@@ -1,0 +1,78 @@
+[tool.black]
+	use-tabs = true
+	safe = true
+	line-length = 110
+	target-version = ["py37", "py38"]
+	exclude = '(/(\.eggs|\.git|\.mypy_cache|\.tox|\.venv|build|dist)|__pycache__)'
+	include = '/((mudproto|tests).*\.py)$'
+
+[tool.coverage.report]
+	precision = 0
+	fail_under = 100.0
+	show_missing = true
+	skip_covered = true
+	sort = "Cover"
+	exclude_lines = [
+		"pragma: no cover",
+		"raise AssertionError",
+		"raise NotImplementedError",
+		"def __repr__",
+		"def __str__",
+		"if __name__ == .__main__.:",
+	]
+
+[tool.coverage.run]
+	source = ["mudproto"]
+	omit = []
+
+[tool.isort]
+	line_length = 110  # The max length of an import line (used for wrapping long imports).
+	supported_extensions = ["py", "pyi"]  # Specify what extensions isort can be ran against.
+	indent = "tab"  # String to place for indents.
+	multi_line_output = 3  # Vertical hanging indent for long sections of multiple imports.
+	include_trailing_comma = true  # Include a trailing comma on multi line imports that include parentheses.
+	force_grid_wrap = 0  # Only consider line length when forcing lines to be grid wrapped.
+	use_parentheses = true  # Use parentheses for line continuation on length limit instead of slashes.
+	ensure_newline_before_comments = true  # Insert a blank line before a comment following an import.
+	indented_import_headings = false  # Do not include import headings inside indented imports.
+	float_to_top = true  # Float all non-indented imports to the top of the file.
+	lines_after_imports = 2  # Add this many lines after imports / before code begins.
+	force_adds = false  # Do not force import adds if the original file is empty.
+	from_first = false  # Show from imports after straight ones.
+	combine_as_imports = false  # Combine as imports on the same line.
+	order_by_type = true  # Order imports by type, which is determined by case, in addition to alphabetically.
+	reverse_relative = true  # Reverse order of relative imports.
+	add_imports = ["from __future__ import annotations"]  # Add the specified import lines to all files.
+	default_section = "STDLIB"  # Set the default section for imports.
+	# The heading to display for future imports.
+	import_heading_future = "Future Modules:"
+	# The heading to display for standard library imports.
+	import_heading_stdlib = "Built-in Modules:"
+	# The heading to display for third-party imports.
+	import_heading_thirdparty = "Third-party Modules:"
+	# Override known third-party imports.
+	known_third_party = []
+	# The heading to display for first-party imports.
+	import_heading_firstparty = "MUD Protocol Modules:"
+	# Override known first-party imports.
+	known_first_party = ["mudproto"]
+	# The heading to display for local imports.
+	import_heading_localfolder = "Local Modules:"
+
+[tool.mypy]
+	files = ["mudproto", "tests"]
+	local_partial_types = true
+	strict = true
+	disallow_any_unimported = true
+	disallow_any_decorated = true
+	warn_unreachable = true
+	show_error_codes = true
+	no_color_output = true
+
+[[tool.mypy.overrides]]
+	module = "mudproto.*"
+	disallow_any_expr = true
+
+[[tool.mypy.overrides]]
+	module = "tests.*"
+	disallow_any_decorated = false

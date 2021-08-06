@@ -1,0 +1,63 @@
+# Apply to all files without commiting:
+# python -B -m pre_commit run --all-files
+# Update this file:
+# python -B -m pre_commit autoupdate
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.4.0
+    hooks:
+      - id: check-case-conflict
+        stages: [commit]
+      - id: check-toml
+        stages: [commit]
+      - id: check-yaml
+        stages: [commit]
+      - id: fix-byte-order-marker
+        stages: [commit]
+      - id: name-tests-test
+        args: ['--django']
+        stages: [commit]
+      - id: requirements-txt-fixer
+        stages: [commit]
+  - repo: local
+    hooks:
+      - id: unittest
+        name: UnitTest
+        args: ['--failfast']
+        stages: [commit]
+        language: system
+        entry: "python -B -m coverage run -m unittest"
+        types: [python]
+        pass_filenames: false
+      - id: isort
+        name: ISort
+        stages: [commit]
+        language: system
+        entry: "python -B -m isort"
+        types_or: [python, spec]
+      - id: tan
+        name: Tan
+        stages: [commit]
+        language: system
+        entry: "python -B -m black"
+        types_or: [python, spec]
+      - id: flake8
+        name: Flake8
+        stages: [commit]
+        language: system
+        entry: "python -B -m flake8"
+        types_or: [python, spec]
+      - id: mypy
+        name: MyPy
+        stages: [commit]
+        language: system
+        entry: "python -B -m mypy"
+        types_or: [python, spec]
+        pass_filenames: false
+      - id: coverage
+        name: Coverage
+        stages: [push]
+        language: system
+        entry: "python -B -m coverage report"
+        types: [python]
+        pass_filenames: false

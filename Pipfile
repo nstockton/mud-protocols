@@ -1,0 +1,15 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+coverage = {extras = ["toml"], version = "*"}
+flake8 = "*"
+flake8-tabs = {version = "==2.2.2"}
+isort = {version = "==5.7.0"}
+mypy = "*"
+pre-commit = "*"
+tan = {git = "https://github.com/nstockton/tan.git", ref = "personal"}
+
+[packages]
