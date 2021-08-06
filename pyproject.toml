@@ -4,7 +4,7 @@
 	line-length = 110
 	target-version = ["py37", "py38"]
 	exclude = '(/(\.eggs|\.git|\.mypy_cache|\.tox|\.venv|build|dist)|__pycache__)'
-	include = '/((mudproto|tests).*\.py)$'
+	include = '/((mudproto|tests).*\.py|setup\.py)$'
 
 [tool.coverage.report]
 	precision = 0
@@ -51,7 +51,7 @@
 	# The heading to display for third-party imports.
 	import_heading_thirdparty = "Third-party Modules:"
 	# Override known third-party imports.
-	known_third_party = []
+	known_third_party = ["setuptools"]
 	# The heading to display for first-party imports.
 	import_heading_firstparty = "MUD Protocol Modules:"
 	# Override known first-party imports.
@@ -60,7 +60,7 @@
 	import_heading_localfolder = "Local Modules:"
 
 [tool.mypy]
-	files = ["mudproto", "tests"]
+	files = ["mudproto", "tests", "setup.py"]
 	local_partial_types = true
 	strict = true
 	disallow_any_unimported = true
