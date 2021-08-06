@@ -43,7 +43,7 @@ setup(
 	url=URL,
 	package_dir={"mudproto": "mudproto"},
 	packages=["mudproto"],
-	package_data={"mudproto": []},
+	package_data={"mudproto": ["py.typed"]},
 	zip_safe=False,
 	setup_requires=REQUIREMENTS,
 	install_requires=REQUIREMENTS,
