@@ -8,15 +8,10 @@ from __future__ import annotations
 
 # Built-in Modules:
 import pathlib
-import sys
 from typing import List
 
 # Third-party Modules:
 from setuptools import setup  # type: ignore[import]
-
-
-if sys.version_info < (3, 7):
-	raise NotImplementedError("Only Python 3.7+ is supported.")
 
 
 NAME: str = "mud-protocols"
