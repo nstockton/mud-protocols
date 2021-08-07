@@ -9,7 +9,7 @@
 	use-tabs = true
 	safe = true
 	line-length = 110
-	target-version = ["py37", "py38"]
+	target-version = ["py37", "py38", "py39"]
 	exclude = '(/(\.eggs|\.git|\.mypy_cache|\.tox|\.venv|build|dist)|__pycache__)'
 	include = '/((mudproto|tests).*\.py|setup\.py)$'
 
@@ -34,7 +34,8 @@
 
 [tool.isort]
 	line_length = 110  # The max length of an import line (used for wrapping long imports).
-	supported_extensions = ["py", "pyi"]  # Specify what extensions isort can be ran against.
+	# Specify what extensions isort can be ran against.
+	supported_extensions = ["py", "pyi", "pys", "pyw", "pyx", "pxd"]
 	indent = "tab"  # String to place for indents.
 	multi_line_output = 3  # Vertical hanging indent for long sections of multiple imports.
 	include_trailing_comma = true  # Include a trailing comma on multi line imports that include parentheses.

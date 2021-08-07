@@ -34,25 +34,25 @@ repos:
         stages: [commit]
         language: system
         entry: "python -B -m isort"
-        types_or: [python, spec]
+        types: [python]
       - id: tan
         name: Tan
         stages: [commit]
         language: system
         entry: "python -B -m black"
-        types_or: [python, spec]
+        types: [python]
       - id: flake8
         name: Flake8
         stages: [commit]
         language: system
         entry: "python -B -m flake8"
-        types_or: [python, spec]
+        types: [python]
       - id: mypy
         name: MyPy
         stages: [commit]
         language: system
         entry: "python -B -m mypy"
-        types_or: [python, spec]
+        types: [python]
         pass_filenames: false
       - id: coverage
         name: Coverage

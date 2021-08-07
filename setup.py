@@ -18,6 +18,7 @@ NAME: str = "mud-protocols"
 DESCRIPTION: str = "MUD protocols implemented in Python."
 KEYWORDS: str = "mud telnet protocol"
 AUTHOR: str = "Nick Stockton"
+AUTHOR_EMAIL: str = "nstockton@users.noreply.github.com"
 VERSION: str = "1.0"
 URL: str = "https://github.com/nstockton/mud-protocols"
 # The directory containing this file
@@ -31,6 +32,7 @@ setup(
 	name=NAME,
 	keywords=KEYWORDS,
 	author=AUTHOR,
+	author_email=AUTHOR_EMAIL,
 	version=VERSION,
 	description=DESCRIPTION,
 	long_description=README,
