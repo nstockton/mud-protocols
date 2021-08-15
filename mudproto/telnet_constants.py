@@ -137,6 +137,7 @@ COMMAND_BYTES: FrozenSet[bytes] = frozenset((XEOF, SUSP, ABORT, EOR, NOP, DM, BR
 NEGOTIATION_BYTES: FrozenSet[bytes] = frozenset((WILL, WONT, DO, DONT))
 
 # Telnet Options.
+# See https://www.iana.org/assignments/telnet-options
 TRANSMIT_BINARY: bytes = bytes([0])  # RFC 856.
 ECHO: bytes = bytes([1])  # RFC 857.
 RECONNECT: bytes = bytes([2])  # RFC 671.
