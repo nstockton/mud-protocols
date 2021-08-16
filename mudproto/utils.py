@@ -10,7 +10,7 @@ from __future__ import annotations
 from typing import AnyStr, Sequence, Tuple, Union
 
 # Local Modules:
-from .telnet_constants import IAC
+from .telnet_constants import IAC, IAC_IAC
 
 
 ESCAPE_XML_STR_ENTITIES: Tuple[Tuple[str, str], ...] = (("&", "&amp;"), ("<", "&lt;"), (">", "&gt;"))
@@ -35,7 +35,7 @@ def escapeIAC(data: bytes) -> bytes:
 	Returns:
 		The data with IAC bytes escaped.
 	"""
-	return data.replace(IAC, IAC + IAC)
+	return data.replace(IAC, IAC_IAC)
 
 
 def multiReplace(

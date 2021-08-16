@@ -133,8 +133,11 @@ WONT: bytes = bytes([252])
 DO: bytes = bytes([253])
 DONT: bytes = bytes([254])
 IAC: bytes = bytes([255])
+IAC_IAC: bytes = IAC + IAC
 COMMAND_BYTES: FrozenSet[bytes] = frozenset((XEOF, SUSP, ABORT, EOR, NOP, DM, BRK, IP, AO, AYT, EC, EL, GA))
+COMMAND_ORDS: FrozenSet[int] = frozenset(ord(i) for i in COMMAND_BYTES)
 NEGOTIATION_BYTES: FrozenSet[bytes] = frozenset((WILL, WONT, DO, DONT))
+NEGOTIATION_ORDS: FrozenSet[int] = frozenset(ord(i) for i in NEGOTIATION_BYTES)
 
 # Telnet Options.
 # See https://www.iana.org/assignments/telnet-options
