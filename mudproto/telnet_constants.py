@@ -88,6 +88,7 @@ from typing import FrozenSet
 # Mud Client Compression Protocol: https://mudhalla.net/tintin/protocols/mccp
 # http://www.gammon.com.au/mccp
 # https://zuggsoft.com/zmud/mcp.htm
+# https://smaugmuds.afkmods.com/mccp/protocol.html
 # MUD Client Protocol: https://www.moo.mud.org/mcp
 # Mud Master Chat Protocol: https://mudhalla.net/tintin/protocols/mmcp
 # MUD NEW-ENVIRON Standard: https://mudhalla.net/tintin/protocols/mnes
