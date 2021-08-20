@@ -12,7 +12,7 @@ from unittest import TestCase
 
 # MUD Protocol Modules:
 from mudproto.mpi import MPI_INIT
-from mudproto.telnet_constants import LF
+from mudproto.telnet_constants import CR, LF
 from mudproto.utils import unescapeXMLBytes
 from mudproto.xml import EVENT_CALLER_TYPE, LT, XMLProtocol
 
@@ -116,11 +116,14 @@ class TestXMLProtocol(TestCase):
 		self.assertEqual(self.receivedEvents, [("line", data.rstrip(LF))])
 		self.receivedEvents.clear()
 		# Insure that partial lines are properly buffered.
-		self.assertEqual(self.parse(b"partial"), (b"partial", b"", "data"))
-		self.assertFalse(self.receivedEvents)
-		self.assertEqual(self.parse(LF), (LF, b"", "data"))
-		self.assertEqual(self.receivedEvents, [("line", b"partial")])
-		self.receivedEvents.clear()
+		for delimiter in (CR, LF):
+			self.assertEqual(self.parse(b"partial"), (b"partial", b"", "data"))
+			self.assertFalse(self.receivedEvents)
+			self.assertEqual(self.parse(delimiter), (delimiter, b"", "data"))
+			self.assertEqual(
+				self.receivedEvents, [("line", b"partial")], f"When {delimiter!r} is used as line delimiter."
+			)
+			self.receivedEvents.clear()
 		self.assertEqual(self.parse(LT + b"IncompleteTag"), (b"", b"", "tag"))
 		self.assertFalse(self.receivedEvents)
 		self.assertEqual(self.xml._tagBuffer, b"IncompleteTag")

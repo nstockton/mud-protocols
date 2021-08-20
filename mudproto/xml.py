@@ -18,7 +18,7 @@ from typing import Any, Callable, Dict, FrozenSet, List, MutableSequence, Tuple,
 # Local Modules:
 from .base import Protocol
 from .mpi import MPI_INIT
-from .telnet_constants import CR_LF, LF
+from .telnet_constants import CR, CR_LF, LF
 from .utils import unescapeXMLBytes
 
 
@@ -124,7 +124,8 @@ class XMLProtocol(Protocol):
 			self._lineBuffer.extend(appData)
 			lines = self._lineBuffer.splitlines(True)
 			self._lineBuffer.clear()
-			if lines and not lines[-1].endswith(LF):
+			if lines and lines[-1][-1:] not in (CR, LF):
+				# Final line is incomplete.
 				self._lineBuffer.extend(lines.pop())
 			lines = [line.rstrip(CR_LF) for line in lines if line.strip()]
 			for line in lines:
