@@ -46,6 +46,9 @@ class MCCPMixIn(Protocol):
 				inputBuffer.clear()
 				if self._decompressor.unused_data:  # type: ignore[misc]
 					# Uncompressed data following the compressed data, likely due to the server terminating compression.
+					logger.debug(
+						"received uncompressed data while compression enabled. Disabling compression."
+					)
 					inputBuffer.extend(self._decompressor.unused_data)  # type: ignore[misc]
 					self._isCompressed = False
 					self._usingMCCp1 = False
@@ -72,6 +75,7 @@ class MCCPMixIn(Protocol):
 						# The server enabled compression. Subsequent data will be compressed.
 						self._isCompressed = True
 						self._decompressor = zlib.decompressobj(zlib.MAX_WBITS)
+						logger.debug("Peer notifies us that subsequent data will be compressed.")
 					else:
 						# We don't care about other subnegotiations, pass it on.
 						outputBuffer.append(inputBuffer[: seIndex + 1])
@@ -91,14 +95,17 @@ class MCCPMixIn(Protocol):
 		if option == MCCP1:
 			# Only enable MCCP1 if MCCP2 is not enabled.
 			self._usingMCCp1 = not self._usingMCCp2
+			logger.debug(f"MCCP1 negotiation {'enabled' if self._usingMCCp1 else 'disabled'}.")
 			return self._usingMCCp1
 		elif option == MCCP2:
 			# Only enable MCCP2 if MCCP1 is not enabled.
 			self._usingMCCp2 = not self._usingMCCp1
+			logger.debug(f"MCCP2 negotiation {'enabled' if self._usingMCCp2 else 'disabled'}.")
 			return self._usingMCCp2
 		return bool(super().on_enableRemote(option))  # type: ignore[misc] # pragma: no cover
 
 	def on_disableRemote(self, option: bytes) -> None:
 		if option in (MCCP1, MCCP2):
+			logger.debug(f"MCCP{'1' if option == MCCP1 else '2'} negotiation disabled.")
 			return None
 		super().on_disableRemote(option)  # type: ignore[misc] # pragma: no cover

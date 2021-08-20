@@ -9,6 +9,7 @@ from __future__ import annotations
 # Built-in Modules:
 from typing import Any, Tuple
 from unittest import TestCase
+from unittest.mock import Mock, patch
 from zlib import DEFLATED, MAX_WBITS, Z_DEFAULT_COMPRESSION, Z_FINISH, Z_SYNC_FLUSH, compressobj
 
 # MUD Protocol Modules:
@@ -59,6 +60,7 @@ class TestMCCPMixIn(TestCase):
 		self.telnet._compressedInputBuffer.clear()
 		return playerReceives, gameReceives
 
+	@patch("mudproto.mccp.logger", Mock())
 	def testTelnetOn_dataReceived(self) -> None:
 		# Insure uncompressed data is passed on.
 		data: bytes = b"Hello World!"
@@ -106,6 +108,7 @@ class TestMCCPMixIn(TestCase):
 		self.assertEqual(self.parse(compressor.flush(Z_FINISH) + data), (data, b""))
 		self.assertFalse(self.telnet._isCompressed)
 
+	@patch("mudproto.mccp.logger", Mock())
 	def testTelnetOn_enableRemote(self) -> None:
 		self.assertFalse(self.telnet._usingMCCp1)
 		self.assertFalse(self.telnet._usingMCCp2)
@@ -118,6 +121,7 @@ class TestMCCPMixIn(TestCase):
 		self.assertFalse(self.telnet.on_enableRemote(MCCP1))
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
 
+	@patch("mudproto.mccp.logger", Mock())
 	def testTelnetOn_disableRemote(self) -> None:
 		self.telnet.on_disableRemote(MCCP1)  # Should not throw an exception.
 		self.telnet.on_disableRemote(MCCP2)  # Should not throw an exception.

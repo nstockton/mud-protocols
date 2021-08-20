@@ -101,6 +101,7 @@ class TestCharsetMixIn(TestCase):
 		self.assertEqual(self.telnet.charset, b"US-ASCII")
 		mockWont.assert_called_once_with(CHARSET)
 
+	@patch("mudproto.charset.logger", Mock())
 	@patch("mudproto.telnet.TelnetProtocol.on_connectionMade")
 	def testTelnetOn_connectionMade(self, mockOn_connectionMade: Mock) -> None:
 		self.telnet.on_connectionMade()
@@ -113,6 +114,7 @@ class TestCharsetMixIn(TestCase):
 		self.assertTrue(self.telnet.on_enableLocal(CHARSET))
 		mockNegotiateCharset.assert_called_once_with(self.telnet.charset)
 
+	@patch("mudproto.charset.logger", Mock())
 	def testTelnetOn_disableLocal(self) -> None:
 		self.telnet.on_disableLocal(CHARSET)  # Should not throw an exception.
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))

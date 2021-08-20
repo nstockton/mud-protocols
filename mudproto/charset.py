@@ -92,17 +92,18 @@ class CharsetMixIn(Protocol):
 
 	def on_connectionMade(self) -> None:
 		super().on_connectionMade()
-		# Offer to handle charset.
+		logger.debug("Request that peer let us handle charset.")
 		self.will(CHARSET)  # type: ignore[attr-defined]
 
 	def on_enableLocal(self, option: bytes) -> bool:
 		if option == CHARSET:
-			logger.debug("Peer acknowledges our request and tells us to begin charset sub-negotiation.")
+			logger.debug("Charset negotiation enabled.")
 			self.negotiateCharset(self.charset)
 			return True
 		return bool(super().on_enableLocal(option))  # type: ignore[misc] # pragma: no cover
 
 	def on_disableLocal(self, option: bytes) -> None:
 		if option == CHARSET:
+			logger.debug("Charset negotiation disabled.")
 			return None
 		super().on_disableLocal(option)  # type: ignore[misc] # pragma: no cover
