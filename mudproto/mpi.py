@@ -141,7 +141,7 @@ class MPIProtocol(Protocol):
 			os.remove(fileName)
 
 	def on_dataReceived(self, data: bytes) -> None:  # NOQA: C901
-		appDataBuffer = []
+		appDataBuffer: List[bytes] = []
 		while data:
 			if self.state == "data":
 				appData, separator, data = data.partition(LF)

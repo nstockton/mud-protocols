@@ -34,7 +34,7 @@ from __future__ import annotations
 # Built-in Modules:
 import logging
 from abc import abstractmethod
-from typing import Any, Callable, Dict, FrozenSet, Union
+from typing import Any, Callable, Dict, FrozenSet, List, Union
 
 # Local Modules:
 from .base import Protocol
@@ -373,7 +373,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 		pass
 
 	def on_dataReceived(self, data: bytes) -> None:  # NOQA: C901
-		appDataBuffer = []
+		appDataBuffer: List[bytes] = []
 		while data:
 			if self.state == "data":
 				appData, separator, data = data.partition(IAC)
