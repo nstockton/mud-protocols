@@ -7,7 +7,7 @@
 from __future__ import annotations
 
 # Built-in Modules:
-from typing import AnyStr, Sequence, Tuple, Union
+from typing import AnyStr, Generator, Sequence, Tuple, Union
 
 # Local Modules:
 from .telnet_constants import IAC, IAC_IAC
@@ -23,6 +23,20 @@ ESCAPE_XML_BYTES_ENTITIES: Tuple[Tuple[bytes, bytes], ...] = tuple(
 UNESCAPE_XML_BYTES_ENTITIES: Tuple[Tuple[bytes, bytes], ...] = tuple(
 	(second, first) for first, second in ESCAPE_XML_BYTES_ENTITIES
 )
+
+
+def iterBytes(data: bytes) -> Generator[bytes, None, None]:
+	"""
+	A generator which yields each byte of a bytes-like object.
+
+	Args:
+		data: The data to process.
+
+	Yields:
+		Each byte of data as a bytes object.
+	"""
+	for i in range(len(data)):
+		yield data[i : i + 1]
 
 
 def escapeIAC(data: bytes) -> bytes:

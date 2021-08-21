@@ -16,6 +16,11 @@ from mudproto.telnet_constants import IAC
 
 
 class TestUtils(TestCase):
+	def test_iterBytes(self) -> None:
+		sent: bytes = b"hello"
+		expected: Tuple[bytes, ...] = (b"h", b"e", b"l", b"l", b"o")
+		self.assertEqual(tuple(utils.iterBytes(sent)), expected)
+
 	def test_escapeIAC(self) -> None:
 		sent: bytes = b"hello" + IAC + b"world"
 		expected: bytes = b"hello" + IAC + IAC + b"world"
