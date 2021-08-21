@@ -7,7 +7,7 @@
 from __future__ import annotations
 
 # Built-in Modules:
-from typing import Any, Tuple
+from typing import Any, Callable, Dict, Tuple
 from unittest import TestCase
 from unittest.mock import Mock, patch
 from zlib import DEFLATED, MAX_WBITS, Z_DEFAULT_COMPRESSION, Z_FINISH, Z_SYNC_FLUSH, compressobj
@@ -32,6 +32,8 @@ from mudproto.telnet_constants import (
 
 
 class Telnet(MCCPMixIn):
+	subnegotiationMap: Dict[bytes, Callable[[bytes], None]] = {}
+
 	def on_connectionMade(self) -> None:
 		pass
 

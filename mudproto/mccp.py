@@ -29,6 +29,8 @@ class MCCPMixIn(Protocol):
 
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
 		super().__init__(*args, **kwargs)  # type: ignore[misc]
+		self.subnegotiationMap[MCCP1] = lambda *args: None  # type: ignore[misc, attr-defined]
+		self.subnegotiationMap[MCCP2] = lambda *args: None  # type: ignore[misc, attr-defined]
 		self._isCompressed: bool = False
 		self._usingMCCp1: bool = False
 		self._usingMCCp2: bool = False
