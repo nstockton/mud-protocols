@@ -52,6 +52,7 @@ class TestCharsetMixIn(TestCase):
 		return playerReceives, gameReceives
 
 	def testTelnetCharset(self) -> None:
+		self.telnet._charsets = (b"US-ASCII", b"UTF-8")
 		oldCharset: bytes = self.telnet.charset
 		self.assertEqual(oldCharset, b"US-ASCII")
 		with self.assertRaises(ValueError):
@@ -62,6 +63,7 @@ class TestCharsetMixIn(TestCase):
 
 	@patch("mudproto.charset.logger", Mock())
 	def testTelnetNegotiateCharset(self) -> None:
+		self.telnet._charsets = (b"US-ASCII", b"UTF-8")
 		oldCharset: bytes = self.telnet.charset
 		self.telnet.negotiateCharset(b"**junk**")
 		self.assertEqual(
@@ -74,6 +76,14 @@ class TestCharsetMixIn(TestCase):
 	@patch("mudproto.telnet.TelnetProtocol.wont")
 	@patch("mudproto.charset.logger")
 	def testTelnetOn_charset(self, mockLogger: Mock, mockWont: Mock) -> None:
+		# Charset request.
+		self.assertEqual(self.telnet._charsets, (b"US-ASCII",))
+		self.telnet.on_charset(CHARSET_REQUEST + b";US-ASCII;UTF-8")
+		mockLogger.debug.assert_called_once_with("Peer responds: Supported charsets: b'US-ASCII;UTF-8'.")
+		self.assertEqual(self.telnet._charsets, (b"US-ASCII", b"UTF-8"))
+		self.assertFalse(hasattr(self.telnet, "_oldCharset"))
+		mockLogger.reset_mock()
+		self.telnet._charsets = (b"US-ASCII", b"UTF-8")
 		# self.telnet.charset is the charset the user requested.
 		self.telnet.charset = b"UTF-8"
 		# self.telnet._oldCharset is the charset the user was using before the request.
