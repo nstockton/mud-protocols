@@ -51,15 +51,14 @@ class CharsetMixIn(Protocol):
 		Args:
 			name: The name of the character set to use.
 		"""
-		self._oldCharset: bytes = self.charset
+		separator: bytes = b";"
 		try:
 			self.charset = name
 		except ValueError:
 			logger.warning(f"Invalid charset {name!r}: falling back to {self.charset!r}.")
-			name = self.charset
-		separator: bytes = b";"
-		logger.debug(f"Tell peer we would like to use the {name!r} charset.")
-		self.requestNegotiation(CHARSET, CHARSET_REQUEST + separator + name)  # type: ignore[attr-defined]
+		else:
+			logger.debug(f"Tell peer we would like to use the {name!r} charset.")
+			self.requestNegotiation(CHARSET, CHARSET_REQUEST + separator + name)  # type: ignore[attr-defined]
 
 	def on_charset(self, data: bytes) -> None:
 		"""
@@ -68,37 +67,24 @@ class CharsetMixIn(Protocol):
 		Args:
 			data: The payload.
 		"""
-		separator: bytes = b";"
 		status, response = data[:1], data[1:]
 		if status == CHARSET_REQUEST:
-			response = response.strip(separator)
-			logger.debug(f"Peer responds: Supported charsets: {response!r}.")
+			separator, response = response[:1], response[1:].upper()
 			self._charsets = tuple(response.split(separator))
-			return None
+			logger.debug(f"Peer responds: Supported charsets: {self._charsets!r}.")
+			self.negotiateCharset(self.charset)
 		elif status == CHARSET_ACCEPTED:
 			logger.debug(f"Peer responds: Charset {response!r} accepted.")
+			self.charset = response
 		elif status == CHARSET_REJECTED:
 			logger.warning("Peer responds: Charset rejected.")
-			if self.charset == self._oldCharset:
-				logger.warning(f"Unable to fall back to {self._oldCharset!r}. Old and new charsets match.")
-			else:
-				logger.debug(f"Falling back to {self._oldCharset!r}.")
-				self.charset = self._oldCharset
 		else:
 			logger.warning(f"Unknown charset negotiation response from peer: {data!r}")
-			self.charset = self._oldCharset
 			self.wont(CHARSET)  # type: ignore[attr-defined]
-		del self._oldCharset
-
-	def on_connectionMade(self) -> None:
-		super().on_connectionMade()
-		logger.debug("Request that peer let us handle charset.")
-		self.will(CHARSET)  # type: ignore[attr-defined]
 
 	def on_enableLocal(self, option: bytes) -> bool:
 		if option == CHARSET:
 			logger.debug("Charset negotiation enabled.")
-			self.negotiateCharset(self.charset)
 			return True
 		return bool(super().on_enableLocal(option))  # type: ignore[misc] # pragma: no cover
 
