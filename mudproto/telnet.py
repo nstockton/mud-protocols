@@ -43,6 +43,7 @@ from .telnet_constants import (
 	CR,
 	CR_LF,
 	CR_NULL,
+	DESCRIPTIONS,
 	DO,
 	DONT,
 	IAC,
@@ -401,6 +402,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 					if appDataBuffer:
 						super().on_dataReceived(b"".join(appDataBuffer))
 						appDataBuffer.clear()
+					logger.debug(f"Received from peer: IAC {DESCRIPTIONS[byte]}")
 					self.on_command(byte, None)
 				elif byte in NEGOTIATION_BYTES:
 					self.state = "negotiation"
@@ -415,6 +417,9 @@ class TelnetProtocol(BaseTelnetProtocol):
 				if appDataBuffer:
 					super().on_dataReceived(b"".join(appDataBuffer))
 					appDataBuffer.clear()
+				logger.debug(
+					f"Received from peer: IAC {DESCRIPTIONS[command]} {DESCRIPTIONS.get(byte, repr(byte))}"
+				)
 				self.on_command(command, byte)
 			elif self.state == "newline":
 				self.state = "data"
@@ -450,7 +455,11 @@ class TelnetProtocol(BaseTelnetProtocol):
 					if appDataBuffer:
 						super().on_dataReceived(b"".join(appDataBuffer))
 						appDataBuffer.clear()
-					self.on_subnegotiation(commands[:1], commands[1:])
+					option, commands = commands[:1], commands[1:]
+					logger.debug(
+						f"Received from peer: IAC SB {DESCRIPTIONS.get(option, repr(option))} {commands!r} IAC SE"
+					)
+					self.on_subnegotiation(option, commands)
 				else:
 					self.state = "subnegotiation"
 					self._commands.append(byte)
