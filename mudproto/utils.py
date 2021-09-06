@@ -7,22 +7,32 @@
 from __future__ import annotations
 
 # Built-in Modules:
-from typing import AnyStr, Generator, Sequence, Tuple, Union
+import re
+from typing import AnyStr, Generator, Match, Pattern, Sequence, Tuple, Union
 
 # Local Modules:
 from .telnet_constants import IAC, IAC_IAC
 
 
-ESCAPE_XML_STR_ENTITIES: Tuple[Tuple[str, str], ...] = (("&", "&amp;"), ("<", "&lt;"), (">", "&gt;"))
+ESCAPE_XML_STR_ENTITIES: Tuple[Tuple[str, str], ...] = (
+	("&", "&amp;"),  # & must always be first when escaping.
+	("<", "&lt;"),
+	(">", "&gt;"),
+	('"', "&quot;"),
+	("'", "&apos;"),
+)
 UNESCAPE_XML_STR_ENTITIES: Tuple[Tuple[str, str], ...] = tuple(
-	(second, first) for first, second in ESCAPE_XML_STR_ENTITIES
+	reversed(  # &amp; must always be last when unescaping.
+		tuple((second, first) for first, second in ESCAPE_XML_STR_ENTITIES)
+	)
 )
 ESCAPE_XML_BYTES_ENTITIES: Tuple[Tuple[bytes, bytes], ...] = tuple(
-	(first.encode("us-ascii"), second.encode("us-ascii")) for first, second in ESCAPE_XML_STR_ENTITIES
+	(bytes(first, "us-ascii"), bytes(second, "us-ascii")) for first, second in ESCAPE_XML_STR_ENTITIES
 )
 UNESCAPE_XML_BYTES_ENTITIES: Tuple[Tuple[bytes, bytes], ...] = tuple(
-	(second, first) for first, second in ESCAPE_XML_BYTES_ENTITIES
+	(bytes(first, "us-ascii"), bytes(second, "us-ascii")) for first, second in UNESCAPE_XML_STR_ENTITIES
 )
+UNESCAPE_XML_NUMERIC_BYTES_REGEX: Pattern[bytes] = re.compile(br"&#(?P<hex>x?)(?P<value>[0-9a-zA-Z]+);")
 
 
 def iterBytes(data: bytes) -> Generator[bytes, None, None]:
@@ -93,4 +103,10 @@ def unescapeXMLBytes(data: bytes) -> bytes:
 	Returns:
 		A copy of the data with XML entities unescaped.
 	"""
-	return multiReplace(data, UNESCAPE_XML_BYTES_ENTITIES)
+
+	def referenceToBytes(match: Match[bytes]) -> bytes:
+		return bytes((int(match.group("value"), 16 if match.group("hex") else 10),))
+
+	return multiReplace(
+		UNESCAPE_XML_NUMERIC_BYTES_REGEX.sub(referenceToBytes, data), UNESCAPE_XML_BYTES_ENTITIES
+	)

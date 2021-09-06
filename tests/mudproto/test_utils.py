@@ -39,6 +39,6 @@ class TestUtils(TestCase):
 		self.assertEqual(utils.escapeXMLString(originalString), expectedString)
 
 	def test_unescapeXMLBytes(self) -> None:
-		originalBytes: bytes = b"&lt;one&amp;two&gt;three"
-		expectedBytes: bytes = b"<one&two>three"
+		originalBytes: bytes = b"&lt;one&amp;gt;two&gt;three&#35;four&#x5F;&#x5f;five"
+		expectedBytes: bytes = b"<one&gt;two>three#four__five"
 		self.assertEqual(utils.unescapeXMLBytes(originalBytes), expectedBytes)
