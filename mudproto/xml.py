@@ -166,9 +166,9 @@ class XMLProtocol(Protocol):
 			self._gratuitous = True
 		elif tag == b"/gratuitous":
 			self._gratuitous = False
-		elif tag == b"room":
+		elif tag.startswith(b"room"):
 			self._inRoom = True
-			self._mode = self.modes[tag]
+			self._mode = self.modes[b"room"]
 		elif tag == b"/room":
 			self._inRoom = False
 			self._mode = self.modes[tag]

@@ -36,10 +36,10 @@ class TestXMLProtocol(TestCase):
 		exits: bytes = b"Exits: north." + LF
 		magic: bytes = b"You feel less protected."
 		line: bytes = b"Hello world!"
-		prompt: bytes = b"!f CW&gt;"
+		prompt: bytes = b"!# CW&gt;"
 		self.rawData: bytes = (
 			b"<movement dir=east/>"
-			+ b"<room><name>" + name + b"</name>" + LF
+			+ b"<room t=&#35;><name>" + name + b"</name>" + LF
 			+ b"<gratuitous><description>" + description + b"</description></gratuitous>"
 			+ b"<magic>" + detectMagic + b"</magic>" + LF
 			+ dynamic
