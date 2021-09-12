@@ -8,8 +8,14 @@ coverage = {extras = ["toml"], version = "*"}
 flake8 = "*"
 flake8-tabs = {version = "==2.2.2"}
 isort = {version = "==5.8.0"}
+mkdocs = {version = "==1.2.2"}
+mkdocs-autorefs = {version = "==0.2.1"}
+mkdocs-material = {version = "==7.2.5"}
+mkdocs-material-extensions = {version = "==1.0.1"}
+mkdocstrings = {version = "==0.15.2"}
 mypy = "*"
 pre-commit = "*"
+pytkdocs = {git = "https://github.com/nstockton/pytkdocs.git", ref = "tab-indentation-parser"}
 tan = {git = "https://github.com/nstockton/tan.git", ref = "personal"}
 
 [packages]
