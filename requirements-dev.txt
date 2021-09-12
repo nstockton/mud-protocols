@@ -1,3 +1,4 @@
+build
 coverage[toml]
 flake8
 flake8-tabs==2.2.2
@@ -11,3 +12,4 @@ mypy
 pre-commit
 git+https://github.com/nstockton/pytkdocs.git@tab-indentation-parser#egg=pytkdocs
 git+https://github.com/nstockton/tan.git@personal#egg=tan
+twine

@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+build = "*"
 coverage = {extras = ["toml"], version = "*"}
 flake8 = "*"
 flake8-tabs = {version = "==2.2.2"}
@@ -17,5 +18,6 @@ mypy = "*"
 pre-commit = "*"
 pytkdocs = {git = "https://github.com/nstockton/pytkdocs.git", ref = "tab-indentation-parser"}
 tan = {git = "https://github.com/nstockton/tan.git", ref = "personal"}
+twine = "*"
 
 [packages]
