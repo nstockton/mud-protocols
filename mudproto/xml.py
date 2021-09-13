@@ -169,6 +169,7 @@ class XMLProtocol(Protocol):
 		elif tag.startswith(b"room"):
 			self._inRoom = True
 			self._mode = self.modes[b"room"]
+			self.callEvent("room", unescapeXMLBytes(tag[5:]))
 		elif tag == b"/room":
 			self._inRoom = False
 			self._mode = self.modes[tag]
@@ -176,17 +177,15 @@ class XMLProtocol(Protocol):
 			self.callEvent("dynamic", unescapeXMLBytes(bytes(self._dynamicBuffer).lstrip(b"\r\n")))
 			self._dynamicBuffer.clear()
 		elif tag in self.modes:
-			if self._inRoom:
-				if tag.startswith(b"/"):
-					self.callEvent(tag[1:].decode("us-ascii"), unescapeXMLBytes(text))
-					self._mode = b"room"
-				else:
-					self._dynamicBuffer.extend(text)
-					self._mode = self.modes[tag]
+			if tag.startswith(b"/"):
+				# Closing tag.
+				self._mode = b"room" if self._inRoom else self.modes[tag]
+				self.callEvent(tag[1:].decode("us-ascii"), unescapeXMLBytes(text))
 			else:
-				if tag.startswith(b"/"):
-					self.callEvent(tag[1:].decode("us-ascii"), unescapeXMLBytes(text))
+				# Opening tag.
 				self._mode = self.modes[tag]
+				if self._inRoom:
+					self._dynamicBuffer.extend(text)
 		self.state = "data"
 		return data
 

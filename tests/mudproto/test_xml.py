@@ -69,6 +69,7 @@ class TestXMLProtocol(TestCase):
 		# fmt: on
 		self.expectedEvents: List[EVENT_CALLER_TYPE] = [
 			("movement", b"east"),
+			("room", b"t=#"),
 			("name", name),
 			("description", description),
 			("magic", detectMagic),
