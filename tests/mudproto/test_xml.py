@@ -39,7 +39,7 @@ class TestXMLProtocol(TestCase):
 		prompt: bytes = b"!# CW&gt;"
 		self.rawData: bytes = (
 			b"<movement dir=east/>"
-			+ b"<room t=&#35;><name>" + name + b"</name>" + LF
+			+ b"<room terrain=city><name>" + name + b"</name>" + LF
 			+ b"<gratuitous><description>" + description + b"</description></gratuitous>"
 			+ b"<magic>" + detectMagic + b"</magic>" + LF
 			+ dynamic
@@ -69,7 +69,7 @@ class TestXMLProtocol(TestCase):
 		# fmt: on
 		self.expectedEvents: List[EVENT_CALLER_TYPE] = [
 			("movement", b"east"),
-			("room", b"t=#"),
+			("room", b"terrain=city"),
 			("name", name),
 			("description", description),
 			("magic", detectMagic),
