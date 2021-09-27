@@ -34,11 +34,11 @@ class TestUtils(TestCase):
 		self.assertEqual(utils.multiReplace(text, ()), text)
 
 	def test_escapeXMLString(self) -> None:
-		originalString: str = "<one&two>three"
-		expectedString: str = "&lt;one&amp;two&gt;three"
+		originalString: str = "<one&two'\">three"
+		expectedString: str = "&lt;one&amp;two'\"&gt;three"
 		self.assertEqual(utils.escapeXMLString(originalString), expectedString)
 
 	def test_unescapeXMLBytes(self) -> None:
-		originalBytes: bytes = b"&lt;one&amp;gt;two&gt;three&#35;four&#x5F;&#x5f;five"
-		expectedBytes: bytes = b"<one&gt;two>three#four__five"
+		originalBytes: bytes = b"&lt;'\"one&amp;gt;two&gt;three&#35;four&#x5F;&#x5f;five&amp;#35;six"
+		expectedBytes: bytes = b"<'\"one&gt;two>three#four__five&#35;six"
 		self.assertEqual(utils.unescapeXMLBytes(originalBytes), expectedBytes)

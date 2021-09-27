@@ -18,8 +18,6 @@ ESCAPE_XML_STR_ENTITIES: Tuple[Tuple[str, str], ...] = (
 	("&", "&amp;"),  # & must always be first when escaping.
 	("<", "&lt;"),
 	(">", "&gt;"),
-	('"', "&quot;"),
-	("'", "&apos;"),
 )
 UNESCAPE_XML_STR_ENTITIES: Tuple[Tuple[str, str], ...] = tuple(
 	reversed(  # &amp; must always be last when unescaping.
