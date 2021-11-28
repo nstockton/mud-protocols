@@ -36,10 +36,10 @@ class TestXMLProtocol(TestCase):
 		exits: bytes = b"Exits: north." + LF
 		magic: bytes = b"You feel less protected."
 		line: bytes = b"Hello world!"
-		prompt: bytes = b"!# CW&gt;"
+		prompt: bytes = b"*f CW&gt;"
 		self.rawData: bytes = (
-			b"<movement dir=east/>"
-			+ b"<room terrain=city><name>" + name + b"</name>" + LF
+			b"<movement dir=south/>"
+			+ b'<room area="Lorien" terrain="forest"><name>' + name + b"</name>" + LF
 			+ b"<gratuitous><description>" + description + b"</description></gratuitous>"
 			+ b"<magic>" + detectMagic + b"</magic>" + LF
 			+ dynamic
@@ -68,8 +68,8 @@ class TestXMLProtocol(TestCase):
 		)
 		# fmt: on
 		self.expectedEvents: List[EVENT_CALLER_TYPE] = [
-			("movement", b"east"),
-			("room", b"terrain=city"),
+			("movement", b"south"),
+			("room", b'area="Lorien" terrain="forest"'),
 			("name", name),
 			("description", description),
 			("magic", detectMagic),
