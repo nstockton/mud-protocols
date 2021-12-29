@@ -13,7 +13,8 @@ from __future__ import annotations
 
 # Built-in Modules:
 import logging
-from typing import Any, Callable, Dict, FrozenSet, List, MutableSequence, Tuple, Union
+from collections.abc import Callable, MutableSequence
+from typing import Any, Tuple
 
 # Local Modules:
 from .base import Protocol
@@ -35,9 +36,9 @@ class XMLProtocol(Protocol):
 	Implements the Mume XML protocol.
 	"""
 
-	states: FrozenSet[str] = frozenset(("data", "tag"))
+	states: frozenset[str] = frozenset(("data", "tag"))
 	"""Valid states for the state machine."""
-	modes: Dict[bytes, Union[bytes, None]] = {
+	modes: dict[bytes, bytes | None] = {
 		b"room": b"room",
 		b"/room": None,
 		b"name": b"name",
@@ -54,7 +55,7 @@ class XMLProtocol(Protocol):
 		b"/prompt": None,
 	}
 	"""A mapping of XML mode to new XML mode values."""
-	tintinReplacements: Dict[bytes, bytes] = {
+	tintinReplacements: dict[bytes, bytes] = {
 		b"prompt": b"PROMPT:",
 		b"/prompt": b":PROMPT",
 		b"name": b"NAME:",
@@ -89,7 +90,7 @@ class XMLProtocol(Protocol):
 		self._lineBuffer: bytearray = bytearray()  # Used for non-XML lines.
 		self._gratuitous: bool = False
 		self._inRoom: bool = False
-		self._mode: Union[bytes, None] = None
+		self._mode: bytes | None = None
 
 	@property
 	def state(self) -> str:
@@ -190,7 +191,7 @@ class XMLProtocol(Protocol):
 		return data
 
 	def on_dataReceived(self, data: bytes) -> None:
-		appDataBuffer: List[bytes] = []
+		appDataBuffer: list[bytes] = []
 		while data:
 			if self.state == "data":
 				data = self._handleXMLText(data, appDataBuffer)

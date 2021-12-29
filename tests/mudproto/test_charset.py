@@ -7,7 +7,6 @@
 from __future__ import annotations
 
 # Built-in Modules:
-from typing import Tuple
 from unittest import TestCase
 from unittest.mock import Mock, patch
 
@@ -42,7 +41,7 @@ class TestCharsetMixIn(TestCase):
 		self.gameReceives.clear()
 		self.playerReceives.clear()
 
-	def parse(self, data: bytes) -> Tuple[bytes, bytes]:
+	def parse(self, data: bytes) -> tuple[bytes, bytes]:
 		self.telnet.on_dataReceived(data)
 		playerReceives: bytes = bytes(self.playerReceives)
 		self.playerReceives.clear()

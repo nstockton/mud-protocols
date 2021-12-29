@@ -13,7 +13,7 @@ from __future__ import annotations
 
 # Built-in Modules:
 import logging
-from typing import Any, Tuple
+from typing import Any
 
 # Local Modules:
 from .base import Protocol
@@ -29,7 +29,7 @@ class CharsetMixIn(Protocol):
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
 		super().__init__(*args, **kwargs)  # type: ignore[misc]
 		self.subnegotiationMap[CHARSET] = self.on_charset  # type: ignore[misc, attr-defined]
-		self._charsets: Tuple[bytes, ...] = (b"US-ASCII",)
+		self._charsets: tuple[bytes, ...] = (b"US-ASCII",)
 		self._charset: bytes = self._charsets[0]
 
 	@property

@@ -8,7 +8,7 @@ from __future__ import annotations
 
 # Built-in Modules:
 import re
-from typing import Callable, List, Tuple
+from collections.abc import Callable
 from unittest import TestCase
 from unittest.mock import Mock, _Call, call, mock_open, patch
 from uuid import uuid4
@@ -19,7 +19,7 @@ from mudproto.telnet_constants import LF
 
 
 BODY: bytes = b"Hello World!"
-SAMPLE_TEXTS: Tuple[str, ...] = (
+SAMPLE_TEXTS: tuple[str, ...] = (
 	"",
 	".",
 	"..",
@@ -117,7 +117,7 @@ class TestMPIProtocol(TestCase):
 		self.gameReceives.clear()
 		self.playerReceives.clear()
 
-	def parse(self, data: bytes) -> Tuple[bytes, bytes, str]:
+	def parse(self, data: bytes) -> tuple[bytes, bytes, str]:
 		self.mpi.on_dataReceived(data)
 		playerReceives: bytes = bytes(self.playerReceives)
 		self.playerReceives.clear()
@@ -348,8 +348,8 @@ class TestEditorPostprocessor(TestCase):
 				self.MPIProtocol.postprocess(sampleText)
 				textWithoutComments: str = re.sub(r"(^|(?<=\n))\s*#.*(?=\n|$)", "\0", sampleText)
 				textWithoutComments = textWithoutComments.replace("\0\n", "\0")
-				paragraphs: List[str] = [paragraph.rstrip() for paragraph in textWithoutComments.split("\0")]
-				expectedCalls: List[Callable[[str], _Call]] = [call(p) for p in paragraphs if p]
+				paragraphs: list[str] = [paragraph.rstrip() for paragraph in textWithoutComments.split("\0")]
+				expectedCalls: list[Callable[[str], _Call]] = [call(p) for p in paragraphs if p]
 				self.assertListEqual(
 					collapseSpacesMock.mock_calls,
 					expectedCalls,

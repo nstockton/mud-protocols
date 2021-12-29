@@ -8,29 +8,30 @@ from __future__ import annotations
 
 # Built-in Modules:
 import re
-from typing import AnyStr, Generator, Match, Pattern, Sequence, Tuple, Union
+from collections.abc import Generator, Sequence
+from typing import AnyStr
 
 # Local Modules:
 from .telnet_constants import IAC, IAC_IAC
 
 
-ESCAPE_XML_STR_ENTITIES: Tuple[Tuple[str, str], ...] = (
+ESCAPE_XML_STR_ENTITIES: tuple[tuple[str, str], ...] = (
 	("&", "&amp;"),  # & must always be first when escaping.
 	("<", "&lt;"),
 	(">", "&gt;"),
 )
-UNESCAPE_XML_STR_ENTITIES: Tuple[Tuple[str, str], ...] = tuple(
+UNESCAPE_XML_STR_ENTITIES: tuple[tuple[str, str], ...] = tuple(
 	reversed(  # &amp; must always be last when unescaping.
 		tuple((second, first) for first, second in ESCAPE_XML_STR_ENTITIES)
 	)
 )
-ESCAPE_XML_BYTES_ENTITIES: Tuple[Tuple[bytes, bytes], ...] = tuple(
+ESCAPE_XML_BYTES_ENTITIES: tuple[tuple[bytes, bytes], ...] = tuple(
 	(bytes(first, "us-ascii"), bytes(second, "us-ascii")) for first, second in ESCAPE_XML_STR_ENTITIES
 )
-UNESCAPE_XML_BYTES_ENTITIES: Tuple[Tuple[bytes, bytes], ...] = tuple(
+UNESCAPE_XML_BYTES_ENTITIES: tuple[tuple[bytes, bytes], ...] = tuple(
 	(bytes(first, "us-ascii"), bytes(second, "us-ascii")) for first, second in UNESCAPE_XML_STR_ENTITIES
 )
-UNESCAPE_XML_NUMERIC_BYTES_REGEX: Pattern[bytes] = re.compile(br"&#(?P<hex>x?)(?P<value>[0-9a-zA-Z]+);")
+UNESCAPE_XML_NUMERIC_BYTES_REGEX: re.Pattern[bytes] = re.compile(br"&#(?P<hex>x?)(?P<value>[0-9a-zA-Z]+);")
 
 
 def iterBytes(data: bytes) -> Generator[bytes, None, None]:
@@ -60,9 +61,7 @@ def escapeIAC(data: bytes) -> bytes:
 	return data.replace(IAC, IAC_IAC)
 
 
-def multiReplace(
-	data: AnyStr, replacements: Union[Sequence[Sequence[bytes]], Sequence[Sequence[str]]]
-) -> AnyStr:
+def multiReplace(data: AnyStr, replacements: Sequence[Sequence[bytes]] | Sequence[Sequence[str]]) -> AnyStr:
 	"""
 	Performs multiple replacement operations on a string or bytes-like object.
 
@@ -102,8 +101,10 @@ def unescapeXMLBytes(data: bytes) -> bytes:
 		A copy of the data with XML entities unescaped.
 	"""
 
-	def referenceToBytes(match: Match[bytes]) -> bytes:
-		return bytes((int(match.group("value"), 16 if match.group("hex") else 10),))
+	def referenceToBytes(match: re.Match[bytes]) -> bytes:
+		isHex: bytes = match.group("hex")
+		value: bytes = match.group("value")
+		return bytes((int(value, 16 if isHex else 10),))
 
 	return multiReplace(
 		UNESCAPE_XML_NUMERIC_BYTES_REGEX.sub(referenceToBytes, data), UNESCAPE_XML_BYTES_ENTITIES

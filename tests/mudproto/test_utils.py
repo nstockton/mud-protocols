@@ -7,7 +7,6 @@
 from __future__ import annotations
 
 # Built-in Modules:
-from typing import Tuple
 from unittest import TestCase
 
 # MUD Protocol Modules:
@@ -18,7 +17,7 @@ from mudproto.telnet_constants import IAC
 class TestUtils(TestCase):
 	def test_iterBytes(self) -> None:
 		sent: bytes = b"hello"
-		expected: Tuple[bytes, ...] = (b"h", b"e", b"l", b"l", b"o")
+		expected: tuple[bytes, ...] = (b"h", b"e", b"l", b"l", b"o")
 		self.assertEqual(tuple(utils.iterBytes(sent)), expected)
 
 	def test_escapeIAC(self) -> None:
@@ -27,7 +26,7 @@ class TestUtils(TestCase):
 		self.assertEqual(utils.escapeIAC(sent), expected)
 
 	def test_multiReplace(self) -> None:
-		replacements: Tuple[Tuple[str, str], ...] = (("ll", "yy"), ("h", "x"), ("o", "z"))
+		replacements: tuple[tuple[str, str], ...] = (("ll", "yy"), ("h", "x"), ("o", "z"))
 		text: str = "hello world"
 		expectedOutput: str = "xeyyz wzrld"
 		self.assertEqual(utils.multiReplace(text, replacements), expectedOutput)

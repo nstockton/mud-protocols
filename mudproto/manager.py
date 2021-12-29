@@ -9,8 +9,9 @@ from __future__ import annotations
 # Built-in Modules:
 import inspect
 import logging
+from collections.abc import Callable
 from types import TracebackType
-from typing import Any, Callable, List, Optional, Type
+from typing import Any
 
 # Local Modules:
 from .base import Protocol
@@ -27,7 +28,7 @@ class Manager(object):
 		writer: Callable[[bytes], None],
 		receiver: Callable[[bytes], None],
 		*,
-		promptTerminator: Optional[bytes] = None,
+		promptTerminator: bytes | None = None,
 	) -> None:
 		self._writer: Callable[[bytes], None] = writer
 		self._receiver: Callable[[bytes], None] = receiver
@@ -41,9 +42,9 @@ class Manager(object):
 				.replace(CR, CR_NULL)
 				.replace(LF, CR_LF)
 			)
-		self._readBuffer: List[bytes] = []
-		self._writeBuffer: List[bytes] = []
-		self._handlers: List[Protocol] = []
+		self._readBuffer: list[bytes] = []
+		self._writeBuffer: list[bytes] = []
+		self._handlers: list[Protocol] = []
 		self._isConnected: bool = False
 
 	@property
@@ -57,9 +58,9 @@ class Manager(object):
 
 	def __exit__(
 		self,
-		excType: Optional[Type[BaseException]],
-		excValue: Optional[BaseException],
-		excTraceback: Optional[TracebackType],
+		excType: type[BaseException] | None,
+		excValue: BaseException | None,
+		excTraceback: TracebackType | None,
 	) -> None:
 		self.disconnect()
 
@@ -135,7 +136,7 @@ class Manager(object):
 		elif data:
 			self._writer(data)
 
-	def register(self, handler: Type[Protocol], **kwargs: Any) -> None:
+	def register(self, handler: type[Protocol], **kwargs: Any) -> None:
 		"""
 		Registers a protocol handler.
 
@@ -146,7 +147,7 @@ class Manager(object):
 		if not inspect.isclass(handler):
 			raise ValueError("Class required, not instance.")
 		for i in self._handlers:
-			if isinstance(i, handler):
+			if isinstance(i, handler):  # type: ignore[misc]
 				raise ValueError("Already registered.")
 		instance: Protocol = handler(self.write, self._receiver, **kwargs)  # type: ignore[misc]
 		if self._handlers:

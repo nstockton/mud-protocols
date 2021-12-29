@@ -20,7 +20,8 @@ import sys
 import tempfile
 import textwrap
 import threading
-from typing import Any, Callable, Dict, FrozenSet, List
+from collections.abc import Callable
+from typing import Any
 
 # Local Modules:
 from .base import Protocol
@@ -43,7 +44,7 @@ class MPIProtocol(Protocol):
 		pager: The program to use for viewing received read-only text.
 	"""
 
-	states: FrozenSet[str] = frozenset(("data", "newline", "init", "command", "length", "body"))
+	states: frozenset[str] = frozenset(("data", "newline", "init", "command", "length", "body"))
 	"""Valid states for the state machine."""
 
 	def __init__(self, *args: Any, outputFormat: str, **kwargs: Any) -> None:
@@ -51,12 +52,12 @@ class MPIProtocol(Protocol):
 		super().__init__(*args, **kwargs)  # type: ignore[misc]
 		self._state: str = "data"
 		self._MPIBuffer: bytearray = bytearray()
-		self._MPIThreads: List[threading.Thread] = []
-		self.commandMap: Dict[bytes, Callable[[bytes], None]] = {b"E": self.edit, b"V": self.view}
-		editors: Dict[str, str] = {
+		self._MPIThreads: list[threading.Thread] = []
+		self.commandMap: dict[bytes, Callable[[bytes], None]] = {b"E": self.edit, b"V": self.view}
+		editors: dict[str, str] = {
 			"win32": "notepad",
 		}
-		pagers: Dict[str, str] = {
+		pagers: dict[str, str] = {
 			"win32": "notepad",
 		}
 		defaultEditor: str = editors.get(sys.platform, "nano")
@@ -97,9 +98,9 @@ class MPIProtocol(Protocol):
 			data: Received data from Mume, containing the session, description, and body of the text.
 		"""
 		session, description, body = data[1:].split(LF, 2)
-		with tempfile.NamedTemporaryFile(prefix="mume_editing_", suffix=".txt", delete=False) as fileObj:
-			fileName = fileObj.name
-			fileObj.write(body.replace(CR, b"").replace(LF, CR_LF))
+		with tempfile.NamedTemporaryFile(prefix="mume_editing_", suffix=".txt", delete=False) as tempFileObj:
+			fileName = tempFileObj.name
+			tempFileObj.write(body.replace(CR, b"").replace(LF, CR_LF))
 		lastModified = os.path.getmtime(fileName)
 		if self.outputFormat == "tintin":
 			print(f"MPICOMMAND:{self.editor} {fileName}:MPICOMMAND")
@@ -141,7 +142,7 @@ class MPIProtocol(Protocol):
 			os.remove(fileName)
 
 	def on_dataReceived(self, data: bytes) -> None:  # NOQA: C901
-		appDataBuffer: List[bytes] = []
+		appDataBuffer: list[bytes] = []
 		while data:
 			if self.state == "data":
 				appData, separator, data = data.partition(LF)
@@ -248,7 +249,7 @@ class MPIProtocol(Protocol):
 		Returns:
 			The text with formatting applied.
 		"""
-		paragraphs: List[str] = self.getParagraphs(text)
+		paragraphs: list[str] = self.getParagraphs(text)
 		for i, paragraph in enumerate(paragraphs):
 			if not self.isComment(paragraph):
 				paragraph = self.collapseSpaces(paragraph)
@@ -257,7 +258,7 @@ class MPIProtocol(Protocol):
 				paragraphs[i] = paragraph
 		return "\n".join(paragraphs)
 
-	def getParagraphs(self, text: str) -> List[str]:
+	def getParagraphs(self, text: str) -> list[str]:
 		"""
 		Extracts paragraphs from a string.
 
@@ -267,7 +268,7 @@ class MPIProtocol(Protocol):
 		Returns:
 			The extracted paragraphs.
 		"""
-		lines: List[str] = text.splitlines()
+		lines: list[str] = text.splitlines()
 		lineno: int = 0
 		while lineno < len(lines):
 			if self.isComment(lines[lineno]):

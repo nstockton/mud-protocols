@@ -14,7 +14,7 @@ from __future__ import annotations
 # Built-in Modules:
 import logging
 import zlib
-from typing import Any, List
+from typing import Any
 
 # Local Modules:
 from .base import Protocol
@@ -38,7 +38,7 @@ class MCCPMixIn(Protocol):
 		self._decompressor: Any = None
 
 	def on_dataReceived(self, data: bytes) -> None:
-		outputBuffer: List[bytes] = []
+		outputBuffer: list[bytes] = []
 		inputBuffer: bytearray = self._compressedInputBuffer
 		inputBuffer.extend(data)
 		while inputBuffer:

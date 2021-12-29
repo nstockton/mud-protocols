@@ -9,7 +9,8 @@ from __future__ import annotations
 # Built-in Modules:
 import logging
 from abc import ABC, abstractmethod
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 
 logger: logging.Logger = logging.getLogger(__name__)

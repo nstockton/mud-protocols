@@ -7,7 +7,8 @@
 from __future__ import annotations
 
 # Built-in Modules:
-from typing import Any, Callable, Dict, Tuple
+from collections.abc import Callable
+from typing import Any
 from unittest import TestCase
 from unittest.mock import Mock, patch
 from zlib import DEFLATED, MAX_WBITS, Z_DEFAULT_COMPRESSION, Z_FINISH, Z_SYNC_FLUSH, compressobj
@@ -32,7 +33,7 @@ from mudproto.telnet_constants import (
 
 
 class Telnet(MCCPMixIn):
-	subnegotiationMap: Dict[bytes, Callable[[bytes], None]] = {}
+	subnegotiationMap: dict[bytes, Callable[[bytes], None]] = {}
 
 	def on_connectionMade(self) -> None:
 		pass
@@ -53,7 +54,7 @@ class TestMCCPMixIn(TestCase):
 		self.gameReceives.clear()
 		self.playerReceives.clear()
 
-	def parse(self, data: bytes) -> Tuple[bytes, bytes]:
+	def parse(self, data: bytes) -> tuple[bytes, bytes]:
 		self.telnet.on_dataReceived(data)
 		playerReceives: bytes = bytes(self.playerReceives)
 		self.playerReceives.clear()

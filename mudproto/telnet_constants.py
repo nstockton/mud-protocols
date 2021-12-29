@@ -75,9 +75,6 @@ Attributes:
 # Future Modules:
 from __future__ import annotations
 
-# Built-in Modules:
-from typing import Dict, FrozenSet
-
 
 # Protocol specifications.
 
@@ -101,7 +98,7 @@ from typing import Dict, FrozenSet
 # Zenith MUD Protocol: http://discworld.starturtle.net/external/protocols/zmp.html
 
 
-DESCRIPTIONS: Dict[bytes, str] = {}
+DESCRIPTIONS: dict[bytes, str] = {}
 
 
 def describe(description: str, value: int) -> bytes:
@@ -154,10 +151,10 @@ DO: bytes = describe("DO", 253)
 DONT: bytes = describe("DONT", 254)
 IAC: bytes = describe("IAC", 255)
 IAC_IAC: bytes = IAC + IAC
-COMMAND_BYTES: FrozenSet[bytes] = frozenset((XEOF, SUSP, ABORT, EOR, NOP, DM, BRK, IP, AO, AYT, EC, EL, GA))
-COMMAND_ORDS: FrozenSet[int] = frozenset(ord(i) for i in COMMAND_BYTES)
-NEGOTIATION_BYTES: FrozenSet[bytes] = frozenset((WILL, WONT, DO, DONT))
-NEGOTIATION_ORDS: FrozenSet[int] = frozenset(ord(i) for i in NEGOTIATION_BYTES)
+COMMAND_BYTES: frozenset[bytes] = frozenset((XEOF, SUSP, ABORT, EOR, NOP, DM, BRK, IP, AO, AYT, EC, EL, GA))
+COMMAND_ORDS: frozenset[int] = frozenset(ord(i) for i in COMMAND_BYTES)
+NEGOTIATION_BYTES: frozenset[bytes] = frozenset((WILL, WONT, DO, DONT))
+NEGOTIATION_ORDS: frozenset[int] = frozenset(ord(i) for i in NEGOTIATION_BYTES)
 
 # Telnet Options.
 # See https://www.iana.org/assignments/telnet-options

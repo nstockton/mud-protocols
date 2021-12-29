@@ -7,7 +7,6 @@
 from __future__ import annotations
 
 # Built-in Modules:
-from typing import List, Tuple
 from unittest import TestCase
 
 # MUD Protocol Modules:
@@ -67,7 +66,7 @@ class TestXMLProtocol(TestCase):
 			+ b"PROMPT:" + unescapeXMLBytes(prompt) + b":PROMPT"
 		)
 		# fmt: on
-		self.expectedEvents: List[EVENT_CALLER_TYPE] = [
+		self.expectedEvents: list[EVENT_CALLER_TYPE] = [
 			("movement", b"south"),
 			("room", b'area="Lorien" terrain="forest"'),
 			("name", name),
@@ -81,7 +80,7 @@ class TestXMLProtocol(TestCase):
 		]
 		self.gameReceives: bytearray = bytearray()
 		self.playerReceives: bytearray = bytearray()
-		self.receivedEvents: List[EVENT_CALLER_TYPE] = []
+		self.receivedEvents: list[EVENT_CALLER_TYPE] = []
 		self.xml: XMLProtocol = XMLProtocol(
 			self.gameReceives.extend,
 			self.playerReceives.extend,
@@ -95,7 +94,7 @@ class TestXMLProtocol(TestCase):
 		self.gameReceives.clear()
 		self.playerReceives.clear()
 
-	def parse(self, data: bytes) -> Tuple[bytes, bytes, str]:
+	def parse(self, data: bytes) -> tuple[bytes, bytes, str]:
 		self.xml.on_dataReceived(data)
 		playerReceives: bytes = bytes(self.playerReceives)
 		self.playerReceives.clear()
