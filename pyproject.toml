@@ -114,7 +114,10 @@
 	# The heading to display for third-party imports.
 	import_heading_thirdparty = "Third-party Modules:"
 	# Override known third-party imports.
-	known_third_party = ["setuptools"]
+	known_third_party = [
+		"setuptools",
+		"typing_extensions",
+	]
 	# The heading to display for first-party imports.
 	import_heading_firstparty = "MUD Protocol Modules:"
 	# Override known first-party imports.

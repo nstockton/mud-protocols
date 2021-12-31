@@ -16,6 +16,9 @@ import logging
 from collections.abc import Callable, MutableSequence
 from typing import Any, Tuple
 
+# Third-party Modules:
+from typing_extensions import TypeAlias
+
 # Local Modules:
 from .base import Protocol
 from .mpi import MPI_INIT
@@ -23,7 +26,7 @@ from .telnet_constants import CR, CR_LF, LF
 from .utils import unescapeXMLBytes
 
 
-EVENT_CALLER_TYPE = Tuple[str, bytes]
+EVENT_CALLER_TYPE: TypeAlias = Tuple[str, bytes]
 LT: bytes = b"<"
 GT: bytes = b">"
 
