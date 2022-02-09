@@ -31,7 +31,7 @@ ESCAPE_XML_BYTES_ENTITIES: tuple[tuple[bytes, bytes], ...] = tuple(
 UNESCAPE_XML_BYTES_ENTITIES: tuple[tuple[bytes, bytes], ...] = tuple(
 	(bytes(first, "us-ascii"), bytes(second, "us-ascii")) for first, second in UNESCAPE_XML_STR_ENTITIES
 )
-UNESCAPE_XML_NUMERIC_BYTES_REGEX: re.Pattern[bytes] = re.compile(br"&#(?P<hex>x?)(?P<value>[0-9a-zA-Z]+);")
+UNESCAPE_XML_NUMERIC_BYTES_REGEX: re.Pattern[bytes] = re.compile(rb"&#(?P<hex>x?)(?P<value>[0-9a-zA-Z]+);")
 
 
 def iterBytes(data: bytes) -> Generator[bytes, None, None]:
