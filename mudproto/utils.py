@@ -9,7 +9,7 @@ from __future__ import annotations
 # Built-in Modules:
 import re
 from collections.abc import Generator, Sequence
-from typing import AnyStr
+from typing import AnyStr, Union
 
 # Local Modules:
 from .telnet_constants import IAC, IAC_IAC
@@ -61,7 +61,9 @@ def escapeIAC(data: bytes) -> bytes:
 	return data.replace(IAC, IAC_IAC)
 
 
-def multiReplace(data: AnyStr, replacements: Sequence[Sequence[bytes]] | Sequence[Sequence[str]]) -> AnyStr:
+def multiReplace(
+	data: AnyStr, replacements: Union[Sequence[Sequence[bytes]], Sequence[Sequence[str]]]
+) -> AnyStr:
 	"""
 	Performs multiple replacement operations on a string or bytes-like object.
 

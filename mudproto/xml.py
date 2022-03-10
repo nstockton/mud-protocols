@@ -14,7 +14,7 @@ from __future__ import annotations
 # Built-in Modules:
 import logging
 from collections.abc import Callable, MutableSequence
-from typing import Any, Tuple
+from typing import Any, Tuple, Union
 
 # Third-party Modules:
 from typing_extensions import TypeAlias
@@ -41,7 +41,7 @@ class XMLProtocol(Protocol):
 
 	states: frozenset[str] = frozenset(("data", "tag"))
 	"""Valid states for the state machine."""
-	modes: dict[bytes, bytes | None] = {
+	modes: dict[bytes, Union[bytes, None]] = {
 		b"room": b"room",
 		b"/room": None,
 		b"name": b"name",
@@ -93,7 +93,7 @@ class XMLProtocol(Protocol):
 		self._lineBuffer: bytearray = bytearray()  # Used for non-XML lines.
 		self._gratuitous: bool = False
 		self._inRoom: bool = False
-		self._mode: bytes | None = None
+		self._mode: Union[bytes, None] = None
 
 	@property
 	def state(self) -> str:

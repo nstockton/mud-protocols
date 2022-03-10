@@ -35,7 +35,7 @@ from __future__ import annotations
 import logging
 from abc import abstractmethod
 from collections.abc import Callable
-from typing import Any
+from typing import Any, Union
 
 # Local Modules:
 from .base import Protocol
@@ -106,7 +106,7 @@ class _OptionState:
 
 class BaseTelnetProtocol(Protocol):
 	@abstractmethod
-	def on_unhandledCommand(self, command: bytes, option: bytes | None) -> None:
+	def on_unhandledCommand(self, command: bytes, option: Union[bytes, None]) -> None:
 		"""
 		Called for commands for which no handler is installed.
 
@@ -212,7 +212,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 		self._state: str = "data"
 		self._options: dict[bytes, _OptionState] = {}
 		"""A mapping of option bytes to their current state."""
-		self.commandMap: dict[bytes, Callable[[bytes | None], None]] = {
+		self.commandMap: dict[bytes, Callable[[Union[bytes, None]], None]] = {
 			WILL: self.on_will,
 			WONT: self.on_wont,
 			DO: self.on_do,
@@ -471,7 +471,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 		if appDataBuffer:
 			super().on_dataReceived(b"".join(appDataBuffer))
 
-	def on_command(self, command: bytes, option: bytes | None) -> None:
+	def on_command(self, command: bytes, option: Union[bytes, None]) -> None:
 		"""
 		Called when a 1 or 2 byte command is received.
 
@@ -497,7 +497,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 		else:
 			self.on_unhandledSubnegotiation(option, data)
 
-	def on_will(self, option: bytes | None) -> None:
+	def on_will(self, option: Union[bytes, None]) -> None:
 		"""
 		Called when an IAC + WILL + option is received.
 
@@ -531,7 +531,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 				f"him.enabled and him.negotiating cannot be True at the same time. state: {state!r}, option: {option!r}"
 			)
 
-	def on_wont(self, option: bytes | None) -> None:
+	def on_wont(self, option: Union[bytes, None]) -> None:
 		"""
 		Called when an IAC + WONT + option is received.
 
@@ -561,7 +561,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 			state.him.negotiating = False
 			self.on_disableRemote(option)
 
-	def on_do(self, option: bytes | None) -> None:
+	def on_do(self, option: Union[bytes, None]) -> None:
 		"""
 		Called when an IAC + DO + option is received.
 
@@ -594,7 +594,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 				f"us.enabled and us.negotiating cannot be True at the same time. state: {state!r}, option: {option!r}"
 			)
 
-	def on_dont(self, option: bytes | None) -> None:
+	def on_dont(self, option: Union[bytes, None]) -> None:
 		"""
 		Called when an IAC + DONT + option is received.
 
@@ -623,7 +623,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 			state.us.negotiating = False
 			self.on_disableLocal(option)
 
-	def on_unhandledCommand(self, command: bytes, option: bytes | None) -> None:
+	def on_unhandledCommand(self, command: bytes, option: Union[bytes, None]) -> None:
 		pass
 
 	def on_unhandledSubnegotiation(self, option: bytes, data: bytes) -> None:

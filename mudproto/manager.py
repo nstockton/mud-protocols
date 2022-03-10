@@ -11,7 +11,7 @@ import inspect
 import logging
 from collections.abc import Callable
 from types import TracebackType
-from typing import Any
+from typing import Any, Optional
 
 # Local Modules:
 from .base import Protocol
@@ -28,7 +28,7 @@ class Manager(object):
 		writer: Callable[[bytes], None],
 		receiver: Callable[[bytes], None],
 		*,
-		promptTerminator: bytes | None = None,
+		promptTerminator: Optional[bytes] = None,
 	) -> None:
 		self._writer: Callable[[bytes], None] = writer
 		self._receiver: Callable[[bytes], None] = receiver
@@ -58,9 +58,9 @@ class Manager(object):
 
 	def __exit__(
 		self,
-		excType: type[BaseException] | None,
-		excValue: BaseException | None,
-		excTraceback: TracebackType | None,
+		excType: Optional[type[BaseException]],
+		excValue: Optional[BaseException],
+		excTraceback: Optional[TracebackType],
 	) -> None:
 		self.disconnect()
 
