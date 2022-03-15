@@ -61,7 +61,7 @@ jobs:
           python -m pre_commit install -t pre-push
           python -m pre_commit run --all-files --show-diff-on-failure --hook-stage commit
           python -m pre_commit run --all-files --show-diff-on-failure --hook-stage push
-          poetry build
+          poetry build --no-interaction
       - name: Test Documentation
         if: matrix.python-version == '3.10'
         run: |
@@ -83,7 +83,6 @@ jobs:
           fetch-depth: 0 # All history for all branches and tags.
       - name: Get Project Info
         id: project_info
-        shell: bash
         run: |
           NAME=${GITHUB_REPOSITORY#*/} # Everything after the first /.
           NAME=${NAME^} # Capitalize first character.
@@ -118,7 +117,7 @@ jobs:
         id: build_dist
         run: |
           source $VENV
-          poetry build
+          poetry build --no-interaction
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
