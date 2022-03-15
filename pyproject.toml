@@ -67,7 +67,7 @@
 [tool.poetry-dynamic-versioning]
 	enable = true
 	vcs = "git"
-	format-jinja = "{% if distance == 0 %}{{ base }}{% else %}{{ base }}-{{ distance }}-g{{ commit|truncate(7,true,'') }}{% endif %}"
+	format-jinja = "{% if distance == 0 %}{{ base }}{% else %}{{ base }}+{{ distance }}.g{{ commit|truncate(7,true,'') }}{% endif %}"
 
 [tool.poetry-dynamic-versioning.substitution]
 	files = [
@@ -180,10 +180,7 @@
 	# The heading to display for third-party imports.
 	import_heading_thirdparty = "Third-party Modules:"
 	# Override known third-party imports.
-	known_third_party = [
-		"setuptools",
-		"typing_extensions",
-	]
+	known_third_party = ["typing_extensions"]
 	# The heading to display for first-party imports.
 	import_heading_firstparty = "MUD Protocol Modules:"
 	# Override known first-party imports.
@@ -209,9 +206,3 @@
 [[tool.mypy.overrides]]
 	module = "tests.*"
 	disallow_any_decorated = false
-
-[[tool.mypy.overrides]]
-	module = [
-		"setuptools.*",
-	]
-	ignore_missing_imports = true
