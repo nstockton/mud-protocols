@@ -9,14 +9,13 @@
         <meta name="description" content="MUD Protocols Main Page">
       
       
-      
         <meta name="author" content="Nick Stockton">
       
       
         <link rel="canonical" href="https://nstockton.github.io/mud-protocols/api/mpi/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.5">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
     
     
       
@@ -24,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.be71726b.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.edf004c2.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
         
       
     
@@ -37,16 +36,15 @@
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
-    
     
     
       <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
-
 
     
     
@@ -61,7 +59,6 @@
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
   
     
-    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -78,7 +75,10 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+    
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="MUD Protocols" class="md-header__button md-logo" aria-label="MUD Protocols" data-md-component="logo">
       
@@ -111,8 +111,7 @@
       <label class="md-header__button md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
       </label>
-      
-<div class="md-search" data-md-component="search" role="dialog">
+      <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
@@ -144,8 +143,7 @@
     
     
       <div class="md-header__source">
-        
-<a href="https://github.com/nstockton/mud-protocols/" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/nstockton/mud-protocols/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
@@ -157,11 +155,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -187,8 +188,7 @@
   </label>
   
     <div class="md-nav__source">
-      
-<a href="https://github.com/nstockton/mud-protocols/" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/nstockton/mud-protocols/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
@@ -246,10 +246,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
-      <label class="md-nav__link" for="__nav_3">
-        API Navigation
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          API Navigation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="API Navigation" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
@@ -258,6 +262,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -268,8 +273,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -280,8 +287,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -292,8 +301,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -304,8 +315,10 @@
     </li>
   
 
+            
           
             
+              
   
   
     
@@ -329,6 +342,7 @@
       </a>
       
         
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -481,8 +495,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -493,8 +509,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -505,8 +523,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -517,6 +537,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -551,6 +572,7 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -708,21 +730,21 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/nstockton/mud-protocols/blob/master/docs/api/mpi.md" title="Edit this page" class="md-content__button md-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
-                  </a>
-                
-                
-                <div class="doc doc-object doc-module">
+<a href="https://github.com/nstockton/mud-protocols/blob/master/docs/api/mpi.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<div class="doc doc-object doc-module">
 
 
 
-<h1 class="doc doc-heading" id="mudproto.mpi">
+<h1 id="mudproto.mpi" class="doc doc-heading">
         <code>Module mudproto.mpi</code>
 
 
 
-<a class="headerlink" href="#mudproto.mpi" title="Permanent link">&para;</a></h1>
+<a href="#mudproto.mpi" class="headerlink" title="Permanent link">&para;</a></h1>
 
     <div class="doc doc-contents first">
 
@@ -744,12 +766,12 @@
 
 
 
-<h2 class="doc doc-heading" id="mudproto.mpi.MPIProtocol">
-        <code>Class MPIProtocol</code>
+<h2 id="mudproto.mpi.MPIProtocol" class="doc doc-heading">
+        <code>Class MPIProtocol(<a title="mudproto.base.Protocol" href="../base/#mudproto.base.Protocol">Protocol</a>)</code>
 
 
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol" title="Permanent link">&para;</a></h2>
+<a href="#mudproto.mpi.MPIProtocol" class="headerlink" title="Permanent link">&para;</a></h2>
 
     <div class="doc doc-contents ">
 
@@ -767,7 +789,7 @@
   <tbody>
       <tr>
         <td><code>commandMap</code></td>
-        <td><code>Dict[bytes, Callable[[bytes], None]]</code></td>
+        <td><code>dict[bytes, Callable[[bytes], None]]</code></td>
         <td><p>A mapping of bytes to callables.</p></td>
       </tr>
       <tr>
@@ -782,6 +804,313 @@
       </tr>
   </tbody>
 </table>
+        <details class="quote">
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">MPIProtocol</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Implements support for the Mume remote editing protocol.</span>
+
+<span class="sd">	Attributes:</span>
+<span class="sd">		commandMap: A mapping of bytes to callables.</span>
+<span class="sd">		editor: The program to use for editing received text.</span>
+<span class="sd">		pager: The program to use for viewing received read-only text.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="n">states</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">((</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;newline&quot;</span><span class="p">,</span> <span class="s2">&quot;init&quot;</span><span class="p">,</span> <span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="s2">&quot;length&quot;</span><span class="p">,</span> <span class="s2">&quot;body&quot;</span><span class="p">))</span>
+	<span class="sd">&quot;&quot;&quot;Valid states for the state machine.&quot;&quot;&quot;</span>
+
+	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">outputFormat</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">outputFormat</span>
+		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c1"># type: ignore[misc]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_MPIThreads</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">commandMap</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span><span class="sa">b</span><span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">edit</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;V&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">}</span>
+		<span class="n">editors</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+			<span class="s2">&quot;win32&quot;</span><span class="p">:</span> <span class="s2">&quot;notepad&quot;</span><span class="p">,</span>
+		<span class="p">}</span>
+		<span class="n">pagers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+			<span class="s2">&quot;win32&quot;</span><span class="p">:</span> <span class="s2">&quot;notepad&quot;</span><span class="p">,</span>
+		<span class="p">}</span>
+		<span class="n">defaultEditor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">editors</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="p">,</span> <span class="s2">&quot;nano&quot;</span><span class="p">)</span>
+		<span class="n">defaultPager</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">pagers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="p">,</span> <span class="s2">&quot;less&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;VISUAL&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EDITOR&quot;</span><span class="p">,</span> <span class="n">defaultEditor</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;PAGER&quot;</span><span class="p">,</span> <span class="n">defaultPager</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_isWordWrapping</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		The state of the state machine.</span>
+
+<span class="sd">		Valid values are in `states`.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span>
+
+	<span class="nd">@state</span><span class="o">.</span><span class="n">setter</span>
+	<span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39; not in </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">value</span>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span> <span class="nf">isWordWrapping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;Specifies whether text should be word wrapped during editing or not.&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isWordWrapping</span>
+
+	<span class="nd">@isWordWrapping</span><span class="o">.</span><span class="n">setter</span>
+	<span class="k">def</span> <span class="nf">isWordWrapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_isWordWrapping</span> <span class="o">=</span> <span class="n">value</span>
+
+	<span class="k">def</span> <span class="nf">edit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Edits text using the program defined in `editor`.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			data: Received data from Mume, containing the session, description, and body of the text.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">session</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">body</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">LF</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+		<span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;mume_editing_&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">tempFileObj</span><span class="p">:</span>
+			<span class="n">fileName</span> <span class="o">=</span> <span class="n">tempFileObj</span><span class="o">.</span><span class="n">name</span>
+			<span class="n">tempFileObj</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">body</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">LF</span><span class="p">,</span> <span class="n">CR_LF</span><span class="p">))</span>
+		<span class="n">lastModified</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">fileName</span><span class="p">)</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;tintin&quot;</span><span class="p">:</span>
+			<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MPICOMMAND:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">fileName</span><span class="si">}</span><span class="s2">:MPICOMMAND&quot;</span><span class="p">)</span>
+			<span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Continue:&quot;</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">editorProcess</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">((</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="n">fileName</span><span class="p">))</span>
+			<span class="n">editorProcess</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+		<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">fileName</span><span class="p">)</span> <span class="o">==</span> <span class="n">lastModified</span><span class="p">:</span>
+			<span class="c1"># The user closed the text editor without saving. Cancel the editing session.</span>
+			<span class="n">response</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;C&quot;</span> <span class="o">+</span> <span class="n">session</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isWordWrapping</span><span class="p">:</span>
+				<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">textFileObj</span><span class="p">:</span>
+					<span class="n">text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">textFileObj</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+				<span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">postprocess</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+				<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">textFileObj</span><span class="p">:</span>
+					<span class="n">textFileObj</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+			<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fileObj</span><span class="p">:</span>
+				<span class="n">response</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;E&quot;</span> <span class="o">+</span> <span class="n">session</span> <span class="o">+</span> <span class="n">LF</span> <span class="o">+</span> <span class="n">fileObj</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+		<span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">+</span> <span class="n">LF</span>
+		<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">fileName</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">MPI_INIT</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;E&quot;</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="o">+</span> <span class="n">LF</span> <span class="o">+</span> <span class="n">response</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Views text using the program defined in `pager`.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			data: Received data from Mume, containing the text.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;mume_viewing_&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">fileObj</span><span class="p">:</span>
+			<span class="n">fileName</span> <span class="o">=</span> <span class="n">fileObj</span><span class="o">.</span><span class="n">name</span>
+			<span class="n">fileObj</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">LF</span><span class="p">,</span> <span class="n">CR_LF</span><span class="p">))</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;tintin&quot;</span><span class="p">:</span>
+			<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MPICOMMAND:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">fileName</span><span class="si">}</span><span class="s2">:MPICOMMAND&quot;</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">pagerProcess</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">((</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="n">fileName</span><span class="p">))</span>
+			<span class="n">pagerProcess</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+			<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">fileName</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: C901</span>
+		<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">while</span> <span class="n">data</span><span class="p">:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;data&quot;</span><span class="p">:</span>
+				<span class="n">appData</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">LF</span><span class="p">)</span>
+				<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">appData</span> <span class="o">+</span> <span class="n">separator</span><span class="p">)</span>
+				<span class="k">if</span> <span class="n">separator</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;newline&quot;</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;newline&quot;</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">MPI_INIT</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">MPI_INIT</span><span class="p">)]):</span>
+					<span class="c1"># Data starts with some or all of the MPI_INIT sequence.</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;init&quot;</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;init&quot;</span><span class="p">:</span>
+				<span class="n">remaining</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">MPI_INIT</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="n">remaining</span><span class="p">])</span>
+				<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">remaining</span><span class="p">:]</span>
+				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span> <span class="o">==</span> <span class="n">MPI_INIT</span><span class="p">:</span>
+					<span class="c1"># The final byte in the MPI_INIT sequence has been reached.</span>
+					<span class="k">if</span> <span class="n">appDataBuffer</span><span class="p">:</span>
+						<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">appDataBuffer</span><span class="p">))</span>
+						<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;command&quot;</span>
+				<span class="k">elif</span> <span class="ow">not</span> <span class="n">MPI_INIT</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">):</span>
+					<span class="c1"># The Bytes in the buffer are not part of an MPI init sequence.</span>
+					<span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;command&quot;</span><span class="p">:</span>
+				<span class="c1"># The MPI command is a single byte.</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_command</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;length&quot;</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;length&quot;</span><span class="p">:</span>
+				<span class="n">length</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">LF</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+				<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+					<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid data </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="si">!r}</span><span class="s2"> in MPI length. Digit expected.&quot;</span><span class="p">)</span>
+					<span class="n">data</span> <span class="o">=</span> <span class="n">MPI_INIT</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="n">data</span>
+					<span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+				<span class="k">elif</span> <span class="n">separator</span><span class="p">:</span>
+					<span class="c1"># The buffer contains the length of subsequent bytes to be received.</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;body&quot;</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;body&quot;</span><span class="p">:</span>
+				<span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="n">remaining</span><span class="p">])</span>
+				<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">remaining</span><span class="p">:]</span>
+				<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span><span class="p">:</span>
+					<span class="c1"># The final byte in the expected MPI data has been received.</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">on_command</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_command</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">))</span>
+					<span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>
+					<span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+		<span class="k">if</span> <span class="n">appDataBuffer</span><span class="p">:</span>
+			<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">appDataBuffer</span><span class="p">))</span>
+
+	<span class="k">def</span> <span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Called when an MPI command is received.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			command: The MPI command, consisting of a single byte.</span>
+<span class="sd">			data: The payload.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="n">command</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">commandMap</span><span class="p">:</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid MPI command </span><span class="si">{</span><span class="n">command</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">on_unhandledCommand</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">commandMap</span><span class="p">[</span><span class="n">command</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">commandMap</span><span class="p">[</span><span class="n">command</span><span class="p">],</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">data</span><span class="p">,),</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_MPIThreads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thread</span><span class="p">)</span>
+			<span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+	<span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="c1"># Identify for Mume Remote Editing.</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">MPI_INIT</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;I&quot;</span> <span class="o">+</span> <span class="n">LF</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="c1"># Clean up any active editing sessions.</span>
+		<span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MPIThreads</span><span class="p">:</span>
+			<span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_MPIThreads</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+	<span class="k">def</span> <span class="nf">on_unhandledCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Called for commands for which no handler is installed.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			command: The MPI command, consisting of a single byte.</span>
+<span class="sd">			data: The payload.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="n">MPI_INIT</span> <span class="o">+</span> <span class="n">command</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">+</span> <span class="n">LF</span> <span class="o">+</span> <span class="n">data</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Reformats text before it is sent to the game when wordwrapping is enabled.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			text: The text to be processed.</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			The text with formatting applied.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">paragraphs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParagraphs</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">paragraph</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">):</span>
+			<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isComment</span><span class="p">(</span><span class="n">paragraph</span><span class="p">):</span>
+				<span class="n">paragraph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collapseSpaces</span><span class="p">(</span><span class="n">paragraph</span><span class="p">)</span>
+				<span class="n">paragraph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">capitalise</span><span class="p">(</span><span class="n">paragraph</span><span class="p">)</span>
+				<span class="n">paragraph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wordwrap</span><span class="p">(</span><span class="n">paragraph</span><span class="p">)</span>
+				<span class="n">paragraphs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">paragraph</span>
+		<span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">getParagraphs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Extracts paragraphs from a string.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			text: The text to analyze.</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			The extracted paragraphs.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+		<span class="n">lineno</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="k">while</span> <span class="n">lineno</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isComment</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">lineno</span><span class="p">]):</span>
+				<span class="k">if</span> <span class="n">lineno</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+					<span class="n">lines</span><span class="p">[</span><span class="n">lineno</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">lines</span><span class="p">[</span><span class="n">lineno</span><span class="p">]</span>
+				<span class="k">if</span> <span class="n">lineno</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+					<span class="n">lines</span><span class="p">[</span><span class="n">lineno</span><span class="p">]</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span>
+			<span class="n">lineno</span> <span class="o">+=</span> <span class="mi">1</span>
+		<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+		<span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\0\n\0?&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+		<span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span><span class="p">)]</span>
+		<span class="k">return</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="p">]</span>
+
+	<span class="k">def</span> <span class="nf">isComment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Determines whether a line is a comment.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			line: The line to analyze.</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			True if the line is a comment, False otherwise.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">collapseSpaces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Collapses all consecutive space and tab characters of a string to a single space character.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			text: The text to perform the operation on.</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			The text with consecutive space and tab characters collapsed.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="c1"># replace consecutive newlines with a null placeholder</span>
+		<span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span><span class="p">)</span>
+		<span class="c1"># collapse all runs of whitespace into a single space</span>
+		<span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[ \t]+&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+		<span class="c1"># reinsert consecutive newlines</span>
+		<span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">text</span>
+
+	<span class="k">def</span> <span class="nf">capitalise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Capitalizes each sentence in a string.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			text: The text to perform sentence capitalization on.</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			The text after each sentence has been capitalized.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="s2">&quot;. &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;. &quot;</span><span class="p">))</span>
+
+	<span class="k">def</span> <span class="nf">wordwrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Wordwraps text using module-specific settings.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			text: The text to be wordwrapped.</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			The text with wordwrapping applied.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span>
+			<span class="n">text</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">79</span><span class="p">,</span> <span class="n">drop_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">break_long_words</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">break_on_hyphens</span><span class="o">=</span><span class="kc">False</span>
+		<span class="p">)</span>
+</code></pre></div>
+        </details>
 
 
 
@@ -796,7 +1125,7 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.isWordWrapping">
+<h3 id="mudproto.mpi.MPIProtocol.isWordWrapping" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isWordWrapping</span><span class="p">:</span> <span class="nb">bool</span></code>
 
   <span class="doc doc-properties">
@@ -804,7 +1133,7 @@
       <small class="doc doc-property doc-property-writable"><code>writable</code></small>
   </span>
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.isWordWrapping" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.isWordWrapping" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -819,7 +1148,7 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.state">
+<h3 id="mudproto.mpi.MPIProtocol.state" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span></code>
 
   <span class="doc doc-properties">
@@ -827,7 +1156,7 @@
       <small class="doc doc-property doc-property-writable"><code>writable</code></small>
   </span>
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.state" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.state" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -843,11 +1172,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.states">
-<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">states</span><span class="p">:</span> <span class="n">FrozenSet</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span></code>
+<h3 id="mudproto.mpi.MPIProtocol.states" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">states</span><span class="p">:</span> <span class="nb">frozenset</span></code>
 
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.states" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.states" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -866,11 +1195,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.capitalise">
+<h3 id="mudproto.mpi.MPIProtocol.capitalise" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">capitalise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.capitalise" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.capitalise" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -911,7 +1240,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\mpi.py</code></summary>
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">capitalise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Capitalizes each sentence in a string.</span>
@@ -935,11 +1264,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.collapseSpaces">
+<h3 id="mudproto.mpi.MPIProtocol.collapseSpaces" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">collapseSpaces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.collapseSpaces" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.collapseSpaces" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -980,7 +1309,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\mpi.py</code></summary>
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">collapseSpaces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Collapses all consecutive space and tab characters of a string to a single space character.</span>
@@ -1010,11 +1339,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.edit">
+<h3 id="mudproto.mpi.MPIProtocol.edit" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">edit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.edit" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.edit" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1040,7 +1369,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\mpi.py</code></summary>
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">edit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Edits text using the program defined in `editor`.</span>
@@ -1049,9 +1378,9 @@
 <span class="sd">		data: Received data from Mume, containing the session, description, and body of the text.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="n">session</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">body</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">LF</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-	<span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;mume_editing_&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">fileObj</span><span class="p">:</span>
-		<span class="n">fileName</span> <span class="o">=</span> <span class="n">fileObj</span><span class="o">.</span><span class="n">name</span>
-		<span class="n">fileObj</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">body</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">LF</span><span class="p">,</span> <span class="n">CR_LF</span><span class="p">))</span>
+	<span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">NamedTemporaryFile</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;mume_editing_&quot;</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="n">delete</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">tempFileObj</span><span class="p">:</span>
+		<span class="n">fileName</span> <span class="o">=</span> <span class="n">tempFileObj</span><span class="o">.</span><span class="n">name</span>
+		<span class="n">tempFileObj</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">body</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">LF</span><span class="p">,</span> <span class="n">CR_LF</span><span class="p">))</span>
 	<span class="n">lastModified</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">fileName</span><span class="p">)</span>
 	<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;tintin&quot;</span><span class="p">:</span>
 		<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MPICOMMAND:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">fileName</span><span class="si">}</span><span class="s2">:MPICOMMAND&quot;</span><span class="p">)</span>
@@ -1086,11 +1415,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.getParagraphs">
+<h3 id="mudproto.mpi.MPIProtocol.getParagraphs" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">getParagraphs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.getParagraphs" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.getParagraphs" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1125,14 +1454,14 @@
   </thead>
   <tbody>
     <tr>
-      <td><code>List[str]</code></td>
+      <td><code>list[str]</code></td>
       <td><p>The extracted paragraphs.</p></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\mpi.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">getParagraphs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">getParagraphs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Extracts paragraphs from a string.</span>
 
@@ -1142,7 +1471,7 @@
 <span class="sd">	Returns:</span>
 <span class="sd">		The extracted paragraphs.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
-	<span class="n">lines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+	<span class="n">lines</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
 	<span class="n">lineno</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 	<span class="k">while</span> <span class="n">lineno</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isComment</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">lineno</span><span class="p">]):</span>
@@ -1167,11 +1496,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.isComment">
+<h3 id="mudproto.mpi.MPIProtocol.isComment" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">isComment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.isComment" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.isComment" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1212,7 +1541,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\mpi.py</code></summary>
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isComment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Determines whether a line is a comment.</span>
@@ -1236,11 +1565,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.on_command">
+<h3 id="mudproto.mpi.MPIProtocol.on_command" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.on_command" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.on_command" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1272,7 +1601,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\mpi.py</code></summary>
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called when an MPI command is received.</span>
@@ -1300,18 +1629,18 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.on_connectionLost">
+<h3 id="mudproto.mpi.MPIProtocol.on_connectionLost" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.on_connectionLost" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.on_connectionLost" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
       <p>Called by <code>disconnect</code> when a connection to peer has been lost.</p>
 
         <details class="quote">
-          <summary>Source code in <code>mudproto\mpi.py</code></summary>
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="c1"># Clean up any active editing sessions.</span>
 	<span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MPIThreads</span><span class="p">:</span>
@@ -1329,18 +1658,18 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.on_connectionMade">
+<h3 id="mudproto.mpi.MPIProtocol.on_connectionMade" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.on_connectionMade" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.on_connectionMade" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
       <p>Called by <code>connect</code> when a connection to peer has been established.</p>
 
         <details class="quote">
-          <summary>Source code in <code>mudproto\mpi.py</code></summary>
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="c1"># Identify for Mume Remote Editing.</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">MPI_INIT</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;I&quot;</span> <span class="o">+</span> <span class="n">LF</span><span class="p">)</span>
@@ -1356,11 +1685,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.on_dataReceived">
+<h3 id="mudproto.mpi.MPIProtocol.on_dataReceived" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.on_dataReceived" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.on_dataReceived" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1386,9 +1715,9 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\mpi.py</code></summary>
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: C901</span>
-	<span class="n">appDataBuffer</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 	<span class="k">while</span> <span class="n">data</span><span class="p">:</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;data&quot;</span><span class="p">:</span>
 			<span class="n">appData</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">LF</span><span class="p">)</span>
@@ -1460,11 +1789,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.on_unhandledCommand">
+<h3 id="mudproto.mpi.MPIProtocol.on_unhandledCommand" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_unhandledCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.on_unhandledCommand" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.on_unhandledCommand" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1496,7 +1825,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\mpi.py</code></summary>
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_unhandledCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called for commands for which no handler is installed.</span>
@@ -1518,11 +1847,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.postprocess">
+<h3 id="mudproto.mpi.MPIProtocol.postprocess" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.postprocess" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.postprocess" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1563,7 +1892,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\mpi.py</code></summary>
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Reformats text before it is sent to the game when wordwrapping is enabled.</span>
@@ -1574,7 +1903,7 @@
 <span class="sd">	Returns:</span>
 <span class="sd">		The text with formatting applied.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
-	<span class="n">paragraphs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParagraphs</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+	<span class="n">paragraphs</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getParagraphs</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 	<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">paragraph</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">paragraphs</span><span class="p">):</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isComment</span><span class="p">(</span><span class="n">paragraph</span><span class="p">):</span>
 			<span class="n">paragraph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collapseSpaces</span><span class="p">(</span><span class="n">paragraph</span><span class="p">)</span>
@@ -1594,11 +1923,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.view">
+<h3 id="mudproto.mpi.MPIProtocol.view" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.view" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.view" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1624,7 +1953,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\mpi.py</code></summary>
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Views text using the program defined in `pager`.</span>
@@ -1653,11 +1982,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.wordwrap">
+<h3 id="mudproto.mpi.MPIProtocol.wordwrap" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">wordwrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.wordwrap" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.wordwrap" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1698,7 +2027,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\mpi.py</code></summary>
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">wordwrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Wordwraps text using module-specific settings.</span>
@@ -1724,14 +2053,14 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.mpi.MPIProtocol.write">
+<h3 id="mudproto.mpi.MPIProtocol.write" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
   </span>
 
-<a class="headerlink" href="#mudproto.mpi.MPIProtocol.write" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.mpi.MPIProtocol.write" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1757,7 +2086,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\mpi.py</code></summary>
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
@@ -1787,11 +2116,6 @@
     </div>
 
   </div>
-                
-              
-              
-                
-
 
               
             </article>
@@ -1800,23 +2124,24 @@
         
       </main>
       
-        
-<footer class="md-footer">
+        <footer class="md-footer">
   
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-          <div class="md-footer-copyright__highlight">
-            Copyright © 2021 Nick Stockton
-          </div>
-        
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
-      </div>
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2021 Nick Stockton
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
       
     </div>
   </div>
@@ -1826,10 +2151,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.56a63758.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1a181d9.min.js"></script>
       
         <script src="../../search/main.js"></script>
       

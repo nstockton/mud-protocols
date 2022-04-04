@@ -9,14 +9,13 @@
         <meta name="description" content="MUD Protocols Main Page">
       
       
-      
         <meta name="author" content="Nick Stockton">
       
       
         <link rel="canonical" href="https://nstockton.github.io/mud-protocols/api/telnet/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.5">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
     
     
       
@@ -24,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.be71726b.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.edf004c2.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
         
       
     
@@ -37,16 +36,15 @@
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
-    
     
     
       <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
-
 
     
     
@@ -61,7 +59,6 @@
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
   
     
-    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -78,7 +75,10 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+    
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="MUD Protocols" class="md-header__button md-logo" aria-label="MUD Protocols" data-md-component="logo">
       
@@ -111,8 +111,7 @@
       <label class="md-header__button md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
       </label>
-      
-<div class="md-search" data-md-component="search" role="dialog">
+      <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
@@ -144,8 +143,7 @@
     
     
       <div class="md-header__source">
-        
-<a href="https://github.com/nstockton/mud-protocols/" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/nstockton/mud-protocols/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
@@ -157,11 +155,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -187,8 +188,7 @@
   </label>
   
     <div class="md-nav__source">
-      
-<a href="https://github.com/nstockton/mud-protocols/" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/nstockton/mud-protocols/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
@@ -246,10 +246,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
-      <label class="md-nav__link" for="__nav_3">
-        API Navigation
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          API Navigation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="API Navigation" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
@@ -258,6 +262,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -268,8 +273,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -280,8 +287,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -292,8 +301,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -304,8 +315,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -316,8 +329,10 @@
     </li>
   
 
+            
           
             
+              
   
   
     
@@ -341,6 +356,7 @@
       </a>
       
         
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -632,8 +648,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -644,8 +662,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -656,6 +676,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -690,6 +711,7 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -986,21 +1008,21 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/nstockton/mud-protocols/blob/master/docs/api/telnet.md" title="Edit this page" class="md-content__button md-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
-                  </a>
-                
-                
-                <div class="doc doc-object doc-module">
+<a href="https://github.com/nstockton/mud-protocols/blob/master/docs/api/telnet.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<div class="doc doc-object doc-module">
 
 
 
-<h1 class="doc doc-heading" id="mudproto.telnet">
+<h1 id="mudproto.telnet" class="doc doc-heading">
         <code>Module mudproto.telnet</code>
 
 
 
-<a class="headerlink" href="#mudproto.telnet" title="Permanent link">&para;</a></h1>
+<a href="#mudproto.telnet" class="headerlink" title="Permanent link">&para;</a></h1>
 
     <div class="doc doc-contents first">
 
@@ -1021,16 +1043,93 @@
 
 
 
-<h2 class="doc doc-heading" id="mudproto.telnet.BaseTelnetProtocol">
-        <code>Class BaseTelnetProtocol</code>
+<h2 id="mudproto.telnet.BaseTelnetProtocol" class="doc doc-heading">
+        <code>Class BaseTelnetProtocol(<a title="mudproto.base.Protocol" href="../base/#mudproto.base.Protocol">Protocol</a>)</code>
 
 
 
-<a class="headerlink" href="#mudproto.telnet.BaseTelnetProtocol" title="Permanent link">&para;</a></h2>
+<a href="#mudproto.telnet.BaseTelnetProtocol" class="headerlink" title="Permanent link">&para;</a></h2>
 
     <div class="doc doc-contents ">
 
 
+        <details class="quote">
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">BaseTelnetProtocol</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+	<span class="nd">@abstractmethod</span>
+	<span class="k">def</span> <span class="nf">on_unhandledCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Called for commands for which no handler is installed.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			command: The first byte in a 1 or 2 byte negotiation sequence.</span>
+<span class="sd">			option: The second byte in a 2 byte negotiation sequence or None.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+	<span class="nd">@abstractmethod</span>
+	<span class="k">def</span> <span class="nf">on_unhandledSubnegotiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Called for subnegotiations for which no handler is installed.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The subnegotiation option.</span>
+<span class="sd">			data: The payload.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+	<span class="nd">@abstractmethod</span>
+	<span class="k">def</span> <span class="nf">on_enableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Called to accept or reject the request for us to manage the option.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The option that peer requests us to handle.</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			True if we will handle the option, False otherwise.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+	<span class="nd">@abstractmethod</span>
+	<span class="k">def</span> <span class="nf">on_enableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Called to accept or reject the request for peer to manage the option.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The option that peer wants to handle.</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			True if we will allow peer to handle the option, False otherwise.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+	<span class="nd">@abstractmethod</span>
+	<span class="k">def</span> <span class="nf">on_disableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Disables a locally managed option.</span>
+
+<span class="sd">		This method is called before we disable a locally enabled option, in order to perform any necessary cleanup.</span>
+
+<span class="sd">		Note:</span>
+<span class="sd">			If on_enableLocal is overridden, this method must be overridden as well.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The option being disabled.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+	<span class="nd">@abstractmethod</span>
+	<span class="k">def</span> <span class="nf">on_disableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Disables a remotely managed option.</span>
+
+<span class="sd">		This method is called when peer disables a remotely enabled option,</span>
+<span class="sd">		in order to perform any necessary cleanup on our end.</span>
+
+<span class="sd">		Note:</span>
+<span class="sd">			If on_enableRemote is overridden, this method must be overridden as well.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The option being disabled.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+</code></pre></div>
+        </details>
 
 
 
@@ -1049,21 +1148,21 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.BaseTelnetProtocol.on_connectionLost">
+<h3 id="mudproto.telnet.BaseTelnetProtocol.on_connectionLost" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
   </span>
 
-<a class="headerlink" href="#mudproto.telnet.BaseTelnetProtocol.on_connectionLost" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.BaseTelnetProtocol.on_connectionLost" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
       <p>Called by <code>disconnect</code> when a connection to peer has been lost.</p>
 
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;Called by `disconnect` when a connection to peer has been lost.&quot;&quot;&quot;</span>
@@ -1079,21 +1178,21 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.BaseTelnetProtocol.on_connectionMade">
+<h3 id="mudproto.telnet.BaseTelnetProtocol.on_connectionMade" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
   </span>
 
-<a class="headerlink" href="#mudproto.telnet.BaseTelnetProtocol.on_connectionMade" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.BaseTelnetProtocol.on_connectionMade" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
       <p>Called by <code>connect</code> when a connection to peer has been established.</p>
 
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;Called by `connect` when a connection to peer has been established.&quot;&quot;&quot;</span>
@@ -1109,14 +1208,14 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.BaseTelnetProtocol.on_dataReceived">
+<h3 id="mudproto.telnet.BaseTelnetProtocol.on_dataReceived" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
   </span>
 
-<a class="headerlink" href="#mudproto.telnet.BaseTelnetProtocol.on_dataReceived" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.BaseTelnetProtocol.on_dataReceived" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1142,7 +1241,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
@@ -1157,11 +1256,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.BaseTelnetProtocol.on_disableLocal">
+<h3 id="mudproto.telnet.BaseTelnetProtocol.on_disableLocal" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_disableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.BaseTelnetProtocol.on_disableLocal" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.BaseTelnetProtocol.on_disableLocal" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1192,7 +1291,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">on_disableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
@@ -1218,11 +1317,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.BaseTelnetProtocol.on_disableRemote">
+<h3 id="mudproto.telnet.BaseTelnetProtocol.on_disableRemote" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_disableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.BaseTelnetProtocol.on_disableRemote" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.BaseTelnetProtocol.on_disableRemote" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1254,7 +1353,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">on_disableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
@@ -1281,11 +1380,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.BaseTelnetProtocol.on_enableLocal">
+<h3 id="mudproto.telnet.BaseTelnetProtocol.on_enableLocal" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_enableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.BaseTelnetProtocol.on_enableLocal" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.BaseTelnetProtocol.on_enableLocal" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1326,7 +1425,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">on_enableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
@@ -1350,11 +1449,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.BaseTelnetProtocol.on_enableRemote">
+<h3 id="mudproto.telnet.BaseTelnetProtocol.on_enableRemote" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_enableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.BaseTelnetProtocol.on_enableRemote" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.BaseTelnetProtocol.on_enableRemote" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1395,7 +1494,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">on_enableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
@@ -1419,11 +1518,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.BaseTelnetProtocol.on_unhandledCommand">
+<h3 id="mudproto.telnet.BaseTelnetProtocol.on_unhandledCommand" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_unhandledCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.BaseTelnetProtocol.on_unhandledCommand" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.BaseTelnetProtocol.on_unhandledCommand" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1455,7 +1554,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">on_unhandledCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
@@ -1477,11 +1576,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.BaseTelnetProtocol.on_unhandledSubnegotiation">
+<h3 id="mudproto.telnet.BaseTelnetProtocol.on_unhandledSubnegotiation" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_unhandledSubnegotiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.BaseTelnetProtocol.on_unhandledSubnegotiation" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.BaseTelnetProtocol.on_unhandledSubnegotiation" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1513,7 +1612,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">on_unhandledSubnegotiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
@@ -1535,14 +1634,14 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.BaseTelnetProtocol.write">
+<h3 id="mudproto.telnet.BaseTelnetProtocol.write" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
   </span>
 
-<a class="headerlink" href="#mudproto.telnet.BaseTelnetProtocol.write" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.BaseTelnetProtocol.write" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1568,7 +1667,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
@@ -1593,17 +1692,23 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h2 class="doc doc-heading" id="mudproto.telnet.TelnetError">
-        <code>Class TelnetError</code>
+<h2 id="mudproto.telnet.TelnetError" class="doc doc-heading">
+        <code>Class TelnetError(<span title="Exception">Exception</span>)</code>
 
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetError" title="Permanent link">&para;</a></h2>
+<a href="#mudproto.telnet.TelnetError" class="headerlink" title="Permanent link">&para;</a></h2>
 
     <div class="doc doc-contents ">
 
       <p>Implements the base class for Telnet exceptions.</p>
 
+        <details class="quote">
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">TelnetError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;Implements the base class for Telnet exceptions.&quot;&quot;&quot;</span>
+</code></pre></div>
+        </details>
 
 
     </div>
@@ -1616,12 +1721,12 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h2 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol">
-        <code>Class TelnetProtocol</code>
+<h2 id="mudproto.telnet.TelnetProtocol" class="doc doc-heading">
+        <code>Class TelnetProtocol(<a title="mudproto.telnet.BaseTelnetProtocol" href="#mudproto.telnet.BaseTelnetProtocol">BaseTelnetProtocol</a>)</code>
 
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol" title="Permanent link">&para;</a></h2>
+<a href="#mudproto.telnet.TelnetProtocol" class="headerlink" title="Permanent link">&para;</a></h2>
 
     <div class="doc doc-contents ">
 
@@ -1639,7 +1744,7 @@ in order to perform any necessary cleanup on our end.</p>
   <tbody>
       <tr>
         <td><code>commandMap</code></td>
-        <td><code>Dict[bytes, Callable[[Union[bytes, None]], None]]</code></td>
+        <td><code>dict[bytes, Callable[[Union[bytes, None]], None]]</code></td>
         <td><p>A mapping of bytes to callables.
 When a Telnet command is received, the command byte
 (the first byte after IAC) is looked up in this dictionary.
@@ -1652,7 +1757,7 @@ provides an API for interacting with them.</p></td>
       </tr>
       <tr>
         <td><code>subnegotiationMap</code></td>
-        <td><code>Dict[bytes, Callable[[bytes], None]]</code></td>
+        <td><code>dict[bytes, Callable[[bytes], None]]</code></td>
         <td><p>A mapping of bytes to callables.
 When a subnegotiation command is received, the option byte (the
 first byte after SB) is looked up in this dictionary.  If
@@ -1663,6 +1768,471 @@ handled.</p></td>
       </tr>
   </tbody>
 </table>
+        <details class="quote">
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">TelnetProtocol</span><span class="p">(</span><span class="n">BaseTelnetProtocol</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Implements the Telnet protocol.</span>
+
+<span class="sd">	Attributes:</span>
+<span class="sd">		commandMap: A mapping of bytes to callables.</span>
+<span class="sd">			When a Telnet command is received, the command byte</span>
+<span class="sd">			(the first byte after IAC) is looked up in this dictionary.</span>
+<span class="sd">			If a callable is found, it is invoked with the argument of the command,</span>
+<span class="sd">			or None if the command takes no argument.  Values should be added to</span>
+<span class="sd">			this dictionary if commands wish to be handled.  By default,</span>
+<span class="sd">			only WILL, WONT, DO, and DONT are handled.  These should not</span>
+<span class="sd">			be overridden, as this class handles them correctly and</span>
+<span class="sd">			provides an API for interacting with them.</span>
+<span class="sd">		subnegotiationMap: A mapping of bytes to callables.</span>
+<span class="sd">			When a subnegotiation command is received, the option byte (the</span>
+<span class="sd">			first byte after SB) is looked up in this dictionary.  If</span>
+<span class="sd">			a callable is found, it is invoked with the argument of the</span>
+<span class="sd">			subnegotiation.  Values should be added to this dictionary if</span>
+<span class="sd">			subnegotiations are to be handled.  By default, no values are</span>
+<span class="sd">			handled.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="n">states</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span>
+		<span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="s2">&quot;newline&quot;</span><span class="p">,</span> <span class="s2">&quot;negotiation&quot;</span><span class="p">,</span> <span class="s2">&quot;subnegotiation&quot;</span><span class="p">,</span> <span class="s2">&quot;subnegotiation-escaped&quot;</span><span class="p">)</span>
+	<span class="p">)</span>
+	<span class="sd">&quot;&quot;&quot;Valid states for the state machine.&quot;&quot;&quot;</span>
+
+	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c1"># type: ignore[misc]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">_OptionState</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+		<span class="sd">&quot;&quot;&quot;A mapping of option bytes to their current state.&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">commandMap</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">]],</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+			<span class="n">WILL</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_will</span><span class="p">,</span>
+			<span class="n">WONT</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_wont</span><span class="p">,</span>
+			<span class="n">DO</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_do</span><span class="p">,</span>
+			<span class="n">DONT</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_dont</span><span class="p">,</span>
+		<span class="p">}</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">subnegotiationMap</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		The state of the state machine.</span>
+
+<span class="sd">		Valid values are in `states`.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span>
+
+	<span class="nd">@state</span><span class="o">.</span><span class="n">setter</span>
+	<span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39; not in </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">value</span>
+
+	<span class="k">def</span> <span class="nf">_do</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Sends IAC DO option to the peer.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The option to send.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">IAC</span> <span class="o">+</span> <span class="n">DO</span> <span class="o">+</span> <span class="n">option</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">_dont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Sends IAC DONT option to the peer.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The option to send.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">IAC</span> <span class="o">+</span> <span class="n">DONT</span> <span class="o">+</span> <span class="n">option</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">_will</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Sends IAC WILL option to the peer.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The option to send.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">IAC</span> <span class="o">+</span> <span class="n">WILL</span> <span class="o">+</span> <span class="n">option</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">_wont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Sends IAC WONT option to the peer.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The option to send.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">IAC</span> <span class="o">+</span> <span class="n">WONT</span> <span class="o">+</span> <span class="n">option</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">will</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Indicates our willingness to enable an option.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The option to accept.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getOptionState</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span> <span class="ow">or</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+				<span class="sa">f</span><span class="s2">&quot;We are offering to enable option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">, but the option is &quot;</span>
+				<span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;already being negotiated by </span><span class="si">{</span><span class="s1">&#39;us&#39;</span> <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span> <span class="k">else</span> <span class="s1">&#39;peer&#39;</span><span class="si">}</span><span class="s2">.&quot;</span>
+			<span class="p">)</span>
+		<span class="k">elif</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attempting to enable an already enabled option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span> <span class="o">=</span> <span class="kc">True</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_will</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">wont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Indicates we are not willing to enable an option.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The option to reject.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getOptionState</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span> <span class="ow">or</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+				<span class="sa">f</span><span class="s2">&quot;We are refusing to enable option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">, but the option is &quot;</span>
+				<span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;already being negotiated by </span><span class="si">{</span><span class="s1">&#39;us&#39;</span> <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span> <span class="k">else</span> <span class="s1">&#39;peer&#39;</span><span class="si">}</span><span class="s2">.&quot;</span>
+			<span class="p">)</span>
+		<span class="k">elif</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attempting to disable an already disabled option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span> <span class="o">=</span> <span class="kc">True</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_wont</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">do</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Requests that the peer enable an option.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The option to enable.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getOptionState</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span> <span class="ow">or</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+				<span class="sa">f</span><span class="s2">&quot;We are requesting that peer enable option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">, but the option is &quot;</span>
+				<span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;already being negotiated by </span><span class="si">{</span><span class="s1">&#39;us&#39;</span> <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span> <span class="k">else</span> <span class="s1">&#39;peer&#39;</span><span class="si">}</span><span class="s2">.&quot;</span>
+			<span class="p">)</span>
+		<span class="k">elif</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Requesting that peer enable an already enabled option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span> <span class="o">=</span> <span class="kc">True</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_do</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">dont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Requests that the peer disable an option.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The option to disable.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getOptionState</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span> <span class="ow">or</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+				<span class="sa">f</span><span class="s2">&quot;We are requesting that peer disable option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">, but the option is &quot;</span>
+				<span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;already being negotiated by </span><span class="si">{</span><span class="s1">&#39;us&#39;</span> <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span> <span class="k">else</span> <span class="s1">&#39;peer&#39;</span><span class="si">}</span><span class="s2">.&quot;</span>
+			<span class="p">)</span>
+		<span class="k">elif</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Requesting that peer disable an already disabled option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span> <span class="o">=</span> <span class="kc">True</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_dont</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">getOptionState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_OptionState</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Gets the state of a Telnet option.</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			An object containing the option state.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="n">option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">option</span><span class="p">]</span> <span class="o">=</span> <span class="n">_OptionState</span><span class="p">()</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">option</span><span class="p">]</span>
+
+	<span class="k">def</span> <span class="nf">requestNegotiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Sends a subnegotiation message to the peer.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The subnegotiation option.</span>
+<span class="sd">			data: The payload.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">IAC</span> <span class="o">+</span> <span class="n">SB</span> <span class="o">+</span> <span class="n">option</span> <span class="o">+</span> <span class="n">escapeIAC</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">+</span> <span class="n">IAC</span> <span class="o">+</span> <span class="n">SE</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="k">pass</span>
+
+	<span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="k">pass</span>
+
+	<span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: C901</span>
+		<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">while</span> <span class="n">data</span><span class="p">:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;data&quot;</span><span class="p">:</span>
+				<span class="n">appData</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">IAC</span><span class="p">)</span>
+				<span class="k">if</span> <span class="n">separator</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;command&quot;</span>
+				<span class="k">elif</span> <span class="n">appData</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">CR</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;newline&quot;</span>
+					<span class="n">appData</span> <span class="o">=</span> <span class="n">appData</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+				<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">appData</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR_LF</span><span class="p">,</span> <span class="n">LF</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR_NULL</span><span class="p">,</span> <span class="n">CR</span><span class="p">))</span>
+				<span class="k">continue</span>
+			<span class="n">byte</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;command&quot;</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">IAC</span><span class="p">:</span>
+					<span class="c1"># Escaped IAC.</span>
+					<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+				<span class="k">elif</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">SE</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+					<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;IAC SE received outside of subnegotiation.&quot;</span><span class="p">)</span>
+				<span class="k">elif</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">SB</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;subnegotiation&quot;</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">_commands</span> <span class="o">=</span> <span class="p">[]</span>
+				<span class="k">elif</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">COMMAND_BYTES</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+					<span class="k">if</span> <span class="n">appDataBuffer</span><span class="p">:</span>
+						<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">appDataBuffer</span><span class="p">))</span>
+						<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+					<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received from peer: IAC </span><span class="si">{</span><span class="n">DESCRIPTIONS</span><span class="p">[</span><span class="n">byte</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">on_command</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+				<span class="k">elif</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">NEGOTIATION_BYTES</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;negotiation&quot;</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="o">=</span> <span class="n">byte</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+					<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown Telnet command received </span><span class="si">{</span><span class="n">byte</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;negotiation&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+				<span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>
+				<span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>
+				<span class="k">if</span> <span class="n">appDataBuffer</span><span class="p">:</span>
+					<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">appDataBuffer</span><span class="p">))</span>
+					<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+				<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+					<span class="sa">f</span><span class="s2">&quot;Received from peer: IAC </span><span class="si">{</span><span class="n">DESCRIPTIONS</span><span class="p">[</span><span class="n">command</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">DESCRIPTIONS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">byte</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
+				<span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">on_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">byte</span><span class="p">)</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;newline&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+				<span class="k">if</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">LF</span><span class="p">:</span>
+					<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
+				<span class="k">elif</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">NULL</span><span class="p">:</span>
+					<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CR</span><span class="p">)</span>
+				<span class="k">elif</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">IAC</span><span class="p">:</span>
+					<span class="c1"># IAC isn&#39;t really allowed after CR, according to the</span>
+					<span class="c1"># RFC, but handling it this way is less surprising than</span>
+					<span class="c1"># delivering the IAC to the app as application data.</span>
+					<span class="c1"># The purpose of the restriction is to allow terminals</span>
+					<span class="c1"># to unambiguously interpret the behavior of the CR</span>
+					<span class="c1"># after reading only one more byte.  CR + LF is supposed</span>
+					<span class="c1"># to mean one thing (cursor to next line, first column),</span>
+					<span class="c1"># CR + NUL another (cursor to first column).  Absent the</span>
+					<span class="c1"># NUL, it still makes sense to interpret this as CR and</span>
+					<span class="c1"># then apply all the usual interpretation to the IAC.</span>
+					<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CR</span><span class="p">)</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;command&quot;</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CR</span> <span class="o">+</span> <span class="n">byte</span><span class="p">)</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;subnegotiation&quot;</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">IAC</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;subnegotiation-escaped&quot;</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">_commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;subnegotiation-escaped&quot;</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">SE</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+					<span class="n">commands</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_commands</span><span class="p">)</span>
+					<span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_commands</span>
+					<span class="k">if</span> <span class="n">appDataBuffer</span><span class="p">:</span>
+						<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">appDataBuffer</span><span class="p">))</span>
+						<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+					<span class="n">option</span><span class="p">,</span> <span class="n">commands</span> <span class="o">=</span> <span class="n">commands</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="n">commands</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+					<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+						<span class="sa">f</span><span class="s2">&quot;Received from peer: IAC SB </span><span class="si">{</span><span class="n">DESCRIPTIONS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">option</span><span class="p">))</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">commands</span><span class="si">!r}</span><span class="s2"> IAC SE&quot;</span>
+					<span class="p">)</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">on_subnegotiation</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">commands</span><span class="p">)</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;subnegotiation&quot;</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">_commands</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid Telnet state </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="si">!r}</span><span class="s2">. How&#39;d you do this?&quot;</span><span class="p">)</span>
+				<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+		<span class="k">if</span> <span class="n">appDataBuffer</span><span class="p">:</span>
+			<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">appDataBuffer</span><span class="p">))</span>
+
+	<span class="k">def</span> <span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Called when a 1 or 2 byte command is received.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			command: The first byte in a 1 or 2 byte negotiation sequence.</span>
+<span class="sd">			option: The second byte in a 2 byte negotiation sequence or None.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="n">command</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">commandMap</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">commandMap</span><span class="p">[</span><span class="n">command</span><span class="p">](</span><span class="n">option</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">on_unhandledCommand</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">on_subnegotiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Called when a subnegotiation is received.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The subnegotiation option.</span>
+<span class="sd">			data: The payload.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="n">option</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">subnegotiationMap</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">subnegotiationMap</span><span class="p">[</span><span class="n">option</span><span class="p">](</span><span class="n">data</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">on_unhandledSubnegotiation</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">on_will</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Called when an IAC + WILL + option is received.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The received option.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="n">option</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Option must not be None in this context.&quot;</span><span class="p">)</span>
+		<span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getOptionState</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># Peer is unilaterally offering to enable an option.</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_enableRemote</span><span class="p">(</span><span class="n">option</span><span class="p">):</span>
+				<span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">True</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_do</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_dont</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># Peer agreed to enable an option in response to our request.</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">True</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span> <span class="o">=</span> <span class="kc">False</span>
+			<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_enableRemote</span><span class="p">(</span><span class="n">option</span><span class="p">):</span>
+				<span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;enableRemote must return True in this context (for option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">)&quot;</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># Peer is unilaterally offering to enable an already-enabled option.</span>
+			<span class="c1"># Ignore this.</span>
+			<span class="k">pass</span>
+		<span class="k">elif</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># This is a bogus state.  It is here for completeness.  It will</span>
+			<span class="c1"># never be entered.</span>
+			<span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+				<span class="sa">f</span><span class="s2">&quot;him.enabled and him.negotiating cannot be True at the same time. state: </span><span class="si">{</span><span class="n">state</span><span class="si">!r}</span><span class="s2">, option: </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">&quot;</span>
+			<span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">on_wont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Called when an IAC + WONT + option is received.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The received option.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="n">option</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Option must not be None in this context.&quot;</span><span class="p">)</span>
+		<span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getOptionState</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># Peer is unilaterally demanding that an already-disabled option be/remain disabled.</span>
+			<span class="c1"># Ignore this (although we could record it and refuse subsequent enable attempts</span>
+			<span class="c1"># from our side, peer could refuse them again, so we won&#39;t).</span>
+			<span class="k">pass</span>
+		<span class="k">elif</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># Peer refused to enable an option in response to our request.</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span> <span class="o">=</span> <span class="kc">False</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Peer refuses to enable option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2"> in response to our request.&quot;</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># Peer is unilaterally demanding that an option be disabled.</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">False</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">on_disableRemote</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_dont</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># Peer agreed to disable an option at our request.</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">False</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span> <span class="o">=</span> <span class="kc">False</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">on_disableRemote</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">on_do</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Called when an IAC + DO + option is received.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The received option.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="n">option</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Option must not be None in this context.&quot;</span><span class="p">)</span>
+		<span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getOptionState</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># Peer is unilaterally requesting that we enable an option.</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_enableLocal</span><span class="p">(</span><span class="n">option</span><span class="p">):</span>
+				<span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">True</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_will</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_wont</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># Peer agreed to allow us to enable an option at our request.</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">True</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span> <span class="o">=</span> <span class="kc">False</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">on_enableLocal</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># Peer is unilaterally requesting us to enable an already-enabled option.</span>
+			<span class="c1"># Ignore this.</span>
+			<span class="k">pass</span>
+		<span class="k">elif</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># This is a bogus state.  It is here for completeness.  It will never be</span>
+			<span class="c1"># entered.</span>
+			<span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+				<span class="sa">f</span><span class="s2">&quot;us.enabled and us.negotiating cannot be True at the same time. state: </span><span class="si">{</span><span class="n">state</span><span class="si">!r}</span><span class="s2">, option: </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">&quot;</span>
+			<span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">on_dont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Called when an IAC + DONT + option is received.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The received option.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="n">option</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Option must not be None in this context.&quot;</span><span class="p">)</span>
+		<span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getOptionState</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># Peer is unilaterally demanding us to disable an already-disabled option.</span>
+			<span class="c1"># Ignore this.</span>
+			<span class="k">pass</span>
+		<span class="k">elif</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># Offered option was refused.</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span> <span class="o">=</span> <span class="kc">False</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Peer rejects our offer to enable option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># Peer is unilaterally demanding we disable an option.</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">False</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">on_disableLocal</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_wont</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span><span class="p">:</span>
+			<span class="c1"># Peer acknowledged our notice that we will disable an option.</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">False</span>
+			<span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span> <span class="o">=</span> <span class="kc">False</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">on_disableLocal</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">on_unhandledCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="k">pass</span>
+
+	<span class="k">def</span> <span class="nf">on_unhandledSubnegotiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="k">pass</span>
+
+	<span class="k">def</span> <span class="nf">on_enableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+		<span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Reject all options by default.</span>
+
+	<span class="k">def</span> <span class="nf">on_enableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+		<span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Reject all options by default.</span>
+
+	<span class="k">def</span> <span class="nf">on_disableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Don&#39;t know how to disable local Telnet option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">on_disableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Don&#39;t know how to disable remote Telnet option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+        </details>
 
 
 
@@ -1677,7 +2247,7 @@ handled.</p></td>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.state">
+<h3 id="mudproto.telnet.TelnetProtocol.state" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span></code>
 
   <span class="doc doc-properties">
@@ -1685,7 +2255,7 @@ handled.</p></td>
       <small class="doc doc-property doc-property-writable"><code>writable</code></small>
   </span>
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.state" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.state" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1701,11 +2271,11 @@ handled.</p></td>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.states">
-<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">states</span><span class="p">:</span> <span class="n">FrozenSet</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span></code>
+<h3 id="mudproto.telnet.TelnetProtocol.states" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">states</span><span class="p">:</span> <span class="nb">frozenset</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.states" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.states" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1724,11 +2294,11 @@ handled.</p></td>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.do">
+<h3 id="mudproto.telnet.TelnetProtocol.do" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">do</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.do" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.do" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1754,7 +2324,7 @@ handled.</p></td>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">do</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Requests that the peer enable an option.</span>
@@ -1785,11 +2355,11 @@ handled.</p></td>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.dont">
+<h3 id="mudproto.telnet.TelnetProtocol.dont" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">dont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.dont" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.dont" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1815,7 +2385,7 @@ handled.</p></td>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">dont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Requests that the peer disable an option.</span>
@@ -1846,11 +2416,11 @@ handled.</p></td>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.getOptionState">
+<h3 id="mudproto.telnet.TelnetProtocol.getOptionState" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">getOptionState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.getOptionState" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.getOptionState" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1872,7 +2442,7 @@ handled.</p></td>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">getOptionState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_OptionState</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Gets the state of a Telnet option.</span>
@@ -1895,11 +2465,11 @@ handled.</p></td>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.on_command">
+<h3 id="mudproto.telnet.TelnetProtocol.on_command" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.on_command" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.on_command" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1931,7 +2501,7 @@ handled.</p></td>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called when a 1 or 2 byte command is received.</span>
@@ -1956,18 +2526,18 @@ handled.</p></td>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.on_connectionLost">
+<h3 id="mudproto.telnet.TelnetProtocol.on_connectionLost" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.on_connectionLost" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.on_connectionLost" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
       <p>Called by <code>disconnect</code> when a connection to peer has been lost.</p>
 
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="k">pass</span>
 </code></pre></div>
@@ -1982,18 +2552,18 @@ handled.</p></td>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.on_connectionMade">
+<h3 id="mudproto.telnet.TelnetProtocol.on_connectionMade" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.on_connectionMade" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.on_connectionMade" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
       <p>Called by <code>connect</code> when a connection to peer has been established.</p>
 
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="k">pass</span>
 </code></pre></div>
@@ -2008,11 +2578,11 @@ handled.</p></td>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.on_dataReceived">
+<h3 id="mudproto.telnet.TelnetProtocol.on_dataReceived" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.on_dataReceived" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.on_dataReceived" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2038,9 +2608,9 @@ handled.</p></td>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: C901</span>
-	<span class="n">appDataBuffer</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 	<span class="k">while</span> <span class="n">data</span><span class="p">:</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;data&quot;</span><span class="p">:</span>
 			<span class="n">appData</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">IAC</span><span class="p">)</span>
@@ -2147,11 +2717,11 @@ handled.</p></td>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.on_disableLocal">
+<h3 id="mudproto.telnet.TelnetProtocol.on_disableLocal" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_disableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.on_disableLocal" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.on_disableLocal" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2182,7 +2752,7 @@ handled.</p></td>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_disableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Don&#39;t know how to disable local Telnet option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
@@ -2197,11 +2767,11 @@ handled.</p></td>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.on_disableRemote">
+<h3 id="mudproto.telnet.TelnetProtocol.on_disableRemote" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_disableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.on_disableRemote" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.on_disableRemote" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2233,7 +2803,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_disableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Don&#39;t know how to disable remote Telnet option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
@@ -2248,11 +2818,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.on_do">
+<h3 id="mudproto.telnet.TelnetProtocol.on_do" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_do</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.on_do" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.on_do" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2278,7 +2848,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_do</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called when an IAC + DO + option is received.</span>
@@ -2323,11 +2893,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.on_dont">
+<h3 id="mudproto.telnet.TelnetProtocol.on_dont" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_dont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.on_dont" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.on_dont" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2353,7 +2923,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_dont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called when an IAC + DONT + option is received.</span>
@@ -2394,11 +2964,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.on_enableLocal">
+<h3 id="mudproto.telnet.TelnetProtocol.on_enableLocal" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_enableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.on_enableLocal" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.on_enableLocal" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2439,7 +3009,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_enableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 	<span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Reject all options by default.</span>
 </code></pre></div>
@@ -2454,11 +3024,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.on_enableRemote">
+<h3 id="mudproto.telnet.TelnetProtocol.on_enableRemote" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_enableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.on_enableRemote" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.on_enableRemote" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2499,7 +3069,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_enableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 	<span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Reject all options by default.</span>
 </code></pre></div>
@@ -2514,11 +3084,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.on_subnegotiation">
+<h3 id="mudproto.telnet.TelnetProtocol.on_subnegotiation" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_subnegotiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.on_subnegotiation" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.on_subnegotiation" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2550,7 +3120,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_subnegotiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called when a subnegotiation is received.</span>
@@ -2575,11 +3145,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.on_unhandledCommand">
+<h3 id="mudproto.telnet.TelnetProtocol.on_unhandledCommand" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_unhandledCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.on_unhandledCommand" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.on_unhandledCommand" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2611,7 +3181,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_unhandledCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="k">pass</span>
 </code></pre></div>
@@ -2626,11 +3196,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.on_unhandledSubnegotiation">
+<h3 id="mudproto.telnet.TelnetProtocol.on_unhandledSubnegotiation" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_unhandledSubnegotiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.on_unhandledSubnegotiation" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.on_unhandledSubnegotiation" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2662,7 +3232,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_unhandledSubnegotiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="k">pass</span>
 </code></pre></div>
@@ -2677,11 +3247,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.on_will">
+<h3 id="mudproto.telnet.TelnetProtocol.on_will" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_will</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.on_will" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.on_will" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2707,7 +3277,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_will</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called when an IAC + WILL + option is received.</span>
@@ -2753,11 +3323,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.on_wont">
+<h3 id="mudproto.telnet.TelnetProtocol.on_wont" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_wont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.on_wont" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.on_wont" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2783,7 +3353,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_wont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called when an IAC + WONT + option is received.</span>
@@ -2825,11 +3395,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.requestNegotiation">
+<h3 id="mudproto.telnet.TelnetProtocol.requestNegotiation" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">requestNegotiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.requestNegotiation" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.requestNegotiation" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2861,7 +3431,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">requestNegotiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Sends a subnegotiation message to the peer.</span>
@@ -2883,11 +3453,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.will">
+<h3 id="mudproto.telnet.TelnetProtocol.will" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">will</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.will" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.will" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2913,7 +3483,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">will</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Indicates our willingness to enable an option.</span>
@@ -2944,11 +3514,11 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.wont">
+<h3 id="mudproto.telnet.TelnetProtocol.wont" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">wont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.wont" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.wont" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -2974,7 +3544,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">wont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Indicates we are not willing to enable an option.</span>
@@ -3005,14 +3575,14 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
-<h3 class="doc doc-heading" id="mudproto.telnet.TelnetProtocol.write">
+<h3 id="mudproto.telnet.TelnetProtocol.write" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
   </span>
 
-<a class="headerlink" href="#mudproto.telnet.TelnetProtocol.write" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.telnet.TelnetProtocol.write" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -3038,7 +3608,7 @@ in order to perform any necessary cleanup on our end.</p>
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\telnet.py</code></summary>
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
@@ -3068,11 +3638,6 @@ in order to perform any necessary cleanup on our end.</p>
     </div>
 
   </div>
-                
-              
-              
-                
-
 
               
             </article>
@@ -3081,23 +3646,24 @@ in order to perform any necessary cleanup on our end.</p>
         
       </main>
       
-        
-<footer class="md-footer">
+        <footer class="md-footer">
   
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-          <div class="md-footer-copyright__highlight">
-            Copyright © 2021 Nick Stockton
-          </div>
-        
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
-      </div>
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2021 Nick Stockton
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
       
     </div>
   </div>
@@ -3107,10 +3673,10 @@ in order to perform any necessary cleanup on our end.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.56a63758.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1a181d9.min.js"></script>
       
         <script src="../../search/main.js"></script>
       

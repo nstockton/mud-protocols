@@ -9,14 +9,13 @@
         <meta name="description" content="MUD Protocols Main Page">
       
       
-      
         <meta name="author" content="Nick Stockton">
       
       
         <link rel="canonical" href="https://nstockton.github.io/mud-protocols/api/manager/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.5">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
     
     
       
@@ -24,10 +23,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.be71726b.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.edf004c2.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.e6a45f82.min.css">
         
       
     
@@ -37,16 +36,15 @@
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
-    
     
     
       <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
-
 
     
     
@@ -61,7 +59,6 @@
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
   
     
-    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -78,7 +75,10 @@
       
     </div>
     
-      <header class="md-header" data-md-component="header">
+    
+      
+
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="MUD Protocols" class="md-header__button md-logo" aria-label="MUD Protocols" data-md-component="logo">
       
@@ -111,8 +111,7 @@
       <label class="md-header__button md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
       </label>
-      
-<div class="md-search" data-md-component="search" role="dialog">
+      <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
@@ -144,8 +143,7 @@
     
     
       <div class="md-header__source">
-        
-<a href="https://github.com/nstockton/mud-protocols/" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/nstockton/mud-protocols/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
@@ -157,11 +155,14 @@
       </div>
     
   </nav>
+  
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
+        
+          
         
       
       <main class="md-main" data-md-component="main">
@@ -187,8 +188,7 @@
   </label>
   
     <div class="md-nav__source">
-      
-<a href="https://github.com/nstockton/mud-protocols/" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/nstockton/mud-protocols/" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
@@ -246,10 +246,14 @@
       
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
-      <label class="md-nav__link" for="__nav_3">
-        API Navigation
-        <span class="md-nav__icon md-icon"></span>
-      </label>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          API Navigation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <nav class="md-nav" aria-label="API Navigation" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
@@ -258,6 +262,7 @@
         <ul class="md-nav__list" data-md-scrollfix>
           
             
+              
   
   
   
@@ -268,8 +273,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -280,8 +287,10 @@
     </li>
   
 
+            
           
             
+              
   
   
     
@@ -305,6 +314,7 @@
       </a>
       
         
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -394,8 +404,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -406,8 +418,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -418,8 +432,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -430,8 +446,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -442,8 +460,10 @@
     </li>
   
 
+            
           
             
+              
   
   
   
@@ -454,6 +474,7 @@
     </li>
   
 
+            
           
         </ul>
       </nav>
@@ -488,6 +509,7 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -582,21 +604,21 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/nstockton/mud-protocols/blob/master/docs/api/manager.md" title="Edit this page" class="md-content__button md-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
-                  </a>
-                
-                
-                <div class="doc doc-object doc-module">
+<a href="https://github.com/nstockton/mud-protocols/blob/master/docs/api/manager.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<div class="doc doc-object doc-module">
 
 
 
-<h1 class="doc doc-heading" id="mudproto.manager">
+<h1 id="mudproto.manager" class="doc doc-heading">
         <code>Module mudproto.manager</code>
 
 
 
-<a class="headerlink" href="#mudproto.manager" title="Permanent link">&para;</a></h1>
+<a href="#mudproto.manager" class="headerlink" title="Permanent link">&para;</a></h1>
 
     <div class="doc doc-contents first">
 
@@ -616,16 +638,169 @@
 
 
 
-<h2 class="doc doc-heading" id="mudproto.manager.Manager">
+<h2 id="mudproto.manager.Manager" class="doc doc-heading">
         <code>Class Manager</code>
 
 
 
-<a class="headerlink" href="#mudproto.manager.Manager" title="Permanent link">&para;</a></h2>
+<a href="#mudproto.manager.Manager" class="headerlink" title="Permanent link">&para;</a></h2>
 
     <div class="doc doc-contents ">
 
 
+        <details class="quote">
+          <summary>Source code in <code>mudproto/manager.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Manager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+		<span class="bp">self</span><span class="p">,</span>
+		<span class="n">writer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
+		<span class="n">receiver</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
+		<span class="o">*</span><span class="p">,</span>
+		<span class="n">promptTerminator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+	<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">writer</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">receiver</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">promptTerminator</span><span class="p">:</span> <span class="nb">bytes</span>
+		<span class="k">if</span> <span class="n">promptTerminator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">promptTerminator</span> <span class="o">=</span> <span class="n">IAC</span> <span class="o">+</span> <span class="n">GA</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">promptTerminator</span> <span class="o">=</span> <span class="p">(</span>
+				<span class="n">promptTerminator</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR_LF</span><span class="p">,</span> <span class="n">LF</span><span class="p">)</span>
+				<span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR_NULL</span><span class="p">,</span> <span class="n">CR</span><span class="p">)</span>
+				<span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR</span><span class="p">,</span> <span class="n">CR_NULL</span><span class="p">)</span>
+				<span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">LF</span><span class="p">,</span> <span class="n">CR_LF</span><span class="p">)</span>
+			<span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Protocol</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_isConnected</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span> <span class="nf">isConnected</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;Connection status.&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isConnected</span>
+
+	<span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Manager</span><span class="p">:</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+		<span class="k">return</span> <span class="bp">self</span>
+
+	<span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span>
+		<span class="bp">self</span><span class="p">,</span>
+		<span class="n">excType</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="ne">BaseException</span><span class="p">]],</span>
+		<span class="n">excValue</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="ne">BaseException</span><span class="p">],</span>
+		<span class="n">excTraceback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TracebackType</span><span class="p">],</span>
+	<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+
+	<span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+
+	<span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;Calls `disconnect`.&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
+
+	<span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Signals that peer is connected.</span>
+
+<span class="sd">		If data was buffered while not connected, `parse` will be called with the data.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isConnected</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_isConnected</span> <span class="o">=</span> <span class="kc">True</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">:</span>
+				<span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">:</span>
+				<span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;Signals that peer has disconnected.&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isConnected</span><span class="p">:</span>
+			<span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">unregister</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_isConnected</span> <span class="o">=</span> <span class="kc">False</span>
+
+	<span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Parses data from peer.</span>
+
+<span class="sd">		If not connected, data will be buffered until `connect` is called.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			data: The data to be parsed.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isConnected</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">:</span>
+			<span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">data</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">escape</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">prompt</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Writes data to peer.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			data: The bytes to be written.</span>
+<span class="sd">			escape: If True, escapes line endings and IAC characters.</span>
+<span class="sd">			prompt: If True, appends the prompt terminator to the data.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="n">escape</span><span class="p">:</span>
+			<span class="n">data</span> <span class="o">=</span> <span class="n">escapeIAC</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR</span><span class="p">,</span> <span class="n">CR_NULL</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">LF</span><span class="p">,</span> <span class="n">CR_LF</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">prompt</span><span class="p">:</span>
+			<span class="n">data</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">promptTerminator</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isConnected</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">:</span>
+			<span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">data</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Protocol</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Registers a protocol handler.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			handler: The handler to be registered.</span>
+<span class="sd">			**kwargs: Key word arguments to be passed to the handler&#39;s constructer.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">handler</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Class required, not instance.&quot;</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
+			<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>  <span class="c1"># type: ignore[misc]</span>
+				<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Already registered.&quot;</span><span class="p">)</span>
+		<span class="n">instance</span><span class="p">:</span> <span class="n">Protocol</span> <span class="o">=</span> <span class="n">handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c1"># type: ignore[misc]</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">_receiver</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">on_dataReceived</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+		<span class="n">instance</span><span class="o">.</span><span class="n">on_connectionMade</span><span class="p">()</span>
+
+	<span class="k">def</span> <span class="nf">unregister</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">:</span> <span class="n">Protocol</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Unregisters a protocol handler.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			instance: The handler instance to be unregistered.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Instance required, not class.&quot;</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">instance</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Instance wasn&#39;t registered.&quot;</span><span class="p">)</span>
+		<span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span> <span class="ow">and</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">_receiver</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">_receiver</span>
+		<span class="n">instance</span><span class="o">.</span><span class="n">on_connectionLost</span><span class="p">()</span>
+</code></pre></div>
+        </details>
 
 
 
@@ -640,7 +815,7 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.manager.Manager.isConnected">
+<h3 id="mudproto.manager.Manager.isConnected" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isConnected</span><span class="p">:</span> <span class="nb">bool</span></code>
 
   <span class="doc doc-properties">
@@ -648,7 +823,7 @@
       <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
   </span>
 
-<a class="headerlink" href="#mudproto.manager.Manager.isConnected" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.manager.Manager.isConnected" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -667,18 +842,18 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.manager.Manager.close">
+<h3 id="mudproto.manager.Manager.close" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.manager.Manager.close" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.manager.Manager.close" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
       <p>Calls <code>disconnect</code>.</p>
 
         <details class="quote">
-          <summary>Source code in <code>mudproto\manager.py</code></summary>
+          <summary>Source code in <code>mudproto/manager.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;Calls `disconnect`.&quot;&quot;&quot;</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
@@ -694,11 +869,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.manager.Manager.connect">
+<h3 id="mudproto.manager.Manager.connect" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.manager.Manager.connect" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.manager.Manager.connect" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -706,7 +881,7 @@
 <p>If data was buffered while not connected, <code>parse</code> will be called with the data.</p>
 
         <details class="quote">
-          <summary>Source code in <code>mudproto\manager.py</code></summary>
+          <summary>Source code in <code>mudproto/manager.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Signals that peer is connected.</span>
@@ -736,18 +911,18 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.manager.Manager.disconnect">
+<h3 id="mudproto.manager.Manager.disconnect" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.manager.Manager.disconnect" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.manager.Manager.disconnect" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
       <p>Signals that peer has disconnected.</p>
 
         <details class="quote">
-          <summary>Source code in <code>mudproto\manager.py</code></summary>
+          <summary>Source code in <code>mudproto/manager.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;Signals that peer has disconnected.&quot;&quot;&quot;</span>
 	<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isConnected</span><span class="p">:</span>
@@ -766,11 +941,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.manager.Manager.parse">
+<h3 id="mudproto.manager.Manager.parse" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.manager.Manager.parse" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.manager.Manager.parse" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -797,7 +972,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\manager.py</code></summary>
+          <summary>Source code in <code>mudproto/manager.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Parses data from peer.</span>
@@ -827,11 +1002,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.manager.Manager.register">
+<h3 id="mudproto.manager.Manager.register" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.manager.Manager.register" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.manager.Manager.register" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -850,7 +1025,7 @@
   <tbody>
       <tr>
         <td><code>handler</code></td>
-        <td><code>Type[Protocol]</code></td>
+        <td><code>type[Protocol]</code></td>
         <td><p>The handler to be registered.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -863,8 +1038,8 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\manager.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Protocol</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <summary>Source code in <code>mudproto/manager.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">Protocol</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Registers a protocol handler.</span>
 
@@ -875,7 +1050,7 @@
 	<span class="k">if</span> <span class="ow">not</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">handler</span><span class="p">):</span>
 		<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Class required, not instance.&quot;</span><span class="p">)</span>
 	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
-		<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
+		<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>  <span class="c1"># type: ignore[misc]</span>
 			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Already registered.&quot;</span><span class="p">)</span>
 	<span class="n">instance</span><span class="p">:</span> <span class="n">Protocol</span> <span class="o">=</span> <span class="n">handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c1"># type: ignore[misc]</span>
 	<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
@@ -894,11 +1069,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.manager.Manager.unregister">
+<h3 id="mudproto.manager.Manager.unregister" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">unregister</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.manager.Manager.unregister" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.manager.Manager.unregister" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -924,7 +1099,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\manager.py</code></summary>
+          <summary>Source code in <code>mudproto/manager.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">unregister</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">:</span> <span class="n">Protocol</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Unregisters a protocol handler.</span>
@@ -953,11 +1128,11 @@
 
 
 
-<h3 class="doc doc-heading" id="mudproto.manager.Manager.write">
+<h3 id="mudproto.manager.Manager.write" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">escape</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
 
-<a class="headerlink" href="#mudproto.manager.Manager.write" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.manager.Manager.write" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -995,7 +1170,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto\manager.py</code></summary>
+          <summary>Source code in <code>mudproto/manager.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">escape</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">prompt</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Writes data to peer.</span>
@@ -1044,11 +1219,6 @@
     </div>
 
   </div>
-                
-              
-              
-                
-
 
               
             </article>
@@ -1057,23 +1227,24 @@
         
       </main>
       
-        
-<footer class="md-footer">
+        <footer class="md-footer">
   
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-          <div class="md-footer-copyright__highlight">
-            Copyright © 2021 Nick Stockton
-          </div>
-        
-        Made with
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
-      </div>
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2021 Nick Stockton
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
       
     </div>
   </div>
@@ -1083,10 +1254,10 @@
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.409db549.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
     
     
-      <script src="../../assets/javascripts/bundle.56a63758.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1a181d9.min.js"></script>
       
         <script src="../../search/main.js"></script>
       
