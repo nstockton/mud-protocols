@@ -91,17 +91,17 @@ jobs:
       - name: Install dependencies
         run: |
           python -m venv .venv
-          source .venv/Scripts/activate
+          source .venv/bin/activate
           python -m pip install --upgrade "poetry==1.1.13"
           poetry install --no-interaction --no-root
       - name: Install library
         run: |
-          source .venv/Scripts/activate
+          source .venv/bin/activate
           poetry install --no-interaction
       - name: Build Wheel And Source Archive
         id: build_dist
         run: |
-          source .venv/Scripts/activate
+          source .venv/bin/activate
           poetry build --no-interaction
       - name: Create Release
         id: create_release
@@ -117,7 +117,7 @@ jobs:
             dist/*
       - name: Publish Documentation
         run: |
-          source .venv/Scripts/activate
+          source .venv/bin/activate
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           mkdocs gh-deploy --force
