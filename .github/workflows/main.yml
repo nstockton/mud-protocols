@@ -20,25 +20,25 @@ jobs:
       max-parallel: 4
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        python-version: ["3.7", "3.8", "3.9", "~3.10.4"]
     runs-on: ${{ matrix.os }}
     defaults:
       run:
         shell: bash
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 # All history for all branches and tags.
       - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
           # Optional - x64 or x86 architecture, defaults to x64.
           architecture: x64
       - name: Setup Virtual Environment
         id: cache-virtualenv
-        uses: syphar/restore-virtualenv@v1
+        uses: syphar/restore-virtualenv@v1.2
       - name: Restore Pip Cache
         uses: syphar/restore-pip-download-cache@v1
         if: steps.cache-virtualenv.outputs.cache-hit != 'true'
@@ -58,10 +58,9 @@ jobs:
           python -m pre_commit run --all-files --show-diff-on-failure --hook-stage push
           poetry build --no-interaction
       - name: Test Documentation
-        if: matrix.python-version == '3.10'
+        if: matrix.python-version == '~3.10.4'
         run: |
-          # Reexamine this when Python 10.3 is released.
-          #python -m pre_commit run --all-files --show-diff-on-failure --hook-stage manual
+          python -m pre_commit run --all-files --show-diff-on-failure --hook-stage manual
   deploy:
     needs: build
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
@@ -72,7 +71,7 @@ jobs:
         shell: bash
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 # All history for all branches and tags.
       - name: Get Project Info
@@ -84,28 +83,25 @@ jobs:
           echo ::set-output name=name::${NAME}
           echo ::set-output name=version::${VERSION}
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
-          python-version: "3.10"
+          python-version: "~3.10.4"
           # Optional - x64 or x86 architecture, defaults to x64.
           architecture: x64
-      - name: Setup Virtual Environment
-        id: cache-virtualenv
-        uses: syphar/restore-virtualenv@v1
-      - name: Restore Pip Cache
-        uses: syphar/restore-pip-download-cache@v1
-        if: steps.cache-virtualenv.outputs.cache-hit != 'true'
       - name: Install dependencies
-        if: steps.cache-virtualenv.outputs.cache-hit != 'true'
         run: |
+          python -m venv .venv
+          source .venv/Scripts/activate
           python -m pip install --upgrade "poetry==1.1.13"
           poetry install --no-interaction --no-root
       - name: Install library
         run: |
+          source .venv/Scripts/activate
           poetry install --no-interaction
       - name: Build Wheel And Source Archive
         id: build_dist
         run: |
+          source .venv/Scripts/activate
           poetry build --no-interaction
       - name: Create Release
         id: create_release
@@ -121,7 +117,7 @@ jobs:
             dist/*
       - name: Publish Documentation
         run: |
+          source .venv/Scripts/activate
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          # Reexamine this when Python 10.3 is released.
-          #mkdocs gh-deploy --force
+          mkdocs gh-deploy --force
