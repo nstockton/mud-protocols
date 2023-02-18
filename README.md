@@ -25,3 +25,22 @@ project would not exist otherwise.
 ## Documentation
 
 Please see the [API reference](https://nstockton.github.io/mud-protocols/api "MUD Protocols API Reference") for more information.
+
+## Development
+
+Install the [Python interpreter,](https://python.org "Python Home Page") and make sure it's in your path.
+
+After Python is installed, execute the following commands from the top level directory of this repository to install the module dependencies.
+```
+python -m venv .venv
+source .venv/bin/activate
+pip install --upgrade --require-hashes --requirement requirements-poetry.txt
+poetry install --no-ansi
+```
+
+If you wish to contribute to this project, install the development dependencies with the following commands.
+```
+source .venv/bin/activate
+pre-commit install -t pre-commit
+pre-commit install -t pre-push
+```
