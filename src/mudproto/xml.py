@@ -85,7 +85,7 @@ class XMLProtocol(Protocol):
 	) -> None:
 		self.outputFormat: str = outputFormat
 		self.eventCaller: Callable[[EVENT_CALLER_TYPE], None] = eventCaller
-		super().__init__(*args, **kwargs)  # type: ignore[misc]
+		super().__init__(*args, **kwargs)
 		self._state: str = "data"
 		self._tagBuffer: bytearray = bytearray()  # Used for start and end tag names.
 		self._textBuffer: bytearray = bytearray()  # Used for the text between start and end tags.

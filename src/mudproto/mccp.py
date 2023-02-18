@@ -28,9 +28,9 @@ class MCCPMixIn(Protocol):
 	"""An MCCP mix in class for the Telnet protocol."""
 
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
-		super().__init__(*args, **kwargs)  # type: ignore[misc]
-		self.subnegotiationMap[MCCP1] = lambda *args: None  # type: ignore[misc, attr-defined]
-		self.subnegotiationMap[MCCP2] = lambda *args: None  # type: ignore[misc, attr-defined]
+		super().__init__(*args, **kwargs)
+		self.subnegotiationMap[MCCP1] = lambda *args: None  # type: ignore[attr-defined]
+		self.subnegotiationMap[MCCP2] = lambda *args: None  # type: ignore[attr-defined]
 		self._isCompressed: bool = False
 		self._usingMCCp1: bool = False
 		self._usingMCCp2: bool = False
@@ -44,14 +44,14 @@ class MCCPMixIn(Protocol):
 		while inputBuffer:
 			if self._isCompressed:
 				# Compressed data:
-				outputBuffer.append(self._decompressor.decompress(inputBuffer))  # type: ignore[misc]
+				outputBuffer.append(self._decompressor.decompress(inputBuffer))
 				inputBuffer.clear()
-				if self._decompressor.unused_data:  # type: ignore[misc]
+				if self._decompressor.unused_data:
 					# Uncompressed data following the compressed data, likely due to the server terminating compression.
 					logger.debug(
 						"received uncompressed data while compression enabled. Disabling compression."
 					)
-					inputBuffer.extend(self._decompressor.unused_data)  # type: ignore[misc]
+					inputBuffer.extend(self._decompressor.unused_data)
 					self._isCompressed = False
 					self._usingMCCp1 = False
 					self._usingMCCp2 = False

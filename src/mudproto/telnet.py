@@ -208,7 +208,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 	"""Valid states for the state machine."""
 
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
-		super().__init__(*args, **kwargs)  # type: ignore[misc]
+		super().__init__(*args, **kwargs)
 		self._state: str = "data"
 		self._options: dict[bytes, _OptionState] = {}
 		"""A mapping of option bytes to their current state."""

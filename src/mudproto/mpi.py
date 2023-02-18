@@ -49,7 +49,7 @@ class MPIProtocol(Protocol):
 
 	def __init__(self, *args: Any, outputFormat: str, **kwargs: Any) -> None:
 		self.outputFormat: str = outputFormat
-		super().__init__(*args, **kwargs)  # type: ignore[misc]
+		super().__init__(*args, **kwargs)
 		self._state: str = "data"
 		self._MPIBuffer: bytearray = bytearray()
 		self._MPIThreads: list[threading.Thread] = []

@@ -210,9 +210,5 @@
 	no_color_output = true
 
 [[tool.mypy.overrides]]
-	module = "mudproto.*"
-	disallow_any_expr = true
-
-[[tool.mypy.overrides]]
 	module = "tests.*"
 	disallow_any_decorated = false

@@ -147,9 +147,9 @@ class Manager(object):
 		if not inspect.isclass(handler):
 			raise ValueError("Class required, not instance.")
 		for i in self._handlers:
-			if isinstance(i, handler):  # type: ignore[misc]
+			if isinstance(i, handler):
 				raise ValueError("Already registered.")
-		instance: Protocol = handler(self.write, self._receiver, **kwargs)  # type: ignore[misc]
+		instance: Protocol = handler(self.write, self._receiver, **kwargs)
 		if self._handlers:
 			self._handlers[-1]._receiver = instance.on_dataReceived
 		self._handlers.append(instance)

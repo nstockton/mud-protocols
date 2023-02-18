@@ -27,8 +27,8 @@ class CharsetMixIn(Protocol):
 	"""A charset mix in class for the Telnet protocol."""
 
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
-		super().__init__(*args, **kwargs)  # type: ignore[misc]
-		self.subnegotiationMap[CHARSET] = self.on_charset  # type: ignore[misc, attr-defined]
+		super().__init__(*args, **kwargs)
+		self.subnegotiationMap[CHARSET] = self.on_charset  # type: ignore[attr-defined]
 		self._charsets: tuple[bytes, ...] = (b"US-ASCII",)
 		self._charset: bytes = self._charsets[0]
 
