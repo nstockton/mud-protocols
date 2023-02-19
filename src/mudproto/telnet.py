@@ -178,6 +178,15 @@ class BaseTelnetProtocol(Protocol):
 			option: The option being disabled.
 		"""
 
+	@abstractmethod
+	def on_optionEnabled(self, option: bytes) -> None:
+		"""
+		Called after an option has been fully enabled.
+
+		Args:
+			option: The option that has been enabled.
+		"""
+
 
 class TelnetProtocol(BaseTelnetProtocol):
 	"""
@@ -512,6 +521,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 			if self.on_enableRemote(option):
 				state.him.enabled = True
 				self._do(option)
+				self.on_optionEnabled(option)
 			else:
 				self._dont(option)
 		elif not state.him.enabled and state.him.negotiating:
@@ -520,6 +530,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 			state.him.negotiating = False
 			if not self.on_enableRemote(option):
 				raise AssertionError(f"enableRemote must return True in this context (for option {option!r})")
+			self.on_optionEnabled(option)
 		elif state.him.enabled and not state.him.negotiating:
 			# Peer is unilaterally offering to enable an already-enabled option.
 			# Ignore this.
@@ -576,6 +587,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 			if self.on_enableLocal(option):
 				state.us.enabled = True
 				self._will(option)
+				self.on_optionEnabled(option)
 			else:
 				self._wont(option)
 		elif not state.us.enabled and state.us.negotiating:
@@ -583,6 +595,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 			state.us.enabled = True
 			state.us.negotiating = False
 			self.on_enableLocal(option)
+			self.on_optionEnabled(option)
 		elif state.us.enabled and not state.us.negotiating:
 			# Peer is unilaterally requesting us to enable an already-enabled option.
 			# Ignore this.
@@ -640,3 +653,6 @@ class TelnetProtocol(BaseTelnetProtocol):
 
 	def on_disableRemote(self, option: bytes) -> None:
 		raise NotImplementedError(f"Don't know how to disable remote Telnet option {option!r}")
+
+	def on_optionEnabled(self, option: bytes) -> None:
+		pass  # Do nothing by default.
