@@ -82,6 +82,7 @@ from __future__ import annotations
 # End of Record: https://mudhalla.net/tintin/protocols/eor
 # Generic Mud Communication Protocol: https://mudhalla.net/tintin/protocols/gmcp
 # https://www.gammon.com.au/gmcp
+# https://www.ironrealms.com/gmcp-doc
 # Mud Client Compression Protocol: https://mudhalla.net/tintin/protocols/mccp
 # http://www.gammon.com.au/mccp
 # https://zuggsoft.com/zmud/mcp.htm
