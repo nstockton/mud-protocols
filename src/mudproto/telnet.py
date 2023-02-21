@@ -560,7 +560,9 @@ class TelnetProtocol(BaseTelnetProtocol):
 		elif not state.him.enabled and state.him.negotiating:
 			# Peer refused to enable an option in response to our request.
 			state.him.negotiating = False
-			logger.debug(f"Peer refuses to enable option {option!r} in response to our request.")
+			logger.debug(
+				f"Peer refuses to enable option {DESCRIPTIONS.get(option, repr(option))} in response to our request."
+			)
 		elif state.him.enabled and not state.him.negotiating:
 			# Peer is unilaterally demanding that an option be disabled.
 			state.him.enabled = False
@@ -624,7 +626,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 		elif not state.us.enabled and state.us.negotiating:
 			# Offered option was refused.
 			state.us.negotiating = False
-			logger.debug(f"Peer rejects our offer to enable option {option!r}.")
+			logger.debug(f"Peer rejects our offer to enable option {DESCRIPTIONS.get(option, repr(option))}.")
 		elif state.us.enabled and not state.us.negotiating:
 			# Peer is unilaterally demanding we disable an option.
 			state.us.enabled = False
