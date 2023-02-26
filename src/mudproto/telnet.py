@@ -251,6 +251,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 		Args:
 			option: The option to send.
 		"""
+		logger.debug(f"Send to peer: IAC DO {DESCRIPTIONS.get(option, repr(option))}")
 		self.write(IAC + DO + option)
 
 	def _dont(self, option: bytes) -> None:
@@ -260,6 +261,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 		Args:
 			option: The option to send.
 		"""
+		logger.debug(f"Send to peer: IAC DONT {DESCRIPTIONS.get(option, repr(option))}")
 		self.write(IAC + DONT + option)
 
 	def _will(self, option: bytes) -> None:
@@ -269,6 +271,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 		Args:
 			option: The option to send.
 		"""
+		logger.debug(f"Send to peer: IAC WILL {DESCRIPTIONS.get(option, repr(option))}")
 		self.write(IAC + WILL + option)
 
 	def _wont(self, option: bytes) -> None:
@@ -278,6 +281,7 @@ class TelnetProtocol(BaseTelnetProtocol):
 		Args:
 			option: The option to send.
 		"""
+		logger.debug(f"Send to peer: IAC WONT {DESCRIPTIONS.get(option, repr(option))}")
 		self.write(IAC + WONT + option)
 
 	def will(self, option: bytes) -> None:
