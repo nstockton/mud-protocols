@@ -13,17 +13,21 @@ from __future__ import annotations
 
 # Built-in Modules:
 import logging
+import sys
 from collections.abc import Callable, MutableSequence
 from typing import Any, Tuple, Union
-
-# Third-party Modules:
-from typing_extensions import TypeAlias
 
 # Local Modules:
 from .base import Protocol
 from .mpi import MPI_INIT
 from .telnet_constants import CR, CR_LF, LF
 from .utils import unescapeXMLBytes
+
+
+if sys.version_info < (3, 10):  # pragma: no cover
+	from typing_extensions import TypeAlias
+else:  # pragma: no cover
+	from typing import TypeAlias
 
 
 EVENT_CALLER_TYPE: TypeAlias = Tuple[str, bytes]
