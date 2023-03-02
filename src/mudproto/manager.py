@@ -107,11 +107,11 @@ class Manager(object):
 		"""
 		if not self.isConnected or not self._handlers:
 			self._readBuffer.append(data)
+			return None
 		elif self._readBuffer:
 			data = b"".join(self._readBuffer) + data
 			self._readBuffer.clear()
-			self._handlers[0].on_dataReceived(data)
-		elif data:
+		if data:
 			self._handlers[0].on_dataReceived(data)
 
 	def write(self, data: bytes, *, escape: bool = False, prompt: bool = False) -> None:
@@ -129,11 +129,11 @@ class Manager(object):
 			data += self.promptTerminator
 		if not self.isConnected or not self._handlers:
 			self._writeBuffer.append(data)
+			return None
 		elif self._writeBuffer:
 			data = b"".join(self._writeBuffer) + data
 			self._writeBuffer.clear()
-			self._writer(data)
-		elif data:
+		if data:
 			self._writer(data)
 
 	def register(self, handler: type[Protocol], **kwargs: Any) -> None:

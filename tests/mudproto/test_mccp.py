@@ -7,14 +7,15 @@
 from __future__ import annotations
 
 # Built-in Modules:
-from collections.abc import Callable
 from typing import Any
 from unittest import TestCase
-from unittest.mock import Mock, patch
+from unittest.mock import patch
 from zlib import DEFLATED, MAX_WBITS, Z_DEFAULT_COMPRESSION, Z_FINISH, Z_SYNC_FLUSH, compressobj
 
 # MUD Protocol Modules:
 from mudproto.mccp import MCCPMixIn
+from mudproto.mccp import logger as mccpLogger
+from mudproto.telnet import TelnetProtocol
 from mudproto.telnet_constants import (
 	COMMAND_BYTES,
 	CR,
@@ -32,14 +33,10 @@ from mudproto.telnet_constants import (
 )
 
 
-class Telnet(MCCPMixIn):
-	subnegotiationMap: dict[bytes, Callable[[bytes], None]] = {}
-
-	def on_connectionMade(self) -> None:
-		pass
-
-	def on_connectionLost(self) -> None:
-		pass
+class Telnet(MCCPMixIn, TelnetProtocol):
+	"""
+	Telnet protocol with MCCP support.
+	"""
 
 
 class TestMCCPMixIn(TestCase):
@@ -49,13 +46,16 @@ class TestMCCPMixIn(TestCase):
 		self.telnet: Telnet = Telnet(self.gameReceives.extend, self.playerReceives.extend)
 
 	def tearDown(self) -> None:
-		self.telnet.on_connectionLost()
 		del self.telnet
 		self.gameReceives.clear()
 		self.playerReceives.clear()
 
 	def parse(self, data: bytes) -> tuple[bytes, bytes]:
-		self.telnet.on_dataReceived(data)
+		# We need to bypass TelnetProtocol.on_dataReceived when testing.
+		with patch.object(
+			TelnetProtocol, "on_dataReceived", side_effect=lambda d: self.playerReceives.extend(d)
+		):
+			self.telnet.on_dataReceived(data)
 		playerReceives: bytes = bytes(self.playerReceives)
 		self.playerReceives.clear()
 		gameReceives: bytes = bytes(self.gameReceives)
@@ -63,8 +63,7 @@ class TestMCCPMixIn(TestCase):
 		self.telnet._compressedInputBuffer.clear()
 		return playerReceives, gameReceives
 
-	@patch("mudproto.mccp.logger", Mock())
-	def testTelnetOn_dataReceived(self) -> None:
+	def test_on_dataReceived(self) -> None:
 		# Insure uncompressed data is passed on.
 		data: bytes = b"Hello World!"
 		self.assertEqual(self.parse(data + CR_LF), (data + CR_LF, b""))
@@ -98,34 +97,38 @@ class TestMCCPMixIn(TestCase):
 		)
 		# Insure compression is enabled on our end when enabled by the server.
 		self.assertFalse(self.telnet._isCompressed)
-		self.assertEqual(self.parse(data + IAC + SB + MCCP1 + WILL + SE), (data, b""))
+		with self.assertLogs(mccpLogger, "DEBUG"):
+			self.assertEqual(self.parse(data + IAC + SB + MCCP1 + WILL + SE), (data, b""))
 		self.assertTrue(self.telnet._isCompressed)
 		self.telnet._isCompressed = False
-		self.assertEqual(self.parse(data + IAC + SB + MCCP2 + IAC + SE), (data, b""))
+		with self.assertLogs(mccpLogger, "DEBUG"):
+			self.assertEqual(self.parse(data + IAC + SB + MCCP2 + IAC + SE), (data, b""))
 		self.assertTrue(self.telnet._isCompressed)
 		# Insure we can actually decompress the data.
 		compressor: Any = compressobj(Z_DEFAULT_COMPRESSION, DEFLATED, MAX_WBITS)
 		compressed: bytes = compressor.compress(data)
 		self.assertEqual(self.parse(compressed + compressor.flush(Z_SYNC_FLUSH)), (data, b""))
 		# Insure that decompression is disabled when Z_FINISH is sent by the server.
-		self.assertEqual(self.parse(compressor.flush(Z_FINISH) + data), (data, b""))
+		with self.assertLogs(mccpLogger, "DEBUG"):
+			self.assertEqual(self.parse(compressor.flush(Z_FINISH) + data), (data, b""))
 		self.assertFalse(self.telnet._isCompressed)
 
-	@patch("mudproto.mccp.logger", Mock())
-	def testTelnetOn_enableRemote(self) -> None:
+	def test_on_enableRemote(self) -> None:
 		self.assertFalse(self.telnet._usingMCCp1)
 		self.assertFalse(self.telnet._usingMCCp2)
 		# MCCP1 is only allowed if MCCP2 wasn't previously negotiated.
-		self.assertTrue(self.telnet.on_enableRemote(MCCP1))
-		self.assertFalse(self.telnet.on_enableRemote(MCCP2))
+		with self.assertLogs(mccpLogger, "DEBUG"):
+			self.assertTrue(self.telnet.on_enableRemote(MCCP1))
+			self.assertFalse(self.telnet.on_enableRemote(MCCP2))
 		self.telnet._usingMCCp1 = False
 		# MCCP2 is only allowed if MCCP1 wasn't previously negotiated.
-		self.assertTrue(self.telnet.on_enableRemote(MCCP2))
-		self.assertFalse(self.telnet.on_enableRemote(MCCP1))
+		with self.assertLogs(mccpLogger, "DEBUG"):
+			self.assertTrue(self.telnet.on_enableRemote(MCCP2))
+			self.assertFalse(self.telnet.on_enableRemote(MCCP1))
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
 
-	@patch("mudproto.mccp.logger", Mock())
-	def testTelnetOn_disableRemote(self) -> None:
-		self.telnet.on_disableRemote(MCCP1)  # Should not throw an exception.
-		self.telnet.on_disableRemote(MCCP2)  # Should not throw an exception.
+	def test_on_disableRemote(self) -> None:
+		with self.assertLogs(mccpLogger, "DEBUG"):
+			self.telnet.on_disableRemote(MCCP1)  # Should not throw an exception.
+			self.telnet.on_disableRemote(MCCP2)  # Should not throw an exception.
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))

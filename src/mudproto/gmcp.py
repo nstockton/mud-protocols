@@ -15,19 +15,13 @@ from __future__ import annotations
 import json
 import logging
 import re
-import sys
 from collections.abc import Iterable, Mapping
 from typing import Any, Optional, Union
 
 # Local Modules:
 from .base import Protocol
+from .telnet import BaseTelnetProtocol
 from .telnet_constants import GMCP
-
-
-if sys.version_info < (3, 8):  # pragma: no cover
-	from typing_extensions import Protocol as TypeProtocol
-else:  # pragma: no cover
-	from typing import Protocol as TypeProtocol
 
 
 GMCP_MESSAGE_REGEX: re.Pattern[bytes] = re.compile(rb"^\s*(?P<package>[\w.-]+)\s*(?P<value>.*?)\s*$")
@@ -36,12 +30,7 @@ GMCP_MESSAGE_REGEX: re.Pattern[bytes] = re.compile(rb"^\s*(?P<package>[\w.-]+)\s
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-class HasWill(TypeProtocol):
-	def will(self, option: bytes) -> None:
-		...
-
-
-class GMCPMixIn(Protocol, HasWill):
+class GMCPMixIn(Protocol, BaseTelnetProtocol):
 	"""
 	A GMCP mix in class for the Telnet protocol.
 	"""
@@ -75,7 +64,7 @@ class GMCPMixIn(Protocol, HasWill):
 			self._isGMCPServer = True
 		self._isGMCPInitialized: bool = False  # Is set to True after GMCP Hello.
 		self._gmcpSupportedPackages: dict[str, int] = {}  # Keys are lower case.
-		self.subnegotiationMap[GMCP] = self.on_gmcp  # type: ignore[attr-defined]
+		self.subnegotiationMap[GMCP] = self.on_gmcp
 
 	@property
 	def isGMCPInitialized(self) -> bool:
@@ -109,7 +98,7 @@ class GMCPMixIn(Protocol, HasWill):
 			jsonAsBytes = bytes(value)
 		payload: bytes = b"%b %b" % (packageAsBytes, jsonAsBytes)
 		logger.debug(f"Sending GMCP payload: {payload!r}.")
-		self.requestNegotiation(GMCP, payload)  # type: ignore[attr-defined]
+		self.requestNegotiation(GMCP, payload)
 
 	def gmcpHello(self) -> None:
 		"""
@@ -212,25 +201,25 @@ class GMCPMixIn(Protocol, HasWill):
 		if option == GMCP:
 			logger.debug("We enable GMCP.")
 			return True
-		return bool(super().on_enableLocal(option))  # type: ignore[misc] # pragma: no cover
+		return bool(super().on_enableLocal(option))  # pragma: no cover
 
 	def on_disableLocal(self, option: bytes) -> None:
 		if option == GMCP:
 			logger.debug("We disable GMCP.")
 			return None
-		super().on_disableLocal(option)  # type: ignore[misc] # pragma: no cover
+		super().on_disableLocal(option)  # pragma: no cover
 
 	def on_enableRemote(self, option: bytes) -> bool:
 		if option == GMCP:
 			logger.debug("Peer enables GMCP.")
 			return True
-		return bool(super().on_enableRemote(option))  # type: ignore[misc] # pragma: no cover
+		return bool(super().on_enableRemote(option))  # pragma: no cover
 
 	def on_disableRemote(self, option: bytes) -> None:
 		if option == GMCP:
 			logger.debug("Peer disables GMCP.")
 			return None
-		super().on_disableRemote(option)  # type: ignore[misc] # pragma: no cover
+		super().on_disableRemote(option)  # pragma: no cover
 
 	def on_optionEnabled(self, option: bytes) -> None:
 		if option == GMCP:
@@ -239,4 +228,4 @@ class GMCPMixIn(Protocol, HasWill):
 				self.gmcpHello()
 				self._isGMCPInitialized = True
 			return None
-		super().on_optionEnabled(option)  # type: ignore[misc] # pragma: no cover
+		super().on_optionEnabled(option)  # pragma: no cover

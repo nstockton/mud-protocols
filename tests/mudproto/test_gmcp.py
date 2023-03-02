@@ -39,9 +39,7 @@ class TestGMCPMixIn(TestCase):
 		)
 
 	def tearDown(self) -> None:
-		self.telnetClient.on_connectionLost()
 		del self.telnetClient
-		self.telnetServer.on_connectionLost()
 		del self.telnetServer
 		self.gameReceives.clear()
 		self.playerReceives.clear()

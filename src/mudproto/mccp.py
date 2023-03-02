@@ -18,19 +18,20 @@ from typing import Any
 
 # Local Modules:
 from .base import Protocol
+from .telnet import BaseTelnetProtocol
 from .telnet_constants import IAC, MCCP1, MCCP2, SB, SE, WILL
 
 
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-class MCCPMixIn(Protocol):
+class MCCPMixIn(Protocol, BaseTelnetProtocol):
 	"""An MCCP mix in class for the Telnet protocol."""
 
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
 		super().__init__(*args, **kwargs)
-		self.subnegotiationMap[MCCP1] = lambda *args: None  # type: ignore[attr-defined]
-		self.subnegotiationMap[MCCP2] = lambda *args: None  # type: ignore[attr-defined]
+		self.subnegotiationMap[MCCP1] = lambda *args: None
+		self.subnegotiationMap[MCCP2] = lambda *args: None
 		self._isCompressed: bool = False
 		self._usingMCCp1: bool = False
 		self._usingMCCp2: bool = False
@@ -104,10 +105,10 @@ class MCCPMixIn(Protocol):
 			self._usingMCCp2 = not self._usingMCCp1
 			logger.debug(f"MCCP2 negotiation {'enabled' if self._usingMCCp2 else 'disabled'}.")
 			return self._usingMCCp2
-		return bool(super().on_enableRemote(option))  # type: ignore[misc] # pragma: no cover
+		return bool(super().on_enableRemote(option))  # pragma: no cover
 
 	def on_disableRemote(self, option: bytes) -> None:
 		if option in (MCCP1, MCCP2):
 			logger.debug(f"MCCP{'1' if option == MCCP1 else '2'} negotiation disabled.")
 			return None
-		super().on_disableRemote(option)  # type: ignore[misc] # pragma: no cover
+		super().on_disableRemote(option)  # pragma: no cover

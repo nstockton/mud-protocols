@@ -17,18 +17,19 @@ from typing import Any
 
 # Local Modules:
 from .base import Protocol
+from .telnet import BaseTelnetProtocol
 from .telnet_constants import CHARSET, CHARSET_ACCEPTED, CHARSET_REJECTED, CHARSET_REQUEST
 
 
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-class CharsetMixIn(Protocol):
+class CharsetMixIn(Protocol, BaseTelnetProtocol):
 	"""A charset mix in class for the Telnet protocol."""
 
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
 		super().__init__(*args, **kwargs)
-		self.subnegotiationMap[CHARSET] = self.on_charset  # type: ignore[attr-defined]
+		self.subnegotiationMap[CHARSET] = self.on_charset
 		self._charsets: tuple[bytes, ...] = (b"US-ASCII",)
 		self._charset: bytes = self._charsets[0]
 
@@ -58,7 +59,7 @@ class CharsetMixIn(Protocol):
 			logger.warning(f"Invalid charset {name!r}: falling back to {self.charset!r}.")
 		else:
 			logger.debug(f"Tell peer we would like to use the {name!r} charset.")
-			self.requestNegotiation(CHARSET, CHARSET_REQUEST + separator + name)  # type: ignore[attr-defined]
+			self.requestNegotiation(CHARSET, CHARSET_REQUEST + separator + name)
 
 	def on_charset(self, data: bytes) -> None:
 		"""
@@ -80,16 +81,16 @@ class CharsetMixIn(Protocol):
 			logger.warning("Peer responds: Charset rejected.")
 		else:
 			logger.warning(f"Unknown charset negotiation response from peer: {data!r}")
-			self.wont(CHARSET)  # type: ignore[attr-defined]
+			self.wont(CHARSET)
 
 	def on_enableLocal(self, option: bytes) -> bool:
 		if option == CHARSET:
 			logger.debug("Charset negotiation enabled.")
 			return True
-		return bool(super().on_enableLocal(option))  # type: ignore[misc] # pragma: no cover
+		return bool(super().on_enableLocal(option))  # pragma: no cover
 
 	def on_disableLocal(self, option: bytes) -> None:
 		if option == CHARSET:
 			logger.debug("Charset negotiation disabled.")
 			return None
-		super().on_disableLocal(option)  # type: ignore[misc] # pragma: no cover
+		super().on_disableLocal(option)  # pragma: no cover

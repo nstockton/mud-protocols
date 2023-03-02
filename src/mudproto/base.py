@@ -8,16 +8,21 @@ from __future__ import annotations
 
 # Built-in Modules:
 import logging
-from abc import ABC, abstractmethod
+import sys
 from collections.abc import Callable
 from typing import Any
+
+
+if sys.version_info < (3, 8):  # pragma: no cover
+	from typing_extensions import Protocol as TypeProtocol
+else:  # pragma: no cover
+	from typing import Protocol as TypeProtocol
 
 
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-class BaseProtocol(ABC):
-	@abstractmethod
+class BaseProtocol(TypeProtocol):
 	def write(self, data: bytes) -> None:
 		"""
 		Writes data to peer.
@@ -26,15 +31,12 @@ class BaseProtocol(ABC):
 			data: The bytes to be written.
 		"""
 
-	@abstractmethod
 	def on_connectionMade(self) -> None:
 		"""Called by `connect` when a connection to peer has been established."""
 
-	@abstractmethod
 	def on_connectionLost(self) -> None:
 		"""Called by `disconnect` when a connection to peer has been lost."""
 
-	@abstractmethod
 	def on_dataReceived(self, data: bytes) -> None:
 		"""
 		Called by `parse` when data is received.

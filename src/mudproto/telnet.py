@@ -33,12 +33,12 @@ from __future__ import annotations
 
 # Built-in Modules:
 import logging
-from abc import abstractmethod
+import sys
 from collections.abc import Callable
 from typing import Any, Union
 
 # Local Modules:
-from .base import Protocol
+from .base import BaseProtocol, Protocol
 from .telnet_constants import (
 	COMMAND_BYTES,
 	CR,
@@ -57,6 +57,12 @@ from .telnet_constants import (
 	WONT,
 )
 from .utils import escapeIAC
+
+
+if sys.version_info < (3, 8):  # pragma: no cover
+	from typing_extensions import Protocol as TypeProtocol
+else:  # pragma: no cover
+	from typing import Protocol as TypeProtocol
 
 
 logger: logging.Logger = logging.getLogger(__name__)
@@ -104,8 +110,71 @@ class _OptionState:
 		return f"<_OptionState us={self.us} him={self.him}>"
 
 
-class BaseTelnetProtocol(Protocol):
-	@abstractmethod
+class BaseTelnetProtocol(BaseProtocol, TypeProtocol):
+	commandMap: dict[bytes, Callable[[Union[bytes, None]], None]]
+	"""A mapping of bytes to callables."""
+	subnegotiationMap: dict[bytes, Callable[[bytes], None]]
+	"""A mapping of bytes to callables."""
+
+	def will(self, option: bytes) -> None:
+		"""
+		Indicates our willingness to enable an option.
+
+		Args:
+			option: The option to accept.
+		"""
+
+	def wont(self, option: bytes) -> None:
+		"""
+		Indicates we are not willing to enable an option.
+
+		Args:
+			option: The option to reject.
+		"""
+
+	def do(self, option: bytes) -> None:
+		"""
+		Requests that the peer enable an option.
+
+		Args:
+			option: The option to enable.
+		"""
+
+	def dont(self, option: bytes) -> None:
+		"""
+		Requests that the peer disable an option.
+
+		Args:
+			option: The option to disable.
+		"""
+
+	def requestNegotiation(self, option: bytes, data: bytes) -> None:
+		"""
+		Sends a subnegotiation message to the peer.
+
+		Args:
+			option: The subnegotiation option.
+			data: The payload.
+		"""
+
+	def on_command(self, command: bytes, option: Union[bytes, None]) -> None:
+		"""
+		Called when a 1 or 2 byte command is received.
+
+		Args:
+			command: The first byte in a 1 or 2 byte negotiation sequence.
+			option: The second byte in a 2 byte negotiation sequence or None.
+		"""
+
+	def on_subnegotiation(self, option: bytes, data: bytes) -> None:
+		"""
+		Called when a subnegotiation is received.
+
+		Args:
+			option: The subnegotiation option.
+			data: The payload.
+		"""
+
 	def on_unhandledCommand(self, command: bytes, option: Union[bytes, None]) -> None:
 		"""
 		Called for commands for which no handler is installed.
@@ -115,7 +184,6 @@ class BaseTelnetProtocol(Protocol):
 			option: The second byte in a 2 byte negotiation sequence or None.
 		"""
 
-	@abstractmethod
 	def on_unhandledSubnegotiation(self, option: bytes, data: bytes) -> None:
 		"""
 		Called for subnegotiations for which no handler is installed.
@@ -125,7 +193,6 @@ class BaseTelnetProtocol(Protocol):
 			data: The payload.
 		"""
 
-	@abstractmethod
 	def on_enableLocal(self, option: bytes) -> bool:
 		"""
 		Called to accept or reject the request for us to manage the option.
@@ -137,19 +204,6 @@ class BaseTelnetProtocol(Protocol):
 			True if we will handle the option, False otherwise.
 		"""
 
-	@abstractmethod
-	def on_enableRemote(self, option: bytes) -> bool:
-		"""
-		Called to accept or reject the request for peer to manage the option.
-
-		Args:
-			option: The option that peer wants to handle.
-
-		Returns:
-			True if we will allow peer to handle the option, False otherwise.
-		"""
-
-	@abstractmethod
 	def on_disableLocal(self, option: bytes) -> None:
 		"""
 		Disables a locally managed option.
@@ -163,7 +217,17 @@ class BaseTelnetProtocol(Protocol):
 			option: The option being disabled.
 		"""
 
-	@abstractmethod
+	def on_enableRemote(self, option: bytes) -> bool:
+		"""
+		Called to accept or reject the request for peer to manage the option.
+
+		Args:
+			option: The option that peer wants to handle.
+
+		Returns:
+			True if we will allow peer to handle the option, False otherwise.
+		"""
+
 	def on_disableRemote(self, option: bytes) -> None:
 		"""
 		Disables a remotely managed option.
@@ -178,7 +242,6 @@ class BaseTelnetProtocol(Protocol):
 			option: The option being disabled.
 		"""
 
-	@abstractmethod
 	def on_optionEnabled(self, option: bytes) -> None:
 		"""
 		Called after an option has been fully enabled.
@@ -188,27 +251,9 @@ class BaseTelnetProtocol(Protocol):
 		"""
 
 
-class TelnetProtocol(BaseTelnetProtocol):
+class TelnetProtocol(Protocol, BaseTelnetProtocol):
 	"""
 	Implements the Telnet protocol.
-
-	Attributes:
-		commandMap: A mapping of bytes to callables.
-			When a Telnet command is received, the command byte
-			(the first byte after IAC) is looked up in this dictionary.
-			If a callable is found, it is invoked with the argument of the command,
-			or None if the command takes no argument.  Values should be added to
-			this dictionary if commands wish to be handled.  By default,
-			only WILL, WONT, DO, and DONT are handled.  These should not
-			be overridden, as this class handles them correctly and
-			provides an API for interacting with them.
-		subnegotiationMap: A mapping of bytes to callables.
-			When a subnegotiation command is received, the option byte (the
-			first byte after SB) is looked up in this dictionary.  If
-			a callable is found, it is invoked with the argument of the
-			subnegotiation.  Values should be added to this dictionary if
-			subnegotiations are to be handled.  By default, no values are
-			handled.
 	"""
 
 	states: frozenset[str] = frozenset(
@@ -221,12 +266,26 @@ class TelnetProtocol(BaseTelnetProtocol):
 		self._state: str = "data"
 		self._options: dict[bytes, _OptionState] = {}
 		"""A mapping of option bytes to their current state."""
+		# When a Telnet command is received, the command byte
+		# (the first byte after IAC) is looked up in the commandMap dictionary.
+		# If a callable is found, it is invoked with the argument of the command,
+		# or None if the command takes no argument.  Values should be added to
+		# this dictionary if commands wish to be handled.  By default,
+		# only WILL, WONT, DO, and DONT are handled.  These should not
+		# be overridden, as this class handles them correctly and
+		# provides an API for interacting with them.
 		self.commandMap: dict[bytes, Callable[[Union[bytes, None]], None]] = {
 			WILL: self.on_will,
 			WONT: self.on_wont,
 			DO: self.on_do,
 			DONT: self.on_dont,
 		}
+		# When a subnegotiation command is received, the option byte (the
+		# first byte after SB) is looked up in the subnegotiationMap dictionary.  If
+		# a callable is found, it is invoked with the argument of the
+		# subnegotiation.  Values should be added to this dictionary if
+		# subnegotiations are to be handled.  By default, no values are
+		# handled.
 		self.subnegotiationMap: dict[bytes, Callable[[bytes], None]] = {}
 
 	@property
@@ -285,12 +344,6 @@ class TelnetProtocol(BaseTelnetProtocol):
 		self.write(IAC + WONT + option)
 
 	def will(self, option: bytes) -> None:
-		"""
-		Indicates our willingness to enable an option.
-
-		Args:
-			option: The option to accept.
-		"""
 		state = self.getOptionState(option)
 		if state.us.negotiating or state.him.negotiating:
 			logger.warning(
@@ -304,12 +357,6 @@ class TelnetProtocol(BaseTelnetProtocol):
 			self._will(option)
 
 	def wont(self, option: bytes) -> None:
-		"""
-		Indicates we are not willing to enable an option.
-
-		Args:
-			option: The option to reject.
-		"""
 		state = self.getOptionState(option)
 		if state.us.negotiating or state.him.negotiating:
 			logger.warning(
@@ -323,12 +370,6 @@ class TelnetProtocol(BaseTelnetProtocol):
 			self._wont(option)
 
 	def do(self, option: bytes) -> None:
-		"""
-		Requests that the peer enable an option.
-
-		Args:
-			option: The option to enable.
-		"""
 		state = self.getOptionState(option)
 		if state.us.negotiating or state.him.negotiating:
 			logger.warning(
@@ -342,12 +383,6 @@ class TelnetProtocol(BaseTelnetProtocol):
 			self._do(option)
 
 	def dont(self, option: bytes) -> None:
-		"""
-		Requests that the peer disable an option.
-
-		Args:
-			option: The option to disable.
-		"""
 		state = self.getOptionState(option)
 		if state.us.negotiating or state.him.negotiating:
 			logger.warning(
@@ -372,13 +407,6 @@ class TelnetProtocol(BaseTelnetProtocol):
 		return self._options[option]
 
 	def requestNegotiation(self, option: bytes, data: bytes) -> None:
-		"""
-		Sends a subnegotiation message to the peer.
-
-		Args:
-			option: The subnegotiation option.
-			data: The payload.
-		"""
 		self.write(IAC + SB + option + escapeIAC(data) + IAC + SE)
 
 	def on_connectionMade(self) -> None:
@@ -485,26 +513,12 @@ class TelnetProtocol(BaseTelnetProtocol):
 			super().on_dataReceived(b"".join(appDataBuffer))
 
 	def on_command(self, command: bytes, option: Union[bytes, None]) -> None:
-		"""
-		Called when a 1 or 2 byte command is received.
-
-		Args:
-			command: The first byte in a 1 or 2 byte negotiation sequence.
-			option: The second byte in a 2 byte negotiation sequence or None.
-		"""
 		if command in self.commandMap:
 			self.commandMap[command](option)
 		else:
 			self.on_unhandledCommand(command, option)
 
 	def on_subnegotiation(self, option: bytes, data: bytes) -> None:
-		"""
-		Called when a subnegotiation is received.
-
-		Args:
-			option: The subnegotiation option.
-			data: The payload.
-		"""
 		if option in self.subnegotiationMap:
 			self.subnegotiationMap[option](data)
 		else:
@@ -651,11 +665,11 @@ class TelnetProtocol(BaseTelnetProtocol):
 	def on_enableLocal(self, option: bytes) -> bool:
 		return False  # Reject all options by default.
 
-	def on_enableRemote(self, option: bytes) -> bool:
-		return False  # Reject all options by default.
-
 	def on_disableLocal(self, option: bytes) -> None:
 		raise NotImplementedError(f"Don't know how to disable local Telnet option {option!r}")
+
+	def on_enableRemote(self, option: bytes) -> bool:
+		return False  # Reject all options by default.
 
 	def on_disableRemote(self, option: bytes) -> None:
 		raise NotImplementedError(f"Don't know how to disable remote Telnet option {option!r}")
