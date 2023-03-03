@@ -670,12 +670,12 @@
         <details class="quote">
           <summary>Source code in <code>mudproto/xml.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">XMLProtocol</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
-	<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Implements the Mume XML protocol.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 
 	<span class="n">states</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">((</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;tag&quot;</span><span class="p">))</span>
-	<span class="sd">&quot;&quot;&quot;Valid states for the state machine.&quot;&quot;&quot;</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;Valid states for the state machine.&quot;&quot;&quot;</span>
 	<span class="n">modes</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
 		<span class="sa">b</span><span class="s2">&quot;room&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;room&quot;</span><span class="p">,</span>
 		<span class="sa">b</span><span class="s2">&quot;/room&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
@@ -692,7 +692,7 @@
 		<span class="sa">b</span><span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;prompt&quot;</span><span class="p">,</span>
 		<span class="sa">b</span><span class="s2">&quot;/prompt&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
 	<span class="p">}</span>
-	<span class="sd">&quot;&quot;&quot;A mapping of XML mode to new XML mode values.&quot;&quot;&quot;</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;A mapping of XML mode to new XML mode values.&quot;&quot;&quot;</span>
 	<span class="n">tintinReplacements</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
 		<span class="sa">b</span><span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;PROMPT:&quot;</span><span class="p">,</span>
 		<span class="sa">b</span><span class="s2">&quot;/prompt&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;:PROMPT&quot;</span><span class="p">,</span>
@@ -709,7 +709,7 @@
 		<span class="sa">b</span><span class="s2">&quot;emote&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;EMOTE:&quot;</span><span class="p">,</span>
 		<span class="sa">b</span><span class="s2">&quot;/emote&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;:EMOTE&quot;</span><span class="p">,</span>
 	<span class="p">}</span>
-	<span class="sd">&quot;&quot;&quot;A mapping of tag to replacement values for Tintin.&quot;&quot;&quot;</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;A mapping of tag to replacement values for Tintin.&quot;&quot;&quot;</span>
 
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
 		<span class="bp">self</span><span class="p">,</span>
@@ -720,7 +720,7 @@
 	<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">outputFormat</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">eventCaller</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">EVENT_CALLER_TYPE</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">eventCaller</span>
-		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>  <span class="c1"># type: ignore[misc]</span>
+		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_tagBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>  <span class="c1"># Used for start and end tag names.</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_textBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>  <span class="c1"># Used for the text between start and end tags.</span>
@@ -732,7 +732,7 @@
 
 	<span class="nd">@property</span>
 	<span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		The state of the state machine.</span>
 
 <span class="sd">		Valid values are in `states`.</span>
@@ -746,7 +746,7 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">value</span>
 
 	<span class="k">def</span> <span class="nf">_handleXMLText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">appDataBuffer</span><span class="p">:</span> <span class="n">MutableSequence</span><span class="p">[</span><span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Handles XML data that is not part of a tag.</span>
 
 <span class="sd">		Args:</span>
@@ -776,7 +776,7 @@
 		<span class="k">return</span> <span class="n">data</span>
 
 	<span class="k">def</span> <span class="nf">_handleXMLTag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">appDataBuffer</span><span class="p">:</span> <span class="n">MutableSequence</span><span class="p">[</span><span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Handles XML data that is part of a tag (I.E. enclosed in &#39;&lt;&gt;&#39;).</span>
 
 <span class="sd">		Args:</span>
@@ -851,7 +851,7 @@
 		<span class="k">pass</span>
 
 	<span class="k">def</span> <span class="nf">callEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-		<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Executes an event using the event caller.</span>
 
 <span class="sd">		Args:</span>
@@ -998,7 +998,7 @@
         <details class="quote">
           <summary>Source code in <code>mudproto/xml.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">callEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-	<span class="sd">&quot;&quot;&quot;</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Executes an event using the event caller.</span>
 
 <span class="sd">	Args:</span>

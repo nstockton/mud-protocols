@@ -263,6 +263,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#development" class="md-nav__link">
+    Development
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -494,6 +501,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#development" class="md-nav__link">
+    Development
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -527,6 +541,19 @@ with improvements by <a href="https://github.com/BeastlyTheos">Ted Cooke.</a></p
 project would not exist otherwise.</p>
 <h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
 <p>Please see the <a href="https://nstockton.github.io/mud-protocols/api" title="MUD Protocols API Reference">API reference</a> for more information.</p>
+<h2 id="development">Development<a class="headerlink" href="#development" title="Permanent link">&para;</a></h2>
+<p>Install the <a href="https://python.org" title="Python Home Page">Python interpreter,</a> and make sure it's in your path.</p>
+<p>After Python is installed, execute the following commands from the top level directory of this repository to install the module dependencies.
+<div class="highlight"><pre><span></span><code>python -m venv .venv
+source .venv/bin/activate
+pip install --upgrade --require-hashes --requirement requirements-poetry.txt
+poetry install --no-ansi
+</code></pre></div></p>
+<p>If you wish to contribute to this project, install the development dependencies with the following commands.
+<div class="highlight"><pre><span></span><code>source .venv/bin/activate
+pre-commit install -t pre-commit
+pre-commit install -t pre-push
+</code></pre></div></p>
 
               
             </article>
