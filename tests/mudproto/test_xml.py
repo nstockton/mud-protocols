@@ -12,7 +12,6 @@ from unittest import TestCase
 # MUD Protocol Modules:
 from mudproto.mpi import MPI_INIT
 from mudproto.telnet_constants import CR, LF
-from mudproto.utils import unescapeXMLBytes
 from mudproto.xml import EVENT_CALLER_TYPE, LT, XMLProtocol
 
 
@@ -35,7 +34,8 @@ class TestXMLProtocol(TestCase):
 		exits: bytes = b"Exits: north." + LF
 		magic: bytes = b"You feel less protected."
 		line: bytes = b"Hello world!"
-		prompt: bytes = b"*f CW&gt;"
+		self.rawPrompt: bytes = b"<prompt>!# CW A1 M1 P8 S3 XP:<status>317k</status>&gt;</prompt>"
+		self.prompt: bytes = b"!# CW A1 M1 P8 S3 XP:317k>"
 		self.rawData: bytes = (
 			b"<movement dir=south/>"
 			+ b'<room area="Lorien" terrain="forest"><name>' + name + b"</name>" + LF
@@ -45,7 +45,7 @@ class TestXMLProtocol(TestCase):
 			+ b"<exits>" + exits + b"</exits></room>" + LF
 			+ b"<magic>" + magic + b"</magic>" + LF
 			+ line + LF
-			+ b"<prompt>" + prompt + b"</prompt>"
+			+ self.rawPrompt
 		)
 		self.normalData: bytes = (
 			name + LF
@@ -54,7 +54,7 @@ class TestXMLProtocol(TestCase):
 			+ exits + LF
 			+ magic + LF
 			+ line + LF
-			+ unescapeXMLBytes(prompt)
+			+ self.prompt
 		)
 		self.tintinData: bytes = (
 			b"NAME:" + name + b":NAME" + LF
@@ -63,7 +63,7 @@ class TestXMLProtocol(TestCase):
 			+ exits + LF
 			+ magic + LF
 			+ line + LF
-			+ b"PROMPT:" + unescapeXMLBytes(prompt) + b":PROMPT"
+			+ b"PROMPT:" + self.prompt + b":PROMPT"
 		)
 		# fmt: on
 		self.expectedEvents: list[EVENT_CALLER_TYPE] = [
@@ -76,7 +76,7 @@ class TestXMLProtocol(TestCase):
 			("dynamic", dynamic),
 			("magic", magic),
 			("line", line),
-			("prompt", unescapeXMLBytes(prompt)),
+			("prompt", self.prompt),
 		]
 		self.gameReceives: bytearray = bytearray()
 		self.playerReceives: bytearray = bytearray()

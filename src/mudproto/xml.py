@@ -126,7 +126,8 @@ class XMLProtocol(Protocol):
 			The remaining data.
 		"""
 		appData, separator, data = data.partition(LT)
-		if self.outputFormat == "raw" or not self._gratuitous:
+		if not (self._gratuitous and self.outputFormat != "raw"):
+			# Gratuitous text should be omitted unless format is 'raw'.
 			appDataBuffer.append(appData)
 		if self._mode is None:
 			self._lineBuffer.extend(appData)
@@ -160,20 +161,21 @@ class XMLProtocol(Protocol):
 		if not separator:
 			# End of tag not reached yet.
 			return data
-		tag = bytes(self._tagBuffer)
+		tag: bytes = bytes(self._tagBuffer).strip()
 		self._tagBuffer.clear()
-		text = bytes(self._textBuffer)
-		self._textBuffer.clear()
+		baseTag: bytes = tag.replace(b"/", b"", 1) if tag.startswith(b"/") else tag
+		isStatusTag: bool = baseTag == b"status"
+		text: bytes = bytes(self._textBuffer)
+		if not isStatusTag:
+			self._textBuffer.clear()
 		if self.outputFormat == "raw":
 			appDataBuffer.append(LT + tag + GT)
 		elif self.outputFormat == "tintin" and not self._gratuitous:
 			appDataBuffer.append(self.tintinReplacements.get(tag, b""))
 		if self._mode is None and tag.startswith(b"movement"):
 			self.callEvent("movement", unescapeXMLBytes(tag[13:-1]))
-		elif tag == b"gratuitous":
-			self._gratuitous = True
-		elif tag == b"/gratuitous":
-			self._gratuitous = False
+		elif baseTag == b"gratuitous":
+			self._gratuitous = not tag.startswith(b"/")
 		elif tag.startswith(b"room"):
 			self._inRoom = True
 			self._mode = self.modes[b"room"]
