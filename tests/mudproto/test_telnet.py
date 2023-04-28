@@ -37,7 +37,9 @@ class TestTelnetProtocol(TestCase):
 	def setUp(self) -> None:
 		self.gameReceives: bytearray = bytearray()
 		self.playerReceives: bytearray = bytearray()
-		self.telnet: TelnetProtocol = TelnetProtocol(self.gameReceives.extend, self.playerReceives.extend)
+		self.telnet: TelnetProtocol = TelnetProtocol(
+			self.gameReceives.extend, self.playerReceives.extend, isClient=True
+		)
 
 	def tearDown(self) -> None:
 		self.telnet.on_connectionLost()

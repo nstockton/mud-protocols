@@ -32,10 +32,12 @@ class TestGMCPMixIn(TestCase):
 			self.gameReceives.extend,
 			self.playerReceives.extend,
 			gmcpClientInfo=("test", "1.0"),
+			isClient=True,
 		)
 		self.telnetServer: Telnet = Telnet(
 			self.gameReceives.extend,
 			self.playerReceives.extend,
+			isClient=False,
 		)
 
 	def tearDown(self) -> None:

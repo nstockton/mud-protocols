@@ -47,21 +47,14 @@ class GMCPMixIn(Protocol, BaseTelnetProtocol):
 		Args:
 			*args: Positional arguments to be passed to the parent constructor.
 			gmcpClientInfo: A tuple containing client name and version to send peer during GMCP Hello.
-				If left undefined, act as a GMCP server.
-				If defined, act as a GMCP client.
 			**kwargs: Key-word only arguments to be passed to the parent constructor.
 		"""
 		super().__init__(*args, **kwargs)
 		self._gmcpClientInfo: dict[str, str] = {}
-		self._isGMCPClient: bool = False
-		self._isGMCPServer: bool = False
 		if gmcpClientInfo is not None:
-			self._isGMCPClient = True
 			client, version = gmcpClientInfo
 			self._gmcpClientInfo["client"] = client
 			self._gmcpClientInfo["version"] = version
-		else:
-			self._isGMCPServer = True
 		self._isGMCPInitialized: bool = False  # Is set to True after GMCP Hello.
 		self._gmcpSupportedPackages: dict[str, int] = {}  # Keys are lower case.
 		self.subnegotiationMap[GMCP] = self.on_gmcp
@@ -176,7 +169,7 @@ class GMCPMixIn(Protocol, BaseTelnetProtocol):
 		package, value = match.groups()
 		logger.debug(f"Received from Peer: GMCP Package: {package!r}, value: {value!r}.")
 		packageAsStr: str = str(package, "utf-8").lower()
-		if self._isGMCPServer:
+		if self.isServer:
 			if packageAsStr == "core.hello":
 				if self._isGMCPInitialized:  # GMCP Hello was already received.
 					logger.warning("Received GMCP Hello from peer after initial Hello was already received.")
@@ -193,7 +186,7 @@ class GMCPMixIn(Protocol, BaseTelnetProtocol):
 
 	def on_connectionMade(self) -> None:
 		super().on_connectionMade()
-		if self._isGMCPServer:
+		if self.isServer:
 			logger.debug("We offer to enable GMCP.")
 			self.will(GMCP)
 
@@ -223,7 +216,7 @@ class GMCPMixIn(Protocol, BaseTelnetProtocol):
 
 	def on_optionEnabled(self, option: bytes) -> None:
 		if option == GMCP:
-			if self._isGMCPClient:
+			if self.isClient:
 				# Hello should be the first thing sent before further GMCP negotiation.
 				self.gmcpHello()
 				self._isGMCPInitialized = True

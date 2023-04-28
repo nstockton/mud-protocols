@@ -28,10 +28,12 @@ class Manager(object):
 		writer: Callable[[bytes], None],
 		receiver: Callable[[bytes], None],
 		*,
+		isClient: bool,
 		promptTerminator: Optional[bytes] = None,
 	) -> None:
 		self._writer: Callable[[bytes], None] = writer
 		self._receiver: Callable[[bytes], None] = receiver
+		self._isClient: bool = isClient
 		self.promptTerminator: bytes
 		if promptTerminator is None:
 			self.promptTerminator = IAC + GA
@@ -46,6 +48,16 @@ class Manager(object):
 		self._writeBuffer: list[bytes] = []
 		self._handlers: list[Protocol] = []
 		self._isConnected: bool = False
+
+	@property
+	def isClient(self) -> bool:
+		"""True if acting as a client, False otherwise."""
+		return self._isClient
+
+	@property
+	def isServer(self) -> bool:
+		"""True if acting as a server, False otherwise."""
+		return not self._isClient
 
 	@property
 	def isConnected(self) -> bool:
@@ -149,7 +161,7 @@ class Manager(object):
 		for i in self._handlers:
 			if isinstance(i, handler):
 				raise ValueError("Already registered.")
-		instance: Protocol = handler(self.write, self._receiver, **kwargs)
+		instance: Protocol = handler(self.write, self._receiver, isClient=self._isClient, **kwargs)
 		if self._handlers:
 			self._handlers[-1]._receiver = instance.on_dataReceived
 		self._handlers.append(instance)

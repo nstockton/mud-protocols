@@ -40,7 +40,7 @@ class TestManager(TestCase):
 		self.gameReceives: bytearray = bytearray()
 		self.playerReceives: bytearray = bytearray()
 		self.manager: Manager = Manager(
-			self.gameReceives.extend, self.playerReceives.extend, promptTerminator=CR_LF
+			self.gameReceives.extend, self.playerReceives.extend, isClient=True, promptTerminator=CR_LF
 		)
 
 	def tearDown(self) -> None:
@@ -58,9 +58,17 @@ class TestManager(TestCase):
 		return playerReceives, gameReceives
 
 	def testManagerInit(self) -> None:
-		manager: Manager = Manager(lambda *args: None, lambda *args: None, promptTerminator=None)
+		manager: Manager = Manager(
+			lambda *args: None, lambda *args: None, isClient=True, promptTerminator=None
+		)
 		self.assertEqual(manager.promptTerminator, IAC + GA)
 		del manager
+
+	def testManagerIsClient(self) -> None:
+		self.assertEqual(self.manager.isClient, self.manager._isClient)
+
+	def testManagerIsServer(self) -> None:
+		self.assertEqual(self.manager.isServer, not self.manager._isClient)
 
 	@patch("mudproto.manager.Manager.disconnect")
 	@patch("mudproto.manager.Manager.connect")
@@ -114,7 +122,9 @@ class TestManager(TestCase):
 	def testManagerRegister(self) -> None:
 		with self.assertRaises(ValueError):
 			# Handler class required, not instance.
-			self.manager.register(FakeProtocol(lambda *args: None, lambda *args: None))  # type: ignore[arg-type]
+			self.manager.register(
+				FakeProtocol(lambda *args: None, lambda *args: None, isClient=True)  # type: ignore[arg-type]
+			)
 		self.manager.register(FakeProtocol)
 		with self.assertRaises(ValueError):
 			self.manager.register(FakeProtocol)
@@ -131,7 +141,7 @@ class TestManager(TestCase):
 			self.manager.unregister(FakeProtocol)  # type: ignore[arg-type]
 		with self.assertRaises(ValueError):
 			# Calling Manager.unregister on an instance that was not registered.
-			self.manager.unregister(MockProtocol(lambda *args: None, lambda *args: None))
+			self.manager.unregister(MockProtocol(lambda *args: None, lambda *args: None, isClient=True))
 		self.manager.register(MockProtocol)
 		instance: Protocol = self.manager._handlers[-1]
 		self.assertIsNot(self.manager._handlers[0]._receiver, instance._receiver)

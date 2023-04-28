@@ -43,7 +43,7 @@ class TestMCCPMixIn(TestCase):
 	def setUp(self) -> None:
 		self.gameReceives: bytearray = bytearray()
 		self.playerReceives: bytearray = bytearray()
-		self.telnet: Telnet = Telnet(self.gameReceives.extend, self.playerReceives.extend)
+		self.telnet: Telnet = Telnet(self.gameReceives.extend, self.playerReceives.extend, isClient=True)
 
 	def tearDown(self) -> None:
 		del self.telnet

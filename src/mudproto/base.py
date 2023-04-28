@@ -23,6 +23,14 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 
 class BaseProtocol(TypeProtocol):
+	@property
+	def isClient(self) -> bool:
+		"""True if acting as a client, False otherwise."""
+
+	@property
+	def isServer(self) -> bool:
+		"""True if acting as a server, False otherwise."""
+
 	def write(self, data: bytes) -> None:
 		"""
 		Writes data to peer.
@@ -48,10 +56,24 @@ class BaseProtocol(TypeProtocol):
 
 class Protocol(BaseProtocol):
 	def __init__(
-		self, writer: Callable[[bytes], None], receiver: Callable[[bytes], None], **kwargs: Any
+		self,
+		writer: Callable[[bytes], None],
+		receiver: Callable[[bytes], None],
+		*,
+		isClient: bool,
+		**kwargs: Any,
 	) -> None:
 		self._writer: Callable[[bytes], None] = writer
 		self._receiver: Callable[[bytes], None] = receiver
+		self._isClient: bool = isClient
+
+	@property
+	def isClient(self) -> bool:
+		return self._isClient
+
+	@property
+	def isServer(self) -> bool:
+		return not self._isClient
 
 	def write(self, data: bytes) -> None:
 		self._writer(data)

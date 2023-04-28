@@ -108,7 +108,7 @@ class TestMPIProtocol(TestCase):
 		self.gameReceives: bytearray = bytearray()
 		self.playerReceives: bytearray = bytearray()
 		self.mpi: MPIProtocol = MPIProtocol(
-			self.gameReceives.extend, self.playerReceives.extend, outputFormat="normal"
+			self.gameReceives.extend, self.playerReceives.extend, outputFormat="normal", isClient=True
 		)
 
 	def tearDown(self) -> None:
@@ -334,7 +334,7 @@ class TestEditorPostprocessor(TestCase):
 		self.gameReceives: bytearray = bytearray()
 		self.playerReceives: bytearray = bytearray()
 		self.MPIProtocol = MPIProtocol(
-			self.gameReceives.extend, self.playerReceives.extend, outputFormat="normal"
+			self.gameReceives.extend, self.playerReceives.extend, outputFormat="normal", isClient=True
 		)
 		self.postprocess = self.MPIProtocol.postprocess
 		self.getParagraphs = self.MPIProtocol.getParagraphs

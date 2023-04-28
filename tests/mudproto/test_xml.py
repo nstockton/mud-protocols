@@ -86,6 +86,7 @@ class TestXMLProtocol(TestCase):
 			self.playerReceives.extend,
 			outputFormat="normal",
 			eventCaller=self.receivedEvents.append,
+			isClient=True,
 		)
 
 	def tearDown(self) -> None:
