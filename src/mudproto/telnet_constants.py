@@ -59,6 +59,7 @@ Attributes:
 Mud Specific Options
 
 Attributes:
+	AARDWOLF102: Aardwolf 102 Protocol.
 	ATCP: Achaea Telnet Client Protocol.
 	GMCP: Generic Mud Communication Protocol.
 	MCCP1: Mud Client Compression Protocol V1.
@@ -78,6 +79,10 @@ from __future__ import annotations
 
 # Protocol specifications.
 
+# Aardwolf 102 Protocol:
+# https://www.aardwolf.com/blog/2008/07/10/telnet-negotiation-control-mud-client-interaction
+# https://www.gammon.com.au/forum/?id=8775
+# https://wiki.mudlet.org/w/Manual:Supported_Protocols#Aardwolf.E2.80.99s_102_subchannel
 # Achaea Telnet Client Protocol: http://www.ironrealms.com/rapture/manual/files/FeatATCP-txt.html
 # End of Record: https://mudhalla.net/tintin/protocols/eor
 # Generic Mud Communication Protocol: https://mudhalla.net/tintin/protocols/gmcp
@@ -223,6 +228,7 @@ MCCP3: bytes = describe("MCCP3", 87)  # Mud Client Compression Protocol V3.
 MSP: bytes = describe("MSP", 90)  # Mud Sound Protocol.
 MXP: bytes = describe("MXP", 91)  # Mud Extention Protocol.
 ZMP: bytes = describe("ZMP", 93)  # Zenith Mud Protocol.
+AARDWOLF102: bytes = describe("AARDWOLF102", 102)  # Aardwolf 102 Protocol.
 ATCP: bytes = describe("ATCP", 200)  # Achaea Telnet Client Protocol.
 GMCP: bytes = describe("GMCP", 201)  # Generic Mud Communication Protocol.
 
