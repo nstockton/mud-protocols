@@ -148,6 +148,17 @@ class BaseTelnetProtocol(BaseProtocol, TypeProtocol):
 			option: The option to disable.
 		"""
 
+	def getOptionState(self, option: bytes) -> _OptionState:
+		"""
+		Gets the state of a Telnet option.
+
+		Args:
+			option: The option to get state.
+
+		Returns:
+			An object containing the option state.
+		"""
+
 	def requestNegotiation(self, option: bytes, data: bytes) -> None:
 		"""
 		Sends a subnegotiation message to the peer.
@@ -396,12 +407,6 @@ class TelnetProtocol(Protocol, BaseTelnetProtocol):
 			self._dont(option)
 
 	def getOptionState(self, option: bytes) -> _OptionState:
-		"""
-		Gets the state of a Telnet option.
-
-		Returns:
-			An object containing the option state.
-		"""
 		if option not in self._options:
 			self._options[option] = _OptionState()
 		return self._options[option]

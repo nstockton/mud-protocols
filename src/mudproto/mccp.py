@@ -14,7 +14,7 @@ from __future__ import annotations
 # Built-in Modules:
 import logging
 import zlib
-from typing import Any
+from typing import Any, Union
 
 # Local Modules:
 from .base import Protocol
@@ -32,20 +32,23 @@ class MCCPMixIn(Protocol, BaseTelnetProtocol):
 		super().__init__(*args, **kwargs)
 		self.subnegotiationMap[MCCP1] = lambda *args: None
 		self.subnegotiationMap[MCCP2] = lambda *args: None
-		self._isCompressed: bool = False
-		self._usingMCCp1: bool = False
-		self._usingMCCp2: bool = False
+		self._compressionEnabled: bool = False
+		self._mccpVersion: Union[int, None] = None
 		self._compressedInputBuffer: bytearray = bytearray()
 		self._decompressor: Any = None
 
+	def disableMCCP(self) -> None:
+		self._mccpVersion = None
+		self._compressionEnabled = False
+		self._decompressor = None
+
 	def on_dataReceived(self, data: bytes) -> None:
-		outputBuffer: list[bytes] = []
 		inputBuffer: bytearray = self._compressedInputBuffer
 		inputBuffer.extend(data)
 		while inputBuffer:
-			if self._isCompressed:
+			if self._compressionEnabled:
 				# Compressed data:
-				outputBuffer.append(self._decompressor.decompress(inputBuffer))
+				super().on_dataReceived(self._decompressor.decompress(inputBuffer))
 				inputBuffer.clear()
 				if self._decompressor.unused_data:
 					# Uncompressed data following the compressed data, likely due to the server terminating compression.
@@ -53,19 +56,19 @@ class MCCPMixIn(Protocol, BaseTelnetProtocol):
 						"received uncompressed data while compression enabled. Disabling compression."
 					)
 					inputBuffer.extend(self._decompressor.unused_data)
-					self._isCompressed = False
-					self._usingMCCp1 = False
-					self._usingMCCp2 = False
-					del self._decompressor
-					self._decompressor = None
+					state = self.getOptionState(MCCP1 if self._mccpVersion == 1 else MCCP2)
+					state.him.enabled = False
+					state.him.negotiating = False
+					self.disableMCCP()
 					continue  # Process the remaining uncompressed data.
 				break  # inputBuffer is empty, no need to loop again.
 			# Uncompressed data:
 			iacIndex: int = inputBuffer.find(IAC)
-			if iacIndex >= 0:
-				# An IAC byte was found.
-				outputBuffer.append(inputBuffer[:iacIndex])
-				del inputBuffer[:iacIndex]
+			if self._mccpVersion is not None and iacIndex >= 0:
+				# MCCP was negotiated on, and an IAC byte was found.
+				if iacIndex > 0:
+					super().on_dataReceived(bytes(inputBuffer[:iacIndex]))
+					del inputBuffer[:iacIndex]
 				if len(inputBuffer) == 1:
 					# Partial IAC sequence.
 					break
@@ -76,39 +79,36 @@ class MCCPMixIn(Protocol, BaseTelnetProtocol):
 						break
 					elif inputBuffer[:seIndex] in (IAC + SB + MCCP1 + WILL, IAC + SB + MCCP2 + IAC):
 						# The server enabled compression. Subsequent data will be compressed.
-						self._isCompressed = True
+						self._compressionEnabled = True
 						self._decompressor = zlib.decompressobj(zlib.MAX_WBITS)
 						logger.debug("Peer notifies us that subsequent data will be compressed.")
 					else:
 						# We don't care about other subnegotiations, pass it on.
-						outputBuffer.append(inputBuffer[: seIndex + 1])
+						super().on_dataReceived(bytes(inputBuffer[: seIndex + 1]))
 					del inputBuffer[: seIndex + 1]
 				else:
 					# We don't care about other IAC sequences, pass it on.
-					outputBuffer.append(inputBuffer[:2])
+					super().on_dataReceived(bytes(inputBuffer[:2]))
 					del inputBuffer[:2]
 			else:
-				# No IAC was found.
-				outputBuffer.append(inputBuffer.copy())
+				# MCCP was not negotiated on, or no IAC was found.
+				super().on_dataReceived(bytes(inputBuffer))
 				inputBuffer.clear()
-		if outputBuffer:
-			super().on_dataReceived(b"".join(outputBuffer))
 
 	def on_enableRemote(self, option: bytes) -> bool:
-		if option == MCCP1:
-			# Only enable MCCP1 if MCCP2 is not enabled.
-			self._usingMCCp1 = not self._usingMCCp2
-			logger.debug(f"MCCP1 negotiation {'enabled' if self._usingMCCp1 else 'disabled'}.")
-			return self._usingMCCp1
-		elif option == MCCP2:
-			# Only enable MCCP2 if MCCP1 is not enabled.
-			self._usingMCCp2 = not self._usingMCCp1
-			logger.debug(f"MCCP2 negotiation {'enabled' if self._usingMCCp2 else 'disabled'}.")
-			return self._usingMCCp2
+		if option in (MCCP1, MCCP2):
+			if self._mccpVersion is None:
+				self._mccpVersion = 1 if option == MCCP1 else 2
+				logger.debug(f"MCCP{self._mccpVersion} negotiation enabled.")
+				return True
+			return False
 		return bool(super().on_enableRemote(option))  # pragma: no cover
 
 	def on_disableRemote(self, option: bytes) -> None:
 		if option in (MCCP1, MCCP2):
-			logger.debug(f"MCCP{'1' if option == MCCP1 else '2'} negotiation disabled.")
+			logger.debug(
+				f"MCCP{self._mccpVersion if self._mccpVersion is not None else ''} negotiation disabled."
+			)
+			self.disableMCCP()
 			return None
 		super().on_disableRemote(option)  # pragma: no cover

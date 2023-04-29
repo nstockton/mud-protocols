@@ -63,11 +63,16 @@ class TestMCCPMixIn(TestCase):
 		self.telnet._compressedInputBuffer.clear()
 		return playerReceives, gameReceives
 
-	def test_on_dataReceived(self) -> None:
+	def test_on_dataReceived_before_MCCP_negotiated_on(self) -> None:
 		# Insure uncompressed data is passed on.
 		data: bytes = b"Hello World!"
+		self.assertIsNone(self.telnet._mccpVersion)
 		self.assertEqual(self.parse(data + CR_LF), (data + CR_LF, b""))
-		# Note that the IAC is buffered while looking for MCCP negotiations.
+
+	def test_on_dataReceived_when_MCCP_negotiated_on_and_before_compression_enabled(self) -> None:
+		data: bytes = b"Hello World!"
+		# Note that the IAC is buffered after MCCP is negotiated on.
+		self.telnet._mccpVersion = 1
 		self.assertEqual(self.parse(data + IAC), (data, b""))
 		self.assertEqual(self.parse(data + CR + IAC), (data + CR, b""))
 		self.assertEqual(self.parse(data + CR + IAC_IAC), (data + CR + IAC_IAC, b""))
@@ -95,32 +100,54 @@ class TestMCCPMixIn(TestCase):
 			self.parse(data + IAC + SB + ECHO + b"something" + IAC_IAC + IAC + SE),
 			(data + IAC + SB + ECHO + b"something" + IAC_IAC + IAC + SE, b""),
 		)
-		# Insure compression is enabled on our end when enabled by the server.
-		self.assertFalse(self.telnet._isCompressed)
+
+	def test_on_dataReceived_when_MCCP1_negotiated_on_and_after_compression_enabled(self) -> None:
+		data: bytes = b"Hello World!"
+		state = self.telnet.getOptionState(MCCP1)
+		state.him.enabled = True
+		state.him.negotiating = False
+		self.telnet._mccpVersion = 1
+		self.assertFalse(self.telnet._compressionEnabled)
 		with self.assertLogs(mccpLogger, "DEBUG"):
 			self.assertEqual(self.parse(data + IAC + SB + MCCP1 + WILL + SE), (data, b""))
-		self.assertTrue(self.telnet._isCompressed)
-		self.telnet._isCompressed = False
+		self.assertTrue(self.telnet._compressionEnabled)
+
+	def test_on_dataReceived_when_MCCP2_negotiated_on_and_after_compression_enabled(self) -> None:
+		data: bytes = b"Hello World!"
+		state = self.telnet.getOptionState(MCCP2)
+		state.him.enabled = True
+		state.him.negotiating = False
+		self.telnet._mccpVersion = 2
+		self.assertFalse(self.telnet._compressionEnabled)
 		with self.assertLogs(mccpLogger, "DEBUG"):
 			self.assertEqual(self.parse(data + IAC + SB + MCCP2 + IAC + SE), (data, b""))
-		self.assertTrue(self.telnet._isCompressed)
-		# Insure we can actually decompress the data.
+		self.assertTrue(self.telnet._compressionEnabled)
+
+	def test_on_dataReceived_when_compression_enabled(self) -> None:
+		data: bytes = b"Hello World!"
+		state = self.telnet.getOptionState(MCCP2)
+		state.him.enabled = True
+		state.him.negotiating = False
+		self.telnet._mccpVersion = 2
+		with self.assertLogs(mccpLogger, "DEBUG"):
+			self.parse(data + IAC + SB + MCCP2 + IAC + SE)
 		compressor: Any = compressobj(Z_DEFAULT_COMPRESSION, DEFLATED, MAX_WBITS)
 		compressed: bytes = compressor.compress(data)
 		self.assertEqual(self.parse(compressed + compressor.flush(Z_SYNC_FLUSH)), (data, b""))
 		# Insure that decompression is disabled when Z_FINISH is sent by the server.
 		with self.assertLogs(mccpLogger, "DEBUG"):
 			self.assertEqual(self.parse(compressor.flush(Z_FINISH) + data), (data, b""))
-		self.assertFalse(self.telnet._isCompressed)
+		self.assertFalse(self.telnet._compressionEnabled)
+		self.assertFalse(state.him.enabled)
+		self.assertFalse(state.him.negotiating)
 
 	def test_on_enableRemote(self) -> None:
-		self.assertFalse(self.telnet._usingMCCp1)
-		self.assertFalse(self.telnet._usingMCCp2)
+		self.assertIsNone(self.telnet._mccpVersion)
 		# MCCP1 is only allowed if MCCP2 wasn't previously negotiated.
 		with self.assertLogs(mccpLogger, "DEBUG"):
 			self.assertTrue(self.telnet.on_enableRemote(MCCP1))
 			self.assertFalse(self.telnet.on_enableRemote(MCCP2))
-		self.telnet._usingMCCp1 = False
+		self.telnet._mccpVersion = None
 		# MCCP2 is only allowed if MCCP1 wasn't previously negotiated.
 		with self.assertLogs(mccpLogger, "DEBUG"):
 			self.assertTrue(self.telnet.on_enableRemote(MCCP2))
