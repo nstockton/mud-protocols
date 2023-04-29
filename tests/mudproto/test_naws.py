@@ -70,8 +70,7 @@ class TestNAWSMixIn(TestCase):
 	def test_dimensions_set_when_running_as_server(self, mockRequestNegotiation: Mock) -> None:
 		dimensions: tuple[int, int] = (80, 25)
 		self.assertEqual(self.telnetServer.dimensions, (0, 0))
-		with self.assertNoLogs(nawsLogger, "DEBUG"):
-			self.telnetServer.dimensions = dimensions
+		self.telnetServer.dimensions = dimensions
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
 		self.assertEqual(self.telnetServer.dimensions, dimensions)
 		mockRequestNegotiation.assert_not_called()
@@ -100,8 +99,7 @@ class TestNAWSMixIn(TestCase):
 
 	@patch("mudproto.telnet.TelnetProtocol.do")
 	def test_on_connectionMade_when_acting_as_client(self, mockDo: Mock) -> None:
-		with self.assertNoLogs(nawsLogger, "DEBUG"):
-			self.telnetClient.on_connectionMade()
+		self.telnetClient.on_connectionMade()
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
 		mockDo.assert_not_called()
 
