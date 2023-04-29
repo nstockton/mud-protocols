@@ -61,7 +61,7 @@ class MCCPMixIn(Protocol, BaseTelnetProtocol):
 					state.him.negotiating = False
 					self.disableMCCP()
 					continue  # Process the remaining uncompressed data.
-				break  # inputBuffer is empty, no need to loop again.
+				return None  # inputBuffer is empty, no need to loop again.
 			# Uncompressed data:
 			iacIndex: int = inputBuffer.find(IAC)
 			if self._mccpVersion is not None and iacIndex >= 0:
@@ -71,12 +71,12 @@ class MCCPMixIn(Protocol, BaseTelnetProtocol):
 					del inputBuffer[:iacIndex]
 				if len(inputBuffer) == 1:
 					# Partial IAC sequence.
-					break
+					return None
 				elif inputBuffer[1] == SB[0]:
 					seIndex: int = inputBuffer.find(SE)
 					if seIndex < 0 or inputBuffer[seIndex - 1 : seIndex] not in (IAC, WILL):
 						# Partial subnegotiation sequence.
-						break
+						return None
 					elif inputBuffer[:seIndex] in (IAC + SB + MCCP1 + WILL, IAC + SB + MCCP2 + IAC):
 						# The server enabled compression. Subsequent data will be compressed.
 						self._compressionEnabled = True
