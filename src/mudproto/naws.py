@@ -39,17 +39,17 @@ class NAWSMixIn(Protocol, BaseTelnetProtocol):
 		"""
 		super().__init__(*args, **kwargs)
 		self.subnegotiationMap[NAWS] = self.on_naws
-		self._dimensions: tuple[int, int] = (0, 0)  # Width, height.
+		self._nawsDimensions: tuple[int, int] = (0, 0)  # Width, height.
 
 	@property
-	def dimensions(self) -> tuple[int, int]:
-		return self._dimensions
+	def nawsDimensions(self) -> tuple[int, int]:
+		return self._nawsDimensions
 
-	@dimensions.setter
-	def dimensions(self, value: tuple[int, int]) -> None:
+	@nawsDimensions.setter
+	def nawsDimensions(self, value: tuple[int, int]) -> None:
 		if value[0] < 0 or value[1] < 0:
 			raise ValueError("Width and height must not be less than 0.")
-		self._dimensions = value
+		self._nawsDimensions = value
 		if self.isClient:
 			# NAWS is negotiated with 16-bit words.
 			width: bytes = int.to_bytes(value[0], length=2, byteorder="big", signed=False)
@@ -74,7 +74,7 @@ class NAWSMixIn(Protocol, BaseTelnetProtocol):
 			width: int = int.from_bytes(data[:2], byteorder="big", signed=False)
 			height: int = int.from_bytes(data[2:], byteorder="big", signed=False)
 			logger.debug(f"Received window size from peer: width = {width}, height = {height}.")
-			self.dimensions = (width, height)
+			self.nawsDimensions = (width, height)
 
 	def on_connectionMade(self) -> None:
 		super().on_connectionMade()

@@ -45,34 +45,34 @@ class TestNAWSMixIn(TestCase):
 		self.playerReceives.clear()
 
 	@patch("mudproto.telnet.TelnetProtocol.requestNegotiation")
-	def test_dimensions_set_when_invalid_value(self, mockRequestNegotiation: Mock) -> None:
-		self.assertEqual(self.telnetClient.dimensions, (0, 0))
+	def test_nawsDimensions_set_when_invalid_value(self, mockRequestNegotiation: Mock) -> None:
+		self.assertEqual(self.telnetClient.nawsDimensions, (0, 0))
 		with self.assertRaises(ValueError):
-			self.telnetClient.dimensions = (-1, 0)
+			self.telnetClient.nawsDimensions = (-1, 0)
 		with self.assertRaises(ValueError):
-			self.telnetClient.dimensions = (0, -1)
+			self.telnetClient.nawsDimensions = (0, -1)
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		self.assertEqual(self.telnetClient.dimensions, (0, 0))
+		self.assertEqual(self.telnetClient.nawsDimensions, (0, 0))
 		mockRequestNegotiation.assert_not_called()
 
 	@patch("mudproto.telnet.TelnetProtocol.requestNegotiation")
-	def test_dimensions_set_when_running_as_client(self, mockRequestNegotiation: Mock) -> None:
-		dimensions: tuple[int, int] = (80, 25)
+	def test_nawsDimensions_set_when_running_as_client(self, mockRequestNegotiation: Mock) -> None:
+		nawsDimensions: tuple[int, int] = (80, 25)
 		payload: bytes = b"\x00\x50\x00\x19"
-		self.assertEqual(self.telnetClient.dimensions, (0, 0))
+		self.assertEqual(self.telnetClient.nawsDimensions, (0, 0))
 		with self.assertLogs(nawsLogger, "DEBUG"):
-			self.telnetClient.dimensions = dimensions
+			self.telnetClient.nawsDimensions = nawsDimensions
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		self.assertEqual(self.telnetClient.dimensions, dimensions)
+		self.assertEqual(self.telnetClient.nawsDimensions, nawsDimensions)
 		mockRequestNegotiation.assert_called_once_with(NAWS, payload)
 
 	@patch("mudproto.telnet.TelnetProtocol.requestNegotiation")
-	def test_dimensions_set_when_running_as_server(self, mockRequestNegotiation: Mock) -> None:
-		dimensions: tuple[int, int] = (80, 25)
-		self.assertEqual(self.telnetServer.dimensions, (0, 0))
-		self.telnetServer.dimensions = dimensions
+	def test_nawsDimensions_set_when_running_as_server(self, mockRequestNegotiation: Mock) -> None:
+		nawsDimensions: tuple[int, int] = (80, 25)
+		self.assertEqual(self.telnetServer.nawsDimensions, (0, 0))
+		self.telnetServer.nawsDimensions = nawsDimensions
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		self.assertEqual(self.telnetServer.dimensions, dimensions)
+		self.assertEqual(self.telnetServer.nawsDimensions, nawsDimensions)
 		mockRequestNegotiation.assert_not_called()
 
 	def test_on_naws_when_running_as_client(self) -> None:
@@ -80,22 +80,22 @@ class TestNAWSMixIn(TestCase):
 		with self.assertLogs(nawsLogger, "WARNING"):
 			self.telnetClient.on_naws(payload)
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		self.assertEqual(self.telnetClient.dimensions, (0, 0))
+		self.assertEqual(self.telnetClient.nawsDimensions, (0, 0))
 
 	def test_on_naws_when_running_as_server_and_invalid_data(self) -> None:
 		with self.assertLogs(nawsLogger, "WARNING"):
 			self.telnetServer.on_naws(b"**junk**")
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		self.assertEqual(self.telnetServer.dimensions, (0, 0))
+		self.assertEqual(self.telnetServer.nawsDimensions, (0, 0))
 
 	def test_on_naws_when_running_as_server_and_valid_data(self) -> None:
-		dimensions: tuple[int, int] = (80, 25)
+		nawsDimensions: tuple[int, int] = (80, 25)
 		payload: bytes = b"\x00\x50\x00\x19"
-		self.assertEqual(self.telnetServer.dimensions, (0, 0))
+		self.assertEqual(self.telnetServer.nawsDimensions, (0, 0))
 		with self.assertLogs(nawsLogger, "DEBUG"):
 			self.telnetServer.on_naws(payload)
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		self.assertEqual(self.telnetServer.dimensions, dimensions)
+		self.assertEqual(self.telnetServer.nawsDimensions, nawsDimensions)
 
 	@patch("mudproto.telnet.TelnetProtocol.do")
 	def test_on_connectionMade_when_acting_as_client(self, mockDo: Mock) -> None:
