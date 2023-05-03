@@ -330,6 +330,20 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#mudproto.charset.CharsetMixIn.isClient" class="md-nav__link">
+    isClient
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.charset.CharsetMixIn.isServer" class="md-nav__link">
+    isServer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.charset.CharsetMixIn.do" class="md-nav__link">
     do()
   </a>
@@ -339,6 +353,13 @@
           <li class="md-nav__item">
   <a href="#mudproto.charset.CharsetMixIn.dont" class="md-nav__link">
     dont()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.charset.CharsetMixIn.getOptionState" class="md-nav__link">
+    getOptionState()
   </a>
   
 </li>
@@ -630,6 +651,20 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#mudproto.charset.CharsetMixIn.isClient" class="md-nav__link">
+    isClient
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.charset.CharsetMixIn.isServer" class="md-nav__link">
+    isServer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.charset.CharsetMixIn.do" class="md-nav__link">
     do()
   </a>
@@ -639,6 +674,13 @@
           <li class="md-nav__item">
   <a href="#mudproto.charset.CharsetMixIn.dont" class="md-nav__link">
     dont()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.charset.CharsetMixIn.getOptionState" class="md-nav__link">
+    getOptionState()
   </a>
   
 </li>
@@ -939,6 +981,54 @@
 
 
 
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="mudproto.charset.CharsetMixIn.isClient" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+<a href="#mudproto.charset.CharsetMixIn.isClient" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>True if acting as a client, False otherwise.</p>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="mudproto.charset.CharsetMixIn.isServer" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isServer</span><span class="p">:</span> <span class="nb">bool</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+<a href="#mudproto.charset.CharsetMixIn.isServer" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>True if acting as a server, False otherwise.</p>
+    </div>
+
+  </div>
+
+
+
 
 
 
@@ -1040,6 +1130,77 @@
 
 <span class="sd">	Args:</span>
 <span class="sd">		option: The option to disable.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="mudproto.charset.CharsetMixIn.getOptionState" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Method</span> <span class="n">getOptionState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+  </span>
+
+<a href="#mudproto.charset.CharsetMixIn.getOptionState" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Gets the state of a Telnet option.</p>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>option</code></td>
+        <td><code>bytes</code></td>
+        <td><p>The option to get state.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>_OptionState</code></td>
+      <td><p>An object containing the option state.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>mudproto/charset.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">getOptionState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_OptionState</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Gets the state of a Telnet option.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		option: The option to get state.</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		An object containing the option state.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 </code></pre></div>
         </details>

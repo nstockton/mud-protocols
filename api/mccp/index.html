@@ -351,6 +351,20 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#mudproto.mccp.MCCPMixIn.isClient" class="md-nav__link">
+    isClient
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.mccp.MCCPMixIn.isServer" class="md-nav__link">
+    isServer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.mccp.MCCPMixIn.do" class="md-nav__link">
     do()
   </a>
@@ -360,6 +374,13 @@
           <li class="md-nav__item">
   <a href="#mudproto.mccp.MCCPMixIn.dont" class="md-nav__link">
     dont()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.mccp.MCCPMixIn.getOptionState" class="md-nav__link">
+    getOptionState()
   </a>
   
 </li>
@@ -602,6 +623,20 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#mudproto.mccp.MCCPMixIn.isClient" class="md-nav__link">
+    isClient
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.mccp.MCCPMixIn.isServer" class="md-nav__link">
+    isServer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.mccp.MCCPMixIn.do" class="md-nav__link">
     do()
   </a>
@@ -611,6 +646,13 @@
           <li class="md-nav__item">
   <a href="#mudproto.mccp.MCCPMixIn.dont" class="md-nav__link">
     dont()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.mccp.MCCPMixIn.getOptionState" class="md-nav__link">
+    getOptionState()
   </a>
   
 </li>
@@ -799,20 +841,23 @@
 		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">subnegotiationMap</span><span class="p">[</span><span class="n">MCCP1</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="kc">None</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">subnegotiationMap</span><span class="p">[</span><span class="n">MCCP2</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="kc">None</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_isCompressed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp1</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp2</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_compressionEnabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_compressedInputBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
 
+	<span class="k">def</span> <span class="nf">disableMCCP</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span> <span class="o">=</span> <span class="kc">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_compressionEnabled</span> <span class="o">=</span> <span class="kc">False</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span> <span class="o">=</span> <span class="kc">None</span>
+
 	<span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-		<span class="n">outputBuffer</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 		<span class="n">inputBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compressedInputBuffer</span>
 		<span class="n">inputBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 		<span class="k">while</span> <span class="n">inputBuffer</span><span class="p">:</span>
-			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isCompressed</span><span class="p">:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compressionEnabled</span><span class="p">:</span>
 				<span class="c1"># Compressed data:</span>
-				<span class="n">outputBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">))</span>
+				<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">))</span>
 				<span class="n">inputBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span><span class="o">.</span><span class="n">unused_data</span><span class="p">:</span>
 					<span class="c1"># Uncompressed data following the compressed data, likely due to the server terminating compression.</span>
@@ -820,63 +865,60 @@
 						<span class="s2">&quot;received uncompressed data while compression enabled. Disabling compression.&quot;</span>
 					<span class="p">)</span>
 					<span class="n">inputBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span><span class="o">.</span><span class="n">unused_data</span><span class="p">)</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">_isCompressed</span> <span class="o">=</span> <span class="kc">False</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp1</span> <span class="o">=</span> <span class="kc">False</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp2</span> <span class="o">=</span> <span class="kc">False</span>
-					<span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span> <span class="o">=</span> <span class="kc">None</span>
+					<span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getOptionState</span><span class="p">(</span><span class="n">MCCP1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">MCCP2</span><span class="p">)</span>
+					<span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">False</span>
+					<span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span> <span class="o">=</span> <span class="kc">False</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">disableMCCP</span><span class="p">()</span>
 					<span class="k">continue</span>  <span class="c1"># Process the remaining uncompressed data.</span>
-				<span class="k">break</span>  <span class="c1"># inputBuffer is empty, no need to loop again.</span>
+				<span class="k">return</span> <span class="kc">None</span>  <span class="c1"># inputBuffer is empty, no need to loop again.</span>
 			<span class="c1"># Uncompressed data:</span>
 			<span class="n">iacIndex</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">inputBuffer</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">IAC</span><span class="p">)</span>
-			<span class="k">if</span> <span class="n">iacIndex</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-				<span class="c1"># An IAC byte was found.</span>
-				<span class="n">outputBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">[:</span><span class="n">iacIndex</span><span class="p">])</span>
-				<span class="k">del</span> <span class="n">inputBuffer</span><span class="p">[:</span><span class="n">iacIndex</span><span class="p">]</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">iacIndex</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="c1"># MCCP was negotiated on, and an IAC byte was found.</span>
+				<span class="k">if</span> <span class="n">iacIndex</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+					<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">[:</span><span class="n">iacIndex</span><span class="p">]))</span>
+					<span class="k">del</span> <span class="n">inputBuffer</span><span class="p">[:</span><span class="n">iacIndex</span><span class="p">]</span>
 				<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
 					<span class="c1"># Partial IAC sequence.</span>
-					<span class="k">break</span>
+					<span class="k">return</span> <span class="kc">None</span>
 				<span class="k">elif</span> <span class="n">inputBuffer</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">SB</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
 					<span class="n">seIndex</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">inputBuffer</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">SE</span><span class="p">)</span>
 					<span class="k">if</span> <span class="n">seIndex</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">inputBuffer</span><span class="p">[</span><span class="n">seIndex</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">seIndex</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">IAC</span><span class="p">,</span> <span class="n">WILL</span><span class="p">):</span>
 						<span class="c1"># Partial subnegotiation sequence.</span>
-						<span class="k">break</span>
+						<span class="k">return</span> <span class="kc">None</span>
 					<span class="k">elif</span> <span class="n">inputBuffer</span><span class="p">[:</span><span class="n">seIndex</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="n">IAC</span> <span class="o">+</span> <span class="n">SB</span> <span class="o">+</span> <span class="n">MCCP1</span> <span class="o">+</span> <span class="n">WILL</span><span class="p">,</span> <span class="n">IAC</span> <span class="o">+</span> <span class="n">SB</span> <span class="o">+</span> <span class="n">MCCP2</span> <span class="o">+</span> <span class="n">IAC</span><span class="p">):</span>
 						<span class="c1"># The server enabled compression. Subsequent data will be compressed.</span>
-						<span class="bp">self</span><span class="o">.</span><span class="n">_isCompressed</span> <span class="o">=</span> <span class="kc">True</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">_compressionEnabled</span> <span class="o">=</span> <span class="kc">True</span>
 						<span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">decompressobj</span><span class="p">(</span><span class="n">zlib</span><span class="o">.</span><span class="n">MAX_WBITS</span><span class="p">)</span>
 						<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Peer notifies us that subsequent data will be compressed.&quot;</span><span class="p">)</span>
 					<span class="k">else</span><span class="p">:</span>
 						<span class="c1"># We don&#39;t care about other subnegotiations, pass it on.</span>
-						<span class="n">outputBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">[:</span> <span class="n">seIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+						<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">[:</span> <span class="n">seIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]))</span>
 					<span class="k">del</span> <span class="n">inputBuffer</span><span class="p">[:</span> <span class="n">seIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
 				<span class="k">else</span><span class="p">:</span>
 					<span class="c1"># We don&#39;t care about other IAC sequences, pass it on.</span>
-					<span class="n">outputBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+					<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">[:</span><span class="mi">2</span><span class="p">]))</span>
 					<span class="k">del</span> <span class="n">inputBuffer</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
 			<span class="k">else</span><span class="p">:</span>
-				<span class="c1"># No IAC was found.</span>
-				<span class="n">outputBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inputBuffer</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+				<span class="c1"># MCCP was not negotiated on, or no IAC was found.</span>
+				<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">))</span>
 				<span class="n">inputBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-		<span class="k">if</span> <span class="n">outputBuffer</span><span class="p">:</span>
-			<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outputBuffer</span><span class="p">))</span>
 
 	<span class="k">def</span> <span class="nf">on_enableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-		<span class="k">if</span> <span class="n">option</span> <span class="o">==</span> <span class="n">MCCP1</span><span class="p">:</span>
-			<span class="c1"># Only enable MCCP1 if MCCP2 is not enabled.</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp1</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp2</span>
-			<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MCCP1 negotiation </span><span class="si">{</span><span class="s1">&#39;enabled&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;disabled&#39;</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp1</span>
-		<span class="k">elif</span> <span class="n">option</span> <span class="o">==</span> <span class="n">MCCP2</span><span class="p">:</span>
-			<span class="c1"># Only enable MCCP2 if MCCP1 is not enabled.</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp2</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp1</span>
-			<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MCCP2 negotiation </span><span class="si">{</span><span class="s1">&#39;enabled&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp2</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;disabled&#39;</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp2</span>
+		<span class="k">if</span> <span class="n">option</span> <span class="ow">in</span> <span class="p">(</span><span class="n">MCCP1</span><span class="p">,</span> <span class="n">MCCP2</span><span class="p">):</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">option</span> <span class="o">==</span> <span class="n">MCCP1</span> <span class="k">else</span> <span class="mi">2</span>
+				<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MCCP</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span><span class="si">}</span><span class="s2"> negotiation enabled.&quot;</span><span class="p">)</span>
+				<span class="k">return</span> <span class="kc">True</span>
+			<span class="k">return</span> <span class="kc">False</span>
 		<span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_enableRemote</span><span class="p">(</span><span class="n">option</span><span class="p">))</span>  <span class="c1"># pragma: no cover</span>
 
 	<span class="k">def</span> <span class="nf">on_disableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 		<span class="k">if</span> <span class="n">option</span> <span class="ow">in</span> <span class="p">(</span><span class="n">MCCP1</span><span class="p">,</span> <span class="n">MCCP2</span><span class="p">):</span>
-			<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MCCP</span><span class="si">{</span><span class="s1">&#39;1&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">option</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">MCCP1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;2&#39;</span><span class="si">}</span><span class="s2"> negotiation disabled.&quot;</span><span class="p">)</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+				<span class="sa">f</span><span class="s2">&quot;MCCP</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span><span class="w"> </span><span class="ow">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="kc">None</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2"> negotiation disabled.&quot;</span>
+			<span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">disableMCCP</span><span class="p">()</span>
 			<span class="k">return</span> <span class="kc">None</span>
 		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_disableRemote</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>  <span class="c1"># pragma: no cover</span>
 </code></pre></div>
@@ -887,6 +929,55 @@
   <div class="doc doc-children">
 
 
+
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="mudproto.mccp.MCCPMixIn.isClient" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+<a href="#mudproto.mccp.MCCPMixIn.isClient" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>True if acting as a client, False otherwise.</p>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="mudproto.mccp.MCCPMixIn.isServer" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isServer</span><span class="p">:</span> <span class="nb">bool</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+<a href="#mudproto.mccp.MCCPMixIn.isServer" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>True if acting as a server, False otherwise.</p>
+    </div>
+
+  </div>
 
 
 
@@ -992,6 +1083,77 @@
 
 <span class="sd">	Args:</span>
 <span class="sd">		option: The option to disable.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="mudproto.mccp.MCCPMixIn.getOptionState" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Method</span> <span class="n">getOptionState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+  </span>
+
+<a href="#mudproto.mccp.MCCPMixIn.getOptionState" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Gets the state of a Telnet option.</p>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>option</code></td>
+        <td><code>bytes</code></td>
+        <td><p>The option to get state.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>_OptionState</code></td>
+      <td><p>An object containing the option state.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>mudproto/mccp.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">getOptionState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_OptionState</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Gets the state of a Telnet option.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		option: The option to get state.</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		An object containing the option state.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 </code></pre></div>
         </details>
@@ -1155,13 +1317,12 @@
         <details class="quote">
           <summary>Source code in <code>mudproto/mccp.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-	<span class="n">outputBuffer</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 	<span class="n">inputBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compressedInputBuffer</span>
 	<span class="n">inputBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 	<span class="k">while</span> <span class="n">inputBuffer</span><span class="p">:</span>
-		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isCompressed</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compressionEnabled</span><span class="p">:</span>
 			<span class="c1"># Compressed data:</span>
-			<span class="n">outputBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">))</span>
+			<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">))</span>
 			<span class="n">inputBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span><span class="o">.</span><span class="n">unused_data</span><span class="p">:</span>
 				<span class="c1"># Uncompressed data following the compressed data, likely due to the server terminating compression.</span>
@@ -1169,46 +1330,44 @@
 					<span class="s2">&quot;received uncompressed data while compression enabled. Disabling compression.&quot;</span>
 				<span class="p">)</span>
 				<span class="n">inputBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span><span class="o">.</span><span class="n">unused_data</span><span class="p">)</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">_isCompressed</span> <span class="o">=</span> <span class="kc">False</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp1</span> <span class="o">=</span> <span class="kc">False</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp2</span> <span class="o">=</span> <span class="kc">False</span>
-				<span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span> <span class="o">=</span> <span class="kc">None</span>
+				<span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getOptionState</span><span class="p">(</span><span class="n">MCCP1</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">MCCP2</span><span class="p">)</span>
+				<span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">False</span>
+				<span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span> <span class="o">=</span> <span class="kc">False</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">disableMCCP</span><span class="p">()</span>
 				<span class="k">continue</span>  <span class="c1"># Process the remaining uncompressed data.</span>
-			<span class="k">break</span>  <span class="c1"># inputBuffer is empty, no need to loop again.</span>
+			<span class="k">return</span> <span class="kc">None</span>  <span class="c1"># inputBuffer is empty, no need to loop again.</span>
 		<span class="c1"># Uncompressed data:</span>
 		<span class="n">iacIndex</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">inputBuffer</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">IAC</span><span class="p">)</span>
-		<span class="k">if</span> <span class="n">iacIndex</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-			<span class="c1"># An IAC byte was found.</span>
-			<span class="n">outputBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">[:</span><span class="n">iacIndex</span><span class="p">])</span>
-			<span class="k">del</span> <span class="n">inputBuffer</span><span class="p">[:</span><span class="n">iacIndex</span><span class="p">]</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">iacIndex</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="c1"># MCCP was negotiated on, and an IAC byte was found.</span>
+			<span class="k">if</span> <span class="n">iacIndex</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">[:</span><span class="n">iacIndex</span><span class="p">]))</span>
+				<span class="k">del</span> <span class="n">inputBuffer</span><span class="p">[:</span><span class="n">iacIndex</span><span class="p">]</span>
 			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
 				<span class="c1"># Partial IAC sequence.</span>
-				<span class="k">break</span>
+				<span class="k">return</span> <span class="kc">None</span>
 			<span class="k">elif</span> <span class="n">inputBuffer</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">SB</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
 				<span class="n">seIndex</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">inputBuffer</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">SE</span><span class="p">)</span>
 				<span class="k">if</span> <span class="n">seIndex</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">inputBuffer</span><span class="p">[</span><span class="n">seIndex</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">seIndex</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">IAC</span><span class="p">,</span> <span class="n">WILL</span><span class="p">):</span>
 					<span class="c1"># Partial subnegotiation sequence.</span>
-					<span class="k">break</span>
+					<span class="k">return</span> <span class="kc">None</span>
 				<span class="k">elif</span> <span class="n">inputBuffer</span><span class="p">[:</span><span class="n">seIndex</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="n">IAC</span> <span class="o">+</span> <span class="n">SB</span> <span class="o">+</span> <span class="n">MCCP1</span> <span class="o">+</span> <span class="n">WILL</span><span class="p">,</span> <span class="n">IAC</span> <span class="o">+</span> <span class="n">SB</span> <span class="o">+</span> <span class="n">MCCP2</span> <span class="o">+</span> <span class="n">IAC</span><span class="p">):</span>
 					<span class="c1"># The server enabled compression. Subsequent data will be compressed.</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">_isCompressed</span> <span class="o">=</span> <span class="kc">True</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">_compressionEnabled</span> <span class="o">=</span> <span class="kc">True</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">decompressobj</span><span class="p">(</span><span class="n">zlib</span><span class="o">.</span><span class="n">MAX_WBITS</span><span class="p">)</span>
 					<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Peer notifies us that subsequent data will be compressed.&quot;</span><span class="p">)</span>
 				<span class="k">else</span><span class="p">:</span>
 					<span class="c1"># We don&#39;t care about other subnegotiations, pass it on.</span>
-					<span class="n">outputBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">[:</span> <span class="n">seIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+					<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">[:</span> <span class="n">seIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]))</span>
 				<span class="k">del</span> <span class="n">inputBuffer</span><span class="p">[:</span> <span class="n">seIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
 			<span class="k">else</span><span class="p">:</span>
 				<span class="c1"># We don&#39;t care about other IAC sequences, pass it on.</span>
-				<span class="n">outputBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+				<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">[:</span><span class="mi">2</span><span class="p">]))</span>
 				<span class="k">del</span> <span class="n">inputBuffer</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
 		<span class="k">else</span><span class="p">:</span>
-			<span class="c1"># No IAC was found.</span>
-			<span class="n">outputBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inputBuffer</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+			<span class="c1"># MCCP was not negotiated on, or no IAC was found.</span>
+			<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">inputBuffer</span><span class="p">))</span>
 			<span class="n">inputBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-	<span class="k">if</span> <span class="n">outputBuffer</span><span class="p">:</span>
-		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">outputBuffer</span><span class="p">))</span>
 </code></pre></div>
         </details>
     </div>
@@ -1323,7 +1482,10 @@ in order to perform any necessary cleanup on our end.</p>
           <summary>Source code in <code>mudproto/mccp.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_disableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="k">if</span> <span class="n">option</span> <span class="ow">in</span> <span class="p">(</span><span class="n">MCCP1</span><span class="p">,</span> <span class="n">MCCP2</span><span class="p">):</span>
-		<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MCCP</span><span class="si">{</span><span class="s1">&#39;1&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">option</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">MCCP1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;2&#39;</span><span class="si">}</span><span class="s2"> negotiation disabled.&quot;</span><span class="p">)</span>
+		<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+			<span class="sa">f</span><span class="s2">&quot;MCCP</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span><span class="w"> </span><span class="ow">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="kc">None</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2"> negotiation disabled.&quot;</span>
+		<span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">disableMCCP</span><span class="p">()</span>
 		<span class="k">return</span> <span class="kc">None</span>
 	<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_disableRemote</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>  <span class="c1"># pragma: no cover</span>
 </code></pre></div>
@@ -1456,16 +1618,12 @@ in order to perform any necessary cleanup on our end.</p>
         <details class="quote">
           <summary>Source code in <code>mudproto/mccp.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_enableRemote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-	<span class="k">if</span> <span class="n">option</span> <span class="o">==</span> <span class="n">MCCP1</span><span class="p">:</span>
-		<span class="c1"># Only enable MCCP1 if MCCP2 is not enabled.</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp1</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp2</span>
-		<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MCCP1 negotiation </span><span class="si">{</span><span class="s1">&#39;enabled&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;disabled&#39;</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp1</span>
-	<span class="k">elif</span> <span class="n">option</span> <span class="o">==</span> <span class="n">MCCP2</span><span class="p">:</span>
-		<span class="c1"># Only enable MCCP2 if MCCP1 is not enabled.</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp2</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp1</span>
-		<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MCCP2 negotiation </span><span class="si">{</span><span class="s1">&#39;enabled&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp2</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;disabled&#39;</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_usingMCCp2</span>
+	<span class="k">if</span> <span class="n">option</span> <span class="ow">in</span> <span class="p">(</span><span class="n">MCCP1</span><span class="p">,</span> <span class="n">MCCP2</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">option</span> <span class="o">==</span> <span class="n">MCCP1</span> <span class="k">else</span> <span class="mi">2</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MCCP</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span><span class="si">}</span><span class="s2"> negotiation enabled.&quot;</span><span class="p">)</span>
+			<span class="k">return</span> <span class="kc">True</span>
+		<span class="k">return</span> <span class="kc">False</span>
 	<span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_enableRemote</span><span class="p">(</span><span class="n">option</span><span class="p">))</span>  <span class="c1"># pragma: no cover</span>
 </code></pre></div>
         </details>

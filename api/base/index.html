@@ -309,6 +309,20 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#mudproto.base.BaseProtocol.isClient" class="md-nav__link">
+    isClient
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.base.BaseProtocol.isServer" class="md-nav__link">
+    isServer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.base.BaseProtocol.on_connectionLost" class="md-nav__link">
     on_connectionLost()
   </a>
@@ -348,6 +362,20 @@
   
     <nav class="md-nav" aria-label="Protocol">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.base.Protocol.isClient" class="md-nav__link">
+    isClient
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.base.Protocol.isServer" class="md-nav__link">
+    isServer
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#mudproto.base.Protocol.__init__" class="md-nav__link">
@@ -552,6 +580,20 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#mudproto.base.BaseProtocol.isClient" class="md-nav__link">
+    isClient
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.base.BaseProtocol.isServer" class="md-nav__link">
+    isServer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.base.BaseProtocol.on_connectionLost" class="md-nav__link">
     on_connectionLost()
   </a>
@@ -591,6 +633,20 @@
   
     <nav class="md-nav" aria-label="Protocol">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.base.Protocol.isClient" class="md-nav__link">
+    isClient
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.base.Protocol.isServer" class="md-nav__link">
+    isServer
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#mudproto.base.Protocol.__init__" class="md-nav__link">
@@ -691,6 +747,14 @@
         <details class="quote">
           <summary>Source code in <code>mudproto/base.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">BaseProtocol</span><span class="p">(</span><span class="n">TypeProtocol</span><span class="p">):</span>
+	<span class="nd">@property</span>
+	<span class="k">def</span> <span class="nf">isClient</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;True if acting as a client, False otherwise.&quot;&quot;&quot;</span>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span> <span class="nf">isServer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;True if acting as a server, False otherwise.&quot;&quot;&quot;</span>
+
 	<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Writes data to peer.</span>
@@ -721,6 +785,52 @@
 
 
 
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="mudproto.base.BaseProtocol.isClient" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+<a href="#mudproto.base.BaseProtocol.isClient" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>True if acting as a client, False otherwise.</p>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="mudproto.base.BaseProtocol.isServer" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isServer</span><span class="p">:</span> <span class="nb">bool</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+<a href="#mudproto.base.BaseProtocol.isServer" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>True if acting as a server, False otherwise.</p>
+    </div>
+
+  </div>
 
 
 
@@ -908,10 +1018,24 @@
           <summary>Source code in <code>mudproto/base.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Protocol</span><span class="p">(</span><span class="n">BaseProtocol</span><span class="p">):</span>
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-		<span class="bp">self</span><span class="p">,</span> <span class="n">writer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span> <span class="n">receiver</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
+		<span class="bp">self</span><span class="p">,</span>
+		<span class="n">writer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
+		<span class="n">receiver</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
+		<span class="o">*</span><span class="p">,</span>
+		<span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+		<span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
 	<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">writer</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">receiver</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">isClient</span>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span> <span class="nf">isClient</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span>
+
+	<span class="nd">@property</span>
+	<span class="k">def</span> <span class="nf">isServer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+		<span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span>
 
 	<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -930,6 +1054,52 @@
 
 
 
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="mudproto.base.Protocol.isClient" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+<a href="#mudproto.base.Protocol.isClient" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>True if acting as a client, False otherwise.</p>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="mudproto.base.Protocol.isServer" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isServer</span><span class="p">:</span> <span class="nb">bool</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+<a href="#mudproto.base.Protocol.isServer" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>True if acting as a server, False otherwise.</p>
+    </div>
+
+  </div>
+
+
+
 
 
 
@@ -938,7 +1108,7 @@
 
 
 <h3 id="mudproto.base.Protocol.__init__" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Method</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">writer</span><span class="p">,</span> <span class="n">receiver</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+<code class="codehilite language-python"><span class="n">Method</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">writer</span><span class="p">,</span> <span class="n">receiver</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">isClient</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-special"><code>special</code></small>
@@ -953,10 +1123,16 @@
         <details class="quote">
           <summary>Source code in <code>mudproto/base.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-	<span class="bp">self</span><span class="p">,</span> <span class="n">writer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span> <span class="n">receiver</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
+	<span class="bp">self</span><span class="p">,</span>
+	<span class="n">writer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
+	<span class="n">receiver</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
+	<span class="o">*</span><span class="p">,</span>
+	<span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+	<span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">writer</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">receiver</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">isClient</span>
 </code></pre></div>
         </details>
     </div>

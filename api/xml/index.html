@@ -407,6 +407,20 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#mudproto.xml.XMLProtocol.isClient" class="md-nav__link">
+    isClient
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.xml.XMLProtocol.isServer" class="md-nav__link">
+    isServer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.xml.XMLProtocol.modes" class="md-nav__link">
     modes
   </a>
@@ -537,6 +551,20 @@
   
     <nav class="md-nav" aria-label="XMLProtocol">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.xml.XMLProtocol.isClient" class="md-nav__link">
+    isClient
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.xml.XMLProtocol.isServer" class="md-nav__link">
+    isServer
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#mudproto.xml.XMLProtocol.modes" class="md-nav__link">
@@ -757,7 +785,8 @@
 <span class="sd">			The remaining data.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="n">appData</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">LT</span><span class="p">)</span>
-		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;raw&quot;</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gratuitous</span><span class="p">:</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gratuitous</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">!=</span> <span class="s2">&quot;raw&quot;</span><span class="p">):</span>
+			<span class="c1"># Gratuitous text should be omitted unless format is &#39;raw&#39;.</span>
 			<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">appData</span><span class="p">)</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_lineBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">appData</span><span class="p">)</span>
@@ -791,20 +820,21 @@
 		<span class="k">if</span> <span class="ow">not</span> <span class="n">separator</span><span class="p">:</span>
 			<span class="c1"># End of tag not reached yet.</span>
 			<span class="k">return</span> <span class="n">data</span>
-		<span class="n">tag</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tagBuffer</span><span class="p">)</span>
+		<span class="n">tag</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tagBuffer</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_tagBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-		<span class="n">text</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_textBuffer</span><span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_textBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+		<span class="n">baseTag</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">tag</span>
+		<span class="n">isStatusTag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">baseTag</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;status&quot;</span>
+		<span class="n">text</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_textBuffer</span><span class="p">)</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">isStatusTag</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_textBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;raw&quot;</span><span class="p">:</span>
 			<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LT</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="n">GT</span><span class="p">)</span>
 		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;tintin&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gratuitous</span><span class="p">:</span>
 			<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tintinReplacements</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;movement&quot;</span><span class="p">):</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">callEvent</span><span class="p">(</span><span class="s2">&quot;movement&quot;</span><span class="p">,</span> <span class="n">unescapeXMLBytes</span><span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="mi">13</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
-		<span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;gratuitous&quot;</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_gratuitous</span> <span class="o">=</span> <span class="kc">True</span>
-		<span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;/gratuitous&quot;</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_gratuitous</span> <span class="o">=</span> <span class="kc">False</span>
+		<span class="k">elif</span> <span class="n">baseTag</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;gratuitous&quot;</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_gratuitous</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
 		<span class="k">elif</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;room&quot;</span><span class="p">):</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_inRoom</span> <span class="o">=</span> <span class="kc">True</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modes</span><span class="p">[</span><span class="sa">b</span><span class="s2">&quot;room&quot;</span><span class="p">]</span>
@@ -868,6 +898,54 @@
 
 
 
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="mudproto.xml.XMLProtocol.isClient" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+<a href="#mudproto.xml.XMLProtocol.isClient" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>True if acting as a client, False otherwise.</p>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="mudproto.xml.XMLProtocol.isServer" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isServer</span><span class="p">:</span> <span class="nb">bool</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+<a href="#mudproto.xml.XMLProtocol.isServer" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>True if acting as a server, False otherwise.</p>
+    </div>
+
+  </div>
 
 
 

@@ -379,6 +379,20 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#mudproto.telnet.BaseTelnetProtocol.isClient" class="md-nav__link">
+    isClient
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.telnet.BaseTelnetProtocol.isServer" class="md-nav__link">
+    isServer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.telnet.BaseTelnetProtocol.do" class="md-nav__link">
     do()
   </a>
@@ -388,6 +402,13 @@
           <li class="md-nav__item">
   <a href="#mudproto.telnet.BaseTelnetProtocol.dont" class="md-nav__link">
     dont()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.telnet.BaseTelnetProtocol.getOptionState" class="md-nav__link">
+    getOptionState()
   </a>
   
 </li>
@@ -523,6 +544,20 @@
   
     <nav class="md-nav" aria-label="TelnetProtocol">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.telnet.TelnetProtocol.isClient" class="md-nav__link">
+    isClient
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.telnet.TelnetProtocol.isServer" class="md-nav__link">
+    isServer
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#mudproto.telnet.TelnetProtocol.state" class="md-nav__link">
@@ -797,6 +832,20 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#mudproto.telnet.BaseTelnetProtocol.isClient" class="md-nav__link">
+    isClient
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.telnet.BaseTelnetProtocol.isServer" class="md-nav__link">
+    isServer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.telnet.BaseTelnetProtocol.do" class="md-nav__link">
     do()
   </a>
@@ -806,6 +855,13 @@
           <li class="md-nav__item">
   <a href="#mudproto.telnet.BaseTelnetProtocol.dont" class="md-nav__link">
     dont()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.telnet.BaseTelnetProtocol.getOptionState" class="md-nav__link">
+    getOptionState()
   </a>
   
 </li>
@@ -941,6 +997,20 @@
   
     <nav class="md-nav" aria-label="TelnetProtocol">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.telnet.TelnetProtocol.isClient" class="md-nav__link">
+    isClient
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.telnet.TelnetProtocol.isServer" class="md-nav__link">
+    isServer
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#mudproto.telnet.TelnetProtocol.state" class="md-nav__link">
@@ -1219,6 +1289,17 @@
 <span class="sd">			option: The option to disable.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 
+	<span class="k">def</span> <span class="nf">getOptionState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_OptionState</span><span class="p">:</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Gets the state of a Telnet option.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			option: The option to get state.</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			An object containing the option state.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
 	<span class="k">def</span> <span class="nf">requestNegotiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Sends a subnegotiation message to the peer.</span>
@@ -1332,6 +1413,54 @@
 
 
 
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="mudproto.telnet.BaseTelnetProtocol.isClient" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+<a href="#mudproto.telnet.BaseTelnetProtocol.isClient" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>True if acting as a client, False otherwise.</p>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="mudproto.telnet.BaseTelnetProtocol.isServer" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isServer</span><span class="p">:</span> <span class="nb">bool</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+<a href="#mudproto.telnet.BaseTelnetProtocol.isServer" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>True if acting as a server, False otherwise.</p>
+    </div>
+
+  </div>
+
+
+
 
 
 
@@ -1427,6 +1556,74 @@
 
 <span class="sd">	Args:</span>
 <span class="sd">		option: The option to disable.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="mudproto.telnet.BaseTelnetProtocol.getOptionState" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Method</span> <span class="n">getOptionState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></code>
+
+
+<a href="#mudproto.telnet.BaseTelnetProtocol.getOptionState" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Gets the state of a Telnet option.</p>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>option</code></td>
+        <td><code>bytes</code></td>
+        <td><p>The option to get state.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>_OptionState</code></td>
+      <td><p>An object containing the option state.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>mudproto/telnet.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">getOptionState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_OptionState</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Gets the state of a Telnet option.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		option: The option to get state.</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		An object containing the option state.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 </code></pre></div>
         </details>
@@ -2494,12 +2691,6 @@ in order to perform any necessary cleanup on our end.</p>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_dont</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
 
 	<span class="k">def</span> <span class="nf">getOptionState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_OptionState</span><span class="p">:</span>
-<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">		Gets the state of a Telnet option.</span>
-
-<span class="sd">		Returns:</span>
-<span class="sd">			An object containing the option state.</span>
-<span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">if</span> <span class="n">option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">option</span><span class="p">]</span> <span class="o">=</span> <span class="n">_OptionState</span><span class="p">()</span>
 		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">option</span><span class="p">]</span>
@@ -2790,6 +2981,54 @@ in order to perform any necessary cleanup on our end.</p>
 
 
 
+<h3 id="mudproto.telnet.TelnetProtocol.isClient" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+<a href="#mudproto.telnet.TelnetProtocol.isClient" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>True if acting as a client, False otherwise.</p>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="mudproto.telnet.TelnetProtocol.isServer" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isServer</span><span class="p">:</span> <span class="nb">bool</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
+      <small class="doc doc-property doc-property-property"><code>property</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
+  </span>
+
+<a href="#mudproto.telnet.TelnetProtocol.isServer" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>True if acting as a server, False otherwise.</p>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
 <h3 id="mudproto.telnet.TelnetProtocol.state" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span></code>
 
@@ -2957,6 +3196,25 @@ in order to perform any necessary cleanup on our end.</p>
 
       <p>Gets the state of a Telnet option.</p>
 
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>option</code></td>
+        <td><code>bytes</code></td>
+        <td><p>The option to get state.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
 <p><strong>Returns:</strong></p>
 <table role="grid" class="data">
   <thead>
@@ -2975,12 +3233,6 @@ in order to perform any necessary cleanup on our end.</p>
         <details class="quote">
           <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">getOptionState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_OptionState</span><span class="p">:</span>
-<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">	Gets the state of a Telnet option.</span>
-
-<span class="sd">	Returns:</span>
-<span class="sd">		An object containing the option state.</span>
-<span class="sd">	&quot;&quot;&quot;</span>
 	<span class="k">if</span> <span class="n">option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">:</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">option</span><span class="p">]</span> <span class="o">=</span> <span class="n">_OptionState</span><span class="p">()</span>
 	<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="n">option</span><span class="p">]</span>
