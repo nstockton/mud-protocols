@@ -365,6 +365,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#mudproto.mccp.MCCPMixIn.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.mccp.MCCPMixIn.do" class="md-nav__link">
     do()
   </a>
@@ -637,6 +644,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#mudproto.mccp.MCCPMixIn.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.mccp.MCCPMixIn.do" class="md-nav__link">
     do()
   </a>
@@ -822,7 +836,7 @@
 
 
 <h2 id="mudproto.mccp.MCCPMixIn" class="doc doc-heading">
-        <code>Class MCCPMixIn(<a title="mudproto.base.Protocol" href="../base/#mudproto.base.Protocol">Protocol</a>, <a title="mudproto.telnet.BaseTelnetProtocol" href="../telnet/#mudproto.telnet.BaseTelnetProtocol">BaseTelnetProtocol</a>)</code>
+        <code>Class MCCPMixIn(<a title="mudproto.telnet.BaseTelnetProtocol" href="../telnet/#mudproto.telnet.BaseTelnetProtocol">BaseTelnetProtocol</a>)</code>
 
 
 
@@ -834,7 +848,7 @@
 
         <details class="quote">
           <summary>Source code in <code>mudproto/mccp.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">MCCPMixIn</span><span class="p">(</span><span class="n">Protocol</span><span class="p">,</span> <span class="n">BaseTelnetProtocol</span><span class="p">):</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">MCCPMixIn</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;An MCCP mix in class for the Telnet protocol.&quot;&quot;&quot;</span>
 
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -982,6 +996,40 @@
 
 
 
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="mudproto.mccp.MCCPMixIn.__init__" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Method</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#mudproto.mccp.MCCPMixIn.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Initialize self.  See help(type(self)) for accurate signature.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>mudproto/mccp.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">subnegotiationMap</span><span class="p">[</span><span class="n">MCCP1</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="kc">None</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">subnegotiationMap</span><span class="p">[</span><span class="n">MCCP2</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="kc">None</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_compressionEnabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_mccpVersion</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_compressedInputBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
@@ -2071,7 +2119,12 @@ in order to perform any necessary cleanup on our end.</p>
         <details class="quote">
           <summary>Source code in <code>mudproto/mccp.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-	<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Writes data to peer.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		data: The bytes to be written.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
 </code></pre></div>
         </details>
     </div>
