@@ -16,11 +16,10 @@ import json
 import logging
 import re
 from collections.abc import Iterable, Mapping
-from typing import Any, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 # Local Modules:
-from .base import Protocol
-from .telnet import BaseTelnetProtocol
+from .telnet import BaseTelnetProtocol, TelnetProtocol
 from .telnet_constants import GMCP
 
 
@@ -30,7 +29,13 @@ GMCP_MESSAGE_REGEX: re.Pattern[bytes] = re.compile(rb"^\s*(?P<package>[\w.-]+)\s
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-class GMCPMixIn(Protocol, BaseTelnetProtocol):
+if TYPE_CHECKING:  # pragma: no cover
+	Base = TelnetProtocol
+else:  # pragma: no cover
+	Base = BaseTelnetProtocol
+
+
+class GMCPMixIn(Base):
 	"""
 	A GMCP mix in class for the Telnet protocol.
 	"""

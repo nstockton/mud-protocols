@@ -33,9 +33,10 @@ from __future__ import annotations
 
 # Built-in Modules:
 import logging
-import sys
 from collections.abc import Callable
-from typing import Any, Union
+from typing import Any
+from typing import Protocol as TypeProtocol
+from typing import Union
 
 # Local Modules:
 from .base import BaseProtocol, Protocol
@@ -57,12 +58,6 @@ from .telnet_constants import (
 	WONT,
 )
 from .utils import escapeIAC
-
-
-if sys.version_info < (3, 8):  # pragma: no cover
-	from typing_extensions import Protocol as TypeProtocol
-else:  # pragma: no cover
-	from typing import Protocol as TypeProtocol
 
 
 logger: logging.Logger = logging.getLogger(__name__)

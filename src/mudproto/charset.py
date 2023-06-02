@@ -13,18 +13,23 @@ from __future__ import annotations
 
 # Built-in Modules:
 import logging
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 # Local Modules:
-from .base import Protocol
-from .telnet import BaseTelnetProtocol
+from .telnet import BaseTelnetProtocol, TelnetProtocol
 from .telnet_constants import CHARSET, CHARSET_ACCEPTED, CHARSET_REJECTED, CHARSET_REQUEST
 
 
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-class CharsetMixIn(Protocol, BaseTelnetProtocol):
+if TYPE_CHECKING:  # pragma: no cover
+	Base = TelnetProtocol
+else:  # pragma: no cover
+	Base = BaseTelnetProtocol
+
+
+class CharsetMixIn(Base):
 	"""A charset mix in class for the Telnet protocol."""
 
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
