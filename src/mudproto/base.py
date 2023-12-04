@@ -8,9 +8,12 @@ from __future__ import annotations
 
 # Built-in Modules:
 import logging
-from collections.abc import Callable
+from abc import abstractmethod
 from typing import Any
 from typing import Protocol as TypeProtocol
+
+# Local Modules:
+from .typedef import PROTOCOL_RECEIVER_TYPE, PROTOCOL_WRITER_TYPE
 
 
 logger: logging.Logger = logging.getLogger(__name__)
@@ -18,13 +21,16 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 class BaseProtocol(TypeProtocol):
 	@property
+	@abstractmethod
 	def isClient(self) -> bool:
 		"""True if acting as a client, False otherwise."""
 
 	@property
+	@abstractmethod
 	def isServer(self) -> bool:
 		"""True if acting as a server, False otherwise."""
 
+	@abstractmethod
 	def write(self, data: bytes) -> None:
 		"""
 		Writes data to peer.
@@ -33,12 +39,15 @@ class BaseProtocol(TypeProtocol):
 			data: The bytes to be written.
 		"""
 
+	@abstractmethod
 	def on_connectionMade(self) -> None:
 		"""Called by `connect` when a connection to peer has been established."""
 
+	@abstractmethod
 	def on_connectionLost(self) -> None:
 		"""Called by `disconnect` when a connection to peer has been lost."""
 
+	@abstractmethod
 	def on_dataReceived(self, data: bytes) -> None:
 		"""
 		Called by `parse` when data is received.
@@ -51,14 +60,14 @@ class BaseProtocol(TypeProtocol):
 class Protocol(BaseProtocol):
 	def __init__(
 		self,
-		writer: Callable[[bytes], None],
-		receiver: Callable[[bytes], None],
+		writer: PROTOCOL_WRITER_TYPE,
+		receiver: PROTOCOL_RECEIVER_TYPE,
 		*,
 		isClient: bool,
 		**kwargs: Any,
 	) -> None:
-		self._writer: Callable[[bytes], None] = writer
-		self._receiver: Callable[[bytes], None] = receiver
+		self._writer: PROTOCOL_WRITER_TYPE = writer
+		self._receiver: PROTOCOL_RECEIVER_TYPE = receiver
 		self._isClient: bool = isClient
 
 	@property

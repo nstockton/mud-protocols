@@ -13,9 +13,7 @@ from __future__ import annotations
 
 # Built-in Modules:
 import logging
-import sys
-from collections.abc import Callable, MutableSequence
-from typing import Any, Tuple, Union
+from typing import Any, ClassVar, Union
 
 # Local Modules:
 from .base import Protocol
@@ -24,13 +22,6 @@ from .telnet_constants import CR, CR_LF, LF
 from .utils import unescapeXMLBytes
 
 
-if sys.version_info < (3, 10):  # pragma: no cover
-	from typing_extensions import TypeAlias
-else:  # pragma: no cover
-	from typing import TypeAlias
-
-
-EVENT_CALLER_TYPE: TypeAlias = Tuple[str, bytes]
 LT: bytes = b"<"
 GT: bytes = b">"
 
@@ -43,9 +34,9 @@ class XMLProtocol(Protocol):
 	Implements the Mume XML protocol.
 	"""
 
-	states: frozenset[str] = frozenset(("data", "tag"))
+	states: ClassVar[frozenset[str]] = frozenset(("data", "tag"))
 	"""Valid states for the state machine."""
-	modes: dict[bytes, Union[bytes, None]] = {
+	modes: ClassVar[dict[bytes, Union[bytes, None]]] = {
 		b"room": b"room",
 		b"/room": None,
 		b"name": b"name",
@@ -62,7 +53,7 @@ class XMLProtocol(Protocol):
 		b"/prompt": None,
 	}
 	"""A mapping of XML mode to new XML mode values."""
-	tintinReplacements: dict[bytes, bytes] = {
+	tintinReplacements: ClassVar[dict[bytes, bytes]] = {
 		b"prompt": b"PROMPT:",
 		b"/prompt": b":PROMPT",
 		b"name": b"NAME:",
@@ -84,11 +75,9 @@ class XMLProtocol(Protocol):
 		self,
 		*args: Any,
 		outputFormat: str,
-		eventCaller: Callable[[EVENT_CALLER_TYPE], None],
 		**kwargs: Any,
 	) -> None:
 		self.outputFormat: str = outputFormat
-		self.eventCaller: Callable[[EVENT_CALLER_TYPE], None] = eventCaller
 		super().__init__(*args, **kwargs)
 		self._state: str = "data"
 		self._tagBuffer: bytearray = bytearray()  # Used for start and end tag names.
@@ -114,7 +103,7 @@ class XMLProtocol(Protocol):
 			raise ValueError(f"'{value}' not in {tuple(sorted(self.states))}")
 		self._state = value
 
-	def _handleXMLText(self, data: bytes, appDataBuffer: MutableSequence[bytes]) -> bytes:
+	def _handleXMLText(self, data: bytes, appDataBuffer: bytearray) -> bytes:
 		"""
 		Handles XML data that is not part of a tag.
 
@@ -128,7 +117,7 @@ class XMLProtocol(Protocol):
 		appData, separator, data = data.partition(LT)
 		if not (self._gratuitous and self.outputFormat != "raw"):
 			# Gratuitous text should be omitted unless format is 'raw'.
-			appDataBuffer.append(appData)
+			appDataBuffer.extend(appData)
 		if self._mode is None:
 			self._lineBuffer.extend(appData)
 			lines = self._lineBuffer.splitlines(True)
@@ -138,14 +127,14 @@ class XMLProtocol(Protocol):
 				self._lineBuffer.extend(lines.pop())
 			lines = [line.rstrip(CR_LF) for line in lines if line.strip()]
 			for line in lines:
-				self.callEvent("line", unescapeXMLBytes(line))
+				self.on_xmlEvent("line", unescapeXMLBytes(line))
 		else:
 			self._textBuffer.extend(appData)
 		if separator:
 			self.state = "tag"
 		return data
 
-	def _handleXMLTag(self, data: bytes, appDataBuffer: MutableSequence[bytes]) -> bytes:
+	def _handleXMLTag(self, data: bytes, appDataBuffer: bytearray) -> bytes:
 		"""
 		Handles XML data that is part of a tag (I.E. enclosed in '<>').
 
@@ -169,28 +158,28 @@ class XMLProtocol(Protocol):
 		if not isStatusTag:
 			self._textBuffer.clear()
 		if self.outputFormat == "raw":
-			appDataBuffer.append(LT + tag + GT)
+			appDataBuffer.extend(LT + tag + GT)
 		elif self.outputFormat == "tintin" and not self._gratuitous:
-			appDataBuffer.append(self.tintinReplacements.get(tag, b""))
+			appDataBuffer.extend(self.tintinReplacements.get(tag, b""))
 		if self._mode is None and tag.startswith(b"movement"):
-			self.callEvent("movement", unescapeXMLBytes(tag[13:-1]))
+			self.on_xmlEvent("movement", unescapeXMLBytes(tag[13:-1]))
 		elif baseTag == b"gratuitous":
 			self._gratuitous = not tag.startswith(b"/")
 		elif tag.startswith(b"room"):
 			self._inRoom = True
 			self._mode = self.modes[b"room"]
-			self.callEvent("room", unescapeXMLBytes(tag[5:]))
+			self.on_xmlEvent("room", unescapeXMLBytes(tag[5:]))
 		elif tag == b"/room":
 			self._inRoom = False
 			self._mode = self.modes[tag]
 			self._dynamicBuffer.extend(text)
-			self.callEvent("dynamic", unescapeXMLBytes(bytes(self._dynamicBuffer).lstrip(b"\r\n")))
+			self.on_xmlEvent("dynamic", unescapeXMLBytes(bytes(self._dynamicBuffer).lstrip(b"\r\n")))
 			self._dynamicBuffer.clear()
 		elif tag in self.modes:
 			if tag.startswith(b"/"):
 				# Closing tag.
 				self._mode = b"room" if self._inRoom else self.modes[tag]
-				self.callEvent(tag[1:].decode("us-ascii"), unescapeXMLBytes(text))
+				self.on_xmlEvent(tag[1:].decode("us-ascii"), unescapeXMLBytes(text))
 			else:
 				# Opening tag.
 				self._mode = self.modes[tag]
@@ -200,7 +189,7 @@ class XMLProtocol(Protocol):
 		return data
 
 	def on_dataReceived(self, data: bytes) -> None:
-		appDataBuffer: list[bytes] = []
+		appDataBuffer: bytearray = bytearray()
 		while data:
 			if self.state == "data":
 				data = self._handleXMLText(data, appDataBuffer)
@@ -208,9 +197,9 @@ class XMLProtocol(Protocol):
 				data = self._handleXMLTag(data, appDataBuffer)
 		if appDataBuffer:
 			if self.outputFormat == "raw":
-				super().on_dataReceived(b"".join(appDataBuffer))
+				super().on_dataReceived(bytes(appDataBuffer))
 			else:
-				super().on_dataReceived(unescapeXMLBytes(b"".join(appDataBuffer)))
+				super().on_dataReceived(unescapeXMLBytes(bytes(appDataBuffer)))
 
 	def on_connectionMade(self) -> None:
 		# Turn on XML mode.
@@ -221,12 +210,11 @@ class XMLProtocol(Protocol):
 	def on_connectionLost(self) -> None:
 		pass
 
-	def callEvent(self, name: str, data: bytes) -> None:
+	def on_xmlEvent(self, name: str, data: bytes) -> None:
 		"""
-		Executes an event using the event caller.
+		Called when an XML event was received.
 
 		Args:
 			name: The event name.
 			data: The payload.
 		"""
-		self.eventCaller((name, data))

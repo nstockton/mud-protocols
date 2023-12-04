@@ -11,7 +11,7 @@ from unittest import TestCase
 from unittest.mock import Mock, patch
 
 # MUD Protocol Modules:
-from mudproto.naws import NAWSMixIn
+from mudproto.naws import Dimensions, NAWSMixIn
 from mudproto.naws import logger as nawsLogger
 from mudproto.telnet import TelnetProtocol
 from mudproto.telnet_constants import NAWS
@@ -46,20 +46,20 @@ class TestNAWSMixIn(TestCase):
 
 	@patch("mudproto.telnet.TelnetProtocol.requestNegotiation")
 	def test_nawsDimensions_set_when_invalid_value(self, mockRequestNegotiation: Mock) -> None:
-		self.assertEqual(self.telnetClient.nawsDimensions, (0, 0))
+		self.assertEqual(self.telnetClient.nawsDimensions, Dimensions(0, 0))
 		with self.assertRaises(ValueError):
-			self.telnetClient.nawsDimensions = (-1, 0)
+			self.telnetClient.nawsDimensions = Dimensions(-1, 0)
 		with self.assertRaises(ValueError):
-			self.telnetClient.nawsDimensions = (0, -1)
+			self.telnetClient.nawsDimensions = Dimensions(0, -1)
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		self.assertEqual(self.telnetClient.nawsDimensions, (0, 0))
+		self.assertEqual(self.telnetClient.nawsDimensions, Dimensions(0, 0))
 		mockRequestNegotiation.assert_not_called()
 
 	@patch("mudproto.telnet.TelnetProtocol.requestNegotiation")
 	def test_nawsDimensions_set_when_running_as_client(self, mockRequestNegotiation: Mock) -> None:
-		nawsDimensions: tuple[int, int] = (80, 25)
+		nawsDimensions: Dimensions = Dimensions(80, 25)
 		payload: bytes = b"\x00\x50\x00\x19"
-		self.assertEqual(self.telnetClient.nawsDimensions, (0, 0))
+		self.assertEqual(self.telnetClient.nawsDimensions, Dimensions(0, 0))
 		with self.assertLogs(nawsLogger, "DEBUG"):
 			self.telnetClient.nawsDimensions = nawsDimensions
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
@@ -68,8 +68,8 @@ class TestNAWSMixIn(TestCase):
 
 	@patch("mudproto.telnet.TelnetProtocol.requestNegotiation")
 	def test_nawsDimensions_set_when_running_as_server(self, mockRequestNegotiation: Mock) -> None:
-		nawsDimensions: tuple[int, int] = (80, 25)
-		self.assertEqual(self.telnetServer.nawsDimensions, (0, 0))
+		nawsDimensions: Dimensions = Dimensions(80, 25)
+		self.assertEqual(self.telnetServer.nawsDimensions, Dimensions(0, 0))
 		self.telnetServer.nawsDimensions = nawsDimensions
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
 		self.assertEqual(self.telnetServer.nawsDimensions, nawsDimensions)
@@ -80,18 +80,18 @@ class TestNAWSMixIn(TestCase):
 		with self.assertLogs(nawsLogger, "WARNING"):
 			self.telnetClient.on_naws(payload)
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		self.assertEqual(self.telnetClient.nawsDimensions, (0, 0))
+		self.assertEqual(self.telnetClient.nawsDimensions, Dimensions(0, 0))
 
 	def test_on_naws_when_running_as_server_and_invalid_data(self) -> None:
 		with self.assertLogs(nawsLogger, "WARNING"):
 			self.telnetServer.on_naws(b"**junk**")
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		self.assertEqual(self.telnetServer.nawsDimensions, (0, 0))
+		self.assertEqual(self.telnetServer.nawsDimensions, Dimensions(0, 0))
 
 	def test_on_naws_when_running_as_server_and_valid_data(self) -> None:
-		nawsDimensions: tuple[int, int] = (80, 25)
+		nawsDimensions: Dimensions = Dimensions(80, 25)
 		payload: bytes = b"\x00\x50\x00\x19"
-		self.assertEqual(self.telnetServer.nawsDimensions, (0, 0))
+		self.assertEqual(self.telnetServer.nawsDimensions, Dimensions(0, 0))
 		with self.assertLogs(nawsLogger, "DEBUG"):
 			self.telnetServer.on_naws(payload)
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))

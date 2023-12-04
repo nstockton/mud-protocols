@@ -16,14 +16,15 @@ import json
 import logging
 import re
 from collections.abc import Iterable, Mapping
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional
 
 # Local Modules:
 from .telnet import BaseTelnetProtocol, TelnetProtocol
 from .telnet_constants import GMCP
+from .typedef import GMCP_CLIENT_INFO_TYPE, REGEX_BYTES_MATCH, REGEX_BYTES_PATTERN
 
 
-GMCP_MESSAGE_REGEX: re.Pattern[bytes] = re.compile(rb"^\s*(?P<package>[\w.-]+)\s*(?P<value>.*?)\s*$")
+GMCP_MESSAGE_REGEX: REGEX_BYTES_PATTERN = re.compile(rb"^\s*(?P<package>[\w.-]+)\s*(?P<value>.*?)\s*$")
 
 
 logger: logging.Logger = logging.getLogger(__name__)
@@ -43,7 +44,7 @@ class GMCPMixIn(Base):
 	def __init__(
 		self,
 		*args: Any,
-		gmcpClientInfo: Optional[tuple[str, str]] = None,
+		gmcpClientInfo: Optional[GMCP_CLIENT_INFO_TYPE] = None,
 		**kwargs: Any,
 	) -> None:
 		"""
@@ -167,7 +168,7 @@ class GMCPMixIn(Base):
 		Args:
 			data: The payload.
 		"""
-		match: Union[re.Match[bytes], None] = GMCP_MESSAGE_REGEX.search(data)
+		match: REGEX_BYTES_MATCH = GMCP_MESSAGE_REGEX.search(data)
 		if match is None:
 			logger.warning(f"Unknown GMCP negotiation from peer: {data!r}")
 			return None

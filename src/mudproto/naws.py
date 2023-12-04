@@ -13,7 +13,10 @@ from __future__ import annotations
 
 # Built-in Modules:
 import logging
-from typing import TYPE_CHECKING, Any
+import sys
+from collections.abc import Sequence
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, Any, Union
 
 # Local Modules:
 from .telnet import BaseTelnetProtocol, TelnetProtocol
@@ -23,10 +26,62 @@ from .telnet_constants import NAWS
 logger: logging.Logger = logging.getLogger(__name__)
 
 
+if sys.version_info < (3, 11):  # pragma: no cover
+	from typing_extensions import Self
+else:  # pragma: no cover
+	from typing import Self
+
+
 if TYPE_CHECKING:  # pragma: no cover
 	Base = TelnetProtocol
 else:  # pragma: no cover
 	Base = BaseTelnetProtocol
+
+
+@dataclass(frozen=True)
+class Dimensions:
+	width: int
+	height: int
+
+	def __post_init__(self) -> None:
+		"""
+		Performs additional processing after dataclass initialization.
+
+		Raises:
+			ValueError: Invalid width or height values were given.
+		"""
+		if self.width < 0 or self.height < 0:
+			raise ValueError("{self!r}: Width and height must not be less than 0.")
+
+	@classmethod
+	def fromBytes(cls: type[Self], data: bytes) -> Self:
+		"""
+		Creates a new Dimensions instance from NAWS bytes.
+
+		Args:
+			data: The bytes with the encoded width and height values.
+
+		Returns:
+			A Dimensions instance using the new values.
+		"""
+		if len(data) != 4:
+			raise ValueError(f"Invalid NAWS sequence: {data!r}.")
+		# NAWS is negotiated with 16-bit words.
+		width: int = int.from_bytes(data[:2], byteorder="big", signed=False)
+		height: int = int.from_bytes(data[2:], byteorder="big", signed=False)
+		return cls(width=width, height=height)
+
+	def toBytes(self) -> bytes:
+		"""
+		Converts the width and height to NAWS bytes.
+
+		Returns:
+			The encoded width and height as bytes.
+		"""
+		# NAWS is negotiated with 16-bit words.
+		width: bytes = int.to_bytes(self.width, length=2, byteorder="big", signed=False)
+		height: bytes = int.to_bytes(self.height, length=2, byteorder="big", signed=False)
+		return width + height
 
 
 class NAWSMixIn(Base):
@@ -44,22 +99,17 @@ class NAWSMixIn(Base):
 		"""
 		super().__init__(*args, **kwargs)
 		self.subnegotiationMap[NAWS] = self.on_naws
-		self._nawsDimensions: tuple[int, int] = (0, 0)  # Width, height.
+		self._nawsDimensions: Dimensions = Dimensions(width=0, height=0)
 
 	@property
-	def nawsDimensions(self) -> tuple[int, int]:
+	def nawsDimensions(self) -> Dimensions:
 		return self._nawsDimensions
 
 	@nawsDimensions.setter
-	def nawsDimensions(self, value: tuple[int, int]) -> None:
-		if value[0] < 0 or value[1] < 0:
-			raise ValueError("Width and height must not be less than 0.")
-		self._nawsDimensions = value
+	def nawsDimensions(self, value: Union[Dimensions, Sequence[int]]) -> None:
+		self._nawsDimensions = value if isinstance(value, Dimensions) else Dimensions(*value)
 		if self.isClient:
-			# NAWS is negotiated with 16-bit words.
-			width: bytes = int.to_bytes(value[0], length=2, byteorder="big", signed=False)
-			height: bytes = int.to_bytes(value[1], length=2, byteorder="big", signed=False)
-			payload: bytes = width + height
+			payload: bytes = self._nawsDimensions.toBytes()
 			logger.debug(f"Sending NAWS payload: {payload!r}.")
 			self.requestNegotiation(NAWS, payload)
 
@@ -72,14 +122,15 @@ class NAWSMixIn(Base):
 		"""
 		if self.isClient:
 			logger.warning("Received NAWS subnegotiation while running in client mode.")
-		elif len(data) != 4:
-			logger.warning(f"Invalid NAWS sequence: {data!r}.")
-		else:
-			# NAWS is negotiated with 16-bit words.
-			width: int = int.from_bytes(data[:2], byteorder="big", signed=False)
-			height: int = int.from_bytes(data[2:], byteorder="big", signed=False)
-			logger.debug(f"Received window size from peer: width = {width}, height = {height}.")
-			self.nawsDimensions = (width, height)
+			return None
+		try:
+			dimensions: Dimensions = Dimensions.fromBytes(data)
+			logger.debug(
+				f"Received window size from peer: width = {dimensions.width}, height = {dimensions.height}."
+			)
+			self.nawsDimensions = dimensions
+		except ValueError as e:
+			logger.warning(repr(e))
 
 	def on_connectionMade(self) -> None:
 		super().on_connectionMade()

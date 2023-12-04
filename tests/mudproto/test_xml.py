@@ -7,12 +7,14 @@
 from __future__ import annotations
 
 # Built-in Modules:
+from collections.abc import Callable
 from unittest import TestCase
+from unittest.mock import Mock, _Call, call, patch
 
 # MUD Protocol Modules:
 from mudproto.mpi import MPI_INIT
 from mudproto.telnet_constants import CR, LF
-from mudproto.xml import EVENT_CALLER_TYPE, LT, XMLProtocol
+from mudproto.xml import LT, XMLProtocol
 
 
 class TestXMLProtocol(TestCase):
@@ -66,26 +68,24 @@ class TestXMLProtocol(TestCase):
 			+ b"PROMPT:" + self.prompt + b":PROMPT"
 		)
 		# fmt: on
-		self.expectedEvents: list[EVENT_CALLER_TYPE] = [
-			("movement", b"south"),
-			("room", b'area="Lorien" terrain="forest"'),
-			("name", name),
-			("description", description),
-			("magic", detectMagic),
-			("exits", exits),
-			("dynamic", dynamic),
-			("magic", magic),
-			("line", line),
-			("prompt", self.prompt),
+		self.expectedEvents: list[Callable[[tuple[str, bytes]], _Call]] = [
+			call("movement", b"south"),
+			call("room", b'area="Lorien" terrain="forest"'),
+			call("name", name),
+			call("description", description),
+			call("magic", detectMagic),
+			call("exits", exits),
+			call("dynamic", dynamic),
+			call("magic", magic),
+			call("line", line),
+			call("prompt", self.prompt),
 		]
 		self.gameReceives: bytearray = bytearray()
 		self.playerReceives: bytearray = bytearray()
-		self.receivedEvents: list[EVENT_CALLER_TYPE] = []
 		self.xml: XMLProtocol = XMLProtocol(
 			self.gameReceives.extend,
 			self.playerReceives.extend,
 			outputFormat="normal",
-			eventCaller=self.receivedEvents.append,
 			isClient=True,
 		)
 
@@ -109,34 +109,33 @@ class TestXMLProtocol(TestCase):
 		with self.assertRaises(ValueError):
 			self.xml.state = "**junk**"
 
-	def testXMLOn_dataReceived(self) -> None:
+	@patch("mudproto.xml.XMLProtocol.on_xmlEvent")
+	def testXMLOn_dataReceived(self, mockOnEvent: Mock) -> None:
 		data: bytes = b"Hello World!" + LF
 		self.xml.outputFormat = "normal"
 		self.xml.on_connectionMade()
 		self.assertEqual(self.parse(data), (data, MPI_INIT + b"X2" + LF + b"3G" + LF, "data"))
-		self.assertEqual(self.receivedEvents, [("line", data.rstrip(LF))])
-		self.receivedEvents.clear()
+		mockOnEvent.assert_called_once_with("line", data.rstrip(LF))
+		mockOnEvent.reset_mock()
 		# Insure that partial lines are properly buffered.
 		for delimiter in (CR, LF):
 			self.assertEqual(self.parse(b"partial"), (b"partial", b"", "data"))
-			self.assertFalse(self.receivedEvents)
+			mockOnEvent.assert_not_called()
 			self.assertEqual(self.parse(delimiter), (delimiter, b"", "data"))
-			self.assertEqual(
-				self.receivedEvents, [("line", b"partial")], f"When {delimiter!r} is used as line delimiter."
-			)
-			self.receivedEvents.clear()
+			mockOnEvent.assert_called_once_with("line", b"partial")
+			mockOnEvent.reset_mock()
 		self.assertEqual(self.parse(LT + b"IncompleteTag"), (b"", b"", "tag"))
-		self.assertFalse(self.receivedEvents)
+		mockOnEvent.assert_not_called()
 		self.assertEqual(self.xml._tagBuffer, b"IncompleteTag")
 		self.assertEqual(self.xml._textBuffer, b"")
 		self.xml._tagBuffer.clear()
 		self.assertEqual(self.parse(self.rawData), (self.normalData, b"", "data"))
-		self.assertEqual(self.receivedEvents, self.expectedEvents)
-		self.receivedEvents.clear()
+		self.assertEqual(mockOnEvent.call_args_list, self.expectedEvents)
+		mockOnEvent.reset_mock()
 		self.xml.outputFormat = "tintin"
 		self.assertEqual(self.parse(self.rawData), (self.tintinData, b"", "data"))
-		self.assertEqual(self.receivedEvents, self.expectedEvents)
-		self.receivedEvents.clear()
+		self.assertEqual(mockOnEvent.call_args_list, self.expectedEvents)
+		mockOnEvent.reset_mock()
 		self.xml.outputFormat = "raw"
 		self.assertEqual(self.parse(self.rawData), (self.rawData, b"", "data"))
-		self.assertEqual(self.receivedEvents, self.expectedEvents)
+		self.assertEqual(mockOnEvent.call_args_list, self.expectedEvents)

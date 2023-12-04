@@ -279,7 +279,7 @@ class TestTelnetProtocol(TestCase):
 		# 'subnegotiation' state:
 		self.assertEqual(self.parse(data + IAC + SB + IAC), (data, b"", "subnegotiation-escaped"))
 		self.assertEqual(self.parse(data + IAC + SB + b"something"), (data, b"", "subnegotiation"))
-		self.assertEqual(b"".join(self.telnet._commands), b"something")
+		self.assertEqual(self.telnet._commands, b"something")
 		del self.telnet._commands
 		# 'subnegotiation-escaped' state:
 		self.assertEqual(self.parse(data + IAC + SB + ECHO + b"something" + IAC + SE), (data, b"", "data"))

@@ -20,12 +20,12 @@ import sys
 import tempfile
 import textwrap
 import threading
-from collections.abc import Callable
-from typing import Any
+from typing import Any, ClassVar
 
 # Local Modules:
 from .base import Protocol
 from .telnet_constants import CR, CR_LF, LF
+from .typedef import MPI_COMMAND_MAP_TYPE
 
 
 MPI_INIT: bytes = b"~$#E"
@@ -44,7 +44,7 @@ class MPIProtocol(Protocol):
 		pager: The program to use for viewing received read-only text.
 	"""
 
-	states: frozenset[str] = frozenset(("data", "newline", "init", "command", "length", "body"))
+	states: ClassVar[frozenset[str]] = frozenset(("data", "newline", "init", "command", "length", "body"))
 	"""Valid states for the state machine."""
 
 	def __init__(self, *args: Any, outputFormat: str, **kwargs: Any) -> None:
@@ -53,7 +53,10 @@ class MPIProtocol(Protocol):
 		self._state: str = "data"
 		self._MPIBuffer: bytearray = bytearray()
 		self._MPIThreads: list[threading.Thread] = []
-		self.commandMap: dict[bytes, Callable[[bytes], None]] = {b"E": self.edit, b"V": self.view}
+		self.commandMap: MPI_COMMAND_MAP_TYPE = {
+			b"E": self.edit,
+			b"V": self.view,
+		}
 		editors: dict[str, str] = {
 			"win32": "notepad",
 		}
@@ -142,11 +145,11 @@ class MPIProtocol(Protocol):
 			os.remove(fileName)
 
 	def on_dataReceived(self, data: bytes) -> None:  # NOQA: C901
-		appDataBuffer: list[bytes] = []
+		appDataBuffer: bytearray = bytearray()
 		while data:
 			if self.state == "data":
 				appData, separator, data = data.partition(LF)
-				appDataBuffer.append(appData + separator)
+				appDataBuffer.extend(appData + separator)
 				if separator:
 					self.state = "newline"
 			elif self.state == "newline":
@@ -162,7 +165,7 @@ class MPIProtocol(Protocol):
 				if self._MPIBuffer == MPI_INIT:
 					# The final byte in the MPI_INIT sequence has been reached.
 					if appDataBuffer:
-						super().on_dataReceived(b"".join(appDataBuffer))
+						super().on_dataReceived(bytes(appDataBuffer))
 						appDataBuffer.clear()
 					self._MPIBuffer.clear()
 					self.state = "command"
@@ -201,7 +204,7 @@ class MPIProtocol(Protocol):
 					self._MPIBuffer.clear()
 					self.state = "data"
 		if appDataBuffer:
-			super().on_dataReceived(b"".join(appDataBuffer))
+			super().on_dataReceived(bytes(appDataBuffer))
 
 	def on_command(self, command: bytes, data: bytes) -> None:
 		"""

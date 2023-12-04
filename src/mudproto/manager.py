@@ -9,13 +9,13 @@ from __future__ import annotations
 # Built-in Modules:
 import inspect
 import logging
-from collections.abc import Callable
 from types import TracebackType
 from typing import Any, Optional
 
 # Local Modules:
 from .base import Protocol
 from .telnet_constants import CR, CR_LF, CR_NULL, GA, IAC, LF
+from .typedef import PROTOCOL_RECEIVER_TYPE, PROTOCOL_WRITER_TYPE
 from .utils import escapeIAC
 
 
@@ -25,14 +25,14 @@ logger: logging.Logger = logging.getLogger(__name__)
 class Manager(object):
 	def __init__(
 		self,
-		writer: Callable[[bytes], None],
-		receiver: Callable[[bytes], None],
+		writer: PROTOCOL_WRITER_TYPE,
+		receiver: PROTOCOL_RECEIVER_TYPE,
 		*,
 		isClient: bool,
 		promptTerminator: Optional[bytes] = None,
 	) -> None:
-		self._writer: Callable[[bytes], None] = writer
-		self._receiver: Callable[[bytes], None] = receiver
+		self._writer: PROTOCOL_WRITER_TYPE = writer
+		self._receiver: PROTOCOL_RECEIVER_TYPE = receiver
 		self._isClient: bool = isClient
 		self.promptTerminator: bytes
 		if promptTerminator is None:
@@ -44,8 +44,8 @@ class Manager(object):
 				.replace(CR, CR_NULL)
 				.replace(LF, CR_LF)
 			)
-		self._readBuffer: list[bytes] = []
-		self._writeBuffer: list[bytes] = []
+		self._readBuffer: bytearray = bytearray()
+		self._writeBuffer: bytearray = bytearray()
 		self._handlers: list[Protocol] = []
 		self._isConnected: bool = False
 
@@ -93,11 +93,11 @@ class Manager(object):
 		if not self.isConnected:
 			self._isConnected = True
 			if self._readBuffer:
-				data = b"".join(self._readBuffer)
+				data = bytes(self._readBuffer)
 				self._readBuffer.clear()
 				self.parse(data)
 			if self._writeBuffer:
-				data = b"".join(self._writeBuffer)
+				data = bytes(self._writeBuffer)
 				self._writeBuffer.clear()
 				self.write(data)
 
@@ -118,10 +118,10 @@ class Manager(object):
 			data: The data to be parsed.
 		"""
 		if not self.isConnected or not self._handlers:
-			self._readBuffer.append(data)
+			self._readBuffer.extend(data)
 			return None
 		elif self._readBuffer:
-			data = b"".join(self._readBuffer) + data
+			data = bytes(self._readBuffer + data)
 			self._readBuffer.clear()
 		if data:
 			self._handlers[0].on_dataReceived(data)
@@ -140,10 +140,10 @@ class Manager(object):
 		if prompt:
 			data += self.promptTerminator
 		if not self.isConnected or not self._handlers:
-			self._writeBuffer.append(data)
+			self._writeBuffer.extend(data)
 			return None
 		elif self._writeBuffer:
-			data = b"".join(self._writeBuffer) + data
+			data = bytes(self._writeBuffer + data)
 			self._writeBuffer.clear()
 		if data:
 			self._writer(data)
