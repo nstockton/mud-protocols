@@ -748,13 +748,16 @@
           <summary>Source code in <code>mudproto/base.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">BaseProtocol</span><span class="p">(</span><span class="n">TypeProtocol</span><span class="p">):</span>
 	<span class="nd">@property</span>
+	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">isClient</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;True if acting as a client, False otherwise.&quot;&quot;&quot;</span>
 
 	<span class="nd">@property</span>
+	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">isServer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;True if acting as a server, False otherwise.&quot;&quot;&quot;</span>
 
+	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Writes data to peer.</span>
@@ -763,12 +766,15 @@
 <span class="sd">			data: The bytes to be written.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 
+	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;Called by `connect` when a connection to peer has been established.&quot;&quot;&quot;</span>
 
+	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;Called by `disconnect` when a connection to peer has been lost.&quot;&quot;&quot;</span>
 
+	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Called by `parse` when data is received.</span>
@@ -854,7 +860,8 @@
 
         <details class="quote">
           <summary>Source code in <code>mudproto/base.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
+<span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;Called by `disconnect` when a connection to peer has been lost.&quot;&quot;&quot;</span>
 </code></pre></div>
         </details>
@@ -880,7 +887,8 @@
 
         <details class="quote">
           <summary>Source code in <code>mudproto/base.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
+<span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;Called by `connect` when a connection to peer has been established.&quot;&quot;&quot;</span>
 </code></pre></div>
         </details>
@@ -925,7 +933,8 @@
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/base.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
+<span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called by `parse` when data is received.</span>
 
@@ -975,7 +984,8 @@
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/base.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
+<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Writes data to peer.</span>
 
@@ -1019,14 +1029,14 @@
           <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Protocol</span><span class="p">(</span><span class="n">BaseProtocol</span><span class="p">):</span>
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
 		<span class="bp">self</span><span class="p">,</span>
-		<span class="n">writer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
-		<span class="n">receiver</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
+		<span class="n">writer</span><span class="p">:</span> <span class="n">PROTOCOL_WRITER_TYPE</span><span class="p">,</span>
+		<span class="n">receiver</span><span class="p">:</span> <span class="n">PROTOCOL_RECEIVER_TYPE</span><span class="p">,</span>
 		<span class="o">*</span><span class="p">,</span>
 		<span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 		<span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
 	<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">writer</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">receiver</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">PROTOCOL_WRITER_TYPE</span> <span class="o">=</span> <span class="n">writer</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">PROTOCOL_RECEIVER_TYPE</span> <span class="o">=</span> <span class="n">receiver</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">isClient</span>
 
 	<span class="nd">@property</span>
@@ -1124,14 +1134,14 @@
           <summary>Source code in <code>mudproto/base.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
 	<span class="bp">self</span><span class="p">,</span>
-	<span class="n">writer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
-	<span class="n">receiver</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
+	<span class="n">writer</span><span class="p">:</span> <span class="n">PROTOCOL_WRITER_TYPE</span><span class="p">,</span>
+	<span class="n">receiver</span><span class="p">:</span> <span class="n">PROTOCOL_RECEIVER_TYPE</span><span class="p">,</span>
 	<span class="o">*</span><span class="p">,</span>
 	<span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 	<span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-	<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">writer</span>
-	<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">receiver</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">PROTOCOL_WRITER_TYPE</span> <span class="o">=</span> <span class="n">writer</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">PROTOCOL_RECEIVER_TYPE</span> <span class="o">=</span> <span class="n">receiver</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">isClient</span>
 </code></pre></div>
         </details>
@@ -1160,7 +1170,8 @@
 
         <details class="quote">
           <summary>Source code in <code>mudproto/base.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
+<span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;Called by `disconnect` when a connection to peer has been lost.&quot;&quot;&quot;</span>
 </code></pre></div>
         </details>
@@ -1189,7 +1200,8 @@
 
         <details class="quote">
           <summary>Source code in <code>mudproto/base.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
+<span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;Called by `connect` when a connection to peer has been established.&quot;&quot;&quot;</span>
 </code></pre></div>
         </details>

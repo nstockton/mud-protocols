@@ -386,20 +386,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.mpi.MPIProtocol.state" class="md-nav__link">
-    state
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.mpi.MPIProtocol.states" class="md-nav__link">
-    states
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#mudproto.mpi.MPIProtocol.capitalise" class="md-nav__link">
     capitalise()
   </a>
@@ -499,6 +485,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mudproto.mpi.MPIState" class="md-nav__link">
+    MPIState
+  </a>
   
 </li>
       
@@ -630,20 +623,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.mpi.MPIProtocol.state" class="md-nav__link">
-    state
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.mpi.MPIProtocol.states" class="md-nav__link">
-    states
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#mudproto.mpi.MPIProtocol.capitalise" class="md-nav__link">
     capitalise()
   </a>
@@ -746,6 +725,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#mudproto.mpi.MPIState" class="md-nav__link">
+    MPIState
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -817,7 +803,7 @@
   <tbody>
       <tr>
         <td><code>commandMap</code></td>
-        <td><code>dict[bytes, Callable[[bytes], None]]</code></td>
+        <td><code>MPI_COMMAND_MAP_TYPE</code></td>
         <td><p>A mapping of bytes to callables.</p></td>
       </tr>
       <tr>
@@ -844,16 +830,17 @@
 <span class="sd">		pager: The program to use for viewing received read-only text.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 
-	<span class="n">states</span><span class="p">:</span> <span class="nb">frozenset</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">((</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;newline&quot;</span><span class="p">,</span> <span class="s2">&quot;init&quot;</span><span class="p">,</span> <span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="s2">&quot;length&quot;</span><span class="p">,</span> <span class="s2">&quot;body&quot;</span><span class="p">))</span>
-<span class="w">	</span><span class="sd">&quot;&quot;&quot;Valid states for the state machine.&quot;&quot;&quot;</span>
-
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">outputFormat</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">outputFormat</span>
 		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">:</span> <span class="n">MPIState</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">DATA</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;The state of the state machine.&quot;&quot;&quot;</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_MPIThreads</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">commandMap</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span><span class="sa">b</span><span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">edit</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;V&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">}</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">commandMap</span><span class="p">:</span> <span class="n">MPI_COMMAND_MAP_TYPE</span> <span class="o">=</span> <span class="p">{</span>
+			<span class="sa">b</span><span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">edit</span><span class="p">,</span>
+			<span class="sa">b</span><span class="s2">&quot;V&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">,</span>
+		<span class="p">}</span>
 		<span class="n">editors</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
 			<span class="s2">&quot;win32&quot;</span><span class="p">:</span> <span class="s2">&quot;notepad&quot;</span><span class="p">,</span>
 		<span class="p">}</span>
@@ -865,21 +852,6 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;VISUAL&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EDITOR&quot;</span><span class="p">,</span> <span class="n">defaultEditor</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;PAGER&quot;</span><span class="p">,</span> <span class="n">defaultPager</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_isWordWrapping</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-
-	<span class="nd">@property</span>
-	<span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">		The state of the state machine.</span>
-
-<span class="sd">		Valid values are in `states`.</span>
-<span class="sd">		&quot;&quot;&quot;</span>
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span>
-
-	<span class="nd">@state</span><span class="o">.</span><span class="n">setter</span>
-	<span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-		<span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
-			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39; not in </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">value</span>
 
 	<span class="nd">@property</span>
 	<span class="k">def</span> <span class="nf">isWordWrapping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -942,40 +914,40 @@
 			<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">fileName</span><span class="p">)</span>
 
 	<span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: C901</span>
-		<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 		<span class="k">while</span> <span class="n">data</span><span class="p">:</span>
-			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;data&quot;</span><span class="p">:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">DATA</span><span class="p">:</span>
 				<span class="n">appData</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">LF</span><span class="p">)</span>
-				<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">appData</span> <span class="o">+</span> <span class="n">separator</span><span class="p">)</span>
+				<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">appData</span> <span class="o">+</span> <span class="n">separator</span><span class="p">)</span>
 				<span class="k">if</span> <span class="n">separator</span><span class="p">:</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;newline&quot;</span>
-			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;newline&quot;</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">NEWLINE</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">NEWLINE</span><span class="p">:</span>
 				<span class="k">if</span> <span class="n">MPI_INIT</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">MPI_INIT</span><span class="p">)]):</span>
 					<span class="c1"># Data starts with some or all of the MPI_INIT sequence.</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;init&quot;</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">INIT</span>
 				<span class="k">else</span><span class="p">:</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
-			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;init&quot;</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">DATA</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">INIT</span><span class="p">:</span>
 				<span class="n">remaining</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">MPI_INIT</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="n">remaining</span><span class="p">])</span>
 				<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">remaining</span><span class="p">:]</span>
 				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span> <span class="o">==</span> <span class="n">MPI_INIT</span><span class="p">:</span>
 					<span class="c1"># The final byte in the MPI_INIT sequence has been reached.</span>
 					<span class="k">if</span> <span class="n">appDataBuffer</span><span class="p">:</span>
-						<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">appDataBuffer</span><span class="p">))</span>
+						<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">appDataBuffer</span><span class="p">))</span>
 						<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;command&quot;</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">COMMAND</span>
 				<span class="k">elif</span> <span class="ow">not</span> <span class="n">MPI_INIT</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">):</span>
 					<span class="c1"># The Bytes in the buffer are not part of an MPI init sequence.</span>
 					<span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
-			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;command&quot;</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">DATA</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">COMMAND</span><span class="p">:</span>
 				<span class="c1"># The MPI command is a single byte.</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_command</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;length&quot;</span>
-			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;length&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">LENGTH</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">LENGTH</span><span class="p">:</span>
 				<span class="n">length</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">LF</span><span class="p">)</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
 				<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
@@ -983,13 +955,13 @@
 					<span class="n">data</span> <span class="o">=</span> <span class="n">MPI_INIT</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="n">data</span>
 					<span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">DATA</span>
 				<span class="k">elif</span> <span class="n">separator</span><span class="p">:</span>
 					<span class="c1"># The buffer contains the length of subsequent bytes to be received.</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;body&quot;</span>
-			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;body&quot;</span><span class="p">:</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">BODY</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">BODY</span><span class="p">:</span>
 				<span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="n">remaining</span><span class="p">])</span>
 				<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">remaining</span><span class="p">:]</span>
@@ -999,9 +971,9 @@
 					<span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>
 					<span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">DATA</span>
 		<span class="k">if</span> <span class="n">appDataBuffer</span><span class="p">:</span>
-			<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">appDataBuffer</span><span class="p">))</span>
+			<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">appDataBuffer</span><span class="p">))</span>
 
 	<span class="k">def</span> <span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
@@ -1214,49 +1186,6 @@
     <div class="doc doc-contents ">
 
       <p>Specifies whether text should be word wrapped during editing or not.</p>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="mudproto.mpi.MPIProtocol.state" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">state</span><span class="p">:</span> <span class="nb">str</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-property"><code>property</code></small>
-      <small class="doc doc-property doc-property-writable"><code>writable</code></small>
-  </span>
-
-<a href="#mudproto.mpi.MPIProtocol.state" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>The state of the state machine.</p>
-<p>Valid values are in <code>states</code>.</p>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="mudproto.mpi.MPIProtocol.states" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">states</span><span class="p">:</span> <span class="nb">frozenset</span></code>
-
-
-<a href="#mudproto.mpi.MPIProtocol.states" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Valid states for the state machine.</p>
     </div>
 
   </div>
@@ -1793,40 +1722,40 @@
         <details class="quote">
           <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: C901</span>
-	<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 	<span class="k">while</span> <span class="n">data</span><span class="p">:</span>
-		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;data&quot;</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">DATA</span><span class="p">:</span>
 			<span class="n">appData</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">LF</span><span class="p">)</span>
-			<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">appData</span> <span class="o">+</span> <span class="n">separator</span><span class="p">)</span>
+			<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">appData</span> <span class="o">+</span> <span class="n">separator</span><span class="p">)</span>
 			<span class="k">if</span> <span class="n">separator</span><span class="p">:</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;newline&quot;</span>
-		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;newline&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">NEWLINE</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">NEWLINE</span><span class="p">:</span>
 			<span class="k">if</span> <span class="n">MPI_INIT</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">MPI_INIT</span><span class="p">)]):</span>
 				<span class="c1"># Data starts with some or all of the MPI_INIT sequence.</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;init&quot;</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">INIT</span>
 			<span class="k">else</span><span class="p">:</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
-		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;init&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">DATA</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">INIT</span><span class="p">:</span>
 			<span class="n">remaining</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">MPI_INIT</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="n">remaining</span><span class="p">])</span>
 			<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">remaining</span><span class="p">:]</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span> <span class="o">==</span> <span class="n">MPI_INIT</span><span class="p">:</span>
 				<span class="c1"># The final byte in the MPI_INIT sequence has been reached.</span>
 				<span class="k">if</span> <span class="n">appDataBuffer</span><span class="p">:</span>
-					<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">appDataBuffer</span><span class="p">))</span>
+					<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">appDataBuffer</span><span class="p">))</span>
 					<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;command&quot;</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">COMMAND</span>
 			<span class="k">elif</span> <span class="ow">not</span> <span class="n">MPI_INIT</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">):</span>
 				<span class="c1"># The Bytes in the buffer are not part of an MPI init sequence.</span>
 				<span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
-		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;command&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">DATA</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">COMMAND</span><span class="p">:</span>
 			<span class="c1"># The MPI command is a single byte.</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_command</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;length&quot;</span>
-		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;length&quot;</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">LENGTH</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">LENGTH</span><span class="p">:</span>
 			<span class="n">length</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">LF</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
 			<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
@@ -1834,13 +1763,13 @@
 				<span class="n">data</span> <span class="o">=</span> <span class="n">MPI_INIT</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="n">data</span>
 				<span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">DATA</span>
 			<span class="k">elif</span> <span class="n">separator</span><span class="p">:</span>
 				<span class="c1"># The buffer contains the length of subsequent bytes to be received.</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;body&quot;</span>
-		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;body&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">BODY</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">BODY</span><span class="p">:</span>
 			<span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">[:</span><span class="n">remaining</span><span class="p">])</span>
 			<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">remaining</span><span class="p">:]</span>
@@ -1850,9 +1779,9 @@
 				<span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>
 				<span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_length</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">DATA</span>
 	<span class="k">if</span> <span class="n">appDataBuffer</span><span class="p">:</span>
-		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">appDataBuffer</span><span class="p">))</span>
+		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">appDataBuffer</span><span class="p">))</span>
 </code></pre></div>
         </details>
     </div>
@@ -2170,6 +2099,65 @@
     </div>
 
   </div>
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="mudproto.mpi.MPIState" class="doc doc-heading">
+        <code>Class MPIState(<span title="enum.Enum">Enum</span>)</code>
+
+
+
+<a href="#mudproto.mpi.MPIState" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Valid states for the state machine.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">MPIState</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Valid states for the state machine.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="n">DATA</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+	<span class="n">NEWLINE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+	<span class="n">INIT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+	<span class="n">COMMAND</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+	<span class="n">LENGTH</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+	<span class="n">BODY</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

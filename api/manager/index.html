@@ -681,14 +681,14 @@
           <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Manager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
 		<span class="bp">self</span><span class="p">,</span>
-		<span class="n">writer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
-		<span class="n">receiver</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">],</span>
+		<span class="n">writer</span><span class="p">:</span> <span class="n">PROTOCOL_WRITER_TYPE</span><span class="p">,</span>
+		<span class="n">receiver</span><span class="p">:</span> <span class="n">PROTOCOL_RECEIVER_TYPE</span><span class="p">,</span>
 		<span class="o">*</span><span class="p">,</span>
 		<span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 		<span class="n">promptTerminator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 	<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">writer</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">receiver</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">PROTOCOL_WRITER_TYPE</span> <span class="o">=</span> <span class="n">writer</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">PROTOCOL_RECEIVER_TYPE</span> <span class="o">=</span> <span class="n">receiver</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">isClient</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">promptTerminator</span><span class="p">:</span> <span class="nb">bytes</span>
 		<span class="k">if</span> <span class="n">promptTerminator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -700,8 +700,8 @@
 				<span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR</span><span class="p">,</span> <span class="n">CR_NULL</span><span class="p">)</span>
 				<span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">LF</span><span class="p">,</span> <span class="n">CR_LF</span><span class="p">)</span>
 			<span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Protocol</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_isConnected</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
@@ -749,11 +749,11 @@
 		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isConnected</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_isConnected</span> <span class="o">=</span> <span class="kc">True</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">:</span>
-				<span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">)</span>
+				<span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">)</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">:</span>
-				<span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">)</span>
+				<span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">)</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
@@ -774,10 +774,10 @@
 <span class="sd">			data: The data to be parsed.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isConnected</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 			<span class="k">return</span> <span class="kc">None</span>
 		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">:</span>
-			<span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span>
+			<span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span> <span class="o">+</span> <span class="n">data</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 		<span class="k">if</span> <span class="n">data</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -796,10 +796,10 @@
 		<span class="k">if</span> <span class="n">prompt</span><span class="p">:</span>
 			<span class="n">data</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">promptTerminator</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isConnected</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 			<span class="k">return</span> <span class="kc">None</span>
 		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">:</span>
-			<span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span>
+			<span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span> <span class="o">+</span> <span class="n">data</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 		<span class="k">if</span> <span class="n">data</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -978,11 +978,11 @@
 	<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isConnected</span><span class="p">:</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_isConnected</span> <span class="o">=</span> <span class="kc">True</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">:</span>
-			<span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">)</span>
+			<span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">:</span>
-			<span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">)</span>
+			<span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
@@ -1069,10 +1069,10 @@
 <span class="sd">		data: The data to be parsed.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isConnected</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 		<span class="k">return</span> <span class="kc">None</span>
 	<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">:</span>
-		<span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span>
+		<span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span> <span class="o">+</span> <span class="n">data</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 	<span class="k">if</span> <span class="n">data</span><span class="p">:</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -1271,10 +1271,10 @@
 	<span class="k">if</span> <span class="n">prompt</span><span class="p">:</span>
 		<span class="n">data</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">promptTerminator</span>
 	<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isConnected</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 		<span class="k">return</span> <span class="kc">None</span>
 	<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">:</span>
-		<span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span>
+		<span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span> <span class="o">+</span> <span class="n">data</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 	<span class="k">if</span> <span class="n">data</span><span class="p">:</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
