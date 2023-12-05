@@ -11,7 +11,7 @@ from unittest import TestCase
 from unittest.mock import Mock, patch
 
 # MUD Protocol Modules:
-from mudproto.naws import Dimensions, NAWSMixIn
+from mudproto.naws import UINT16_MAX, Dimensions, NAWSMixIn
 from mudproto.naws import logger as nawsLogger
 from mudproto.telnet import TelnetProtocol
 from mudproto.telnet_constants import NAWS
@@ -50,7 +50,11 @@ class TestNAWSMixIn(TestCase):
 		with self.assertRaises(ValueError):
 			self.telnetClient.nawsDimensions = Dimensions(-1, 0)
 		with self.assertRaises(ValueError):
+			self.telnetClient.nawsDimensions = Dimensions(UINT16_MAX + 1, 0)
+		with self.assertRaises(ValueError):
 			self.telnetClient.nawsDimensions = Dimensions(0, -1)
+		with self.assertRaises(ValueError):
+			self.telnetClient.nawsDimensions = Dimensions(0, UINT16_MAX + 1)
 		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
 		self.assertEqual(self.telnetClient.nawsDimensions, Dimensions(0, 0))
 		mockRequestNegotiation.assert_not_called()

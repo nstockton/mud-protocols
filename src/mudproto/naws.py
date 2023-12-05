@@ -23,6 +23,9 @@ from .telnet import BaseTelnetProtocol, TelnetProtocol
 from .telnet_constants import NAWS
 
 
+UINT16_MAX: int = 0xFFFF
+
+
 logger: logging.Logger = logging.getLogger(__name__)
 
 
@@ -50,8 +53,8 @@ class Dimensions:
 		Raises:
 			ValueError: Invalid width or height values were given.
 		"""
-		if self.width < 0 or self.height < 0:
-			raise ValueError("{self!r}: Width and height must not be less than 0.")
+		if not 0 <= self.width <= UINT16_MAX or not 0 <= self.height <= UINT16_MAX:
+			raise ValueError(f"{self!r}: Values must be in range 0 - {UINT16_MAX}.")
 
 	@classmethod
 	def fromBytes(cls: type[Self], data: bytes) -> Self:
