@@ -34,7 +34,8 @@ from __future__ import annotations
 # Built-in Modules:
 import logging
 from abc import abstractmethod
-from typing import Any, ClassVar
+from enum import Enum, auto
+from typing import Any
 from typing import Protocol as TypeProtocol
 from typing import Union
 
@@ -104,6 +105,19 @@ class _OptionState:
 
 	def __repr__(self) -> str:
 		return f"<_OptionState us={self.us} him={self.him}>"
+
+
+class TelnetState(Enum):
+	"""
+	Valid states for the state machine.
+	"""
+
+	DATA = auto()
+	COMMAND = auto()
+	NEWLINE = auto()
+	NEGOTIATION = auto()
+	SUBNEGOTIATION = auto()
+	SUBNEGOTIATION_ESCAPED = auto()
 
 
 class BaseTelnetProtocol(BaseProtocol, TypeProtocol):
@@ -278,14 +292,10 @@ class TelnetProtocol(Protocol, BaseTelnetProtocol):
 	Implements the Telnet protocol.
 	"""
 
-	states: ClassVar[frozenset[str]] = frozenset(
-		("data", "command", "newline", "negotiation", "subnegotiation", "subnegotiation-escaped")
-	)
-	"""Valid states for the state machine."""
-
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
 		super().__init__(*args, **kwargs)
-		self._state: str = "data"
+		self.state: TelnetState = TelnetState.DATA
+		"""The state of the state machine."""
 		self._options: dict[bytes, _OptionState] = {}
 		"""A mapping of option bytes to their current state."""
 		# When a Telnet command is received, the command byte
@@ -309,21 +319,6 @@ class TelnetProtocol(Protocol, BaseTelnetProtocol):
 		# subnegotiations are to be handled.  By default, no values are
 		# handled.
 		self.subnegotiationMap: TELNET_SUBNEGOTIATION_MAP_TYPE = {}
-
-	@property
-	def state(self) -> str:
-		"""
-		The state of the state machine.
-
-		Valid values are in `states`.
-		"""
-		return self._state
-
-	@state.setter
-	def state(self, value: str) -> None:
-		if value not in self.states:
-			raise ValueError(f"'{value}' not in {tuple(sorted(self.states))}")
-		self._state = value
 
 	def _do(self, option: bytes) -> None:
 		"""
@@ -434,42 +429,42 @@ class TelnetProtocol(Protocol, BaseTelnetProtocol):
 	def on_dataReceived(self, data: bytes) -> None:  # NOQA: C901
 		appDataBuffer: bytearray = bytearray()
 		while data:
-			if self.state == "data":
+			if self.state == TelnetState.DATA:
 				appData, separator, data = data.partition(IAC)
 				if separator:
-					self.state = "command"
+					self.state = TelnetState.COMMAND
 				elif appData.endswith(CR):
-					self.state = "newline"
+					self.state = TelnetState.NEWLINE
 					appData = appData[:-1]
 				appDataBuffer.extend(appData.replace(CR_LF, LF).replace(CR_NULL, CR))
 				continue
 			byte, data = data[:1], data[1:]
-			if self.state == "command":
+			if self.state == TelnetState.COMMAND:
 				if byte == IAC:
 					# Escaped IAC.
 					appDataBuffer.extend(byte)
-					self.state = "data"
+					self.state = TelnetState.DATA
 				elif byte == SE:
-					self.state = "data"
+					self.state = TelnetState.DATA
 					logger.warning("IAC SE received outside of subnegotiation.")
 				elif byte == SB:
-					self.state = "subnegotiation"
+					self.state = TelnetState.SUBNEGOTIATION
 					self._commands: bytearray = bytearray()
 				elif byte in COMMAND_BYTES:
-					self.state = "data"
+					self.state = TelnetState.DATA
 					if appDataBuffer:
 						super().on_dataReceived(bytes(appDataBuffer))
 						appDataBuffer.clear()
 					logger.debug(f"Received from peer: IAC {DESCRIPTIONS[byte]}")
 					self.on_command(byte, None)
 				elif byte in NEGOTIATION_BYTES:
-					self.state = "negotiation"
+					self.state = TelnetState.NEGOTIATION
 					self._command = byte
 				else:
-					self.state = "data"
+					self.state = TelnetState.DATA
 					logger.warning(f"Unknown Telnet command received {byte!r}.")
-			elif self.state == "negotiation":
-				self.state = "data"
+			elif self.state == TelnetState.NEGOTIATION:
+				self.state = TelnetState.DATA
 				command = self._command
 				del self._command
 				if appDataBuffer:
@@ -479,8 +474,8 @@ class TelnetProtocol(Protocol, BaseTelnetProtocol):
 					f"Received from peer: IAC {DESCRIPTIONS[command]} {DESCRIPTIONS.get(byte, repr(byte))}"
 				)
 				self.on_command(command, byte)
-			elif self.state == "newline":
-				self.state = "data"
+			elif self.state == TelnetState.NEWLINE:
+				self.state = TelnetState.DATA
 				if byte == LF:
 					appDataBuffer.extend(byte)
 				elif byte == NULL:
@@ -497,17 +492,17 @@ class TelnetProtocol(Protocol, BaseTelnetProtocol):
 					# NUL, it still makes sense to interpret this as CR and
 					# then apply all the usual interpretation to the IAC.
 					appDataBuffer.extend(CR)
-					self.state = "command"
+					self.state = TelnetState.COMMAND
 				else:
 					appDataBuffer.extend(CR + byte)
-			elif self.state == "subnegotiation":
+			elif self.state == TelnetState.SUBNEGOTIATION:
 				if byte == IAC:
-					self.state = "subnegotiation-escaped"
+					self.state = TelnetState.SUBNEGOTIATION_ESCAPED
 				else:
 					self._commands.extend(byte)
-			elif self.state == "subnegotiation-escaped":
+			elif self.state == TelnetState.SUBNEGOTIATION_ESCAPED:
 				if byte == SE:
-					self.state = "data"
+					self.state = TelnetState.DATA
 					commands = bytes(self._commands)
 					del self._commands
 					if appDataBuffer:
@@ -519,12 +514,8 @@ class TelnetProtocol(Protocol, BaseTelnetProtocol):
 					)
 					self.on_subnegotiation(option, commands)
 				else:
-					self.state = "subnegotiation"
+					self.state = TelnetState.SUBNEGOTIATION
 					self._commands.extend(byte)
-			else:
-				logger.warning(f"Invalid Telnet state {self.state!r}. How'd you do this?")
-				appDataBuffer.extend(byte)
-				self.state = "data"
 		if appDataBuffer:
 			super().on_dataReceived(bytes(appDataBuffer))
 

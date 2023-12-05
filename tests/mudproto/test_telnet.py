@@ -11,7 +11,7 @@ from unittest import TestCase
 from unittest.mock import Mock, patch
 
 # MUD Protocol Modules:
-from mudproto.telnet import TelnetProtocol
+from mudproto.telnet import TelnetProtocol, TelnetState
 from mudproto.telnet_constants import (
 	COMMAND_BYTES,
 	CR,
@@ -55,19 +55,15 @@ class TestTelnetProtocol(TestCase):
 		state.him.negotiating = False
 		return state
 
-	def parse(self, data: bytes) -> tuple[bytes, bytes, str]:
+	def parse(self, data: bytes) -> tuple[bytes, bytes, TelnetState]:
 		self.telnet.on_dataReceived(data)
 		playerReceives: bytes = bytes(self.playerReceives)
 		self.playerReceives.clear()
 		gameReceives: bytes = bytes(self.gameReceives)
 		self.gameReceives.clear()
-		state: str = self.telnet.state
-		self.telnet.state = "data"
+		state: TelnetState = self.telnet.state
+		self.telnet.state = TelnetState.DATA
 		return playerReceives, gameReceives, state
-
-	def testTelnetState(self) -> None:
-		with self.assertRaises(ValueError):
-			self.telnet.state = "**junk**"
 
 	@patch("mudproto.telnet.logger")
 	def testTelnetWill(self, mockLogger: Mock) -> None:
@@ -226,7 +222,7 @@ class TestTelnetProtocol(TestCase):
 		self.assertEqual(self.playerReceives, b"")
 		self.assertEqual(self.gameReceives, expected)
 		self.gameReceives.clear()
-		self.assertEqual(self.telnet.state, "data")
+		self.assertEqual(self.telnet.state, TelnetState.DATA)
 
 	@patch("mudproto.telnet.logger")
 	@patch("mudproto.telnet.TelnetProtocol.on_subnegotiation")
@@ -240,59 +236,58 @@ class TestTelnetProtocol(TestCase):
 		# 'data' state:
 		data: bytes = b"Hello World!"
 		self.telnet.on_connectionMade()
-		self.assertEqual(self.parse(data), (data, b"", "data"))
-		self.assertEqual(self.parse(data + IAC), (data, b"", "command"))
-		self.assertEqual(self.parse(data + CR), (data, b"", "newline"))
-		self.assertEqual(self.parse(data + CR_LF), (data + LF, b"", "data"))
-		self.assertEqual(self.parse(data + CR_NULL), (data + CR, b"", "data"))
-		self.assertEqual(self.parse(data + CR + IAC), (data + CR, b"", "command"))
+		self.assertEqual(self.parse(data), (data, b"", TelnetState.DATA))
+		self.assertEqual(self.parse(data + IAC), (data, b"", TelnetState.COMMAND))
+		self.assertEqual(self.parse(data + CR), (data, b"", TelnetState.NEWLINE))
+		self.assertEqual(self.parse(data + CR_LF), (data + LF, b"", TelnetState.DATA))
+		self.assertEqual(self.parse(data + CR_NULL), (data + CR, b"", TelnetState.DATA))
+		self.assertEqual(self.parse(data + CR + IAC), (data + CR, b"", TelnetState.COMMAND))
 		# 'command' and 'negotiation' states:
-		self.assertEqual(self.parse(data + IAC + IAC), (data + IAC, b"", "data"))
-		self.assertEqual(self.parse(data + IAC + SE), (data, b"", "data"))
+		self.assertEqual(self.parse(data + IAC + IAC), (data + IAC, b"", TelnetState.DATA))
+		self.assertEqual(self.parse(data + IAC + SE), (data, b"", TelnetState.DATA))
 		mockLogger.warning.assert_called_once_with("IAC SE received outside of subnegotiation.")
 		mockLogger.reset_mock()
-		self.assertEqual(self.parse(data + IAC + SB), (data, b"", "subnegotiation"))
+		self.assertEqual(self.parse(data + IAC + SB), (data, b"", TelnetState.SUBNEGOTIATION))
 		for byte in COMMAND_BYTES:
-			self.assertEqual(self.parse(data + IAC + byte), (data, b"", "data"))
+			self.assertEqual(self.parse(data + IAC + byte), (data, b"", TelnetState.DATA))
 			mockOn_command.assert_called_once_with(byte, None)
 			mockOn_command.reset_mock()
 		for byte in NEGOTIATION_BYTES:
-			self.assertEqual(self.parse(data + IAC + byte), (data, b"", "negotiation"))
-			self.assertEqual(self.parse(data + IAC + byte + ECHO), (data, b"", "data"))
+			self.assertEqual(self.parse(data + IAC + byte), (data, b"", TelnetState.NEGOTIATION))
+			self.assertEqual(self.parse(data + IAC + byte + ECHO), (data, b"", TelnetState.DATA))
 			mockOn_command.assert_called_once_with(byte, ECHO)
 			mockOn_command.reset_mock()
-		self.assertEqual(self.parse(data + IAC + NULL), (data, b"", "data"))
+		self.assertEqual(self.parse(data + IAC + NULL), (data, b"", TelnetState.DATA))
 		mockLogger.warning.assert_called_once_with(f"Unknown Telnet command received {NULL!r}.")
 		mockLogger.reset_mock()
 		# 'newline' state:
 		# This state is entered when a packet ends in CR (I.E. when new lines are broken over two packets).
 		self.telnet.on_dataReceived(data + CR)
-		self.assertEqual(self.parse(LF), (data + LF, b"", "data"))
+		self.assertEqual(self.parse(LF), (data + LF, b"", TelnetState.DATA))
 		self.telnet.on_dataReceived(data + CR)
-		self.assertEqual(self.parse(NULL), (data + CR, b"", "data"))
+		self.assertEqual(self.parse(NULL), (data + CR, b"", TelnetState.DATA))
 		self.telnet.on_dataReceived(data + CR)
-		self.assertEqual(self.parse(IAC), (data + CR, b"", "command"))
+		self.assertEqual(self.parse(IAC), (data + CR, b"", TelnetState.COMMAND))
 		self.telnet.on_dataReceived(data + CR)
-		self.assertEqual(self.parse(IAC + IAC), (data + CR + IAC, b"", "data"))
+		self.assertEqual(self.parse(IAC + IAC), (data + CR + IAC, b"", TelnetState.DATA))
 		self.telnet.on_dataReceived(data + CR)
-		self.assertEqual(self.parse(ECHO), (data + CR + ECHO, b"", "data"))
+		self.assertEqual(self.parse(ECHO), (data + CR + ECHO, b"", TelnetState.DATA))
 		# 'subnegotiation' state:
-		self.assertEqual(self.parse(data + IAC + SB + IAC), (data, b"", "subnegotiation-escaped"))
-		self.assertEqual(self.parse(data + IAC + SB + b"something"), (data, b"", "subnegotiation"))
+		self.assertEqual(self.parse(data + IAC + SB + IAC), (data, b"", TelnetState.SUBNEGOTIATION_ESCAPED))
+		self.assertEqual(self.parse(data + IAC + SB + b"something"), (data, b"", TelnetState.SUBNEGOTIATION))
 		self.assertEqual(self.telnet._commands, b"something")
 		del self.telnet._commands
 		# 'subnegotiation-escaped' state:
-		self.assertEqual(self.parse(data + IAC + SB + ECHO + b"something" + IAC + SE), (data, b"", "data"))
+		self.assertEqual(
+			self.parse(data + IAC + SB + ECHO + b"something" + IAC + SE), (data, b"", TelnetState.DATA)
+		)
 		mockOn_subnegotiation.assert_called_once_with(ECHO, b"something")
 		mockOn_subnegotiation.reset_mock()
 		self.assertEqual(
-			self.parse(data + IAC + SB + ECHO + b"something" + IAC + IAC + IAC + SE), (data, b"", "data")
+			self.parse(data + IAC + SB + ECHO + b"something" + IAC + IAC + IAC + SE),
+			(data, b"", TelnetState.DATA),
 		)
 		mockOn_subnegotiation.assert_called_once_with(ECHO, b"something" + IAC)
-		# Invalid state: This should never happen.
-		self.telnet._state = "**junk**"
-		self.assertEqual(self.parse(data), (data, b"", "data"))
-		mockLogger.warning.assert_called_once_with("Invalid Telnet state '**junk**'. How'd you do this?")
 
 	@patch("mudproto.telnet.TelnetProtocol.on_unhandledCommand")
 	def testTelnetOn_command(self, mockOn_unhandledCommand: Mock) -> None:

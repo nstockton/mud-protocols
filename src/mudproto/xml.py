@@ -13,6 +13,7 @@ from __future__ import annotations
 
 # Built-in Modules:
 import logging
+from enum import Enum, auto
 from typing import Any, ClassVar, Union
 
 # Local Modules:
@@ -29,13 +30,20 @@ GT: bytes = b">"
 logger: logging.Logger = logging.getLogger(__name__)
 
 
+class XMLState(Enum):
+	"""
+	Valid states for the state machine.
+	"""
+
+	DATA = auto()
+	TAG = auto()
+
+
 class XMLProtocol(Protocol):
 	"""
 	Implements the Mume XML protocol.
 	"""
 
-	states: ClassVar[frozenset[str]] = frozenset(("data", "tag"))
-	"""Valid states for the state machine."""
 	modes: ClassVar[dict[bytes, Union[bytes, None]]] = {
 		b"room": b"room",
 		b"/room": None,
@@ -79,7 +87,8 @@ class XMLProtocol(Protocol):
 	) -> None:
 		self.outputFormat: str = outputFormat
 		super().__init__(*args, **kwargs)
-		self._state: str = "data"
+		self.state: XMLState = XMLState.DATA
+		"""The state of the state machine."""
 		self._tagBuffer: bytearray = bytearray()  # Used for start and end tag names.
 		self._textBuffer: bytearray = bytearray()  # Used for the text between start and end tags.
 		self._dynamicBuffer: bytearray = bytearray()  # Used for dynamic room descriptions.
@@ -87,21 +96,6 @@ class XMLProtocol(Protocol):
 		self._gratuitous: bool = False
 		self._inRoom: bool = False
 		self._mode: Union[bytes, None] = None
-
-	@property
-	def state(self) -> str:
-		"""
-		The state of the state machine.
-
-		Valid values are in `states`.
-		"""
-		return self._state
-
-	@state.setter
-	def state(self, value: str) -> None:
-		if value not in self.states:
-			raise ValueError(f"'{value}' not in {tuple(sorted(self.states))}")
-		self._state = value
 
 	def _handleXMLText(self, data: bytes, appDataBuffer: bytearray) -> bytes:
 		"""
@@ -131,7 +125,7 @@ class XMLProtocol(Protocol):
 		else:
 			self._textBuffer.extend(appData)
 		if separator:
-			self.state = "tag"
+			self.state = XMLState.TAG
 		return data
 
 	def _handleXMLTag(self, data: bytes, appDataBuffer: bytearray) -> bytes:
@@ -185,15 +179,15 @@ class XMLProtocol(Protocol):
 				self._mode = self.modes[tag]
 				if self._inRoom:
 					self._dynamicBuffer.extend(text)
-		self.state = "data"
+		self.state = XMLState.DATA
 		return data
 
 	def on_dataReceived(self, data: bytes) -> None:
 		appDataBuffer: bytearray = bytearray()
 		while data:
-			if self.state == "data":
+			if self.state == XMLState.DATA:
 				data = self._handleXMLText(data, appDataBuffer)
-			elif self.state == "tag":
+			elif self.state == XMLState.TAG:
 				data = self._handleXMLTag(data, appDataBuffer)
 		if appDataBuffer:
 			if self.outputFormat == "raw":

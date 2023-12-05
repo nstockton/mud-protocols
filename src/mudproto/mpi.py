@@ -20,7 +20,8 @@ import sys
 import tempfile
 import textwrap
 import threading
-from typing import Any, ClassVar
+from enum import Enum, auto
+from typing import Any
 
 # Local Modules:
 from .base import Protocol
@@ -34,6 +35,19 @@ MPI_INIT: bytes = b"~$#E"
 logger: logging.Logger = logging.getLogger(__name__)
 
 
+class MPIState(Enum):
+	"""
+	Valid states for the state machine.
+	"""
+
+	DATA = auto()
+	NEWLINE = auto()
+	INIT = auto()
+	COMMAND = auto()
+	LENGTH = auto()
+	BODY = auto()
+
+
 class MPIProtocol(Protocol):
 	"""
 	Implements support for the Mume remote editing protocol.
@@ -44,13 +58,11 @@ class MPIProtocol(Protocol):
 		pager: The program to use for viewing received read-only text.
 	"""
 
-	states: ClassVar[frozenset[str]] = frozenset(("data", "newline", "init", "command", "length", "body"))
-	"""Valid states for the state machine."""
-
 	def __init__(self, *args: Any, outputFormat: str, **kwargs: Any) -> None:
 		self.outputFormat: str = outputFormat
 		super().__init__(*args, **kwargs)
-		self._state: str = "data"
+		self.state: MPIState = MPIState.DATA
+		"""The state of the state machine."""
 		self._MPIBuffer: bytearray = bytearray()
 		self._MPIThreads: list[threading.Thread] = []
 		self.commandMap: MPI_COMMAND_MAP_TYPE = {
@@ -68,21 +80,6 @@ class MPIProtocol(Protocol):
 		self.editor: str = os.getenv("VISUAL", "") or os.getenv("EDITOR", defaultEditor)
 		self.pager: str = os.getenv("PAGER", defaultPager)
 		self._isWordWrapping: bool = False
-
-	@property
-	def state(self) -> str:
-		"""
-		The state of the state machine.
-
-		Valid values are in `states`.
-		"""
-		return self._state
-
-	@state.setter
-	def state(self, value: str) -> None:
-		if value not in self.states:
-			raise ValueError(f"'{value}' not in {tuple(sorted(self.states))}")
-		self._state = value
 
 	@property
 	def isWordWrapping(self) -> bool:
@@ -147,18 +144,18 @@ class MPIProtocol(Protocol):
 	def on_dataReceived(self, data: bytes) -> None:  # NOQA: C901
 		appDataBuffer: bytearray = bytearray()
 		while data:
-			if self.state == "data":
+			if self.state == MPIState.DATA:
 				appData, separator, data = data.partition(LF)
 				appDataBuffer.extend(appData + separator)
 				if separator:
-					self.state = "newline"
-			elif self.state == "newline":
+					self.state = MPIState.NEWLINE
+			elif self.state == MPIState.NEWLINE:
 				if MPI_INIT.startswith(data[: len(MPI_INIT)]):
 					# Data starts with some or all of the MPI_INIT sequence.
-					self.state = "init"
+					self.state = MPIState.INIT
 				else:
-					self.state = "data"
-			elif self.state == "init":
+					self.state = MPIState.DATA
+			elif self.state == MPIState.INIT:
 				remaining = len(MPI_INIT) - len(self._MPIBuffer)
 				self._MPIBuffer.extend(data[:remaining])
 				data = data[remaining:]
@@ -168,17 +165,17 @@ class MPIProtocol(Protocol):
 						super().on_dataReceived(bytes(appDataBuffer))
 						appDataBuffer.clear()
 					self._MPIBuffer.clear()
-					self.state = "command"
+					self.state = MPIState.COMMAND
 				elif not MPI_INIT.startswith(self._MPIBuffer):
 					# The Bytes in the buffer are not part of an MPI init sequence.
 					data = bytes(self._MPIBuffer) + data
 					self._MPIBuffer.clear()
-					self.state = "data"
-			elif self.state == "command":
+					self.state = MPIState.DATA
+			elif self.state == MPIState.COMMAND:
 				# The MPI command is a single byte.
 				self._command, data = data[:1], data[1:]
-				self.state = "length"
-			elif self.state == "length":
+				self.state = MPIState.LENGTH
+			elif self.state == MPIState.LENGTH:
 				length, separator, data = data.partition(LF)
 				self._MPIBuffer.extend(length)
 				if not self._MPIBuffer.isdigit():
@@ -186,13 +183,13 @@ class MPIProtocol(Protocol):
 					data = MPI_INIT + self._command + bytes(self._MPIBuffer) + separator + data
 					del self._command
 					self._MPIBuffer.clear()
-					self.state = "data"
+					self.state = MPIState.DATA
 				elif separator:
 					# The buffer contains the length of subsequent bytes to be received.
 					self._length = int(self._MPIBuffer)
 					self._MPIBuffer.clear()
-					self.state = "body"
-			elif self.state == "body":
+					self.state = MPIState.BODY
+			elif self.state == MPIState.BODY:
 				remaining = self._length - len(self._MPIBuffer)
 				self._MPIBuffer.extend(data[:remaining])
 				data = data[remaining:]
@@ -202,7 +199,7 @@ class MPIProtocol(Protocol):
 					del self._command
 					del self._length
 					self._MPIBuffer.clear()
-					self.state = "data"
+					self.state = MPIState.DATA
 		if appDataBuffer:
 			super().on_dataReceived(bytes(appDataBuffer))
 

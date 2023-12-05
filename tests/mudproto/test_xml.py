@@ -14,7 +14,7 @@ from unittest.mock import Mock, _Call, call, patch
 # MUD Protocol Modules:
 from mudproto.mpi import MPI_INIT
 from mudproto.telnet_constants import CR, LF
-from mudproto.xml import LT, XMLProtocol
+from mudproto.xml import LT, XMLProtocol, XMLState
 
 
 class TestXMLProtocol(TestCase):
@@ -95,47 +95,43 @@ class TestXMLProtocol(TestCase):
 		self.gameReceives.clear()
 		self.playerReceives.clear()
 
-	def parse(self, data: bytes) -> tuple[bytes, bytes, str]:
+	def parse(self, data: bytes) -> tuple[bytes, bytes, XMLState]:
 		self.xml.on_dataReceived(data)
 		playerReceives: bytes = bytes(self.playerReceives)
 		self.playerReceives.clear()
 		gameReceives: bytes = bytes(self.gameReceives)
 		self.gameReceives.clear()
-		state: str = self.xml.state
-		self.xml.state = "data"
+		state: XMLState = self.xml.state
+		self.xml.state = XMLState.DATA
 		return playerReceives, gameReceives, state
-
-	def testXMLState(self) -> None:
-		with self.assertRaises(ValueError):
-			self.xml.state = "**junk**"
 
 	@patch("mudproto.xml.XMLProtocol.on_xmlEvent")
 	def testXMLOn_dataReceived(self, mockOnEvent: Mock) -> None:
 		data: bytes = b"Hello World!" + LF
 		self.xml.outputFormat = "normal"
 		self.xml.on_connectionMade()
-		self.assertEqual(self.parse(data), (data, MPI_INIT + b"X2" + LF + b"3G" + LF, "data"))
+		self.assertEqual(self.parse(data), (data, MPI_INIT + b"X2" + LF + b"3G" + LF, XMLState.DATA))
 		mockOnEvent.assert_called_once_with("line", data.rstrip(LF))
 		mockOnEvent.reset_mock()
 		# Insure that partial lines are properly buffered.
 		for delimiter in (CR, LF):
-			self.assertEqual(self.parse(b"partial"), (b"partial", b"", "data"))
+			self.assertEqual(self.parse(b"partial"), (b"partial", b"", XMLState.DATA))
 			mockOnEvent.assert_not_called()
-			self.assertEqual(self.parse(delimiter), (delimiter, b"", "data"))
+			self.assertEqual(self.parse(delimiter), (delimiter, b"", XMLState.DATA))
 			mockOnEvent.assert_called_once_with("line", b"partial")
 			mockOnEvent.reset_mock()
-		self.assertEqual(self.parse(LT + b"IncompleteTag"), (b"", b"", "tag"))
+		self.assertEqual(self.parse(LT + b"IncompleteTag"), (b"", b"", XMLState.TAG))
 		mockOnEvent.assert_not_called()
 		self.assertEqual(self.xml._tagBuffer, b"IncompleteTag")
 		self.assertEqual(self.xml._textBuffer, b"")
 		self.xml._tagBuffer.clear()
-		self.assertEqual(self.parse(self.rawData), (self.normalData, b"", "data"))
+		self.assertEqual(self.parse(self.rawData), (self.normalData, b"", XMLState.DATA))
 		self.assertEqual(mockOnEvent.call_args_list, self.expectedEvents)
 		mockOnEvent.reset_mock()
 		self.xml.outputFormat = "tintin"
-		self.assertEqual(self.parse(self.rawData), (self.tintinData, b"", "data"))
+		self.assertEqual(self.parse(self.rawData), (self.tintinData, b"", XMLState.DATA))
 		self.assertEqual(mockOnEvent.call_args_list, self.expectedEvents)
 		mockOnEvent.reset_mock()
 		self.xml.outputFormat = "raw"
-		self.assertEqual(self.parse(self.rawData), (self.rawData, b"", "data"))
+		self.assertEqual(self.parse(self.rawData), (self.rawData, b"", XMLState.DATA))
 		self.assertEqual(mockOnEvent.call_args_list, self.expectedEvents)
