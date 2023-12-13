@@ -429,7 +429,7 @@ class TelnetProtocol(Protocol, BaseTelnetProtocol):
 	def on_dataReceived(self, data: bytes) -> None:  # NOQA: C901
 		appDataBuffer: bytearray = bytearray()
 		while data:
-			if self.state == TelnetState.DATA:
+			if self.state is TelnetState.DATA:
 				appData, separator, data = data.partition(IAC)
 				if separator:
 					self.state = TelnetState.COMMAND
@@ -439,7 +439,7 @@ class TelnetProtocol(Protocol, BaseTelnetProtocol):
 				appDataBuffer.extend(appData.replace(CR_LF, LF).replace(CR_NULL, CR))
 				continue
 			byte, data = data[:1], data[1:]
-			if self.state == TelnetState.COMMAND:
+			if self.state is TelnetState.COMMAND:
 				if byte == IAC:
 					# Escaped IAC.
 					appDataBuffer.extend(byte)
@@ -463,7 +463,7 @@ class TelnetProtocol(Protocol, BaseTelnetProtocol):
 				else:
 					self.state = TelnetState.DATA
 					logger.warning(f"Unknown Telnet command received {byte!r}.")
-			elif self.state == TelnetState.NEGOTIATION:
+			elif self.state is TelnetState.NEGOTIATION:
 				self.state = TelnetState.DATA
 				command = self._command
 				del self._command
@@ -474,7 +474,7 @@ class TelnetProtocol(Protocol, BaseTelnetProtocol):
 					f"Received from peer: IAC {DESCRIPTIONS[command]} {DESCRIPTIONS.get(byte, repr(byte))}"
 				)
 				self.on_command(command, byte)
-			elif self.state == TelnetState.NEWLINE:
+			elif self.state is TelnetState.NEWLINE:
 				self.state = TelnetState.DATA
 				if byte == LF:
 					appDataBuffer.extend(byte)
@@ -495,12 +495,12 @@ class TelnetProtocol(Protocol, BaseTelnetProtocol):
 					self.state = TelnetState.COMMAND
 				else:
 					appDataBuffer.extend(CR + byte)
-			elif self.state == TelnetState.SUBNEGOTIATION:
+			elif self.state is TelnetState.SUBNEGOTIATION:
 				if byte == IAC:
 					self.state = TelnetState.SUBNEGOTIATION_ESCAPED
 				else:
 					self._commands.extend(byte)
-			elif self.state == TelnetState.SUBNEGOTIATION_ESCAPED:
+			elif self.state is TelnetState.SUBNEGOTIATION_ESCAPED:
 				if byte == SE:
 					self.state = TelnetState.DATA
 					commands = bytes(self._commands)

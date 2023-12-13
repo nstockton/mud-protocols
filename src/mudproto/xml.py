@@ -185,9 +185,9 @@ class XMLProtocol(Protocol):
 	def on_dataReceived(self, data: bytes) -> None:
 		appDataBuffer: bytearray = bytearray()
 		while data:
-			if self.state == XMLState.DATA:
+			if self.state is XMLState.DATA:
 				data = self._handleXMLText(data, appDataBuffer)
-			elif self.state == XMLState.TAG:
+			elif self.state is XMLState.TAG:
 				data = self._handleXMLTag(data, appDataBuffer)
 		if appDataBuffer:
 			if self.outputFormat == "raw":

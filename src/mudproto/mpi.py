@@ -144,18 +144,18 @@ class MPIProtocol(Protocol):
 	def on_dataReceived(self, data: bytes) -> None:  # NOQA: C901
 		appDataBuffer: bytearray = bytearray()
 		while data:
-			if self.state == MPIState.DATA:
+			if self.state is MPIState.DATA:
 				appData, separator, data = data.partition(LF)
 				appDataBuffer.extend(appData + separator)
 				if separator:
 					self.state = MPIState.NEWLINE
-			elif self.state == MPIState.NEWLINE:
+			elif self.state is MPIState.NEWLINE:
 				if MPI_INIT.startswith(data[: len(MPI_INIT)]):
 					# Data starts with some or all of the MPI_INIT sequence.
 					self.state = MPIState.INIT
 				else:
 					self.state = MPIState.DATA
-			elif self.state == MPIState.INIT:
+			elif self.state is MPIState.INIT:
 				remaining = len(MPI_INIT) - len(self._MPIBuffer)
 				self._MPIBuffer.extend(data[:remaining])
 				data = data[remaining:]
@@ -171,11 +171,11 @@ class MPIProtocol(Protocol):
 					data = bytes(self._MPIBuffer) + data
 					self._MPIBuffer.clear()
 					self.state = MPIState.DATA
-			elif self.state == MPIState.COMMAND:
+			elif self.state is MPIState.COMMAND:
 				# The MPI command is a single byte.
 				self._command, data = data[:1], data[1:]
 				self.state = MPIState.LENGTH
-			elif self.state == MPIState.LENGTH:
+			elif self.state is MPIState.LENGTH:
 				length, separator, data = data.partition(LF)
 				self._MPIBuffer.extend(length)
 				if not self._MPIBuffer.isdigit():
@@ -189,7 +189,7 @@ class MPIProtocol(Protocol):
 					self._length = int(self._MPIBuffer)
 					self._MPIBuffer.clear()
 					self.state = MPIState.BODY
-			elif self.state == MPIState.BODY:
+			elif self.state is MPIState.BODY:
 				remaining = self._length - len(self._MPIBuffer)
 				self._MPIBuffer.extend(data[:remaining])
 				data = data[remaining:]
