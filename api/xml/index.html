@@ -407,6 +407,13 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#mudproto.xml.XMLProtocol.ignoredSubTags" class="md-nav__link">
+    ignoredSubTags
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.xml.XMLProtocol.isClient" class="md-nav__link">
     isClient
   </a>
@@ -544,6 +551,13 @@
   
     <nav class="md-nav" aria-label="XMLProtocol">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.xml.XMLProtocol.ignoredSubTags" class="md-nav__link">
+    ignoredSubTags
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#mudproto.xml.XMLProtocol.isClient" class="md-nav__link">
@@ -721,6 +735,10 @@
 		<span class="sa">b</span><span class="s2">&quot;/emote&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;:EMOTE&quot;</span><span class="p">,</span>
 	<span class="p">}</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;A mapping of tag to replacement values for Tintin.&quot;&quot;&quot;</span>
+	<span class="n">ignoredSubTags</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">frozenset</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span>
+		<span class="p">{</span><span class="sa">b</span><span class="s2">&quot;character&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;enemy&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;object&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;player&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;status&quot;</span><span class="p">}</span>
+	<span class="p">)</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;Tags that can appear inside other tags and should be ignored.&quot;&quot;&quot;</span>
 
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
 		<span class="bp">self</span><span class="p">,</span>
@@ -789,10 +807,9 @@
 			<span class="k">return</span> <span class="n">data</span>
 		<span class="n">tag</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tagBuffer</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_tagBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-		<span class="n">baseTag</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">tag</span>
-		<span class="n">isStatusTag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">baseTag</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;status&quot;</span>
+		<span class="n">baseTag</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
 		<span class="n">text</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_textBuffer</span><span class="p">)</span>
-		<span class="k">if</span> <span class="ow">not</span> <span class="n">isStatusTag</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">baseTag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignoredSubTags</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">baseTag</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;exits&quot;</span> <span class="ow">and</span> <span class="n">baseTag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;exit&quot;</span><span class="p">)):</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_textBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;raw&quot;</span><span class="p">:</span>
 			<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">LT</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="n">GT</span><span class="p">)</span>
@@ -828,9 +845,9 @@
 	<span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 		<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 		<span class="k">while</span> <span class="n">data</span><span class="p">:</span>
-			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">XMLState</span><span class="o">.</span><span class="n">DATA</span><span class="p">:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">XMLState</span><span class="o">.</span><span class="n">DATA</span><span class="p">:</span>
 				<span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handleXMLText</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">appDataBuffer</span><span class="p">)</span>
-			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">XMLState</span><span class="o">.</span><span class="n">TAG</span><span class="p">:</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">XMLState</span><span class="o">.</span><span class="n">TAG</span><span class="p">:</span>
 				<span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handleXMLTag</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">appDataBuffer</span><span class="p">)</span>
 		<span class="k">if</span> <span class="n">appDataBuffer</span><span class="p">:</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;raw&quot;</span><span class="p">:</span>
@@ -864,6 +881,25 @@
 
 
 
+
+
+
+  <div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="mudproto.xml.XMLProtocol.ignoredSubTags" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">ignoredSubTags</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">frozenset</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]]</span></code>
+
+
+<a href="#mudproto.xml.XMLProtocol.ignoredSubTags" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Tags that can appear inside other tags and should be ignored.</p>
+    </div>
+
+  </div>
 
 
 
@@ -1050,9 +1086,9 @@
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 	<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 	<span class="k">while</span> <span class="n">data</span><span class="p">:</span>
-		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">XMLState</span><span class="o">.</span><span class="n">DATA</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">XMLState</span><span class="o">.</span><span class="n">DATA</span><span class="p">:</span>
 			<span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handleXMLText</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">appDataBuffer</span><span class="p">)</span>
-		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">XMLState</span><span class="o">.</span><span class="n">TAG</span><span class="p">:</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">XMLState</span><span class="o">.</span><span class="n">TAG</span><span class="p">:</span>
 			<span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handleXMLTag</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">appDataBuffer</span><span class="p">)</span>
 	<span class="k">if</span> <span class="n">appDataBuffer</span><span class="p">:</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;raw&quot;</span><span class="p">:</span>

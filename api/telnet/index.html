@@ -2712,7 +2712,7 @@ in order to perform any necessary cleanup on our end.</p>
 	<span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: C901</span>
 		<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 		<span class="k">while</span> <span class="n">data</span><span class="p">:</span>
-			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">DATA</span><span class="p">:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">DATA</span><span class="p">:</span>
 				<span class="n">appData</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">IAC</span><span class="p">)</span>
 				<span class="k">if</span> <span class="n">separator</span><span class="p">:</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">COMMAND</span>
@@ -2722,7 +2722,7 @@ in order to perform any necessary cleanup on our end.</p>
 				<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">appData</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR_LF</span><span class="p">,</span> <span class="n">LF</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR_NULL</span><span class="p">,</span> <span class="n">CR</span><span class="p">))</span>
 				<span class="k">continue</span>
 			<span class="n">byte</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">COMMAND</span><span class="p">:</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">COMMAND</span><span class="p">:</span>
 				<span class="k">if</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">IAC</span><span class="p">:</span>
 					<span class="c1"># Escaped IAC.</span>
 					<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
@@ -2746,7 +2746,7 @@ in order to perform any necessary cleanup on our end.</p>
 				<span class="k">else</span><span class="p">:</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">DATA</span>
 					<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown Telnet command received </span><span class="si">{</span><span class="n">byte</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
-			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">NEGOTIATION</span><span class="p">:</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">NEGOTIATION</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">DATA</span>
 				<span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>
 				<span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>
@@ -2757,7 +2757,7 @@ in order to perform any necessary cleanup on our end.</p>
 					<span class="sa">f</span><span class="s2">&quot;Received from peer: IAC </span><span class="si">{</span><span class="n">DESCRIPTIONS</span><span class="p">[</span><span class="n">command</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">DESCRIPTIONS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span><span class="w"> </span><span class="nb">repr</span><span class="p">(</span><span class="n">byte</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
 				<span class="p">)</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">on_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">byte</span><span class="p">)</span>
-			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">NEWLINE</span><span class="p">:</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">NEWLINE</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">DATA</span>
 				<span class="k">if</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">LF</span><span class="p">:</span>
 					<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
@@ -2778,12 +2778,12 @@ in order to perform any necessary cleanup on our end.</p>
 					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">COMMAND</span>
 				<span class="k">else</span><span class="p">:</span>
 					<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">CR</span> <span class="o">+</span> <span class="n">byte</span><span class="p">)</span>
-			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">SUBNEGOTIATION</span><span class="p">:</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">SUBNEGOTIATION</span><span class="p">:</span>
 				<span class="k">if</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">IAC</span><span class="p">:</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">SUBNEGOTIATION_ESCAPED</span>
 				<span class="k">else</span><span class="p">:</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">_commands</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
-			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">SUBNEGOTIATION_ESCAPED</span><span class="p">:</span>
+			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">SUBNEGOTIATION_ESCAPED</span><span class="p">:</span>
 				<span class="k">if</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">SE</span><span class="p">:</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">DATA</span>
 					<span class="n">commands</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_commands</span><span class="p">)</span>
@@ -3346,7 +3346,7 @@ in order to perform any necessary cleanup on our end.</p>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: C901</span>
 	<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 	<span class="k">while</span> <span class="n">data</span><span class="p">:</span>
-		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">DATA</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">DATA</span><span class="p">:</span>
 			<span class="n">appData</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">IAC</span><span class="p">)</span>
 			<span class="k">if</span> <span class="n">separator</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">COMMAND</span>
@@ -3356,7 +3356,7 @@ in order to perform any necessary cleanup on our end.</p>
 			<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">appData</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR_LF</span><span class="p">,</span> <span class="n">LF</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR_NULL</span><span class="p">,</span> <span class="n">CR</span><span class="p">))</span>
 			<span class="k">continue</span>
 		<span class="n">byte</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">COMMAND</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">COMMAND</span><span class="p">:</span>
 			<span class="k">if</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">IAC</span><span class="p">:</span>
 				<span class="c1"># Escaped IAC.</span>
 				<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
@@ -3380,7 +3380,7 @@ in order to perform any necessary cleanup on our end.</p>
 			<span class="k">else</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">DATA</span>
 				<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown Telnet command received </span><span class="si">{</span><span class="n">byte</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
-		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">NEGOTIATION</span><span class="p">:</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">NEGOTIATION</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">DATA</span>
 			<span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>
 			<span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>
@@ -3391,7 +3391,7 @@ in order to perform any necessary cleanup on our end.</p>
 				<span class="sa">f</span><span class="s2">&quot;Received from peer: IAC </span><span class="si">{</span><span class="n">DESCRIPTIONS</span><span class="p">[</span><span class="n">command</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">DESCRIPTIONS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">byte</span><span class="p">,</span><span class="w"> </span><span class="nb">repr</span><span class="p">(</span><span class="n">byte</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
 			<span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">on_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">byte</span><span class="p">)</span>
-		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">NEWLINE</span><span class="p">:</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">NEWLINE</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">DATA</span>
 			<span class="k">if</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">LF</span><span class="p">:</span>
 				<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
@@ -3412,12 +3412,12 @@ in order to perform any necessary cleanup on our end.</p>
 				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">COMMAND</span>
 			<span class="k">else</span><span class="p">:</span>
 				<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">CR</span> <span class="o">+</span> <span class="n">byte</span><span class="p">)</span>
-		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">SUBNEGOTIATION</span><span class="p">:</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">SUBNEGOTIATION</span><span class="p">:</span>
 			<span class="k">if</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">IAC</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">SUBNEGOTIATION_ESCAPED</span>
 			<span class="k">else</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">_commands</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span>
-		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">SUBNEGOTIATION_ESCAPED</span><span class="p">:</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">SUBNEGOTIATION_ESCAPED</span><span class="p">:</span>
 			<span class="k">if</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">SE</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">TelnetState</span><span class="o">.</span><span class="n">DATA</span>
 				<span class="n">commands</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_commands</span><span class="p">)</span>
