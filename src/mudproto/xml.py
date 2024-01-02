@@ -78,6 +78,10 @@ class XMLProtocol(Protocol):
 		b"/emote": b":EMOTE",
 	}
 	"""A mapping of tag to replacement values for Tintin."""
+	ignoredSubTags: ClassVar[frozenset[bytes]] = frozenset(
+		{b"character", b"enemy", b"object", b"player", b"status"}
+	)
+	"""Tags that can appear inside other tags and should be ignored."""
 
 	def __init__(
 		self,
@@ -146,10 +150,9 @@ class XMLProtocol(Protocol):
 			return data
 		tag: bytes = bytes(self._tagBuffer).strip()
 		self._tagBuffer.clear()
-		baseTag: bytes = tag.replace(b"/", b"", 1) if tag.startswith(b"/") else tag
-		isStatusTag: bool = baseTag == b"status"
+		baseTag: bytes = tag.lstrip(b"/")
 		text: bytes = bytes(self._textBuffer)
-		if not isStatusTag:
+		if baseTag not in self.ignoredSubTags and not (baseTag != b"exits" and baseTag.startswith(b"exit")):
 			self._textBuffer.clear()
 		if self.outputFormat == "raw":
 			appDataBuffer.extend(LT + tag + GT)

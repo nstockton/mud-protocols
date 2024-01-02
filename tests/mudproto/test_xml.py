@@ -7,7 +7,8 @@
 from __future__ import annotations
 
 # Built-in Modules:
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
+from itertools import zip_longest
 from unittest import TestCase
 from unittest.mock import Mock, _Call, call, patch
 
@@ -29,10 +30,15 @@ class TestXMLProtocol(TestCase):
 			+ b"\x1b[35mstories told by the everchanging patterns.\x1b[0m" + LF
 		)
 		detectMagic: bytes = b"\x1b[35mTraces of white tones form the aura of this place.\x1b[0m"
+		rawDynamic: bytes = (
+			b"A finely crafted <object>crystal lamp</object> is hanging from a tree branch." + LF
+			+ b"An <character>elven caretaker</character> is standing here, offering his guests a rest." + LF
+		)
 		dynamic: bytes = (
 			b"A finely crafted crystal lamp is hanging from a tree branch." + LF
 			+ b"An elven caretaker is standing here, offering his guests a rest." + LF
 		)
+		rawExits: bytes = b"<exits>Exits: <exit dir=north id=4805400>north</exit>." + LF + b"</exits>"
 		exits: bytes = b"Exits: north." + LF
 		magic: bytes = b"You feel less protected."
 		line: bytes = b"Hello world!"
@@ -40,11 +46,13 @@ class TestXMLProtocol(TestCase):
 		self.prompt: bytes = b"!# CW A1 M1 P8 S3 XP:317k>"
 		self.rawData: bytes = (
 			b"<movement dir=south/>"
-			+ b'<room area="Lorien" terrain="forest"><name>' + name + b"</name>" + LF
+			+ b'<room id=13168037 area="Lorien" terrain="forest">'
+			+ b"<name>" + name + b"</name>" + LF
 			+ b"<gratuitous><description>" + description + b"</description></gratuitous>"
 			+ b"<magic>" + detectMagic + b"</magic>" + LF
-			+ dynamic
-			+ b"<exits>" + exits + b"</exits></room>" + LF
+			+ rawDynamic
+			+ rawExits
+			+ b"</room>" + LF
 			+ b"<magic>" + magic + b"</magic>" + LF
 			+ line + LF
 			+ self.rawPrompt
@@ -70,7 +78,7 @@ class TestXMLProtocol(TestCase):
 		# fmt: on
 		self.expectedEvents: list[Callable[[tuple[str, bytes]], _Call]] = [
 			call("movement", b"south"),
-			call("room", b'area="Lorien" terrain="forest"'),
+			call("room", b'id=13168037 area="Lorien" terrain="forest"'),
 			call("name", name),
 			call("description", description),
 			call("magic", detectMagic),
@@ -105,6 +113,14 @@ class TestXMLProtocol(TestCase):
 		self.xml.state = XMLState.DATA
 		return playerReceives, gameReceives, state
 
+	def assertCallList(
+		self,
+		originalCalls: Iterable[Callable[..., _Call]],
+		expectedCalls: Iterable[Callable[..., _Call]],
+	) -> None:
+		for original, expected in zip_longest(originalCalls, expectedCalls):
+			self.assertEqual(original, expected)
+
 	@patch("mudproto.xml.XMLProtocol.on_xmlEvent")
 	def testXMLOn_dataReceived(self, mockOnEvent: Mock) -> None:
 		data: bytes = b"Hello World!" + LF
@@ -126,12 +142,12 @@ class TestXMLProtocol(TestCase):
 		self.assertEqual(self.xml._textBuffer, b"")
 		self.xml._tagBuffer.clear()
 		self.assertEqual(self.parse(self.rawData), (self.normalData, b"", XMLState.DATA))
-		self.assertEqual(mockOnEvent.call_args_list, self.expectedEvents)
+		self.assertCallList(mockOnEvent.call_args_list, self.expectedEvents)
 		mockOnEvent.reset_mock()
 		self.xml.outputFormat = "tintin"
 		self.assertEqual(self.parse(self.rawData), (self.tintinData, b"", XMLState.DATA))
-		self.assertEqual(mockOnEvent.call_args_list, self.expectedEvents)
+		self.assertCallList(mockOnEvent.call_args_list, self.expectedEvents)
 		mockOnEvent.reset_mock()
 		self.xml.outputFormat = "raw"
 		self.assertEqual(self.parse(self.rawData), (self.rawData, b"", XMLState.DATA))
-		self.assertEqual(mockOnEvent.call_args_list, self.expectedEvents)
+		self.assertCallList(mockOnEvent.call_args_list, self.expectedEvents)
