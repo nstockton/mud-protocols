@@ -29,6 +29,7 @@ class TestXMLProtocol(TestCase):
 			+ b"\x1b[35mcloth create a place where one can stand and let the mind wander into the\x1b[0m" + LF
 			+ b"\x1b[35mstories told by the everchanging patterns.\x1b[0m" + LF
 		)
+		terrain: bytes = b"There is some snow on the ground."
 		detectMagic: bytes = b"\x1b[35mTraces of white tones form the aura of this place.\x1b[0m"
 		rawDynamic: bytes = (
 			b"A finely crafted <object>crystal lamp</object> is hanging from a tree branch." + LF
@@ -49,6 +50,7 @@ class TestXMLProtocol(TestCase):
 			+ b'<room id=13168037 area="Lorien" terrain="forest">'
 			+ b"<name>" + name + b"</name>" + LF
 			+ b"<gratuitous><description>" + description + b"</description></gratuitous>"
+			+ b"<terrain>" + terrain + b"</terrain>" + LF
 			+ b"<magic>" + detectMagic + b"</magic>" + LF
 			+ rawDynamic
 			+ rawExits
@@ -59,6 +61,7 @@ class TestXMLProtocol(TestCase):
 		)
 		self.normalData: bytes = (
 			name + LF
+			+ terrain + LF
 			+ detectMagic + LF
 			+ dynamic
 			+ exits + LF
@@ -68,6 +71,7 @@ class TestXMLProtocol(TestCase):
 		)
 		self.tintinData: bytes = (
 			b"NAME:" + name + b":NAME" + LF
+			+ terrain + LF
 			+ detectMagic + LF
 			+ dynamic
 			+ exits + LF
@@ -81,6 +85,7 @@ class TestXMLProtocol(TestCase):
 			call("room", b'id=13168037 area="Lorien" terrain="forest"'),
 			call("name", name),
 			call("description", description),
+			call("terrain", terrain),
 			call("magic", detectMagic),
 			call("exits", exits),
 			call("dynamic", dynamic),

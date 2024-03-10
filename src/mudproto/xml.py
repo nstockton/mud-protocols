@@ -13,6 +13,7 @@ from __future__ import annotations
 
 # Built-in Modules:
 import logging
+import re
 from enum import Enum, auto
 from typing import Any, ClassVar, Union
 
@@ -25,9 +26,15 @@ from .utils import unescapeXMLBytes
 
 LT: bytes = b"<"
 GT: bytes = b">"
+DIRECTIONS_REGEX: re.Pattern[bytes] = re.compile(rb"dir\=['\x22]?(?P<dir>north|east|south|west|up|down)")
 
 
 logger: logging.Logger = logging.getLogger(__name__)
+
+
+def directionFromMovement(movement: bytes) -> bytes:
+	match: Union[re.Match[bytes], None] = DIRECTIONS_REGEX.search(movement)
+	return match.group("dir") if match is not None else b""
 
 
 class XMLState(Enum):
@@ -39,28 +46,36 @@ class XMLState(Enum):
 	TAG = auto()
 
 
+class XMLMode(Enum):
+	"""
+	Valid modes corresponding to supported XML tags.
+	"""
+
+	NONE = auto()
+	DESCRIPTION = auto()
+	EXITS = auto()
+	MAGIC = auto()
+	NAME = auto()
+	PROMPT = auto()
+	ROOM = auto()
+	TERRAIN = auto()
+
+
 class XMLProtocol(Protocol):
 	"""
 	Implements the Mume XML protocol.
 	"""
 
-	modes: ClassVar[dict[bytes, Union[bytes, None]]] = {
-		b"room": b"room",
-		b"/room": None,
-		b"name": b"name",
-		b"/name": b"room",
-		b"description": b"description",
-		b"/description": b"room",
-		b"terrain": None,
-		b"/terrain": b"room",
-		b"magic": b"magic",
-		b"/magic": None,
-		b"exits": b"exits",
-		b"/exits": None,
-		b"prompt": b"prompt",
-		b"/prompt": None,
+	tagModes: ClassVar[dict[str, XMLMode]] = {
+		"description": XMLMode.DESCRIPTION,
+		"exits": XMLMode.EXITS,
+		"magic": XMLMode.MAGIC,
+		"name": XMLMode.NAME,
+		"prompt": XMLMode.PROMPT,
+		"room": XMLMode.ROOM,
+		"terrain": XMLMode.TERRAIN,
 	}
-	"""A mapping of XML mode to new XML mode values."""
+	"""A mapping of closing tags to mode objects."""
 	tintinReplacements: ClassVar[dict[bytes, bytes]] = {
 		b"prompt": b"PROMPT:",
 		b"/prompt": b":PROMPT",
@@ -78,10 +93,6 @@ class XMLProtocol(Protocol):
 		b"/emote": b":EMOTE",
 	}
 	"""A mapping of tag to replacement values for Tintin."""
-	ignoredSubTags: ClassVar[frozenset[bytes]] = frozenset(
-		{b"character", b"enemy", b"object", b"player", b"status"}
-	)
-	"""Tags that can appear inside other tags and should be ignored."""
 
 	def __init__(
 		self,
@@ -98,8 +109,8 @@ class XMLProtocol(Protocol):
 		self._dynamicBuffer: bytearray = bytearray()  # Used for dynamic room descriptions.
 		self._lineBuffer: bytearray = bytearray()  # Used for non-XML lines.
 		self._gratuitous: bool = False
-		self._inRoom: bool = False
-		self._mode: Union[bytes, None] = None
+		self._mode: XMLMode = XMLMode.NONE
+		self._parentModes: list[XMLMode] = []
 
 	def _handleXMLText(self, data: bytes, appDataBuffer: bytearray) -> bytes:
 		"""
@@ -113,10 +124,10 @@ class XMLProtocol(Protocol):
 			The remaining data.
 		"""
 		appData, separator, data = data.partition(LT)
-		if not (self._gratuitous and self.outputFormat != "raw"):
+		if self.outputFormat == "raw" or not self._gratuitous:
 			# Gratuitous text should be omitted unless format is 'raw'.
 			appDataBuffer.extend(appData)
-		if self._mode is None:
+		if self._mode is XMLMode.NONE:
 			self._lineBuffer.extend(appData)
 			lines = self._lineBuffer.splitlines(True)
 			self._lineBuffer.clear()
@@ -126,13 +137,15 @@ class XMLProtocol(Protocol):
 			lines = [line.rstrip(CR_LF) for line in lines if line.strip()]
 			for line in lines:
 				self.on_xmlEvent("line", unescapeXMLBytes(line))
+		elif self._mode is XMLMode.ROOM:
+			self._dynamicBuffer.extend(appData)
 		else:
 			self._textBuffer.extend(appData)
 		if separator:
 			self.state = XMLState.TAG
 		return data
 
-	def _handleXMLTag(self, data: bytes, appDataBuffer: bytearray) -> bytes:
+	def _handleXMLTag(self, data: bytes, appDataBuffer: bytearray) -> bytes:  # NOQA: C901
 		"""
 		Handles XML data that is part of a tag (I.E. enclosed in '<>').
 
@@ -150,38 +163,54 @@ class XMLProtocol(Protocol):
 			return data
 		tag: bytes = bytes(self._tagBuffer).strip()
 		self._tagBuffer.clear()
-		baseTag: bytes = tag.lstrip(b"/")
-		text: bytes = bytes(self._textBuffer)
-		if baseTag not in self.ignoredSubTags and not (baseTag != b"exits" and baseTag.startswith(b"exit")):
-			self._textBuffer.clear()
+		tagName: str = str(tag, "us-ascii").strip("/").split(None, 1)[0] if tag else ""
+		isClosingTag: bool = tag.startswith(b"/")
 		if self.outputFormat == "raw":
 			appDataBuffer.extend(LT + tag + GT)
 		elif self.outputFormat == "tintin" and not self._gratuitous:
 			appDataBuffer.extend(self.tintinReplacements.get(tag, b""))
-		if self._mode is None and tag.startswith(b"movement"):
-			self.on_xmlEvent("movement", unescapeXMLBytes(tag[13:-1]))
-		elif baseTag == b"gratuitous":
-			self._gratuitous = not tag.startswith(b"/")
-		elif tag.startswith(b"room"):
-			self._inRoom = True
-			self._mode = self.modes[b"room"]
-			self.on_xmlEvent("room", unescapeXMLBytes(tag[5:]))
-		elif tag == b"/room":
-			self._inRoom = False
-			self._mode = self.modes[tag]
-			self._dynamicBuffer.extend(text)
-			self.on_xmlEvent("dynamic", unescapeXMLBytes(bytes(self._dynamicBuffer).lstrip(b"\r\n")))
-			self._dynamicBuffer.clear()
-		elif tag in self.modes:
-			if tag.startswith(b"/"):
-				# Closing tag.
-				self._mode = b"room" if self._inRoom else self.modes[tag]
-				self.on_xmlEvent(tag[1:].decode("us-ascii"), unescapeXMLBytes(text))
+		if tagName == "gratuitous":
+			self._gratuitous = not isClosingTag
+		elif isClosingTag and self.tagModes.get(tagName) is self._mode:
+			# The tag is a closing tag, corresponding with the current mode.
+			if self._mode is XMLMode.ROOM:
+				self.on_xmlEvent("dynamic", unescapeXMLBytes(bytes(self._dynamicBuffer).lstrip(b"\r\n")))
+				self._dynamicBuffer.clear()
 			else:
-				# Opening tag.
-				self._mode = self.modes[tag]
-				if self._inRoom:
-					self._dynamicBuffer.extend(text)
+				self.on_xmlEvent(tagName, unescapeXMLBytes(bytes(self._textBuffer)))
+				self._textBuffer.clear()
+			self._mode = self._parentModes.pop()
+		elif tagName == "magic":
+			# Magic tags can occur inside and outside room info.
+			self._parentModes.append(self._mode)
+			self._mode = XMLMode.MAGIC
+		elif self._mode is XMLMode.NONE and tagName == "movement":
+			# Movement is transmitted as a self-closing tag (I.E. opening and closing tag in one).
+			# Because of this, we don't need a separate mode for movement.
+			self.on_xmlEvent(tagName, directionFromMovement(unescapeXMLBytes(tag)))
+		elif self._mode is XMLMode.NONE:
+			# A new child mode from NONE.
+			if tagName == "prompt":
+				self._parentModes.append(self._mode)
+				self._mode = XMLMode.PROMPT
+			elif tagName == "room":
+				self._parentModes.append(self._mode)
+				self._mode = XMLMode.ROOM
+				self.on_xmlEvent("room", unescapeXMLBytes(tag[5:]))
+		elif self._mode is XMLMode.ROOM:
+			# New child mode from ROOM.
+			if tagName == "name":
+				self._parentModes.append(self._mode)
+				self._mode = XMLMode.NAME
+			elif tagName == "description":
+				self._parentModes.append(self._mode)
+				self._mode = XMLMode.DESCRIPTION
+			elif tagName == "exits":
+				self._parentModes.append(self._mode)
+				self._mode = XMLMode.EXITS
+			elif tagName == "terrain":
+				self._parentModes.append(self._mode)
+				self._mode = XMLMode.TERRAIN
 		self.state = XMLState.DATA
 		return data
 
