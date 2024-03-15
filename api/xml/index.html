@@ -399,19 +399,19 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#mudproto.xml.XMLMode" class="md-nav__link">
+    XMLMode
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#mudproto.xml.XMLProtocol" class="md-nav__link">
     XMLProtocol
   </a>
   
     <nav class="md-nav" aria-label="XMLProtocol">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.xml.XMLProtocol.ignoredSubTags" class="md-nav__link">
-    ignoredSubTags
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#mudproto.xml.XMLProtocol.isClient" class="md-nav__link">
@@ -428,8 +428,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.xml.XMLProtocol.modes" class="md-nav__link">
-    modes
+  <a href="#mudproto.xml.XMLProtocol.tagModes" class="md-nav__link">
+    tagModes
   </a>
   
 </li>
@@ -545,19 +545,19 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#mudproto.xml.XMLMode" class="md-nav__link">
+    XMLMode
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#mudproto.xml.XMLProtocol" class="md-nav__link">
     XMLProtocol
   </a>
   
     <nav class="md-nav" aria-label="XMLProtocol">
       <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.xml.XMLProtocol.ignoredSubTags" class="md-nav__link">
-    ignoredSubTags
-  </a>
-  
-</li>
         
           <li class="md-nav__item">
   <a href="#mudproto.xml.XMLProtocol.isClient" class="md-nav__link">
@@ -574,8 +574,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.xml.XMLProtocol.modes" class="md-nav__link">
-    modes
+  <a href="#mudproto.xml.XMLProtocol.tagModes" class="md-nav__link">
+    tagModes
   </a>
   
 </li>
@@ -679,6 +679,70 @@
 
 
 
+
+  <div class="doc doc-object doc-class">
+
+
+
+<h2 id="mudproto.xml.XMLMode" class="doc doc-heading">
+        <code>Class XMLMode(<span title="enum.Enum">Enum</span>)</code>
+
+
+
+<a href="#mudproto.xml.XMLMode" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Valid modes corresponding to supported XML tags.</p>
+
+        <details class="quote">
+          <summary>Source code in <code>mudproto/xml.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">XMLMode</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Valid modes corresponding to supported XML tags.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="n">NONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+	<span class="n">DESCRIPTION</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+	<span class="n">EXITS</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+	<span class="n">MAGIC</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+	<span class="n">NAME</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+	<span class="n">PROMPT</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+	<span class="n">ROOM</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+	<span class="n">TERRAIN</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
+</code></pre></div>
+        </details>
+
+
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+
+
   <div class="doc doc-object doc-class">
 
 
@@ -701,23 +765,16 @@
 <span class="sd">	Implements the Mume XML protocol.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 
-	<span class="n">modes</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">{</span>
-		<span class="sa">b</span><span class="s2">&quot;room&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;room&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;/room&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;/name&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;room&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;description&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;/description&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;room&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;terrain&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;/terrain&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;room&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;magic&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;magic&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;/magic&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;exits&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;exits&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;/exits&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;prompt&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;/prompt&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+	<span class="n">tagModes</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">XMLMode</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">DESCRIPTION</span><span class="p">,</span>
+		<span class="s2">&quot;exits&quot;</span><span class="p">:</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">EXITS</span><span class="p">,</span>
+		<span class="s2">&quot;magic&quot;</span><span class="p">:</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">MAGIC</span><span class="p">,</span>
+		<span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span>
+		<span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">PROMPT</span><span class="p">,</span>
+		<span class="s2">&quot;room&quot;</span><span class="p">:</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">ROOM</span><span class="p">,</span>
+		<span class="s2">&quot;terrain&quot;</span><span class="p">:</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">TERRAIN</span><span class="p">,</span>
 	<span class="p">}</span>
-<span class="w">	</span><span class="sd">&quot;&quot;&quot;A mapping of XML mode to new XML mode values.&quot;&quot;&quot;</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;A mapping of closing tags to mode objects.&quot;&quot;&quot;</span>
 	<span class="n">tintinReplacements</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
 		<span class="sa">b</span><span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;PROMPT:&quot;</span><span class="p">,</span>
 		<span class="sa">b</span><span class="s2">&quot;/prompt&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;:PROMPT&quot;</span><span class="p">,</span>
@@ -735,10 +792,6 @@
 		<span class="sa">b</span><span class="s2">&quot;/emote&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;:EMOTE&quot;</span><span class="p">,</span>
 	<span class="p">}</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;A mapping of tag to replacement values for Tintin.&quot;&quot;&quot;</span>
-	<span class="n">ignoredSubTags</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">frozenset</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span>
-		<span class="p">{</span><span class="sa">b</span><span class="s2">&quot;character&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;enemy&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;object&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;player&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;status&quot;</span><span class="p">}</span>
-	<span class="p">)</span>
-<span class="w">	</span><span class="sd">&quot;&quot;&quot;Tags that can appear inside other tags and should be ignored.&quot;&quot;&quot;</span>
 
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
 		<span class="bp">self</span><span class="p">,</span>
@@ -755,8 +808,8 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">_dynamicBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>  <span class="c1"># Used for dynamic room descriptions.</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_lineBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>  <span class="c1"># Used for non-XML lines.</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_gratuitous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_inRoom</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">:</span> <span class="n">XMLMode</span> <span class="o">=</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">NONE</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_parentModes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">XMLMode</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
 	<span class="k">def</span> <span class="nf">_handleXMLText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
@@ -770,10 +823,10 @@
 <span class="sd">			The remaining data.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="n">appData</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">LT</span><span class="p">)</span>
-		<span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_gratuitous</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">!=</span> <span class="s2">&quot;raw&quot;</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;raw&quot;</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gratuitous</span><span class="p">:</span>
 			<span class="c1"># Gratuitous text should be omitted unless format is &#39;raw&#39;.</span>
 			<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">appData</span><span class="p">)</span>
-		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="ow">is</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">NONE</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_lineBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">appData</span><span class="p">)</span>
 			<span class="n">lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lineBuffer</span><span class="o">.</span><span class="n">splitlines</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_lineBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
@@ -783,13 +836,15 @@
 			<span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="n">CR_LF</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
 			<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">on_xmlEvent</span><span class="p">(</span><span class="s2">&quot;line&quot;</span><span class="p">,</span> <span class="n">unescapeXMLBytes</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="ow">is</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">ROOM</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_dynamicBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">appData</span><span class="p">)</span>
 		<span class="k">else</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_textBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">appData</span><span class="p">)</span>
 		<span class="k">if</span> <span class="n">separator</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">XMLState</span><span class="o">.</span><span class="n">TAG</span>
 		<span class="k">return</span> <span class="n">data</span>
 
-	<span class="k">def</span> <span class="nf">_handleXMLTag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">_handleXMLTag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>  <span class="c1"># NOQA: C901</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Handles XML data that is part of a tag (I.E. enclosed in &#39;&lt;&gt;&#39;).</span>
 
@@ -807,38 +862,54 @@
 			<span class="k">return</span> <span class="n">data</span>
 		<span class="n">tag</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tagBuffer</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_tagBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-		<span class="n">baseTag</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
-		<span class="n">text</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_textBuffer</span><span class="p">)</span>
-		<span class="k">if</span> <span class="n">baseTag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignoredSubTags</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">baseTag</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;exits&quot;</span> <span class="ow">and</span> <span class="n">baseTag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;exit&quot;</span><span class="p">)):</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_textBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+		<span class="n">tagName</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="s2">&quot;us-ascii&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">tag</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+		<span class="n">isClosingTag</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;raw&quot;</span><span class="p">:</span>
 			<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">LT</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="n">GT</span><span class="p">)</span>
 		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;tintin&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gratuitous</span><span class="p">:</span>
 			<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tintinReplacements</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
-		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;movement&quot;</span><span class="p">):</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">on_xmlEvent</span><span class="p">(</span><span class="s2">&quot;movement&quot;</span><span class="p">,</span> <span class="n">unescapeXMLBytes</span><span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="mi">13</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
-		<span class="k">elif</span> <span class="n">baseTag</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;gratuitous&quot;</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_gratuitous</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
-		<span class="k">elif</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;room&quot;</span><span class="p">):</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_inRoom</span> <span class="o">=</span> <span class="kc">True</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modes</span><span class="p">[</span><span class="sa">b</span><span class="s2">&quot;room&quot;</span><span class="p">]</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">on_xmlEvent</span><span class="p">(</span><span class="s2">&quot;room&quot;</span><span class="p">,</span> <span class="n">unescapeXMLBytes</span><span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="mi">5</span><span class="p">:]))</span>
-		<span class="k">elif</span> <span class="n">tag</span> <span class="o">==</span> <span class="sa">b</span><span class="s2">&quot;/room&quot;</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_inRoom</span> <span class="o">=</span> <span class="kc">False</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modes</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_dynamicBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">on_xmlEvent</span><span class="p">(</span><span class="s2">&quot;dynamic&quot;</span><span class="p">,</span> <span class="n">unescapeXMLBytes</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dynamicBuffer</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)))</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_dynamicBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-		<span class="k">elif</span> <span class="n">tag</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modes</span><span class="p">:</span>
-			<span class="k">if</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
-				<span class="c1"># Closing tag.</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;room&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inRoom</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">modes</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">on_xmlEvent</span><span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;us-ascii&quot;</span><span class="p">),</span> <span class="n">unescapeXMLBytes</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+		<span class="k">if</span> <span class="n">tagName</span> <span class="o">==</span> <span class="s2">&quot;gratuitous&quot;</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_gratuitous</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">isClosingTag</span>
+		<span class="k">elif</span> <span class="n">isClosingTag</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tagModes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tagName</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">:</span>
+			<span class="c1"># The tag is a closing tag, corresponding with the current mode.</span>
+			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="ow">is</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">ROOM</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">on_xmlEvent</span><span class="p">(</span><span class="s2">&quot;dynamic&quot;</span><span class="p">,</span> <span class="n">unescapeXMLBytes</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dynamicBuffer</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)))</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_dynamicBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 			<span class="k">else</span><span class="p">:</span>
-				<span class="c1"># Opening tag.</span>
-				<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modes</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span>
-				<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inRoom</span><span class="p">:</span>
-					<span class="bp">self</span><span class="o">.</span><span class="n">_dynamicBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">on_xmlEvent</span><span class="p">(</span><span class="n">tagName</span><span class="p">,</span> <span class="n">unescapeXMLBytes</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_textBuffer</span><span class="p">)))</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_textBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parentModes</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+		<span class="k">elif</span> <span class="n">tagName</span> <span class="o">==</span> <span class="s2">&quot;magic&quot;</span><span class="p">:</span>
+			<span class="c1"># Magic tags can occur inside and outside room info.</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_parentModes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">MAGIC</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="ow">is</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">NONE</span> <span class="ow">and</span> <span class="n">tagName</span> <span class="o">==</span> <span class="s2">&quot;movement&quot;</span><span class="p">:</span>
+			<span class="c1"># Movement is transmitted as a self-closing tag (I.E. opening and closing tag in one).</span>
+			<span class="c1"># Because of this, we don&#39;t need a separate mode for movement.</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">on_xmlEvent</span><span class="p">(</span><span class="n">tagName</span><span class="p">,</span> <span class="n">directionFromMovement</span><span class="p">(</span><span class="n">unescapeXMLBytes</span><span class="p">(</span><span class="n">tag</span><span class="p">)))</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="ow">is</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">NONE</span><span class="p">:</span>
+			<span class="c1"># A new child mode from NONE.</span>
+			<span class="k">if</span> <span class="n">tagName</span> <span class="o">==</span> <span class="s2">&quot;prompt&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_parentModes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">PROMPT</span>
+			<span class="k">elif</span> <span class="n">tagName</span> <span class="o">==</span> <span class="s2">&quot;room&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_parentModes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">ROOM</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">on_xmlEvent</span><span class="p">(</span><span class="s2">&quot;room&quot;</span><span class="p">,</span> <span class="n">unescapeXMLBytes</span><span class="p">(</span><span class="n">tag</span><span class="p">[</span><span class="mi">5</span><span class="p">:]))</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="ow">is</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">ROOM</span><span class="p">:</span>
+			<span class="c1"># New child mode from ROOM.</span>
+			<span class="k">if</span> <span class="n">tagName</span> <span class="o">==</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_parentModes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">NAME</span>
+			<span class="k">elif</span> <span class="n">tagName</span> <span class="o">==</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_parentModes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">DESCRIPTION</span>
+			<span class="k">elif</span> <span class="n">tagName</span> <span class="o">==</span> <span class="s2">&quot;exits&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_parentModes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">EXITS</span>
+			<span class="k">elif</span> <span class="n">tagName</span> <span class="o">==</span> <span class="s2">&quot;terrain&quot;</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_parentModes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">TERRAIN</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">XMLState</span><span class="o">.</span><span class="n">DATA</span>
 		<span class="k">return</span> <span class="n">data</span>
 
@@ -881,25 +952,6 @@
 
 
 
-
-
-
-  <div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="mudproto.xml.XMLProtocol.ignoredSubTags" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">ignoredSubTags</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">frozenset</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]]</span></code>
-
-
-<a href="#mudproto.xml.XMLProtocol.ignoredSubTags" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Tags that can appear inside other tags and should be ignored.</p>
-    </div>
-
-  </div>
 
 
 
@@ -955,15 +1007,15 @@
 
 
 
-<h3 id="mudproto.xml.XMLProtocol.modes" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">modes</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]]]</span></code>
+<h3 id="mudproto.xml.XMLProtocol.tagModes" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">tagModes</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">mudproto</span><span class="o">.</span><span class="n">xml</span><span class="o">.</span><span class="n">XMLMode</span><span class="p">]]</span></code>
 
 
-<a href="#mudproto.xml.XMLProtocol.modes" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.xml.XMLProtocol.tagModes" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
-      <p>A mapping of XML mode to new XML mode values.</p>
+      <p>A mapping of closing tags to mode objects.</p>
     </div>
 
   </div>
@@ -1266,6 +1318,7 @@
     </div>
 
   </div>
+
 
 
 
