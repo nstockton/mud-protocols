@@ -97,6 +97,14 @@ class TestMCCPMixIn(TestCase):
 			(data + IAC + SB + ECHO + b"something" + IAC + SE, b""),
 		)
 		self.assertEqual(
+			self.parse(data + IAC + SB + ECHO + SE + b"something" + IAC + SE),
+			(data + IAC + SB + ECHO + SE + b"something" + IAC + SE, b""),
+		)
+		self.assertEqual(
+			self.parse(data + IAC + SB + ECHO + b"something" + IAC_IAC + SE),
+			(data + IAC + SB + ECHO + b"something" + IAC_IAC + SE, b""),
+		)
+		self.assertEqual(
 			self.parse(data + IAC + SB + ECHO + b"something" + IAC_IAC + IAC + SE),
 			(data + IAC + SB + ECHO + b"something" + IAC_IAC + IAC + SE, b""),
 		)

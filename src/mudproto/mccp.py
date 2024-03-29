@@ -21,6 +21,13 @@ from .telnet import BaseTelnetProtocol, TelnetProtocol
 from .telnet_constants import IAC, MCCP1, MCCP2, SB, SE, WILL
 
 
+IAC_SB: bytes = IAC + SB
+MCCP_ENABLED_RESPONSES: tuple[bytes, bytes] = (
+	IAC + SB + MCCP1 + WILL + SE,
+	IAC + SB + MCCP2 + IAC + SE,
+)
+
+
 logger: logging.Logger = logging.getLogger(__name__)
 
 
@@ -69,20 +76,20 @@ class MCCPMixIn(Base):
 				return None  # inputBuffer is empty, no need to loop again.
 			# Uncompressed data:
 			iacIndex: int = inputBuffer.find(IAC)
-			if self._mccpVersion is not None and iacIndex >= 0:
+			if self._mccpVersion is not None and iacIndex != -1:
 				# MCCP was negotiated on, and an IAC byte was found.
 				if iacIndex > 0:
 					super().on_dataReceived(bytes(inputBuffer[:iacIndex]))
 					del inputBuffer[:iacIndex]
-				if len(inputBuffer) == 1:
+				if inputBuffer == IAC:
 					# Partial IAC sequence.
 					return None
-				elif inputBuffer[1] == SB[0]:
+				elif inputBuffer.startswith(IAC_SB):
 					seIndex: int = inputBuffer.find(SE)
-					if seIndex < 0 or inputBuffer[seIndex - 1 : seIndex] not in (IAC, WILL):
+					if seIndex == -1:
 						# Partial subnegotiation sequence.
 						return None
-					elif inputBuffer[:seIndex] in (IAC + SB + MCCP1 + WILL, IAC + SB + MCCP2 + IAC):
+					elif inputBuffer.startswith(MCCP_ENABLED_RESPONSES):
 						# The server enabled compression. Subsequent data will be compressed.
 						self._compressionEnabled = True
 						self._decompressor = zlib.decompressobj(zlib.MAX_WBITS)
