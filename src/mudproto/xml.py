@@ -129,7 +129,7 @@ class XMLProtocol(Protocol):
 			appDataBuffer.extend(appData)
 		if self._mode is XMLMode.NONE:
 			self._lineBuffer.extend(appData)
-			lines = self._lineBuffer.splitlines(True)
+			lines = self._lineBuffer.splitlines(keepends=True)
 			self._lineBuffer.clear()
 			if lines and lines[-1][-1:] not in (CR, LF):
 				# Final line is incomplete.
