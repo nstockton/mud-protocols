@@ -808,12 +808,12 @@
       </tr>
       <tr>
         <td><code>editor</code></td>
-        <td><code>str</code></td>
+        <td></td>
         <td><p>The program to use for editing received text.</p></td>
       </tr>
       <tr>
         <td><code>pager</code></td>
-        <td><code>str</code></td>
+        <td></td>
         <td><p>The program to use for viewing received read-only text.</p></td>
       </tr>
   </tbody>
@@ -842,16 +842,23 @@
 			<span class="sa">b</span><span class="s2">&quot;V&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">,</span>
 		<span class="p">}</span>
 		<span class="n">editors</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-			<span class="s2">&quot;win32&quot;</span><span class="p">:</span> <span class="s2">&quot;notepad&quot;</span><span class="p">,</span>
+			<span class="s2">&quot;win32&quot;</span><span class="p">:</span> <span class="s2">&quot;notepad.exe&quot;</span><span class="p">,</span>
 		<span class="p">}</span>
 		<span class="n">pagers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-			<span class="s2">&quot;win32&quot;</span><span class="p">:</span> <span class="s2">&quot;notepad&quot;</span><span class="p">,</span>
+			<span class="s2">&quot;win32&quot;</span><span class="p">:</span> <span class="s2">&quot;notepad.exe&quot;</span><span class="p">,</span>
 		<span class="p">}</span>
 		<span class="n">defaultEditor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">editors</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="p">,</span> <span class="s2">&quot;nano&quot;</span><span class="p">)</span>
 		<span class="n">defaultPager</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">pagers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="p">,</span> <span class="s2">&quot;less&quot;</span><span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;VISUAL&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EDITOR&quot;</span><span class="p">,</span> <span class="n">defaultEditor</span><span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;PAGER&quot;</span><span class="p">,</span> <span class="n">defaultPager</span><span class="p">)</span>
+		<span class="n">editor</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;VISUAL&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EDITOR&quot;</span><span class="p">,</span> <span class="n">defaultEditor</span><span class="p">))</span>
+		<span class="n">pager</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;PAGER&quot;</span><span class="p">,</span> <span class="n">defaultPager</span><span class="p">))</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_isWordWrapping</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+		<span class="k">if</span> <span class="n">editor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;MPI editor executable not found.&quot;</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">pager</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;MPI pager executable not found.&quot;</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">editor</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">pager</span>
 
 	<span class="nd">@property</span>
 	<span class="k">def</span> <span class="nf">isWordWrapping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -878,8 +885,7 @@
 			<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MPICOMMAND:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">fileName</span><span class="si">}</span><span class="s2">:MPICOMMAND&quot;</span><span class="p">)</span>
 			<span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Continue:&quot;</span><span class="p">)</span>
 		<span class="k">else</span><span class="p">:</span>
-			<span class="n">editorProcess</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">((</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="n">fileName</span><span class="p">))</span>
-			<span class="n">editorProcess</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+			<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">((</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="n">fileName</span><span class="p">))</span>
 		<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">fileName</span><span class="p">)</span> <span class="o">==</span> <span class="n">lastModified</span><span class="p">:</span>
 			<span class="c1"># The user closed the text editor without saving. Cancel the editing session.</span>
 			<span class="n">response</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;C&quot;</span> <span class="o">+</span> <span class="n">session</span>
@@ -909,8 +915,7 @@
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;tintin&quot;</span><span class="p">:</span>
 			<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MPICOMMAND:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">fileName</span><span class="si">}</span><span class="s2">:MPICOMMAND&quot;</span><span class="p">)</span>
 		<span class="k">else</span><span class="p">:</span>
-			<span class="n">pagerProcess</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">((</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="n">fileName</span><span class="p">))</span>
-			<span class="n">pagerProcess</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+			<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">((</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="n">fileName</span><span class="p">))</span>
 			<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">fileName</span><span class="p">)</span>
 
 	<span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: C901</span>
@@ -1391,8 +1396,7 @@
 		<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MPICOMMAND:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">fileName</span><span class="si">}</span><span class="s2">:MPICOMMAND&quot;</span><span class="p">)</span>
 		<span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Continue:&quot;</span><span class="p">)</span>
 	<span class="k">else</span><span class="p">:</span>
-		<span class="n">editorProcess</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">((</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="n">fileName</span><span class="p">))</span>
-		<span class="n">editorProcess</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+		<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">((</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="n">fileName</span><span class="p">))</span>
 	<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">(</span><span class="n">fileName</span><span class="p">)</span> <span class="o">==</span> <span class="n">lastModified</span><span class="p">:</span>
 		<span class="c1"># The user closed the text editor without saving. Cancel the editing session.</span>
 		<span class="n">response</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;C&quot;</span> <span class="o">+</span> <span class="n">session</span>
@@ -1972,8 +1976,7 @@
 	<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;tintin&quot;</span><span class="p">:</span>
 		<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MPICOMMAND:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">fileName</span><span class="si">}</span><span class="s2">:MPICOMMAND&quot;</span><span class="p">)</span>
 	<span class="k">else</span><span class="p">:</span>
-		<span class="n">pagerProcess</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">((</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="n">fileName</span><span class="p">))</span>
-		<span class="n">pagerProcess</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+		<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">((</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="n">fileName</span><span class="p">))</span>
 		<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">fileName</span><span class="p">)</span>
 </code></pre></div>
         </details>
