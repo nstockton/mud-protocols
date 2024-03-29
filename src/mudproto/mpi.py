@@ -15,13 +15,14 @@ from __future__ import annotations
 import logging
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
 import textwrap
 import threading
 from enum import Enum, auto
-from typing import Any
+from typing import Any, Union
 
 # Local Modules:
 from .base import Protocol
@@ -70,16 +71,23 @@ class MPIProtocol(Protocol):
 			b"V": self.view,
 		}
 		editors: dict[str, str] = {
-			"win32": "notepad",
+			"win32": "notepad.exe",
 		}
 		pagers: dict[str, str] = {
-			"win32": "notepad",
+			"win32": "notepad.exe",
 		}
 		defaultEditor: str = editors.get(sys.platform, "nano")
 		defaultPager: str = pagers.get(sys.platform, "less")
-		self.editor: str = os.getenv("VISUAL", "") or os.getenv("EDITOR", defaultEditor)
-		self.pager: str = os.getenv("PAGER", defaultPager)
+		editor: Union[str, None] = shutil.which(os.getenv("VISUAL", "") or os.getenv("EDITOR", defaultEditor))
+		pager: Union[str, None] = shutil.which(os.getenv("PAGER", defaultPager))
 		self._isWordWrapping: bool = False
+		if editor is None:  # pragma: no cover
+			raise ValueError("MPI editor executable not found.")
+		elif pager is None:  # pragma: no cover
+			raise ValueError("MPI pager executable not found.")
+		else:  # pragma: no cover
+			self.editor: str = editor
+			self.pager: str = pager
 
 	@property
 	def isWordWrapping(self) -> bool:
@@ -106,8 +114,7 @@ class MPIProtocol(Protocol):
 			print(f"MPICOMMAND:{self.editor} {fileName}:MPICOMMAND")
 			input("Continue:")
 		else:
-			editorProcess = subprocess.Popen((*self.editor.split(), fileName))
-			editorProcess.wait()
+			subprocess.run((*self.editor.split(), fileName))
 		if os.path.getmtime(fileName) == lastModified:
 			# The user closed the text editor without saving. Cancel the editing session.
 			response = b"C" + session
@@ -137,8 +144,7 @@ class MPIProtocol(Protocol):
 		if self.outputFormat == "tintin":
 			print(f"MPICOMMAND:{self.pager} {fileName}:MPICOMMAND")
 		else:
-			pagerProcess = subprocess.Popen((*self.pager.split(), fileName))
-			pagerProcess.wait()
+			subprocess.run((*self.pager.split(), fileName))
 			os.remove(fileName)
 
 	def on_dataReceived(self, data: bytes) -> None:  # NOQA: C901

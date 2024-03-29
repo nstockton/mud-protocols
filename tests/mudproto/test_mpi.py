@@ -187,7 +187,7 @@ class TestMPIProtocol(TestCase):
 		)
 
 	@patch("mudproto.mpi.os.remove")
-	@patch("mudproto.mpi.subprocess.Popen")
+	@patch("mudproto.mpi.subprocess.run")
 	@patch("mudproto.mpi.tempfile.NamedTemporaryFile")
 	@patch("mudproto.mpi.print")
 	def testMPIView(
@@ -217,13 +217,12 @@ class TestMPIProtocol(TestCase):
 		self.assertEqual((self.playerReceives, self.gameReceives, self.mpi.state), (b"", b"", MPIState.DATA))
 		MockNamedTemporaryFile.assert_called_once_with(prefix="mume_viewing_", suffix=".txt", delete=False)
 		mockSubprocess.assert_called_once_with((*self.mpi.pager.split(), tempFileName))
-		mockSubprocess.return_value.wait.assert_called_once()
 		mockRemove.assert_called_once_with(tempFileName)
 
 	@patch("mudproto.mpi.open", mock_open(read_data=BODY))
 	@patch("mudproto.mpi.MPIProtocol.postprocess")
 	@patch("mudproto.mpi.os.remove")
-	@patch("mudproto.mpi.subprocess.Popen")
+	@patch("mudproto.mpi.subprocess.run")
 	@patch("mudproto.mpi.tempfile.NamedTemporaryFile")
 	@patch("mudproto.mpi.os.path")
 	@patch("mudproto.mpi.input", return_value="")
@@ -277,11 +276,9 @@ class TestMPIProtocol(TestCase):
 		self.gameReceives.clear()
 		MockNamedTemporaryFile.assert_called_once_with(prefix="mume_editing_", suffix=".txt", delete=False)
 		mockSubprocess.assert_called_once_with((*self.mpi.editor.split(), tempFileName))
-		mockSubprocess.return_value.wait.assert_called_once()
 		mockRemove.assert_called_once_with(tempFileName)
 		MockNamedTemporaryFile.reset_mock()
 		mockSubprocess.reset_mock()
-		mockSubprocess.return_value.wait.reset_mock()
 		mockRemove.reset_mock()
 		mockOsPath.reset_mock(return_value=True)
 		# Test remote editing.
@@ -314,7 +311,6 @@ class TestMPIProtocol(TestCase):
 		self.gameReceives.clear()
 		MockNamedTemporaryFile.assert_called_once_with(prefix="mume_editing_", suffix=".txt", delete=False)
 		mockSubprocess.assert_called_once_with((*self.mpi.editor.split(), tempFileName))
-		mockSubprocess.return_value.wait.assert_called_once()
 		mockRemove.assert_called_once_with(tempFileName)
 		# confirm pre and post processors were not called since wordwrapping was not defined
 		mockPostprocessor.assert_not_called()
