@@ -131,12 +131,12 @@ class XMLProtocol(Protocol):
 			self._lineBuffer.extend(appData)
 			lines = self._lineBuffer.splitlines(keepends=True)
 			self._lineBuffer.clear()
-			if lines and lines[-1][-1:] not in (CR, LF):
+			if lines and not lines[-1].endswith((CR, LF)):
 				# Final line is incomplete.
 				self._lineBuffer.extend(lines.pop())
-			lines = [line.rstrip(CR_LF) for line in lines if line.strip()]
 			for line in lines:
-				self.on_xmlEvent("line", unescapeXMLBytes(line))
+				if line.strip():
+					self.on_xmlEvent("line", unescapeXMLBytes(line.rstrip(CR_LF)))
 		elif self._mode is XMLMode.ROOM:
 			self._dynamicBuffer.extend(appData)
 		else:
