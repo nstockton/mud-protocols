@@ -12,12 +12,12 @@ from unittest import TestCase
 from unittest.mock import Mock, patch
 
 # MUD Protocol Modules:
-from mudproto.base import Protocol
+from mudproto.base import BaseConnection
 from mudproto.manager import Manager
 from mudproto.telnet_constants import CR, CR_LF, CR_NULL, GA, IAC, LF
 
 
-class FakeProtocol(Protocol):
+class FakeProtocol(BaseConnection):
 	def on_connectionMade(self) -> None:
 		pass
 
@@ -25,7 +25,7 @@ class FakeProtocol(Protocol):
 		pass
 
 
-class MockProtocol(Protocol):
+class MockProtocol(BaseConnection):
 	on_connectionMade: Mock = Mock()
 	on_connectionLost: Mock = Mock()
 	on_dataReceived: Mock = Mock()
@@ -143,7 +143,7 @@ class TestManager(TestCase):
 			# Calling Manager.unregister on an instance that was not registered.
 			self.manager.unregister(MockProtocol(lambda *args: None, lambda *args: None, isClient=True))
 		self.manager.register(MockProtocol)
-		instance: Protocol = self.manager._handlers[-1]
+		instance: BaseConnection = self.manager._handlers[-1]
 		self.assertIsNot(self.manager._handlers[0]._receiver, instance._receiver)
 		mockOn_connectionLost: Mock
 		with patch.object(instance, "on_connectionLost") as mockOn_connectionLost:

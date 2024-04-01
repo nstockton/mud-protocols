@@ -18,7 +18,7 @@ from enum import Enum, auto
 from typing import Any, ClassVar, Union
 
 # Local Modules:
-from .base import Protocol
+from .base import BaseConnection
 from .mpi import MPI_INIT
 from .telnet_constants import CR, CR_LF, LF
 from .utils import unescapeXMLBytes
@@ -61,7 +61,7 @@ class XMLMode(Enum):
 	TERRAIN = auto()
 
 
-class XMLProtocol(Protocol):
+class XMLProtocol(BaseConnection):
 	"""
 	Implements the Mume XML protocol.
 	"""

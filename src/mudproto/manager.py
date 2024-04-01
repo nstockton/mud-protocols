@@ -13,9 +13,9 @@ from types import TracebackType
 from typing import Any, Optional
 
 # Local Modules:
-from .base import Protocol
+from .base import BaseConnection
 from .telnet_constants import CR, CR_LF, CR_NULL, GA, IAC, LF
-from .typedef import PROTOCOL_RECEIVER_TYPE, PROTOCOL_WRITER_TYPE
+from .typedef import CONNECTION_RECEIVER_TYPE, CONNECTION_WRITER_TYPE
 from .utils import escapeIAC
 
 
@@ -25,14 +25,14 @@ logger: logging.Logger = logging.getLogger(__name__)
 class Manager:
 	def __init__(
 		self,
-		writer: PROTOCOL_WRITER_TYPE,
-		receiver: PROTOCOL_RECEIVER_TYPE,
+		writer: CONNECTION_WRITER_TYPE,
+		receiver: CONNECTION_RECEIVER_TYPE,
 		*,
 		isClient: bool,
 		promptTerminator: Optional[bytes] = None,
 	) -> None:
-		self._writer: PROTOCOL_WRITER_TYPE = writer
-		self._receiver: PROTOCOL_RECEIVER_TYPE = receiver
+		self._writer: CONNECTION_WRITER_TYPE = writer
+		self._receiver: CONNECTION_RECEIVER_TYPE = receiver
 		self._isClient: bool = isClient
 		self.promptTerminator: bytes
 		if promptTerminator is None:
@@ -46,7 +46,7 @@ class Manager:
 			)
 		self._readBuffer: bytearray = bytearray()
 		self._writeBuffer: bytearray = bytearray()
-		self._handlers: list[Protocol] = []
+		self._handlers: list[BaseConnection] = []
 		self._isConnected: bool = False
 
 	@property
@@ -148,7 +148,7 @@ class Manager:
 		if data:
 			self._writer(data)
 
-	def register(self, handler: type[Protocol], **kwargs: Any) -> None:
+	def register(self, handler: type[BaseConnection], **kwargs: Any) -> None:
 		"""
 		Registers a protocol handler.
 
@@ -161,13 +161,13 @@ class Manager:
 		for i in self._handlers:
 			if isinstance(i, handler):
 				raise ValueError("Already registered.")
-		instance: Protocol = handler(self.write, self._receiver, isClient=self._isClient, **kwargs)
+		instance: BaseConnection = handler(self.write, self._receiver, isClient=self._isClient, **kwargs)
 		if self._handlers:
 			self._handlers[-1]._receiver = instance.on_dataReceived
 		self._handlers.append(instance)
 		instance.on_connectionMade()
 
-	def unregister(self, instance: Protocol) -> None:
+	def unregister(self, instance: BaseConnection) -> None:
 		"""
 		Unregisters a protocol handler.
 

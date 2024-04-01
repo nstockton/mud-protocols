@@ -13,13 +13,13 @@ from typing import Any
 from typing import Protocol as TypeProtocol
 
 # Local Modules:
-from .typedef import PROTOCOL_RECEIVER_TYPE, PROTOCOL_WRITER_TYPE
+from .typedef import CONNECTION_RECEIVER_TYPE, CONNECTION_WRITER_TYPE
 
 
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-class BaseProtocol(TypeProtocol):
+class BaseConnectionInterface(TypeProtocol):
 	@property
 	@abstractmethod
 	def isClient(self) -> bool:
@@ -57,17 +57,17 @@ class BaseProtocol(TypeProtocol):
 		"""
 
 
-class Protocol(BaseProtocol):
+class BaseConnection(BaseConnectionInterface):
 	def __init__(
 		self,
-		writer: PROTOCOL_WRITER_TYPE,
-		receiver: PROTOCOL_RECEIVER_TYPE,
+		writer: CONNECTION_WRITER_TYPE,
+		receiver: CONNECTION_RECEIVER_TYPE,
 		*,
 		isClient: bool,
 		**kwargs: Any,
 	) -> None:
-		self._writer: PROTOCOL_WRITER_TYPE = writer
-		self._receiver: PROTOCOL_RECEIVER_TYPE = receiver
+		self._writer: CONNECTION_WRITER_TYPE = writer
+		self._receiver: CONNECTION_RECEIVER_TYPE = receiver
 		self._isClient: bool = isClient
 
 	@property

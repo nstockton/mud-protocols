@@ -25,7 +25,7 @@ from enum import Enum, auto
 from typing import Any, Union
 
 # Local Modules:
-from .base import Protocol
+from .base import BaseConnection
 from .telnet_constants import CR, CR_LF, LF
 from .typedef import MPI_COMMAND_MAP_TYPE
 
@@ -49,7 +49,7 @@ class MPIState(Enum):
 	BODY = auto()
 
 
-class MPIProtocol(Protocol):
+class MPIProtocol(BaseConnection):
 	"""
 	Implements support for the Mume remote editing protocol.
 

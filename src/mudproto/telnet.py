@@ -40,7 +40,7 @@ from typing import Protocol as TypeProtocol
 from typing import Union
 
 # Local Modules:
-from .base import BaseProtocol, Protocol
+from .base import BaseConnection, BaseConnectionInterface
 from .telnet_constants import (
 	COMMAND_BYTES,
 	CR,
@@ -120,7 +120,7 @@ class TelnetState(Enum):
 	SUBNEGOTIATION_ESCAPED = auto()
 
 
-class TelnetInterface(BaseProtocol, TypeProtocol):
+class TelnetInterface(BaseConnectionInterface, TypeProtocol):
 	commandMap: TELNET_COMMAND_MAP_TYPE
 	"""A mapping of bytes to callables."""
 	subnegotiationMap: TELNET_SUBNEGOTIATION_MAP_TYPE
@@ -291,7 +291,7 @@ class TelnetInterface(BaseProtocol, TypeProtocol):
 		"""
 
 
-class TelnetProtocol(Protocol, TelnetInterface):
+class TelnetProtocol(BaseConnection, TelnetInterface):
 	"""
 	Implements the Telnet protocol.
 	"""
