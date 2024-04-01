@@ -235,6 +235,7 @@ class BaseTelnetProtocol(BaseProtocol, TypeProtocol):
 		Returns:
 			True if we will handle the option, False otherwise.
 		"""
+		return False  # Reject all options by default.
 
 	@abstractmethod
 	def on_disableLocal(self, option: bytes) -> None:
@@ -249,6 +250,7 @@ class BaseTelnetProtocol(BaseProtocol, TypeProtocol):
 		Args:
 			option: The option being disabled.
 		"""
+		raise NotImplementedError(f"Don't know how to disable local Telnet option {option!r}")
 
 	@abstractmethod
 	def on_enableRemote(self, option: bytes) -> bool:
@@ -261,6 +263,7 @@ class BaseTelnetProtocol(BaseProtocol, TypeProtocol):
 		Returns:
 			True if we will allow peer to handle the option, False otherwise.
 		"""
+		return False  # Reject all options by default.
 
 	@abstractmethod
 	def on_disableRemote(self, option: bytes) -> None:
@@ -276,6 +279,7 @@ class BaseTelnetProtocol(BaseProtocol, TypeProtocol):
 		Args:
 			option: The option being disabled.
 		"""
+		raise NotImplementedError(f"Don't know how to disable remote Telnet option {option!r}")
 
 	@abstractmethod
 	def on_optionEnabled(self, option: bytes) -> None:
@@ -421,10 +425,10 @@ class TelnetProtocol(Protocol, BaseTelnetProtocol):
 		self.write(IAC + SB + option + escapeIAC(data) + IAC + SE)
 
 	def on_connectionMade(self) -> None:
-		pass
+		return super().on_connectionMade()
 
 	def on_connectionLost(self) -> None:
-		pass
+		return super().on_connectionLost()
 
 	def on_dataReceived(self, data: bytes) -> None:  # NOQA: C901
 		appDataBuffer: bytearray = bytearray()
@@ -664,22 +668,22 @@ class TelnetProtocol(Protocol, BaseTelnetProtocol):
 			self.on_disableLocal(option)
 
 	def on_unhandledCommand(self, command: bytes, option: Union[bytes, None]) -> None:
-		pass
+		return super().on_unhandledCommand(command, option)
 
 	def on_unhandledSubnegotiation(self, option: bytes, data: bytes) -> None:
-		pass
+		return super().on_unhandledSubnegotiation(option, data)
 
 	def on_enableLocal(self, option: bytes) -> bool:
-		return False  # Reject all options by default.
+		return super().on_enableLocal(option)
 
 	def on_disableLocal(self, option: bytes) -> None:
-		raise NotImplementedError(f"Don't know how to disable local Telnet option {option!r}")
+		return super().on_disableLocal(option)
 
 	def on_enableRemote(self, option: bytes) -> bool:
-		return False  # Reject all options by default.
+		return super().on_enableRemote(option)
 
 	def on_disableRemote(self, option: bytes) -> None:
-		raise NotImplementedError(f"Don't know how to disable remote Telnet option {option!r}")
+		return super().on_disableRemote(option)
 
 	def on_optionEnabled(self, option: bytes) -> None:
-		pass  # Do nothing by default.
+		return super().on_optionEnabled(option)

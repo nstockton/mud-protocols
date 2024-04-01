@@ -14,10 +14,10 @@ from __future__ import annotations
 # Built-in Modules:
 import logging
 import zlib
-from typing import TYPE_CHECKING, Any, Union
+from typing import Any, Union
 
 # Local Modules:
-from .telnet import BaseTelnetProtocol, TelnetProtocol
+from .telnet import BaseTelnetProtocol
 from .telnet_constants import IAC, MCCP1, MCCP2, SB, SE, WILL
 
 
@@ -31,13 +31,7 @@ MCCP_ENABLED_RESPONSES: tuple[bytes, bytes] = (
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-if TYPE_CHECKING:  # pragma: no cover
-	Base = TelnetProtocol
-else:  # pragma: no cover
-	Base = BaseTelnetProtocol
-
-
-class MCCPMixIn(Base):
+class MCCPMixIn(BaseTelnetProtocol):
 	"""An MCCP mix in class for the Telnet protocol."""
 
 	def __init__(self, *args: Any, **kwargs: Any) -> None:

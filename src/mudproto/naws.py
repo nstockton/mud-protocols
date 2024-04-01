@@ -16,10 +16,10 @@ import logging
 import sys
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Union
+from typing import Any, Union
 
 # Local Modules:
-from .telnet import BaseTelnetProtocol, TelnetProtocol
+from .telnet import BaseTelnetProtocol
 from .telnet_constants import NAWS
 
 
@@ -33,12 +33,6 @@ if sys.version_info < (3, 11):  # pragma: no cover
 	from typing_extensions import Self
 else:  # pragma: no cover
 	from typing import Self
-
-
-if TYPE_CHECKING:  # pragma: no cover
-	Base = TelnetProtocol
-else:  # pragma: no cover
-	Base = BaseTelnetProtocol
 
 
 @dataclass(frozen=True)
@@ -87,7 +81,7 @@ class Dimensions:
 		return width + height
 
 
-class NAWSMixIn(Base):
+class NAWSMixIn(BaseTelnetProtocol):
 	"""
 	A NAWS mix in class for the Telnet protocol.
 	"""
