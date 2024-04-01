@@ -878,7 +878,7 @@
 
 
 <h2 id="mudproto.charset.CharsetMixIn" class="doc doc-heading">
-        <code>Class CharsetMixIn(<a title="mudproto.telnet.BaseTelnetProtocol" href="../telnet/#mudproto.telnet.BaseTelnetProtocol">BaseTelnetProtocol</a>)</code>
+        <code>Class CharsetMixIn(<a title="mudproto.telnet.TelnetInterface" href="../telnet/#mudproto.telnet.TelnetInterface">TelnetInterface</a>)</code>
 
 
 
@@ -890,7 +890,7 @@
 
         <details class="quote">
           <summary>Source code in <code>mudproto/charset.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">CharsetMixIn</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">CharsetMixIn</span><span class="p">(</span><span class="n">TelnetInterface</span><span class="p">):</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;A charset mix in class for the Telnet protocol.&quot;&quot;&quot;</span>
 
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1670,6 +1670,7 @@ in order to perform any necessary cleanup on our end.</p>
 <span class="sd">	Args:</span>
 <span class="sd">		option: The option being disabled.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Don&#39;t know how to disable remote Telnet option </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -1805,6 +1806,7 @@ in order to perform any necessary cleanup on our end.</p>
 <span class="sd">	Returns:</span>
 <span class="sd">		True if we will allow peer to handle the option, False otherwise.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Reject all options by default.</span>
 </code></pre></div>
         </details>
     </div>
