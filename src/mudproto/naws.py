@@ -19,7 +19,7 @@ from dataclasses import dataclass
 from typing import Any, Union
 
 # Local Modules:
-from .telnet import BaseTelnetProtocol
+from .telnet import TelnetInterface
 from .telnet_constants import NAWS
 
 
@@ -81,7 +81,7 @@ class Dimensions:
 		return width + height
 
 
-class NAWSMixIn(BaseTelnetProtocol):
+class NAWSMixIn(TelnetInterface):
 	"""
 	A NAWS mix in class for the Telnet protocol.
 	"""

@@ -19,7 +19,7 @@ from collections.abc import Iterable, Mapping
 from typing import Any, Optional
 
 # Local Modules:
-from .telnet import BaseTelnetProtocol
+from .telnet import TelnetInterface
 from .telnet_constants import GMCP
 from .typedef import GMCP_CLIENT_INFO_TYPE, REGEX_BYTES_MATCH, REGEX_BYTES_PATTERN
 
@@ -30,7 +30,7 @@ GMCP_MESSAGE_REGEX: REGEX_BYTES_PATTERN = re.compile(rb"^\s*(?P<package>[\w.-]+)
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-class GMCPMixIn(BaseTelnetProtocol):
+class GMCPMixIn(TelnetInterface):
 	"""
 	A GMCP mix in class for the Telnet protocol.
 	"""

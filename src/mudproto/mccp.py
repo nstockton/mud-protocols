@@ -17,7 +17,7 @@ import zlib
 from typing import Any, Union
 
 # Local Modules:
-from .telnet import BaseTelnetProtocol
+from .telnet import TelnetInterface
 from .telnet_constants import IAC, MCCP1, MCCP2, SB, SE, WILL
 
 
@@ -31,7 +31,7 @@ MCCP_ENABLED_RESPONSES: tuple[bytes, bytes] = (
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-class MCCPMixIn(BaseTelnetProtocol):
+class MCCPMixIn(TelnetInterface):
 	"""An MCCP mix in class for the Telnet protocol."""
 
 	def __init__(self, *args: Any, **kwargs: Any) -> None:

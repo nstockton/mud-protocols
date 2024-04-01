@@ -120,7 +120,7 @@ class TelnetState(Enum):
 	SUBNEGOTIATION_ESCAPED = auto()
 
 
-class BaseTelnetProtocol(BaseProtocol, TypeProtocol):
+class TelnetInterface(BaseProtocol, TypeProtocol):
 	commandMap: TELNET_COMMAND_MAP_TYPE
 	"""A mapping of bytes to callables."""
 	subnegotiationMap: TELNET_SUBNEGOTIATION_MAP_TYPE
@@ -291,7 +291,7 @@ class BaseTelnetProtocol(BaseProtocol, TypeProtocol):
 		"""
 
 
-class TelnetProtocol(Protocol, BaseTelnetProtocol):
+class TelnetProtocol(Protocol, TelnetInterface):
 	"""
 	Implements the Telnet protocol.
 	"""

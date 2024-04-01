@@ -16,14 +16,14 @@ import logging
 from typing import Any
 
 # Local Modules:
-from .telnet import BaseTelnetProtocol
+from .telnet import TelnetInterface
 from .telnet_constants import CHARSET, CHARSET_ACCEPTED, CHARSET_REJECTED, CHARSET_REQUEST
 
 
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-class CharsetMixIn(BaseTelnetProtocol):
+class CharsetMixIn(TelnetInterface):
 	"""A charset mix in class for the Telnet protocol."""
 
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
