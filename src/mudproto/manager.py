@@ -22,7 +22,7 @@ from .utils import escapeIAC
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-class Manager(object):
+class Manager:
 	def __init__(
 		self,
 		writer: PROTOCOL_WRITER_TYPE,
