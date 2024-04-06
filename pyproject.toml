@@ -52,7 +52,7 @@
 
 [tool.poetry.dependencies]
 	python = "^3.8"
-	typing-extensions = {version = "^4.1", python = "< 3.10"}
+	typing-extensions = {version = "^4.1", python = "< 3.11"}
 
 [tool.poetry.dev-dependencies]
 	poetry-dynamic-versioning = {version = "1.2.0", extras = ["plugin"]}
