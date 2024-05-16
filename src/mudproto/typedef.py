@@ -8,7 +8,7 @@ from __future__ import annotations
 
 # Built-in Modules:
 import sys
-from typing import Dict, Tuple, Union
+from typing import Dict, Tuple, TypeVar, Union
 
 
 if sys.version_info < (3, 10):  # pragma: no cover
@@ -23,6 +23,7 @@ else:  # pragma: no cover
 	from re import Match, Pattern
 
 
+BytesOrStr = TypeVar("BytesOrStr", bytes, str)
 REGEX_MATCH: TypeAlias = Union[Match[str], None]
 REGEX_PATTERN: TypeAlias = Pattern[str]
 REGEX_BYTES_MATCH: TypeAlias = Union[Match[bytes], None]

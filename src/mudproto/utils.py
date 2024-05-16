@@ -9,11 +9,11 @@ from __future__ import annotations
 # Built-in Modules:
 import re
 from collections.abc import Generator, Sequence
-from typing import AnyStr, Union
+from typing import Union
 
 # Local Modules:
 from .telnet_constants import IAC, IAC_IAC
-from .typedef import REGEX_BYTES_PATTERN
+from .typedef import REGEX_BYTES_PATTERN, BytesOrStr
 
 
 ESCAPE_XML_STR_ENTITIES: tuple[tuple[str, str], ...] = (
@@ -63,8 +63,8 @@ def escapeIAC(data: bytes) -> bytes:
 
 
 def multiReplace(
-	data: AnyStr, replacements: Union[Sequence[Sequence[bytes]], Sequence[Sequence[str]]]
-) -> AnyStr:
+	data: BytesOrStr, replacements: Union[Sequence[Sequence[bytes]], Sequence[Sequence[str]]]
+) -> BytesOrStr:
 	"""
 	Performs multiple replacement operations on a string or bytes-like object.
 
