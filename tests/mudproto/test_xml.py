@@ -156,3 +156,7 @@ class TestXMLProtocol(TestCase):
 		self.xml.outputFormat = "raw"
 		self.assertEqual(self.parse(self.rawData), (self.rawData, b"", XMLState.DATA))
 		self.assertCallList(mockOnEvent.call_args_list, self.expectedEvents)
+		mockOnEvent.reset_mock()
+		latin1Tag: bytes = b"<m\xf3vement dir=south/>"
+		self.assertEqual(self.parse(latin1Tag), (latin1Tag, b"", XMLState.DATA))
+		mockOnEvent.assert_called_once_with("movement", b"south")

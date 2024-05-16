@@ -21,7 +21,7 @@ from typing import Any, ClassVar, Union
 from .base import BaseConnection
 from .mpi import MPI_INIT
 from .telnet_constants import CR, CR_LF, LF
-from .utils import unescapeXMLBytes
+from .utils import decodeBytes, unescapeXMLBytes
 
 
 LT: bytes = b"<"
@@ -163,7 +163,7 @@ class XMLProtocol(BaseConnection):
 			return data
 		tag: bytes = bytes(self._tagBuffer).strip()
 		self._tagBuffer.clear()
-		tagName: str = str(tag, "us-ascii").strip("/").split(None, 1)[0] if tag else ""
+		tagName: str = decodeBytes(tag).strip("/").split(None, 1)[0] if tag else ""
 		isClosingTag: bool = tag.startswith(b"/")
 		if self.outputFormat == "raw":
 			appDataBuffer.extend(LT + tag + GT)
