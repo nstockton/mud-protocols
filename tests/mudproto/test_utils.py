@@ -15,6 +15,20 @@ from mudproto.telnet_constants import IAC
 
 
 class TestUtils(TestCase):
+	def test_latin2ascii(self) -> None:
+		with self.assertRaises(NotImplementedError):
+			utils.latin2ascii(UnicodeError("junk"))
+
+	def test_decodeBytes(self) -> None:
+		asciiChars: str = "".join(chr(i) for i in range(128))
+		latinChars: str = "".join(chr(i) for i in range(128, 256))
+		latinReplacements: str = "".join(
+			utils.LATIN_DECODING_REPLACEMENTS.get(ord(char), "?") for char in latinChars
+		)
+		self.assertEqual(utils.decodeBytes(bytes(asciiChars, "us-ascii")), asciiChars)
+		self.assertEqual(utils.decodeBytes(bytes(latinChars, "latin-1")), latinReplacements)
+		self.assertEqual(utils.decodeBytes(bytes(latinChars, "utf-8")), latinReplacements)
+
 	def test_iterBytes(self) -> None:
 		sent: bytes = b"hello"
 		expected: tuple[bytes, ...] = (b"h", b"e", b"l", b"l", b"o")
