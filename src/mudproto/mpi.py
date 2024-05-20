@@ -26,7 +26,7 @@ from typing import Any, Union
 
 # Local Modules:
 from .base import BaseConnection
-from .telnet_constants import CR, CR_LF, LF
+from .telnet_constants import CR, LF
 from .typedef import MPI_COMMAND_MAP_TYPE
 
 
@@ -105,31 +105,38 @@ class MPIProtocol(BaseConnection):
 		Args:
 			data: Received data from Mume, containing the session, description, and body of the text.
 		"""
-		session, description, body = data[1:].split(LF, 2)
-		with tempfile.NamedTemporaryFile(prefix="mume_editing_", suffix=".txt", delete=False) as tempFileObj:
+		# Use windows line endings when editing the file.
+		newline: str = "\r\n"
+		# The MUME server sends the MPI data encoded in Latin-1.
+		session, description, body = str(data, "latin-1")[1:].split("\n", 2)
+		with tempfile.NamedTemporaryFile(
+			"w", encoding="utf-8", newline=newline, prefix="mume_editing_", suffix=".txt", delete=False
+		) as tempFileObj:
 			fileName = tempFileObj.name
-			tempFileObj.write(body.replace(CR, b"").replace(LF, CR_LF))
+			tempFileObj.write(body)
 		lastModified = os.path.getmtime(fileName)
 		if self.outputFormat == "tintin":
 			print(f"MPICOMMAND:{self.editor} {fileName}:MPICOMMAND")
 			input("Continue:")
 		else:
 			subprocess.run((*self.editor.split(), fileName))
+		response: str
 		if os.path.getmtime(fileName) == lastModified:
 			# The user closed the text editor without saving. Cancel the editing session.
-			response = b"C" + session
+			response = f"C{session}\n"
 		else:
 			if self.isWordWrapping:
-				with open(fileName, "r") as textFileObj:
-					text: str = str(textFileObj.read())
+				with open(fileName, "r", encoding="utf-8", newline=newline) as fileObj:
+					text: str = fileObj.read()
 				text = self.postprocess(text)
-				with open(fileName, "w") as textFileObj:
-					textFileObj.write(text)
-			with open(fileName, "rb") as fileObj:
-				response = b"E" + session + LF + fileObj.read()
-		response = response.replace(CR, b"").strip() + LF
+				with open(fileName, "w", encoding="utf-8", newline=newline) as fileObj:
+					fileObj.write(text)
+			with open(fileName, "r", encoding="utf-8", newline=newline) as fileObj:
+				response = f"E{session}\n{fileObj.read().strip()}\n"
 		os.remove(fileName)
-		self.write(MPI_INIT + b"E" + b"%d" % len(response) + LF + response)
+		# MUME requires that output body be encoded in Latin-1 with Unix line endings.
+		output: bytes = bytes(response, "latin-1").replace(CR, b"")
+		self.write(MPI_INIT + b"E" + b"%d" % len(output) + LF + output)
 
 	def view(self, data: bytes) -> None:
 		"""
@@ -138,9 +145,15 @@ class MPIProtocol(BaseConnection):
 		Args:
 			data: Received data from Mume, containing the text.
 		"""
-		with tempfile.NamedTemporaryFile(prefix="mume_viewing_", suffix=".txt", delete=False) as fileObj:
+		# Use windows line endings when viewing the file.
+		newline: str = "\r\n"
+		# The MUME server sends the MPI data encoded in Latin-1.
+		body: str = str(data, "latin-1")
+		with tempfile.NamedTemporaryFile(
+			"w", encoding="utf-8", newline=newline, prefix="mume_viewing_", suffix=".txt", delete=False
+		) as fileObj:
 			fileName = fileObj.name
-			fileObj.write(data.replace(CR, b"").replace(LF, CR_LF))
+			fileObj.write(body)
 		if self.outputFormat == "tintin":
 			print(f"MPICOMMAND:{self.pager} {fileName}:MPICOMMAND")
 		else:
