@@ -67,6 +67,18 @@ class TestCharsetMixIn(TestCase):
 		self.telnet.negotiateCharset(b"UTF-8")
 		self.assertEqual(self.gameReceives, IAC + SB + CHARSET + CHARSET_REQUEST + b";" + b"UTF-8" + IAC + SE)
 
+	def testTelnetParseSupportedCharsets(self) -> None:
+		supportedCharsets: bytes = b"ISO_8859-1:1987;ISO-8859-1;UTF-8;US-ASCII"
+		separator: bytes = b";"
+		result: tuple[bytes, ...] = self.telnet.parseSupportedCharsets(separator + supportedCharsets)
+		self.assertEqual(len(result), 3)
+		# ISO_8859-1:1987 and ISO-8859-1 are aliases for the same codec.
+		# When 2 or more aliases point to the same codec, the first one should be used and the duplicates removed.
+		deduplicated: tuple[bytes, ...] = tuple(
+			i for i in supportedCharsets.split(separator) if i != b"ISO-8859-1"
+		)
+		self.assertEqual(result, deduplicated)
+
 	@patch("mudproto.telnet.TelnetProtocol.wont")
 	@patch("mudproto.charset.CharsetMixIn.negotiateCharset")
 	@patch("mudproto.charset.logger")

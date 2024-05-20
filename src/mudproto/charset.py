@@ -12,7 +12,9 @@ Charset protocol.
 from __future__ import annotations
 
 # Built-in Modules:
+import codecs
 import logging
+from contextlib import suppress
 from typing import Any
 
 # Local Modules:
@@ -60,6 +62,27 @@ class CharsetMixIn(TelnetInterface):
 			logger.debug(f"Tell peer we would like to use the {name!r} charset.")
 			self.requestNegotiation(CHARSET, CHARSET_REQUEST + separator + name)
 
+	def parseSupportedCharsets(self, response: bytes) -> tuple[bytes, ...]:
+		"""
+		Parses the supported character sets from peer.
+
+		Args:
+			response: The response from peer, containing the supported character sets.
+
+		Returns:
+			The character sets supported by peer, with duplicate aliases removed.
+		"""
+		charsets: list[bytes] = []
+		names: set[str] = set()
+		separator, response = response[:1], response[1:]
+		for item in response.split(separator):
+			with suppress(LookupError):
+				name = codecs.lookup(str(item, "us-ascii")).name
+				if name not in names:
+					charsets.append(item)
+					names.add(name)
+		return tuple(charsets)
+
 	def on_charset(self, data: bytes) -> None:
 		"""
 		Called when a charset subnegotiation is received.
@@ -69,8 +92,7 @@ class CharsetMixIn(TelnetInterface):
 		"""
 		status, response = data[:1], data[1:]
 		if status == CHARSET_REQUEST:
-			separator, response = response[:1], response[1:].upper()
-			self._charsets = tuple(response.split(separator))
+			self._charsets = self.parseSupportedCharsets(response)
 			logger.debug(f"Peer responds: Supported charsets: {self._charsets!r}.")
 			self.negotiateCharset(self.charset)
 		elif status == CHARSET_ACCEPTED:
