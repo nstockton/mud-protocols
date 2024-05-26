@@ -15,7 +15,7 @@ from __future__ import annotations
 import codecs
 import logging
 from contextlib import suppress
-from typing import Any
+from typing import Any, Union
 
 # Local Modules:
 from .telnet import TelnetInterface
@@ -35,18 +35,11 @@ class CharsetMixIn(TelnetInterface):
 		self._charset: bytes = self._charsets[0]
 
 	@property
-	def charset(self) -> bytes:
-		"""The character set to be used."""
-		return self._charset
+	def charset(self) -> str:
+		"""The currently used character set."""
+		return str(self._charset, "us-ascii")
 
-	@charset.setter
-	def charset(self, value: bytes) -> None:
-		value = value.upper()
-		if value not in self._charsets:
-			raise ValueError(f"'{value!r}' not in {self._charsets!r}")
-		self._charset = value
-
-	def negotiateCharset(self, name: bytes) -> None:
+	def negotiateCharset(self, name: Union[bytes, str]) -> None:
 		"""
 		Negotiates changing the character set.
 
@@ -54,13 +47,19 @@ class CharsetMixIn(TelnetInterface):
 			name: The name of the character set to use.
 		"""
 		separator: bytes = b";"
+		if not isinstance(name, str):
+			name = str(name, "us-ascii")
 		try:
-			self.charset = name
-		except ValueError:
-			logger.warning(f"Invalid charset {name!r}: falling back to {self.charset!r}.")
-		else:
-			logger.debug(f"Tell peer we would like to use the {name!r} charset.")
-			self.requestNegotiation(CHARSET, CHARSET_REQUEST + separator + name)
+			target = codecs.lookup(name).name
+		except LookupError:
+			logger.warning(f"'{name}' not a valid codec")
+			return None
+		for item in self._charsets:
+			if target == codecs.lookup(str(item, "us-ascii")).name:
+				logger.debug(f"Tell peer we would like to use the {item!r} charset.")
+				self.requestNegotiation(CHARSET, CHARSET_REQUEST + separator + item)
+				return None
+		logger.warning(f"Could not find any charsets which target '{target}'")
 
 	def parseSupportedCharsets(self, response: bytes) -> tuple[bytes, ...]:
 		"""
@@ -94,10 +93,10 @@ class CharsetMixIn(TelnetInterface):
 		if status == CHARSET_REQUEST:
 			self._charsets = self.parseSupportedCharsets(response)
 			logger.debug(f"Peer responds: Supported charsets: {self._charsets!r}.")
-			self.negotiateCharset(self.charset)
+			self.negotiateCharset(self._charset)
 		elif status == CHARSET_ACCEPTED:
 			logger.debug(f"Peer responds: Charset {response!r} accepted.")
-			self.charset = response
+			self._charset = response
 		elif status == CHARSET_REJECTED:
 			logger.warning("Peer responds: Charset rejected.")
 		else:
