@@ -470,6 +470,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#mudproto.charset.CharsetMixIn.parseSupportedCharsets" class="md-nav__link">
+    parseSupportedCharsets()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.charset.CharsetMixIn.requestNegotiation" class="md-nav__link">
     requestNegotiation()
   </a>
@@ -798,6 +805,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#mudproto.charset.CharsetMixIn.parseSupportedCharsets" class="md-nav__link">
+    parseSupportedCharsets()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.charset.CharsetMixIn.requestNegotiation" class="md-nav__link">
     requestNegotiation()
   </a>
@@ -900,18 +914,11 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">_charset</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_charsets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 	<span class="nd">@property</span>
-	<span class="k">def</span> <span class="nf">charset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-<span class="w">		</span><span class="sd">&quot;&quot;&quot;The character set to be used.&quot;&quot;&quot;</span>
-		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_charset</span>
+	<span class="k">def</span> <span class="nf">charset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;The currently used character set.&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_charset</span><span class="p">,</span> <span class="s2">&quot;us-ascii&quot;</span><span class="p">)</span>
 
-	<span class="nd">@charset</span><span class="o">.</span><span class="n">setter</span>
-	<span class="k">def</span> <span class="nf">charset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-		<span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-		<span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_charsets</span><span class="p">:</span>
-			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s2">&#39; not in </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_charsets</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_charset</span> <span class="o">=</span> <span class="n">value</span>
-
-	<span class="k">def</span> <span class="nf">negotiateCharset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">negotiateCharset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Negotiates changing the character set.</span>
 
@@ -919,13 +926,40 @@
 <span class="sd">			name: The name of the character set to use.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="n">separator</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;;&quot;</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+			<span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;us-ascii&quot;</span><span class="p">)</span>
 		<span class="k">try</span><span class="p">:</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">charset</span> <span class="o">=</span> <span class="n">name</span>
-		<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-			<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid charset </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2">: falling back to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">charset</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
-		<span class="k">else</span><span class="p">:</span>
-			<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tell peer we would like to use the </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> charset.&quot;</span><span class="p">)</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">requestNegotiation</span><span class="p">(</span><span class="n">CHARSET</span><span class="p">,</span> <span class="n">CHARSET_REQUEST</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+			<span class="n">target</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+		<span class="k">except</span> <span class="ne">LookupError</span><span class="p">:</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; not a valid codec&quot;</span><span class="p">)</span>
+			<span class="k">return</span> <span class="kc">None</span>
+		<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_charsets</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">target</span> <span class="o">==</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;us-ascii&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+				<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tell peer we would like to use the </span><span class="si">{</span><span class="n">item</span><span class="si">!r}</span><span class="s2"> charset.&quot;</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">requestNegotiation</span><span class="p">(</span><span class="n">CHARSET</span><span class="p">,</span> <span class="n">CHARSET_REQUEST</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="n">item</span><span class="p">)</span>
+				<span class="k">return</span> <span class="kc">None</span>
+		<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not find any charsets which target &#39;</span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">parseSupportedCharsets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Parses the supported character sets from peer.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			response: The response from peer, containing the supported character sets.</span>
+
+<span class="sd">		Returns:</span>
+<span class="sd">			The character sets supported by peer, with duplicate aliases removed.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">charsets</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="n">names</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+		<span class="n">separator</span><span class="p">,</span> <span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+		<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">):</span>
+			<span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">LookupError</span><span class="p">):</span>
+				<span class="n">name</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;us-ascii&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">name</span>
+				<span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+					<span class="n">charsets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+					<span class="n">names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+		<span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">charsets</span><span class="p">)</span>
 
 	<span class="k">def</span> <span class="nf">on_charset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
@@ -936,13 +970,12 @@
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="n">status</span><span class="p">,</span> <span class="n">response</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 		<span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">CHARSET_REQUEST</span><span class="p">:</span>
-			<span class="n">separator</span><span class="p">,</span> <span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">_charsets</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">))</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_charsets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parseSupportedCharsets</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 			<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Peer responds: Supported charsets: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_charsets</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">negotiateCharset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">charset</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">negotiateCharset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_charset</span><span class="p">)</span>
 		<span class="k">elif</span> <span class="n">status</span> <span class="o">==</span> <span class="n">CHARSET_ACCEPTED</span><span class="p">:</span>
 			<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Peer responds: Charset </span><span class="si">{</span><span class="n">response</span><span class="si">!r}</span><span class="s2"> accepted.&quot;</span><span class="p">)</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">charset</span> <span class="o">=</span> <span class="n">response</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">_charset</span> <span class="o">=</span> <span class="n">response</span>
 		<span class="k">elif</span> <span class="n">status</span> <span class="o">==</span> <span class="n">CHARSET_REJECTED</span><span class="p">:</span>
 			<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Peer responds: Charset rejected.&quot;</span><span class="p">)</span>
 		<span class="k">else</span><span class="p">:</span>
@@ -977,18 +1010,18 @@
 
 
 <h3 id="mudproto.charset.CharsetMixIn.charset" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">charset</span><span class="p">:</span> <span class="nb">bytes</span></code>
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">charset</span><span class="p">:</span> <span class="nb">str</span></code>
 
   <span class="doc doc-properties">
       <small class="doc doc-property doc-property-property"><code>property</code></small>
-      <small class="doc doc-property doc-property-writable"><code>writable</code></small>
+      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
   </span>
 
 <a href="#mudproto.charset.CharsetMixIn.charset" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
-      <p>The character set to be used.</p>
+      <p>The currently used character set.</p>
     </div>
 
   </div>
@@ -1285,7 +1318,7 @@
   <tbody>
       <tr>
         <td><code>name</code></td>
-        <td><code>bytes</code></td>
+        <td><code>Union[bytes, str]</code></td>
         <td><p>The name of the character set to use.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -1293,7 +1326,7 @@
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/charset.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">negotiateCharset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">negotiateCharset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Negotiates changing the character set.</span>
 
@@ -1301,13 +1334,19 @@
 <span class="sd">		name: The name of the character set to use.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="n">separator</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;;&quot;</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+		<span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;us-ascii&quot;</span><span class="p">)</span>
 	<span class="k">try</span><span class="p">:</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">charset</span> <span class="o">=</span> <span class="n">name</span>
-	<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-		<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid charset </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2">: falling back to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">charset</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
-	<span class="k">else</span><span class="p">:</span>
-		<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tell peer we would like to use the </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> charset.&quot;</span><span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">requestNegotiation</span><span class="p">(</span><span class="n">CHARSET</span><span class="p">,</span> <span class="n">CHARSET_REQUEST</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+		<span class="n">target</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+	<span class="k">except</span> <span class="ne">LookupError</span><span class="p">:</span>
+		<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; not a valid codec&quot;</span><span class="p">)</span>
+		<span class="k">return</span> <span class="kc">None</span>
+	<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_charsets</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">target</span> <span class="o">==</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;us-ascii&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+			<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tell peer we would like to use the </span><span class="si">{</span><span class="n">item</span><span class="si">!r}</span><span class="s2"> charset.&quot;</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">requestNegotiation</span><span class="p">(</span><span class="n">CHARSET</span><span class="p">,</span> <span class="n">CHARSET_REQUEST</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="n">item</span><span class="p">)</span>
+			<span class="k">return</span> <span class="kc">None</span>
+	<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not find any charsets which target &#39;</span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -1360,13 +1399,12 @@
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="n">status</span><span class="p">,</span> <span class="n">response</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 	<span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">CHARSET_REQUEST</span><span class="p">:</span>
-		<span class="n">separator</span><span class="p">,</span> <span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_charsets</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">))</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_charsets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parseSupportedCharsets</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 		<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Peer responds: Supported charsets: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_charsets</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">negotiateCharset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">charset</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">negotiateCharset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_charset</span><span class="p">)</span>
 	<span class="k">elif</span> <span class="n">status</span> <span class="o">==</span> <span class="n">CHARSET_ACCEPTED</span><span class="p">:</span>
 		<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Peer responds: Charset </span><span class="si">{</span><span class="n">response</span><span class="si">!r}</span><span class="s2"> accepted.&quot;</span><span class="p">)</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">charset</span> <span class="o">=</span> <span class="n">response</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_charset</span> <span class="o">=</span> <span class="n">response</span>
 	<span class="k">elif</span> <span class="n">status</span> <span class="o">==</span> <span class="n">CHARSET_REJECTED</span><span class="p">:</span>
 		<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Peer responds: Charset rejected.&quot;</span><span class="p">)</span>
 	<span class="k">else</span><span class="p">:</span>
@@ -2044,6 +2082,84 @@ in order to perform any necessary cleanup on our end.</p>
 <span class="sd">		option: The subnegotiation option.</span>
 <span class="sd">		data: The payload.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="mudproto.charset.CharsetMixIn.parseSupportedCharsets" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Method</span> <span class="n">parseSupportedCharsets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span></code>
+
+
+<a href="#mudproto.charset.CharsetMixIn.parseSupportedCharsets" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Parses the supported character sets from peer.</p>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>response</code></td>
+        <td><code>bytes</code></td>
+        <td><p>The response from peer, containing the supported character sets.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>tuple[bytes, ...]</code></td>
+      <td><p>The character sets supported by peer, with duplicate aliases removed.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>mudproto/charset.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">parseSupportedCharsets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Parses the supported character sets from peer.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		response: The response from peer, containing the supported character sets.</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		The character sets supported by peer, with duplicate aliases removed.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">charsets</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">names</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+	<span class="n">separator</span><span class="p">,</span> <span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="p">[:</span><span class="mi">1</span><span class="p">],</span> <span class="n">response</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+	<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">separator</span><span class="p">):</span>
+		<span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">LookupError</span><span class="p">):</span>
+			<span class="n">name</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;us-ascii&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">name</span>
+			<span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+				<span class="n">charsets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+				<span class="n">names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+	<span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">charsets</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
