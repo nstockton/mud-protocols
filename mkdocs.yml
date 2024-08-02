@@ -20,7 +20,6 @@ nav:
       - mccp.py: api/mccp.md
       - mpi.py: api/mpi.md
       - telnet.py: api/telnet.md
-      - utils.py: api/utils.md
       - xml.py: api/xml.md
   - License: license.md
 
