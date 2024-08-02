@@ -1,7 +1,7 @@
 [build-system]
 	requires = [
 		"poetry-core>=1.0.0",
-		"poetry-dynamic-versioning==1.2.0",
+		"poetry-dynamic-versioning==1.4.0",
 	]
 	build-backend = "poetry_dynamic_versioning.backend"
 
@@ -56,7 +56,7 @@
 	typing-extensions = {version = "^4.1", python = "< 3.11"}
 
 [tool.poetry.dev-dependencies]
-	poetry-dynamic-versioning = {version = "1.2.0", extras = ["plugin"]}
+	poetry-dynamic-versioning = {version = "1.4.0", extras = ["plugin"]}
 	pre-commit = "^3.5"
 
 [tool.poetry.group.docs.dependencies]
