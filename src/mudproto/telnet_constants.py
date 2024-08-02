@@ -156,7 +156,6 @@ WONT: bytes = describe("WONT", 252)
 DO: bytes = describe("DO", 253)
 DONT: bytes = describe("DONT", 254)
 IAC: bytes = describe("IAC", 255)
-IAC_IAC: bytes = IAC + IAC
 COMMAND_BYTES: frozenset[bytes] = frozenset((XEOF, SUSP, ABORT, EOR, NOP, DM, BRK, IP, AO, AYT, EC, EL, GA))
 COMMAND_ORDS: frozenset[int] = frozenset(ord(i) for i in COMMAND_BYTES)
 NEGOTIATION_BYTES: frozenset[bytes] = frozenset((WILL, WONT, DO, DONT))

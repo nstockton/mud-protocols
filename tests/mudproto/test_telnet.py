@@ -11,7 +11,7 @@ from unittest import TestCase
 from unittest.mock import Mock, patch
 
 # MUD Protocol Modules:
-from mudproto.telnet import TelnetProtocol, TelnetState
+from mudproto.telnet import TelnetProtocol, TelnetState, escapeIAC
 from mudproto.telnet_constants import (
 	COMMAND_BYTES,
 	CR,
@@ -30,7 +30,13 @@ from mudproto.telnet_constants import (
 	WILL,
 	WONT,
 )
-from mudproto.utils import escapeIAC
+
+
+class TestTelnet(TestCase):
+	def test_escapeIAC(self) -> None:
+		sent: bytes = b"hello" + IAC + b"world"
+		expected: bytes = b"hello" + IAC + IAC + b"world"
+		self.assertEqual(escapeIAC(sent), expected)
 
 
 class TestTelnetProtocol(TestCase):

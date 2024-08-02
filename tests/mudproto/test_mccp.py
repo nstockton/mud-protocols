@@ -15,14 +15,13 @@ from zlib import DEFLATED, MAX_WBITS, Z_DEFAULT_COMPRESSION, Z_FINISH, Z_SYNC_FL
 # MUD Protocol Modules:
 from mudproto.mccp import MCCPMixIn
 from mudproto.mccp import logger as mccpLogger
-from mudproto.telnet import TelnetProtocol
+from mudproto.telnet import IAC_IAC, TelnetProtocol
 from mudproto.telnet_constants import (
 	COMMAND_BYTES,
 	CR,
 	CR_LF,
 	ECHO,
 	IAC,
-	IAC_IAC,
 	MCCP1,
 	MCCP2,
 	NEGOTIATION_BYTES,

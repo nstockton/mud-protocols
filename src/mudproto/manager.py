@@ -14,9 +14,9 @@ from typing import Any, Optional
 
 # Local Modules:
 from .base import BaseConnection
+from .telnet import escapeIAC
 from .telnet_constants import CR, CR_LF, CR_NULL, GA, IAC, LF
 from .typedef import CONNECTION_RECEIVER_TYPE, CONNECTION_WRITER_TYPE
-from .utils import escapeIAC
 
 
 logger: logging.Logger = logging.getLogger(__name__)

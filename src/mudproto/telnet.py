@@ -59,10 +59,25 @@ from .telnet_constants import (
 	WONT,
 )
 from .typedef import TELNET_COMMAND_MAP_TYPE, TELNET_SUBNEGOTIATION_MAP_TYPE
-from .utils import escapeIAC
+
+
+IAC_IAC: bytes = IAC + IAC
 
 
 logger: logging.Logger = logging.getLogger(__name__)
+
+
+def escapeIAC(data: bytes) -> bytes:
+	"""
+	Escapes IAC bytes of a bytes-like object.
+
+	Args:
+		data: The data to be escaped.
+
+	Returns:
+		The data with IAC bytes escaped.
+	"""
+	return data.replace(IAC, IAC_IAC)
 
 
 class TelnetError(Exception):

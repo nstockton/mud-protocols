@@ -52,6 +52,7 @@
 
 [tool.poetry.dependencies]
 	python = "^3.8"
+	knickknacks = {url = "https://github.com/nstockton/knickknacks/releases/download/v0.1.1/knickknacks-0.1.1-py3-none-any.whl"}
 	typing-extensions = {version = "^4.1", python = "< 3.11"}
 
 [tool.poetry.dev-dependencies]
@@ -204,7 +205,10 @@
 	# The heading to display for third-party imports.
 	import_heading_thirdparty = "Third-party Modules:"
 	# Override known third-party imports.
-	known_third_party = ["typing_extensions"]
+	known_third_party = [
+		"knickknacks",
+		"typing_extensions",
+	]
 	# The heading to display for first-party imports.
 	import_heading_firstparty = "MUD Protocol Modules:"
 	# Override known first-party imports.

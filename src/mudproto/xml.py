@@ -17,11 +17,14 @@ import re
 from enum import Enum, auto
 from typing import Any, ClassVar, Union
 
+# Third-party Modules:
+from knickknacks.databytes import decodeBytes
+from knickknacks.xml import unescapeXMLBytes
+
 # Local Modules:
 from .base import BaseConnection
 from .mpi import MPI_INIT
 from .telnet_constants import CR, CR_LF, LF
-from .utils import decodeBytes, unescapeXMLBytes
 
 
 LT: bytes = b"<"
