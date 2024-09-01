@@ -35,12 +35,10 @@ from __future__ import annotations
 import logging
 from abc import abstractmethod
 from enum import Enum, auto
-from typing import Any
-from typing import Protocol as TypeProtocol
-from typing import Union
+from typing import Any, Union
 
 # Local Modules:
-from .base import BaseConnection, BaseConnectionInterface
+from .base import BaseConnectionInterface
 from .telnet_constants import (
 	COMMAND_BYTES,
 	CR,
@@ -135,7 +133,7 @@ class TelnetState(Enum):
 	SUBNEGOTIATION_ESCAPED = auto()
 
 
-class TelnetInterface(BaseConnectionInterface, TypeProtocol):
+class TelnetInterface(BaseConnectionInterface):
 	commandMap: TELNET_COMMAND_MAP_TYPE
 	"""A mapping of bytes to callables."""
 	subnegotiationMap: TELNET_SUBNEGOTIATION_MAP_TYPE
@@ -306,7 +304,7 @@ class TelnetInterface(BaseConnectionInterface, TypeProtocol):
 		"""
 
 
-class TelnetProtocol(BaseConnection, TelnetInterface):
+class TelnetProtocol(TelnetInterface):
 	"""
 	Implements the Telnet protocol.
 	"""

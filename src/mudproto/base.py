@@ -8,9 +8,8 @@ from __future__ import annotations
 
 # Built-in Modules:
 import logging
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from typing import Any
-from typing import Protocol as TypeProtocol
 
 # Local Modules:
 from .typedef import CONNECTION_RECEIVER_TYPE, CONNECTION_WRITER_TYPE
@@ -19,18 +18,29 @@ from .typedef import CONNECTION_RECEIVER_TYPE, CONNECTION_WRITER_TYPE
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-class BaseConnectionInterface(TypeProtocol):
+class BaseConnectionInterface(ABC):
+	def __init__(
+		self,
+		writer: CONNECTION_WRITER_TYPE,
+		receiver: CONNECTION_RECEIVER_TYPE,
+		*,
+		isClient: bool,
+		**kwargs: Any,
+	) -> None:
+		self._writer: CONNECTION_WRITER_TYPE = writer
+		self._receiver: CONNECTION_RECEIVER_TYPE = receiver
+		self._isClient: bool = isClient
+
 	@property
-	@abstractmethod
 	def isClient(self) -> bool:
 		"""True if acting as a client, False otherwise."""
+		return self._isClient
 
 	@property
-	@abstractmethod
 	def isServer(self) -> bool:
 		"""True if acting as a server, False otherwise."""
+		return not self._isClient
 
-	@abstractmethod
 	def write(self, data: bytes) -> None:
 		"""
 		Writes data to peer.
@@ -38,6 +48,7 @@ class BaseConnectionInterface(TypeProtocol):
 		Args:
 			data: The bytes to be written.
 		"""
+		self._writer(data)
 
 	@abstractmethod
 	def on_connectionMade(self) -> None:
@@ -55,31 +66,4 @@ class BaseConnectionInterface(TypeProtocol):
 		Args:
 			data: The received data.
 		"""
-
-
-class BaseConnection(BaseConnectionInterface):
-	def __init__(
-		self,
-		writer: CONNECTION_WRITER_TYPE,
-		receiver: CONNECTION_RECEIVER_TYPE,
-		*,
-		isClient: bool,
-		**kwargs: Any,
-	) -> None:
-		self._writer: CONNECTION_WRITER_TYPE = writer
-		self._receiver: CONNECTION_RECEIVER_TYPE = receiver
-		self._isClient: bool = isClient
-
-	@property
-	def isClient(self) -> bool:
-		return self._isClient
-
-	@property
-	def isServer(self) -> bool:
-		return not self._isClient
-
-	def write(self, data: bytes) -> None:
-		self._writer(data)
-
-	def on_dataReceived(self, data: bytes) -> None:
 		self._receiver(data)

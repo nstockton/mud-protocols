@@ -13,7 +13,7 @@ from types import TracebackType
 from typing import Any, Optional
 
 # Local Modules:
-from .base import BaseConnection
+from .base import BaseConnectionInterface
 from .telnet import escapeIAC
 from .telnet_constants import CR, CR_LF, CR_NULL, GA, IAC, LF
 from .typedef import CONNECTION_RECEIVER_TYPE, CONNECTION_WRITER_TYPE
@@ -46,7 +46,7 @@ class Manager:
 			)
 		self._readBuffer: bytearray = bytearray()
 		self._writeBuffer: bytearray = bytearray()
-		self._handlers: list[BaseConnection] = []
+		self._handlers: list[BaseConnectionInterface] = []
 		self._isConnected: bool = False
 
 	@property
@@ -148,7 +148,7 @@ class Manager:
 		if data:
 			self._writer(data)
 
-	def register(self, handler: type[BaseConnection], **kwargs: Any) -> None:
+	def register(self, handler: type[BaseConnectionInterface], **kwargs: Any) -> None:
 		"""
 		Registers a protocol handler.
 
@@ -161,13 +161,15 @@ class Manager:
 		for i in self._handlers:
 			if isinstance(i, handler):
 				raise ValueError("Already registered.")
-		instance: BaseConnection = handler(self.write, self._receiver, isClient=self._isClient, **kwargs)
+		instance: BaseConnectionInterface = handler(
+			self.write, self._receiver, isClient=self._isClient, **kwargs
+		)
 		if self._handlers:
 			self._handlers[-1]._receiver = instance.on_dataReceived
 		self._handlers.append(instance)
 		instance.on_connectionMade()
 
-	def unregister(self, instance: BaseConnection) -> None:
+	def unregister(self, instance: BaseConnectionInterface) -> None:
 		"""
 		Unregisters a protocol handler.
 
