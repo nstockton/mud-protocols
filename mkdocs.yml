@@ -14,7 +14,7 @@ nav:
   - Home: index.md
   - API Index: api/index.md
   - API Navigation:
-      - base.py: api/base.md
+      - connection.py: api/connection.md
       - charset.py: api/charset.md
       - manager.py: api/manager.md
       - mccp.py: api/mccp.md

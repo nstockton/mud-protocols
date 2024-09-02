@@ -22,7 +22,7 @@ from knickknacks.databytes import decodeBytes
 from knickknacks.xml import unescapeXMLBytes
 
 # Local Modules:
-from .base import BaseConnectionInterface
+from .connection import ConnectionInterface
 from .mpi import MPI_INIT
 from .telnet_constants import CR, CR_LF, LF
 
@@ -64,7 +64,7 @@ class XMLMode(Enum):
 	TERRAIN = auto()
 
 
-class XMLProtocol(BaseConnectionInterface):
+class XMLProtocol(ConnectionInterface):
 	"""
 	Implements the Mume XML protocol.
 	"""

@@ -38,7 +38,7 @@ from enum import Enum, auto
 from typing import Any, Union
 
 # Local Modules:
-from .base import BaseConnectionInterface
+from .connection import ConnectionInterface
 from .telnet_constants import (
 	COMMAND_BYTES,
 	CR,
@@ -133,7 +133,7 @@ class TelnetState(Enum):
 	SUBNEGOTIATION_ESCAPED = auto()
 
 
-class TelnetInterface(BaseConnectionInterface):
+class TelnetInterface(ConnectionInterface):
 	commandMap: TELNET_COMMAND_MAP_TYPE
 	"""A mapping of bytes to callables."""
 	subnegotiationMap: TELNET_SUBNEGOTIATION_MAP_TYPE

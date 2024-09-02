@@ -4,7 +4,7 @@ Automatically generated API reference.
 
 ## MUD Protocols
 
-* [Base Protocol](base.md)
+* [Connection](connection.md)
 * [Charset Protocol](charset.md)
 * [Protocol Manager](manager.md)
 * [MUD Client Compression Protocol](mccp.md)

@@ -18,7 +18,7 @@ from .typedef import CONNECTION_RECEIVER_TYPE, CONNECTION_WRITER_TYPE
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-class BaseConnectionInterface(ABC):
+class ConnectionInterface(ABC):
 	def __init__(
 		self,
 		writer: CONNECTION_WRITER_TYPE,
