@@ -72,7 +72,8 @@ class TestCharsetMixIn(TestCase):
 		result: tuple[bytes, ...] = self.telnet.parseSupportedCharsets(separator + supportedCharsets)
 		self.assertEqual(len(result), 3)
 		# ISO_8859-1:1987 and ISO-8859-1 are aliases for the same codec.
-		# When 2 or more aliases point to the same codec, the first one should be used and the duplicates removed.
+		# When 2 or more aliases point to the same codec, the
+		# first one should be used and the duplicates removed.
 		deduplicated: tuple[bytes, ...] = tuple(
 			i for i in supportedCharsets.split(separator) if i != b"ISO-8859-1"
 		)

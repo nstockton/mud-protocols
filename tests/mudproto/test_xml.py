@@ -23,8 +23,10 @@ class TestXMLProtocol(TestCase):
 		name: bytes = b"\x1b[34mLower Flet\x1b[0m"
 		# fmt: off
 		description: bytes = (
-			b"\x1b[35mBeing close to the ground, this white platform is not encircled by any rail.\x1b[0m" + LF
-			+ b"\x1b[35mInstead, beautiful draperies and tapestries hang from the many branches that\x1b[0m" + LF
+			b"\x1b[35mBeing close to the ground, this white platform is not encircled by any rail.\x1b[0m"
+			+ LF
+			+ b"\x1b[35mInstead, beautiful draperies and tapestries hang from the many branches that\x1b[0m"
+			+ LF
 			+ b"\x1b[35msurround the flet. Swaying gently in the breeze, images on the colourful\x1b[0m" + LF
 			+ b"\x1b[35mcloth create a place where one can stand and let the mind wander into the\x1b[0m" + LF
 			+ b"\x1b[35mstories told by the everchanging patterns.\x1b[0m" + LF

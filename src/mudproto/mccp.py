@@ -7,7 +7,6 @@ MUD Client Compression protocol.
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-
 # Future Modules:
 from __future__ import annotations
 
@@ -57,7 +56,8 @@ class MCCPMixIn(TelnetInterface):
 				super().on_dataReceived(self._decompressor.decompress(inputBuffer))
 				inputBuffer.clear()
 				if self._decompressor.unused_data:
-					# Uncompressed data following the compressed data, likely due to the server terminating compression.
+					# Uncompressed data following the compressed data.
+					# Likely due to the server terminating compression.
 					logger.debug(
 						"received uncompressed data while compression enabled. Disabling compression."
 					)

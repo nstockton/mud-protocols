@@ -50,7 +50,8 @@ SAMPLE_TEXTS: tuple[str, ...] = (
 		"A lightly wooded hill divides the Bree forest in the east from the \n"
 		+ "road to\n"
 		+ "Fornost in the west. Not quite rising to the heights of\n"
-		+ " the trees at the base of the hill, this hill offers little view other than a passing glimps of those\n"
+		+ " the trees at the base of the hill, "
+		+ "this hill offers little view other than a passing glimps of those\n"
 		+ "travelling the road directly to the west. Beyond the road, rising above \n"
 		+ "the tree canapy, a barren ridge forms a straight line across the horizon. Remnents\n"
 		+ "of food stuffs and miscellaneous trifles are scattered around the hilltop,\n"
@@ -144,7 +145,8 @@ class TestMPIProtocol(TestCase):
 		self.assertEqual(self.parse(LF + MPI_INIT[:1] + LF), (LF + MPI_INIT[:1] + LF, b"", MPIState.NEWLINE))
 		# if some but not all of MPI_INIT was  received followed by data, fall back to state 'data'.
 		self.assertEqual(self.parse(LF + MPI_INIT[:1] + data), (LF + MPI_INIT[:1] + data, b"", MPIState.DATA))
-		# if a line feed is followed by 1 or more bytes of MPI_INIT, but not the final byte, state becomes 'init'.
+		# if a line feed is followed by 1 or more bytes of MPI_INIT, but
+		# not the final byte, state becomes 'init'.
 		# If a line feed is followed by part of MPI_INIT and then junk, state becomes 'data'.
 		for i in range(1, len(MPI_INIT)):
 			self.mpi.on_dataReceived(LF + MPI_INIT[:i])
@@ -368,7 +370,10 @@ class TestEditorPostprocessor(TestCase):
 		for sentence in processedText.split(". "):
 			self.assertTrue(
 				sentence[0].isupper() or not sentence[0].isalpha(),
-				f"The sentence\n{sentence}\nfrom the sample text\n{sampleText}\nstarts with an uncapitalized letter.",
+				(
+					f"The sentence\n{sentence}\nfrom the sample text\n{sampleText}\n"
+					+ "starts with an uncapitalized letter."
+				),
 			)
 
 	def test_wordwrap(self) -> None:
@@ -378,5 +383,8 @@ class TestEditorPostprocessor(TestCase):
 				self.assertLess(
 					len(line),
 					80,
-					f"The line\n{line}\nfrom the sample text\n{sampleText}\nis {len(line)} chars long, which is too long",
+					(
+						f"The line\n{line}\nfrom the sample text\n{sampleText}\nis {len(line)} "
+						+ "chars long, which is too long"
+					),
 				)

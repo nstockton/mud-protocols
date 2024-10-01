@@ -27,7 +27,6 @@ Telnet protocol.
 # Author: Jean-Paul Calderone
 # Author: Nick Stockton
 
-
 # Future Modules:
 from __future__ import annotations
 
@@ -255,7 +254,8 @@ class TelnetInterface(ConnectionInterface):
 		"""
 		Disables a locally managed option.
 
-		This method is called before we disable a locally enabled option, in order to perform any necessary cleanup.
+		This method is called before we disable a
+		locally enabled option, in order to perform any necessary cleanup.
 
 		Note:
 			If on_enableLocal is overridden, this method must be overridden as well.
@@ -527,7 +527,8 @@ class TelnetProtocol(TelnetInterface):
 						appDataBuffer.clear()
 					option, commands = commands[:1], commands[1:]
 					logger.debug(
-						f"Received from peer: IAC SB {DESCRIPTIONS.get(option, repr(option))} {commands!r} IAC SE"
+						f"Received from peer: IAC SB {DESCRIPTIONS.get(option, repr(option))} "
+						+ f"{commands!r} IAC SE"
 					)
 					self.on_subnegotiation(option, commands)
 				else:
@@ -581,7 +582,8 @@ class TelnetProtocol(TelnetInterface):
 			# This is a bogus state.  It is here for completeness.  It will
 			# never be entered.
 			raise AssertionError(
-				f"him.enabled and him.negotiating cannot be True at the same time. state: {state!r}, option: {option!r}"
+				"him.enabled and him.negotiating cannot be True at the same time. "
+				+ f"state: {state!r}, option: {option!r}"
 			)
 
 	def on_wont(self, option: Union[bytes, None]) -> None:
@@ -603,7 +605,8 @@ class TelnetProtocol(TelnetInterface):
 			# Peer refused to enable an option in response to our request.
 			state.him.negotiating = False
 			logger.debug(
-				f"Peer refuses to enable option {DESCRIPTIONS.get(option, repr(option))} in response to our request."
+				f"Peer refuses to enable option {DESCRIPTIONS.get(option, repr(option))} "
+				+ "in response to our request."
 			)
 		elif state.him.enabled and not state.him.negotiating:
 			# Peer is unilaterally demanding that an option be disabled.
@@ -648,7 +651,8 @@ class TelnetProtocol(TelnetInterface):
 			# This is a bogus state.  It is here for completeness.  It will never be
 			# entered.
 			raise AssertionError(
-				f"us.enabled and us.negotiating cannot be True at the same time. state: {state!r}, option: {option!r}"
+				"us.enabled and us.negotiating cannot be True at the same time. "
+				+ f"state: {state!r}, option: {option!r}"
 			)
 
 	def on_dont(self, option: Union[bytes, None]) -> None:

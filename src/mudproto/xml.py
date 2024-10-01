@@ -7,7 +7,6 @@ Mume XML Protocol.
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-
 # Future Modules:
 from __future__ import annotations
 
@@ -233,7 +232,8 @@ class XMLProtocol(ConnectionInterface):
 	def on_connectionMade(self) -> None:
 		# Turn on XML mode.
 		# Mode "3" tells MUME to enable XML output without sending an initial "<xml>" tag.
-		# Option "G" tells MUME to wrap room descriptions in gratuitous tags if they would otherwise be hidden.
+		# Option "G" tells MUME to wrap room descriptions in gratuitous
+		# tags if they would otherwise be hidden.
 		self.write(MPI_INIT + b"X2" + LF + b"3G" + LF)
 
 	def on_connectionLost(self) -> None:

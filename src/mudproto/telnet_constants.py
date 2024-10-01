@@ -72,7 +72,6 @@ Attributes:
 	ZMP: Zenith Mud Protocol.
 """
 
-
 # Future Modules:
 from __future__ import annotations
 
