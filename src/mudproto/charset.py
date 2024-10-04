@@ -52,12 +52,12 @@ class CharsetMixIn(TelnetInterface):
 			target = codecs.lookup(name).name
 		except LookupError:
 			logger.warning(f"'{name}' not a valid codec")
-			return None
+			return
 		for item in self._charsets:
 			if target == codecs.lookup(str(item, "us-ascii")).name:
 				logger.debug(f"Tell peer we would like to use the {item!r} charset.")
 				self.requestNegotiation(CHARSET, CHARSET_REQUEST + separator + item)
-				return None
+				return
 		logger.warning(f"Could not find any charsets which target '{target}'")
 
 	def parseSupportedCharsets(self, response: bytes) -> tuple[bytes, ...]:
@@ -111,5 +111,5 @@ class CharsetMixIn(TelnetInterface):
 	def on_disableLocal(self, option: bytes) -> None:
 		if option == CHARSET:
 			logger.debug("Charset negotiation disabled.")
-			return None
+			return
 		super().on_disableLocal(option)  # pragma: no cover

@@ -119,8 +119,8 @@ class Manager:
 		"""
 		if not self.isConnected or not self._handlers:
 			self._readBuffer.extend(data)
-			return None
-		elif self._readBuffer:
+			return
+		if self._readBuffer:
 			data = bytes(self._readBuffer + data)
 			self._readBuffer.clear()
 		if data:
@@ -141,8 +141,8 @@ class Manager:
 			data += self.promptTerminator
 		if not self.isConnected or not self._handlers:
 			self._writeBuffer.extend(data)
-			return None
-		elif self._writeBuffer:
+			return
+		if self._writeBuffer:
 			data = bytes(self._writeBuffer + data)
 			self._writeBuffer.clear()
 		if data:
@@ -176,7 +176,7 @@ class Manager:
 		"""
 		if inspect.isclass(instance):
 			raise ValueError("Instance required, not class.")
-		elif instance not in self._handlers:
+		if instance not in self._handlers:
 			raise ValueError("Instance wasn't registered.")
 		index = self._handlers.index(instance)
 		self._handlers.remove(instance)

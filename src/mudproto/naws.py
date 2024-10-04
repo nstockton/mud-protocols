@@ -118,7 +118,7 @@ class NAWSMixIn(TelnetInterface):
 		"""
 		if self.isClient:
 			logger.warning("Received NAWS subnegotiation while running in client mode.")
-			return None
+			return
 		try:
 			dimensions: Dimensions = Dimensions.fromBytes(data)
 			logger.debug(
@@ -143,7 +143,7 @@ class NAWSMixIn(TelnetInterface):
 	def on_disableLocal(self, option: bytes) -> None:
 		if self.isClient and option == NAWS:
 			logger.debug("We disable NAWS.")
-			return None
+			return
 		super().on_disableLocal(option)  # pragma: no cover
 
 	def on_enableRemote(self, option: bytes) -> bool:
@@ -155,5 +155,5 @@ class NAWSMixIn(TelnetInterface):
 	def on_disableRemote(self, option: bytes) -> None:
 		if self.isServer and option == NAWS:
 			logger.debug("Peer disables NAWS.")
-			return None
+			return
 		super().on_disableRemote(option)  # pragma: no cover

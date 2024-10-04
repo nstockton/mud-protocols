@@ -164,7 +164,7 @@ class GMCPMixIn(TelnetInterface):
 		match: REGEX_BYTES_MATCH = GMCP_MESSAGE_REGEX.search(data)
 		if match is None:
 			logger.warning(f"Unknown GMCP negotiation from peer: {data!r}")
-			return None
+			return
 		package, value = match.groups()
 		logger.debug(f"Received from Peer: GMCP Package: {package!r}, value: {value!r}.")
 		packageAsStr: str = str(package, "utf-8").lower()
@@ -178,8 +178,8 @@ class GMCPMixIn(TelnetInterface):
 					self._gmcpClientInfo["client"] = gmcpClientInfo.get("client", "unknown")
 					self._gmcpClientInfo["version"] = gmcpClientInfo.get("version", "0.0")
 					self._isGMCPInitialized = True
-				return None
-			elif not self._isGMCPInitialized:  # Received GMCP before initial Hello.
+				return
+			if not self._isGMCPInitialized:  # Received GMCP before initial Hello.
 				logger.warning("Received GMCP message from peer before initial Hello.")
 		self.on_gmcpMessage(packageAsStr, value)
 
@@ -198,7 +198,7 @@ class GMCPMixIn(TelnetInterface):
 	def on_disableLocal(self, option: bytes) -> None:
 		if option == GMCP:
 			logger.debug("We disable GMCP.")
-			return None
+			return
 		super().on_disableLocal(option)  # pragma: no cover
 
 	def on_enableRemote(self, option: bytes) -> bool:
@@ -210,7 +210,7 @@ class GMCPMixIn(TelnetInterface):
 	def on_disableRemote(self, option: bytes) -> None:
 		if option == GMCP:
 			logger.debug("Peer disables GMCP.")
-			return None
+			return
 		super().on_disableRemote(option)  # pragma: no cover
 
 	def on_optionEnabled(self, option: bytes) -> None:
@@ -219,5 +219,5 @@ class GMCPMixIn(TelnetInterface):
 				# Hello should be the first thing sent before further GMCP negotiation.
 				self.gmcpHello()
 				self._isGMCPInitialized = True
-			return None
+			return
 		super().on_optionEnabled(option)  # pragma: no cover

@@ -82,11 +82,10 @@ class MPIProtocol(ConnectionInterface):
 		self._isWordWrapping: bool = False
 		if editor is None:  # pragma: no cover
 			raise ValueError("MPI editor executable not found.")
-		elif pager is None:  # pragma: no cover
+		if pager is None:  # pragma: no cover
 			raise ValueError("MPI pager executable not found.")
-		else:  # pragma: no cover
-			self.editor: str = editor
-			self.pager: str = pager
+		self.editor: str = editor
+		self.pager: str = pager
 
 	@property
 	def isWordWrapping(self) -> bool:
@@ -327,8 +326,7 @@ class MPIProtocol(ConnectionInterface):
 		# collapse all runs of whitespace into a single space
 		text = re.sub(r"[ \t]+", " ", text.strip())
 		# reinsert consecutive newlines
-		text = text.replace("\0", "\n")
-		return text
+		return text.replace("\0", "\n")
 
 	def capitalise(self, text: str) -> str:
 		"""
