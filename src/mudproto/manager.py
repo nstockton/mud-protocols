@@ -1,7 +1,9 @@
+"""Protocol manager."""
+
+
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
 
 # Future Modules:
 from __future__ import annotations
@@ -23,6 +25,8 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 
 class Manager:
+	"""Handles registering and unregistering protocol classes to a connection."""
+
 	def __init__(
 		self,
 		writer: CONNECTION_WRITER_TYPE,
@@ -31,6 +35,15 @@ class Manager:
 		isClient: bool,
 		promptTerminator: Optional[bytes] = None,
 	) -> None:
+		"""
+		Defines the constructor.
+
+		Args:
+			writer: The object where output is written.
+			receiver: The object where input is received.
+			isClient: True if acting as a client, False if acting as a server.
+			promptTerminator: The byte sequence used to terminate a prompt. If None, IAC + GA is used.
+		"""
 		self._writer: CONNECTION_WRITER_TYPE = writer
 		self._receiver: CONNECTION_RECEIVER_TYPE = receiver
 		self._isClient: bool = isClient

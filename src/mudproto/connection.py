@@ -1,7 +1,9 @@
+"""MUD connection."""
+
+
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
 
 # Future Modules:
 from __future__ import annotations
@@ -19,6 +21,8 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 
 class ConnectionInterface(ABC):
+	"""Input and output to a MUD client or server."""
+
 	def __init__(
 		self,
 		writer: CONNECTION_WRITER_TYPE,
@@ -27,6 +31,15 @@ class ConnectionInterface(ABC):
 		isClient: bool,
 		**kwargs: Any,
 	) -> None:
+		"""
+		Defines the constructor.
+
+		Args:
+			writer: The object where output is written.
+			receiver: The object where input is received.
+			isClient: True if acting as a client, False if acting as a server.
+			**kwargs: Key-word only arguments (currently unused).
+		"""
 		self._writer: CONNECTION_WRITER_TYPE = writer
 		self._receiver: CONNECTION_RECEIVER_TYPE = receiver
 		self._isClient: bool = isClient

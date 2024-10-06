@@ -1,6 +1,4 @@
-"""
-Charset protocol.
-"""
+"""Charset protocol."""
 
 
 # This Source Code Form is subject to the terms of the Mozilla Public
@@ -28,6 +26,13 @@ class CharsetMixIn(TelnetInterface):
 	"""A charset mix in class for the Telnet protocol."""
 
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
+		"""
+		Defines the constructor.
+
+		Args:
+			*args: Positional arguments to be passed to the parent constructor.
+			**kwargs: Key-word only arguments to be passed to the parent constructor.
+		"""
 		super().__init__(*args, **kwargs)
 		self.subnegotiationMap[CHARSET] = self.on_charset
 		self._charsets: tuple[bytes, ...] = (b"US-ASCII",)
@@ -102,13 +107,13 @@ class CharsetMixIn(TelnetInterface):
 			logger.warning(f"Unknown charset negotiation response from peer: {data!r}")
 			self.wont(CHARSET)
 
-	def on_enableLocal(self, option: bytes) -> bool:
+	def on_enableLocal(self, option: bytes) -> bool:  # NOQA: D102
 		if option == CHARSET:
 			logger.debug("Charset negotiation enabled.")
 			return True
 		return bool(super().on_enableLocal(option))  # pragma: no cover
 
-	def on_disableLocal(self, option: bytes) -> None:
+	def on_disableLocal(self, option: bytes) -> None:  # NOQA: D102
 		if option == CHARSET:
 			logger.debug("Charset negotiation disabled.")
 			return

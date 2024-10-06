@@ -1,6 +1,4 @@
-"""
-Negotiate About Window Sys (NAWS).
-"""
+"""Negotiate About Window Sys (NAWS)."""
 
 
 # This Source Code Form is subject to the terms of the Mozilla Public
@@ -36,8 +34,12 @@ else:  # pragma: no cover
 
 @dataclass(frozen=True)
 class Dimensions:
+	"""Represents the dimensions of a window."""
+
 	width: int
+	"""The window width."""
 	height: int
+	"""The window height."""
 
 	def __post_init__(self) -> None:
 		"""
@@ -81,9 +83,7 @@ class Dimensions:
 
 
 class NAWSMixIn(TelnetInterface):
-	"""
-	A NAWS mix in class for the Telnet protocol.
-	"""
+	"""A NAWS mix in class for the Telnet protocol."""
 
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
 		"""
@@ -99,6 +99,7 @@ class NAWSMixIn(TelnetInterface):
 
 	@property
 	def nawsDimensions(self) -> Dimensions:
+		"""The window dimensions."""
 		return self._nawsDimensions
 
 	@nawsDimensions.setter
@@ -128,31 +129,31 @@ class NAWSMixIn(TelnetInterface):
 		except ValueError as e:
 			logger.warning(repr(e))
 
-	def on_connectionMade(self) -> None:
+	def on_connectionMade(self) -> None:  # NOQA: D102
 		super().on_connectionMade()
 		if self.isServer:
 			logger.debug("We ask peer to enable NAWS.")
 			self.do(NAWS)
 
-	def on_enableLocal(self, option: bytes) -> bool:
+	def on_enableLocal(self, option: bytes) -> bool:  # NOQA: D102
 		if self.isClient and option == NAWS:
 			logger.debug("We enable NAWS.")
 			return True
 		return bool(super().on_enableLocal(option))  # pragma: no cover
 
-	def on_disableLocal(self, option: bytes) -> None:
+	def on_disableLocal(self, option: bytes) -> None:  # NOQA: D102
 		if self.isClient and option == NAWS:
 			logger.debug("We disable NAWS.")
 			return
 		super().on_disableLocal(option)  # pragma: no cover
 
-	def on_enableRemote(self, option: bytes) -> bool:
+	def on_enableRemote(self, option: bytes) -> bool:  # NOQA: D102
 		if self.isServer and option == NAWS:
 			logger.debug("Peer enables NAWS.")
 			return True
 		return bool(super().on_enableRemote(option))  # pragma: no cover
 
-	def on_disableRemote(self, option: bytes) -> None:
+	def on_disableRemote(self, option: bytes) -> None:  # NOQA: D102
 		if self.isServer and option == NAWS:
 			logger.debug("Peer disables NAWS.")
 			return

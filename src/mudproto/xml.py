@@ -1,6 +1,4 @@
-"""
-Mume XML Protocol.
-"""
+"""Mume XML Protocol."""
 
 
 # This Source Code Form is subject to the terms of the Mozilla Public
@@ -35,23 +33,28 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 
 def directionFromMovement(movement: bytes) -> bytes:
+	"""
+	Retrieves the direction of movement from a movement tag.
+
+	Args:
+		movement: The movement tag to parse.
+
+	Returns:
+		The direction of movement.
+	"""
 	match: Union[re.Match[bytes], None] = DIRECTIONS_REGEX.search(movement)
 	return match.group("dir") if match is not None else b""
 
 
 class XMLState(Enum):
-	"""
-	Valid states for the state machine.
-	"""
+	"""Valid states for the state machine."""
 
 	DATA = auto()
 	TAG = auto()
 
 
 class XMLMode(Enum):
-	"""
-	Valid modes corresponding to supported XML tags.
-	"""
+	"""Valid modes corresponding to supported XML tags."""
 
 	NONE = auto()
 	DESCRIPTION = auto()
@@ -64,9 +67,7 @@ class XMLMode(Enum):
 
 
 class XMLProtocol(ConnectionInterface):
-	"""
-	Implements the Mume XML protocol.
-	"""
+	"""Implements the Mume XML protocol."""
 
 	tagModes: ClassVar[dict[str, XMLMode]] = {
 		"description": XMLMode.DESCRIPTION,
@@ -102,6 +103,14 @@ class XMLProtocol(ConnectionInterface):
 		outputFormat: str,
 		**kwargs: Any,
 	) -> None:
+		"""
+		Defines the constructor.
+
+		Args:
+			*args: Positional arguments to be passed to the parent constructor.
+			outputFormat: The output format to be used.
+			**kwargs: Key-word only arguments to be passed to the parent constructor.
+		"""
 		self.outputFormat: str = outputFormat
 		super().__init__(*args, **kwargs)
 		self.state: XMLState = XMLState.DATA
@@ -216,7 +225,7 @@ class XMLProtocol(ConnectionInterface):
 		self.state = XMLState.DATA
 		return data
 
-	def on_dataReceived(self, data: bytes) -> None:
+	def on_dataReceived(self, data: bytes) -> None:  # NOQA: D102
 		appDataBuffer: bytearray = bytearray()
 		while data:
 			if self.state is XMLState.DATA:
@@ -229,14 +238,14 @@ class XMLProtocol(ConnectionInterface):
 			else:
 				super().on_dataReceived(unescapeXMLBytes(bytes(appDataBuffer)))
 
-	def on_connectionMade(self) -> None:
+	def on_connectionMade(self) -> None:  # NOQA: D102
 		# Turn on XML mode.
 		# Mode "3" tells MUME to enable XML output without sending an initial "<xml>" tag.
 		# Option "G" tells MUME to wrap room descriptions in gratuitous
 		# tags if they would otherwise be hidden.
 		self.write(MPI_INIT + b"X2" + LF + b"3G" + LF)
 
-	def on_connectionLost(self) -> None:
+	def on_connectionLost(self) -> None:  # NOQA: D102
 		pass
 
 	def on_xmlEvent(self, name: str, data: bytes) -> None:

@@ -33,9 +33,7 @@ from mudproto.telnet_constants import (
 
 
 class Telnet(MCCPMixIn, TelnetProtocol):
-	"""
-	Telnet protocol with MCCP support.
-	"""
+	"""Telnet protocol with MCCP support."""
 
 
 class TestMCCPMixIn(TestCase):

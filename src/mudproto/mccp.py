@@ -1,6 +1,4 @@
-"""
-MUD Client Compression protocol.
-"""
+"""MUD Client Compression protocol."""
 
 
 # This Source Code Form is subject to the terms of the Mozilla Public
@@ -34,6 +32,13 @@ class MCCPMixIn(TelnetInterface):
 	"""An MCCP mix in class for the Telnet protocol."""
 
 	def __init__(self, *args: Any, **kwargs: Any) -> None:
+		"""
+		Defines the constructor.
+
+		Args:
+			*args: Positional arguments to be passed to the parent constructor.
+			**kwargs: Key-word only arguments to be passed to the parent constructor.
+		"""
 		super().__init__(*args, **kwargs)
 		self.subnegotiationMap[MCCP1] = lambda *args: None
 		self.subnegotiationMap[MCCP2] = lambda *args: None
@@ -43,11 +48,12 @@ class MCCPMixIn(TelnetInterface):
 		self._decompressor: Any = None
 
 	def disableMCCP(self) -> None:
+		"""Disables compression."""
 		self._mccpVersion = None
 		self._compressionEnabled = False
 		self._decompressor = None
 
-	def on_dataReceived(self, data: bytes) -> None:
+	def on_dataReceived(self, data: bytes) -> None:  # NOQA: D102
 		inputBuffer: bytearray = self._compressedInputBuffer
 		inputBuffer.extend(data)
 		while inputBuffer:
@@ -101,7 +107,7 @@ class MCCPMixIn(TelnetInterface):
 				super().on_dataReceived(bytes(inputBuffer))
 				inputBuffer.clear()
 
-	def on_enableRemote(self, option: bytes) -> bool:
+	def on_enableRemote(self, option: bytes) -> bool:  # NOQA: D102
 		if option in (MCCP1, MCCP2):
 			if self._mccpVersion is None:
 				self._mccpVersion = 1 if option == MCCP1 else 2
@@ -110,7 +116,7 @@ class MCCPMixIn(TelnetInterface):
 			return False
 		return bool(super().on_enableRemote(option))  # pragma: no cover
 
-	def on_disableRemote(self, option: bytes) -> None:
+	def on_disableRemote(self, option: bytes) -> None:  # NOQA: D102
 		if option in (MCCP1, MCCP2):
 			logger.debug(
 				f"MCCP{self._mccpVersion if self._mccpVersion is not None else ''} negotiation disabled."

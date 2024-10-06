@@ -1,6 +1,4 @@
-"""
-Generic MUD Communication Protocol.
-"""
+"""Generic MUD Communication Protocol."""
 
 
 # This Source Code Form is subject to the terms of the Mozilla Public
@@ -30,9 +28,7 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 
 class GMCPMixIn(TelnetInterface):
-	"""
-	A GMCP mix in class for the Telnet protocol.
-	"""
+	"""A GMCP mix in class for the Telnet protocol."""
 
 	def __init__(
 		self,
@@ -41,7 +37,7 @@ class GMCPMixIn(TelnetInterface):
 		**kwargs: Any,
 	) -> None:
 		"""
-		Defines the constructor for the mixin.
+		Defines the constructor.
 
 		Args:
 			*args: Positional arguments to be passed to the parent constructor.
@@ -93,9 +89,7 @@ class GMCPMixIn(TelnetInterface):
 		self.requestNegotiation(GMCP, payload)
 
 	def gmcpHello(self) -> None:
-		"""
-		Sends a GMCP Hello to the peer.
-		"""
+		"""Sends a GMCP Hello to the peer."""
 		logger.debug("Sending GMCP Hello.")
 		self.gmcpSend("Core.Hello", self._gmcpClientInfo)
 
@@ -183,37 +177,37 @@ class GMCPMixIn(TelnetInterface):
 				logger.warning("Received GMCP message from peer before initial Hello.")
 		self.on_gmcpMessage(packageAsStr, value)
 
-	def on_connectionMade(self) -> None:
+	def on_connectionMade(self) -> None:  # NOQA: D102
 		super().on_connectionMade()
 		if self.isServer:
 			logger.debug("We offer to enable GMCP.")
 			self.will(GMCP)
 
-	def on_enableLocal(self, option: bytes) -> bool:
+	def on_enableLocal(self, option: bytes) -> bool:  # NOQA: D102
 		if option == GMCP:
 			logger.debug("We enable GMCP.")
 			return True
 		return bool(super().on_enableLocal(option))  # pragma: no cover
 
-	def on_disableLocal(self, option: bytes) -> None:
+	def on_disableLocal(self, option: bytes) -> None:  # NOQA: D102
 		if option == GMCP:
 			logger.debug("We disable GMCP.")
 			return
 		super().on_disableLocal(option)  # pragma: no cover
 
-	def on_enableRemote(self, option: bytes) -> bool:
+	def on_enableRemote(self, option: bytes) -> bool:  # NOQA: D102
 		if option == GMCP:
 			logger.debug("Peer enables GMCP.")
 			return True
 		return bool(super().on_enableRemote(option))  # pragma: no cover
 
-	def on_disableRemote(self, option: bytes) -> None:
+	def on_disableRemote(self, option: bytes) -> None:  # NOQA: D102
 		if option == GMCP:
 			logger.debug("Peer disables GMCP.")
 			return
 		super().on_disableRemote(option)  # pragma: no cover
 
-	def on_optionEnabled(self, option: bytes) -> None:
+	def on_optionEnabled(self, option: bytes) -> None:  # NOQA: D102
 		if option == GMCP:
 			if self.isClient:
 				# Hello should be the first thing sent before further GMCP negotiation.

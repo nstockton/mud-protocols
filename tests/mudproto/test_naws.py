@@ -18,9 +18,7 @@ from mudproto.telnet_constants import NAWS
 
 
 class Telnet(NAWSMixIn, TelnetProtocol):
-	"""
-	Telnet protocol with NAWS support.
-	"""
+	"""Telnet protocol with NAWS support."""
 
 
 class TestNAWSMixIn(TestCase):

@@ -1,6 +1,4 @@
-"""
-Mume Remote Editing Protocol.
-"""
+"""Mume Remote Editing Protocol."""
 
 
 # This Source Code Form is subject to the terms of the Mozilla Public
@@ -36,9 +34,7 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 
 class MPIState(Enum):
-	"""
-	Valid states for the state machine.
-	"""
+	"""Valid states for the state machine."""
 
 	DATA = auto()
 	NEWLINE = auto()
@@ -49,16 +45,17 @@ class MPIState(Enum):
 
 
 class MPIProtocol(ConnectionInterface):
-	"""
-	Implements support for the Mume remote editing protocol.
-
-	Attributes:
-		commandMap: A mapping of bytes to callables.
-		editor: The program to use for editing received text.
-		pager: The program to use for viewing received read-only text.
-	"""
+	"""Implements support for the Mume remote editing protocol."""
 
 	def __init__(self, *args: Any, outputFormat: str, **kwargs: Any) -> None:
+		"""
+		Defines the constructor.
+
+		Args:
+			*args: Positional arguments to be passed to the parent constructor.
+			outputFormat: The output format to be used.
+			**kwargs: Key-word only arguments to be passed to the parent constructor.
+		"""
 		self.outputFormat: str = outputFormat
 		super().__init__(*args, **kwargs)
 		self.state: MPIState = MPIState.DATA
@@ -69,6 +66,7 @@ class MPIProtocol(ConnectionInterface):
 			b"E": self.edit,
 			b"V": self.view,
 		}
+		"""A mapping of bytes to callables."""
 		editors: dict[str, str] = {
 			"win32": "notepad.exe",
 		}
@@ -85,7 +83,9 @@ class MPIProtocol(ConnectionInterface):
 		if pager is None:  # pragma: no cover
 			raise ValueError("MPI pager executable not found.")
 		self.editor: str = editor
+		"""The program to use for editing received text."""
 		self.pager: str = pager
+		"""The program to use for viewing received read-only text."""
 
 	@property
 	def isWordWrapping(self) -> bool:
@@ -158,7 +158,7 @@ class MPIProtocol(ConnectionInterface):
 			subprocess.run((*self.pager.split(), fileName))
 			os.remove(fileName)
 
-	def on_dataReceived(self, data: bytes) -> None:  # NOQA: C901
+	def on_dataReceived(self, data: bytes) -> None:  # NOQA: C901,D102
 		appDataBuffer: bytearray = bytearray()
 		while data:
 			if self.state is MPIState.DATA:
@@ -236,11 +236,11 @@ class MPIProtocol(ConnectionInterface):
 			self._MPIThreads.append(thread)
 			thread.start()
 
-	def on_connectionMade(self) -> None:
+	def on_connectionMade(self) -> None:  # NOQA: D102
 		# Identify for Mume Remote Editing.
 		self.write(MPI_INIT + b"I" + LF)
 
-	def on_connectionLost(self) -> None:
+	def on_connectionLost(self) -> None:  # NOQA: D102
 		# Clean up any active editing sessions.
 		for thread in self._MPIThreads:
 			thread.join()

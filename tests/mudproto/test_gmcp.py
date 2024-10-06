@@ -19,9 +19,7 @@ from mudproto.telnet_constants import GMCP
 
 
 class Telnet(GMCPMixIn, TelnetProtocol):
-	"""
-	Telnet protocol with GMCP support.
-	"""
+	"""Telnet protocol with GMCP support."""
 
 
 class TestGMCPMixIn(TestCase):
