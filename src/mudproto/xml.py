@@ -11,6 +11,8 @@ from __future__ import annotations
 # Built-in Modules:
 import logging
 import re
+from collections.abc import Iterable
+from contextlib import suppress
 from enum import Enum, auto
 from typing import Any, ClassVar, Union
 
@@ -66,36 +68,52 @@ class XMLMode(Enum):
 	TERRAIN = auto()
 
 
+def getXMLMode(tag: str) -> Union[XMLMode, None]:
+	"""
+	Retrieves an XMLMode enum from a tag name.
+
+	Args:
+		tag: The tag name.
+
+	Returns:
+		the XMLMode enum corresponding to the tag name, None if not found.
+	"""
+	with suppress(KeyError):
+		return XMLMode[tag.upper()]
+	return None
+
+
+def getTintinTagReplacement(tag: bytes, validTags: Iterable[bytes]) -> bytes:
+	"""
+	Retrieves a Tintin tag replacement from a tag name.
+
+	Args:
+		tag: The tag name.
+		validTags: The supported tag names.
+
+	Returns:
+		Uppercase tag name followed by a colon if opening tag,
+		a colon followed by uppercase tag name if closing tag,
+		An empty bytes object if not found.
+	"""
+	isClosing: bool = tag.startswith(b"/")
+	tag = tag.strip(b"/")
+	return b"" if tag not in validTags else b":" + tag.upper() if isClosing else tag.upper() + b":"
+
+
 class XMLProtocol(ConnectionInterface):
 	"""Implements the Mume XML protocol."""
 
-	tagModes: ClassVar[dict[str, XMLMode]] = {
-		"description": XMLMode.DESCRIPTION,
-		"exits": XMLMode.EXITS,
-		"magic": XMLMode.MAGIC,
-		"name": XMLMode.NAME,
-		"prompt": XMLMode.PROMPT,
-		"room": XMLMode.ROOM,
-		"terrain": XMLMode.TERRAIN,
+	tintinReplacements: ClassVar[set[bytes]] = {
+		b"prompt",
+		b"name",
+		b"tell",
+		b"narrate",
+		b"pray",
+		b"say",
+		b"emote",
 	}
-	"""A mapping of closing tags to mode objects."""
-	tintinReplacements: ClassVar[dict[bytes, bytes]] = {
-		b"prompt": b"PROMPT:",
-		b"/prompt": b":PROMPT",
-		b"name": b"NAME:",
-		b"/name": b":NAME",
-		b"tell": b"TELL:",
-		b"/tell": b":TELL",
-		b"narrate": b"NARRATE:",
-		b"/narrate": b":NARRATE",
-		b"pray": b"PRAY:",
-		b"/pray": b":PRAY",
-		b"say": b"SAY:",
-		b"/say": b":SAY",
-		b"emote": b"EMOTE:",
-		b"/emote": b":EMOTE",
-	}
-	"""A mapping of tag to replacement values for Tintin."""
+	"""Tag to replacement values for Tintin."""
 
 	def __init__(
 		self,
@@ -179,10 +197,10 @@ class XMLProtocol(ConnectionInterface):
 		if self.outputFormat == "raw":
 			appDataBuffer.extend(LT + tag + GT)
 		elif self.outputFormat == "tintin" and not self._gratuitous:
-			appDataBuffer.extend(self.tintinReplacements.get(tag, b""))
+			appDataBuffer.extend(getTintinTagReplacement(tag, self.tintinReplacements))
 		if tagName == "gratuitous":
 			self._gratuitous = not isClosingTag
-		elif isClosingTag and self.tagModes.get(tagName) is self._mode:
+		elif isClosingTag and getXMLMode(tagName) is self._mode:
 			# The tag is a closing tag, corresponding with the current mode.
 			if self._mode is XMLMode.ROOM:
 				self.on_xmlEvent("dynamic", unescapeXMLBytes(bytes(self._dynamicBuffer).lstrip(b"\r\n")))
