@@ -10,10 +10,12 @@ from __future__ import annotations
 
 # Built-in Modules:
 import logging
-import sys
 from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Any, Union
+
+# Third-party Modules:
+from knickknacks.typedef import Self
 
 # Local Modules:
 from .telnet import TelnetInterface
@@ -24,12 +26,6 @@ UINT16_MAX: int = 0xFFFF
 
 
 logger: logging.Logger = logging.getLogger(__name__)
-
-
-if sys.version_info < (3, 11):  # pragma: no cover
-	from typing_extensions import Self
-else:  # pragma: no cover
-	from typing import Self
 
 
 @dataclass(frozen=True)
