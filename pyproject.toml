@@ -59,6 +59,7 @@
 	pre-commit = "^3.5"
 
 [tool.poetry.group.docs.dependencies]
+	jinja2 = "3.0.3"  # See https://github.com/mkdocs/mkdocs/issues/2799
 	mkdocs = "1.2.3"
 	mkdocs-autorefs = "0.3.1"
 	mkdocs-material = "8.1.3"
