@@ -15,13 +15,16 @@ import re
 from collections.abc import Iterable, Mapping
 from typing import Any, Optional
 
+# Third-party Modules:
+from knickknacks.typedef import ReBytesMatchType, ReBytesPatternType
+
 # Local Modules:
 from .telnet import TelnetInterface
 from .telnet_constants import GMCP
-from .typedef import GMCP_CLIENT_INFO_TYPE, REGEX_BYTES_MATCH, REGEX_BYTES_PATTERN
+from .typedef import GMCPClientInfoType
 
 
-GMCP_MESSAGE_REGEX: REGEX_BYTES_PATTERN = re.compile(rb"^\s*(?P<package>[\w.-]+)\s*(?P<value>.*?)\s*$")
+GMCP_MESSAGE_REGEX: ReBytesPatternType = re.compile(rb"^\s*(?P<package>[\w.-]+)\s*(?P<value>.*?)\s*$")
 
 
 logger: logging.Logger = logging.getLogger(__name__)
@@ -33,7 +36,7 @@ class GMCPMixIn(TelnetInterface):
 	def __init__(
 		self,
 		*args: Any,
-		gmcpClientInfo: Optional[GMCP_CLIENT_INFO_TYPE] = None,
+		gmcpClientInfo: Optional[GMCPClientInfoType] = None,
 		**kwargs: Any,
 	) -> None:
 		"""
@@ -155,7 +158,7 @@ class GMCPMixIn(TelnetInterface):
 		Args:
 			data: The payload.
 		"""
-		match: REGEX_BYTES_MATCH = GMCP_MESSAGE_REGEX.search(data)
+		match: ReBytesMatchType = GMCP_MESSAGE_REGEX.search(data)
 		if match is None:
 			logger.warning(f"Unknown GMCP negotiation from peer: {data!r}")
 			return
@@ -178,7 +181,7 @@ class GMCPMixIn(TelnetInterface):
 		self.on_gmcpMessage(packageAsStr, value)
 
 	def on_connectionMade(self) -> None:  # NOQA: D102
-		super().on_connectionMade()
+		super().on_connectionMade()  # type: ignore[safe-super]
 		if self.isServer:
 			logger.debug("We offer to enable GMCP.")
 			self.will(GMCP)
@@ -193,7 +196,7 @@ class GMCPMixIn(TelnetInterface):
 		if option == GMCP:
 			logger.debug("We disable GMCP.")
 			return
-		super().on_disableLocal(option)  # pragma: no cover
+		super().on_disableLocal(option)  # type: ignore[safe-super]  # pragma: no cover
 
 	def on_enableRemote(self, option: bytes) -> bool:  # NOQA: D102
 		if option == GMCP:
@@ -205,7 +208,7 @@ class GMCPMixIn(TelnetInterface):
 		if option == GMCP:
 			logger.debug("Peer disables GMCP.")
 			return
-		super().on_disableRemote(option)  # pragma: no cover
+		super().on_disableRemote(option)  # type: ignore[safe-super]  # pragma: no cover
 
 	def on_optionEnabled(self, option: bytes) -> None:  # NOQA: D102
 		if option == GMCP:
@@ -214,4 +217,4 @@ class GMCPMixIn(TelnetInterface):
 				self.gmcpHello()
 				self._isGMCPInitialized = True
 			return
-		super().on_optionEnabled(option)  # pragma: no cover
+		super().on_optionEnabled(option)  # type: ignore[safe-super]  # pragma: no cover

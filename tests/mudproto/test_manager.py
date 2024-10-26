@@ -19,10 +19,10 @@ from mudproto.telnet_constants import CR, CR_LF, CR_NULL, GA, IAC, LF
 
 class FakeProtocol(ConnectionInterface):
 	def on_connectionMade(self) -> None:
-		return super().on_connectionMade()
+		return super().on_connectionMade()  # type: ignore[safe-super]
 
 	def on_connectionLost(self) -> None:
-		return super().on_connectionLost()
+		return super().on_connectionLost()  # type: ignore[safe-super]
 
 	def on_dataReceived(self, data: bytes) -> None:
 		return super().on_dataReceived(data)

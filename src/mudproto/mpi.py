@@ -24,7 +24,7 @@ from typing import Any, Union
 # Local Modules:
 from .connection import ConnectionInterface
 from .telnet_constants import CR, LF
-from .typedef import MPI_COMMAND_MAP_TYPE
+from .typedef import MPICommandMapType
 
 
 MPI_INIT: bytes = b"~$#E"
@@ -62,7 +62,7 @@ class MPIProtocol(ConnectionInterface):
 		"""The state of the state machine."""
 		self._MPIBuffer: bytearray = bytearray()
 		self._MPIThreads: list[threading.Thread] = []
-		self.commandMap: MPI_COMMAND_MAP_TYPE = {
+		self.commandMap: MPICommandMapType = {
 			b"E": self.edit,
 			b"V": self.view,
 		}

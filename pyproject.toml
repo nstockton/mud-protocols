@@ -51,7 +51,7 @@
 
 [tool.poetry.dependencies]
 	python = "^3.9"
-	knickknacks = {url = "https://github.com/nstockton/knickknacks/releases/download/v0.1.1/knickknacks-0.1.1-py3-none-any.whl"}
+	knickknacks = {url = "https://github.com/nstockton/knickknacks/releases/download/v0.2.1/knickknacks-0.2.1-py3-none-any.whl"}
 	typing-extensions = {version = "^4.1", python = "< 3.11"}
 
 [tool.poetry.dev-dependencies]
@@ -124,6 +124,10 @@
 		"D212",  # Multi-line docstring summary should start at the first line.
 		"I",  # ISort will handle imports instead of Ruff.
 		"W191",  # Indentation contains tabs.
+	]
+	typing-modules = [
+		"mudproto.typedef",
+		"knickknacks.typedef",
 	]
 	unfixable = [
 		"B",  # Flake8-bugbear.

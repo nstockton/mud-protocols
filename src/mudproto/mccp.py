@@ -123,4 +123,4 @@ class MCCPMixIn(TelnetInterface):
 			)
 			self.disableMCCP()
 			return
-		super().on_disableRemote(option)  # pragma: no cover
+		super().on_disableRemote(option)  # type: ignore[safe-super]  # pragma: no cover

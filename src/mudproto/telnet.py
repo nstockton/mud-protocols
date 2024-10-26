@@ -53,7 +53,7 @@ from .telnet_constants import (
 	WILL,
 	WONT,
 )
-from .typedef import TELNET_COMMAND_MAP_TYPE, TELNET_SUBNEGOTIATION_MAP_TYPE
+from .typedef import TelnetCommandMapType, TelnetSubnegotiationMapType
 
 
 IAC_IAC: bytes = IAC + IAC
@@ -125,9 +125,9 @@ class TelnetState(Enum):
 class TelnetInterface(ConnectionInterface):
 	"""Defines the interface for the Telnet protocol."""
 
-	commandMap: TELNET_COMMAND_MAP_TYPE
+	commandMap: TelnetCommandMapType
 	"""A mapping of bytes to callables."""
-	subnegotiationMap: TELNET_SUBNEGOTIATION_MAP_TYPE
+	subnegotiationMap: TelnetSubnegotiationMapType
 	"""A mapping of bytes to callables."""
 
 	@abstractmethod
@@ -320,7 +320,7 @@ class TelnetProtocol(TelnetInterface):
 		# only WILL, WONT, DO, and DONT are handled.  These should not
 		# be overridden, as this class handles them correctly and
 		# provides an API for interacting with them.
-		self.commandMap: TELNET_COMMAND_MAP_TYPE = {
+		self.commandMap: TelnetCommandMapType = {
 			WILL: self.on_will,
 			WONT: self.on_wont,
 			DO: self.on_do,
@@ -332,7 +332,7 @@ class TelnetProtocol(TelnetInterface):
 		# subnegotiation.  Values should be added to this dictionary if
 		# subnegotiations are to be handled.  By default, no values are
 		# handled.
-		self.subnegotiationMap: TELNET_SUBNEGOTIATION_MAP_TYPE = {}
+		self.subnegotiationMap: TelnetSubnegotiationMapType = {}
 
 	def _do(self, option: bytes) -> None:
 		"""
@@ -475,10 +475,10 @@ class TelnetProtocol(TelnetInterface):
 		self.write(IAC + SB + option + escapeIAC(data) + IAC + SE)
 
 	def on_connectionMade(self) -> None:  # NOQA: D102
-		return super().on_connectionMade()
+		return super().on_connectionMade()  # type: ignore[safe-super]
 
 	def on_connectionLost(self) -> None:  # NOQA: D102
-		return super().on_connectionLost()
+		return super().on_connectionLost()  # type: ignore[safe-super]
 
 	def on_dataReceived(self, data: bytes) -> None:  # NOQA: C901,D102
 		appDataBuffer: bytearray = bytearray()
@@ -722,22 +722,22 @@ class TelnetProtocol(TelnetInterface):
 			self.on_disableLocal(option)
 
 	def on_unhandledCommand(self, command: bytes, option: Union[bytes, None]) -> None:  # NOQA: D102
-		return super().on_unhandledCommand(command, option)
+		return super().on_unhandledCommand(command, option)  # type: ignore[safe-super]
 
 	def on_unhandledSubnegotiation(self, option: bytes, data: bytes) -> None:  # NOQA: D102
-		return super().on_unhandledSubnegotiation(option, data)
+		return super().on_unhandledSubnegotiation(option, data)  # type: ignore[safe-super]
 
 	def on_enableLocal(self, option: bytes) -> bool:  # NOQA: D102
 		return super().on_enableLocal(option)
 
 	def on_disableLocal(self, option: bytes) -> None:  # NOQA: D102
-		return super().on_disableLocal(option)
+		return super().on_disableLocal(option)  # type: ignore[safe-super]
 
 	def on_enableRemote(self, option: bytes) -> bool:  # NOQA: D102
 		return super().on_enableRemote(option)
 
 	def on_disableRemote(self, option: bytes) -> None:  # NOQA: D102
-		return super().on_disableRemote(option)
+		return super().on_disableRemote(option)  # type: ignore[safe-super]
 
 	def on_optionEnabled(self, option: bytes) -> None:  # NOQA: D102
-		return super().on_optionEnabled(option)
+		return super().on_optionEnabled(option)  # type: ignore[safe-super]

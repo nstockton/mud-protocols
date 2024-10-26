@@ -130,7 +130,7 @@ class NAWSMixIn(TelnetInterface):
 			logger.warning(repr(e))
 
 	def on_connectionMade(self) -> None:  # NOQA: D102
-		super().on_connectionMade()
+		super().on_connectionMade()  # type: ignore[safe-super]
 		if self.isServer:
 			logger.debug("We ask peer to enable NAWS.")
 			self.do(NAWS)
@@ -145,7 +145,7 @@ class NAWSMixIn(TelnetInterface):
 		if self.isClient and option == NAWS:
 			logger.debug("We disable NAWS.")
 			return
-		super().on_disableLocal(option)  # pragma: no cover
+		super().on_disableLocal(option)  # type: ignore[safe-super]  # pragma: no cover
 
 	def on_enableRemote(self, option: bytes) -> bool:  # NOQA: D102
 		if self.isServer and option == NAWS:
@@ -157,4 +157,4 @@ class NAWSMixIn(TelnetInterface):
 		if self.isServer and option == NAWS:
 			logger.debug("Peer disables NAWS.")
 			return
-		super().on_disableRemote(option)  # pragma: no cover
+		super().on_disableRemote(option)  # type: ignore[safe-super]  # pragma: no cover

@@ -14,7 +14,7 @@ from abc import ABC, abstractmethod
 from typing import Any
 
 # Local Modules:
-from .typedef import CONNECTION_RECEIVER_TYPE, CONNECTION_WRITER_TYPE
+from .typedef import ConnectionReceiverType, ConnectionWriterType
 
 
 logger: logging.Logger = logging.getLogger(__name__)
@@ -25,8 +25,8 @@ class ConnectionInterface(ABC):
 
 	def __init__(
 		self,
-		writer: CONNECTION_WRITER_TYPE,
-		receiver: CONNECTION_RECEIVER_TYPE,
+		writer: ConnectionWriterType,
+		receiver: ConnectionReceiverType,
 		*,
 		isClient: bool,
 		**kwargs: Any,
@@ -40,8 +40,8 @@ class ConnectionInterface(ABC):
 			isClient: True if acting as a client, False if acting as a server.
 			**kwargs: Key-word only arguments (currently unused).
 		"""
-		self._writer: CONNECTION_WRITER_TYPE = writer
-		self._receiver: CONNECTION_RECEIVER_TYPE = receiver
+		self._writer: ConnectionWriterType = writer
+		self._receiver: ConnectionReceiverType = receiver
 		self._isClient: bool = isClient
 
 	@property

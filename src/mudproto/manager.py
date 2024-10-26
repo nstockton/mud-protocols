@@ -18,7 +18,7 @@ from typing import Any, Optional
 from .connection import ConnectionInterface
 from .telnet import escapeIAC
 from .telnet_constants import CR, CR_LF, CR_NULL, GA, IAC, LF
-from .typedef import CONNECTION_RECEIVER_TYPE, CONNECTION_WRITER_TYPE
+from .typedef import ConnectionReceiverType, ConnectionWriterType
 
 
 logger: logging.Logger = logging.getLogger(__name__)
@@ -29,8 +29,8 @@ class Manager:
 
 	def __init__(
 		self,
-		writer: CONNECTION_WRITER_TYPE,
-		receiver: CONNECTION_RECEIVER_TYPE,
+		writer: ConnectionWriterType,
+		receiver: ConnectionReceiverType,
 		*,
 		isClient: bool,
 		promptTerminator: Optional[bytes] = None,
@@ -44,8 +44,8 @@ class Manager:
 			isClient: True if acting as a client, False if acting as a server.
 			promptTerminator: The byte sequence used to terminate a prompt. If None, IAC + GA is used.
 		"""
-		self._writer: CONNECTION_WRITER_TYPE = writer
-		self._receiver: CONNECTION_RECEIVER_TYPE = receiver
+		self._writer: ConnectionWriterType = writer
+		self._receiver: ConnectionReceiverType = receiver
 		self._isClient: bool = isClient
 		self.promptTerminator: bytes
 		if promptTerminator is None:

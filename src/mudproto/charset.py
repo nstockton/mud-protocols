@@ -117,4 +117,4 @@ class CharsetMixIn(TelnetInterface):
 		if option == CHARSET:
 			logger.debug("Charset negotiation disabled.")
 			return
-		super().on_disableLocal(option)  # pragma: no cover
+		super().on_disableLocal(option)  # type: ignore[safe-super]  # pragma: no cover
