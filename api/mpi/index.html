@@ -267,8 +267,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../base/" class="md-nav__link">
-        base.py
+      <a href="../connection/" class="md-nav__link">
+        connection.py
       </a>
     </li>
   
@@ -381,6 +381,13 @@
           <li class="md-nav__item">
   <a href="#mudproto.mpi.MPIProtocol.isWordWrapping" class="md-nav__link">
     isWordWrapping
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.mpi.MPIProtocol.__init__" class="md-nav__link">
+    __init__()
   </a>
   
 </li>
@@ -609,6 +616,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#mudproto.mpi.MPIProtocol.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.mpi.MPIProtocol.capitalise" class="md-nav__link">
     capitalise()
   </a>
@@ -767,7 +781,7 @@
 
 
 <h2 id="mudproto.mpi.MPIProtocol" class="doc doc-heading">
-        <code>Class MPIProtocol(<a title="mudproto.base.BaseConnection" href="../base/#mudproto.base.BaseConnection">BaseConnection</a>)</code>
+        <code>Class MPIProtocol(<a title="mudproto.connection.ConnectionInterface" href="../connection/#mudproto.connection.ConnectionInterface">ConnectionInterface</a>)</code>
 
 
 
@@ -777,56 +791,31 @@
 
       <p>Implements support for the Mume remote editing protocol.</p>
 
-<p><strong>Attributes:</strong></p>
-<table role="grid" class="data">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>commandMap</code></td>
-        <td><code>MPI_COMMAND_MAP_TYPE</code></td>
-        <td><p>A mapping of bytes to callables.</p></td>
-      </tr>
-      <tr>
-        <td><code>editor</code></td>
-        <td></td>
-        <td><p>The program to use for editing received text.</p></td>
-      </tr>
-      <tr>
-        <td><code>pager</code></td>
-        <td></td>
-        <td><p>The program to use for viewing received read-only text.</p></td>
-      </tr>
-  </tbody>
-</table>
         <details class="quote">
           <summary>Source code in <code>mudproto/mpi.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">MPIProtocol</span><span class="p">(</span><span class="n">BaseConnection</span><span class="p">):</span>
-<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">	Implements support for the Mume remote editing protocol.</span>
-
-<span class="sd">	Attributes:</span>
-<span class="sd">		commandMap: A mapping of bytes to callables.</span>
-<span class="sd">		editor: The program to use for editing received text.</span>
-<span class="sd">		pager: The program to use for viewing received read-only text.</span>
-<span class="sd">	&quot;&quot;&quot;</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">MPIProtocol</span><span class="p">(</span><span class="n">ConnectionInterface</span><span class="p">):</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;Implements support for the Mume remote editing protocol.&quot;&quot;&quot;</span>
 
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">outputFormat</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Defines the constructor.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			*args: Positional arguments to be passed to the parent constructor.</span>
+<span class="sd">			outputFormat: The output format to be used.</span>
+<span class="sd">			**kwargs: Key-word only arguments to be passed to the parent constructor.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">outputFormat</span>
 		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">:</span> <span class="n">MPIState</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">DATA</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;The state of the state machine.&quot;&quot;&quot;</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_MPIThreads</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">commandMap</span><span class="p">:</span> <span class="n">MPI_COMMAND_MAP_TYPE</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">commandMap</span><span class="p">:</span> <span class="n">MPICommandMapType</span> <span class="o">=</span> <span class="p">{</span>
 			<span class="sa">b</span><span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">edit</span><span class="p">,</span>
 			<span class="sa">b</span><span class="s2">&quot;V&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">,</span>
 		<span class="p">}</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;A mapping of bytes to callables.&quot;&quot;&quot;</span>
 		<span class="n">editors</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
 			<span class="s2">&quot;win32&quot;</span><span class="p">:</span> <span class="s2">&quot;notepad.exe&quot;</span><span class="p">,</span>
 		<span class="p">}</span>
@@ -840,11 +829,12 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">_isWordWrapping</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 		<span class="k">if</span> <span class="n">editor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
 			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;MPI editor executable not found.&quot;</span><span class="p">)</span>
-		<span class="k">elif</span> <span class="n">pager</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+		<span class="k">if</span> <span class="n">pager</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
 			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;MPI pager executable not found.&quot;</span><span class="p">)</span>
-		<span class="k">else</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">editor</span>
-			<span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">pager</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">editor</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;The program to use for editing received text.&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">pager</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;The program to use for viewing received read-only text.&quot;&quot;&quot;</span>
 
 	<span class="nd">@property</span>
 	<span class="k">def</span> <span class="nf">isWordWrapping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -917,7 +907,7 @@
 			<span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">((</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="n">fileName</span><span class="p">))</span>
 			<span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">fileName</span><span class="p">)</span>
 
-	<span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: C901</span>
+	<span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: C901,D102</span>
 		<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 		<span class="k">while</span> <span class="n">data</span><span class="p">:</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">DATA</span><span class="p">:</span>
@@ -995,11 +985,11 @@
 			<span class="bp">self</span><span class="o">.</span><span class="n">_MPIThreads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thread</span><span class="p">)</span>
 			<span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
-	<span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 		<span class="c1"># Identify for Mume Remote Editing.</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">MPI_INIT</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;I&quot;</span> <span class="o">+</span> <span class="n">LF</span><span class="p">)</span>
 
-	<span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 		<span class="c1"># Clean up any active editing sessions.</span>
 		<span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MPIThreads</span><span class="p">:</span>
 			<span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
@@ -1085,8 +1075,7 @@
 		<span class="c1"># collapse all runs of whitespace into a single space</span>
 		<span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[ \t]+&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
 		<span class="c1"># reinsert consecutive newlines</span>
-		<span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-		<span class="k">return</span> <span class="n">text</span>
+		<span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
 	<span class="k">def</span> <span class="nf">capitalise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
@@ -1197,6 +1186,102 @@
 
 
 
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="mudproto.mpi.MPIProtocol.__init__" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Method</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">outputFormat</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#mudproto.mpi.MPIProtocol.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Defines the constructor.</p>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>*args</code></td>
+        <td><code>Any</code></td>
+        <td><p>Positional arguments to be passed to the parent constructor.</p></td>
+        <td><code>()</code></td>
+      </tr>
+      <tr>
+        <td><code>outputFormat</code></td>
+        <td><code>str</code></td>
+        <td><p>The output format to be used.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>**kwargs</code></td>
+        <td><code>Any</code></td>
+        <td><p>Key-word only arguments to be passed to the parent constructor.</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>mudproto/mpi.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">outputFormat</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Defines the constructor.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		*args: Positional arguments to be passed to the parent constructor.</span>
+<span class="sd">		outputFormat: The output format to be used.</span>
+<span class="sd">		**kwargs: Key-word only arguments to be passed to the parent constructor.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">outputFormat</span>
+	<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">:</span> <span class="n">MPIState</span> <span class="o">=</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">DATA</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;The state of the state machine.&quot;&quot;&quot;</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_MPIBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_MPIThreads</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">commandMap</span><span class="p">:</span> <span class="n">MPICommandMapType</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="sa">b</span><span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">edit</span><span class="p">,</span>
+		<span class="sa">b</span><span class="s2">&quot;V&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">view</span><span class="p">,</span>
+	<span class="p">}</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;A mapping of bytes to callables.&quot;&quot;&quot;</span>
+	<span class="n">editors</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s2">&quot;win32&quot;</span><span class="p">:</span> <span class="s2">&quot;notepad.exe&quot;</span><span class="p">,</span>
+	<span class="p">}</span>
+	<span class="n">pagers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s2">&quot;win32&quot;</span><span class="p">:</span> <span class="s2">&quot;notepad.exe&quot;</span><span class="p">,</span>
+	<span class="p">}</span>
+	<span class="n">defaultEditor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">editors</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="p">,</span> <span class="s2">&quot;nano&quot;</span><span class="p">)</span>
+	<span class="n">defaultPager</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">pagers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="p">,</span> <span class="s2">&quot;less&quot;</span><span class="p">)</span>
+	<span class="n">editor</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;VISUAL&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;EDITOR&quot;</span><span class="p">,</span> <span class="n">defaultEditor</span><span class="p">))</span>
+	<span class="n">pager</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;PAGER&quot;</span><span class="p">,</span> <span class="n">defaultPager</span><span class="p">))</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_isWordWrapping</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+	<span class="k">if</span> <span class="n">editor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+		<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;MPI editor executable not found.&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">pager</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># pragma: no cover</span>
+		<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;MPI pager executable not found.&quot;</span><span class="p">)</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">editor</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;The program to use for editing received text.&quot;&quot;&quot;</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">pager</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">pager</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;The program to use for viewing received read-only text.&quot;&quot;&quot;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
@@ -1334,8 +1419,7 @@
 	<span class="c1"># collapse all runs of whitespace into a single space</span>
 	<span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[ \t]+&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
 	<span class="c1"># reinsert consecutive newlines</span>
-	<span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-	<span class="k">return</span> <span class="n">text</span>
+	<span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\0</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -1656,7 +1740,7 @@
 
         <details class="quote">
           <summary>Source code in <code>mudproto/mpi.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 	<span class="c1"># Clean up any active editing sessions.</span>
 	<span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MPIThreads</span><span class="p">:</span>
 		<span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
@@ -1685,7 +1769,7 @@
 
         <details class="quote">
           <summary>Source code in <code>mudproto/mpi.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 	<span class="c1"># Identify for Mume Remote Editing.</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">MPI_INIT</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;I&quot;</span> <span class="o">+</span> <span class="n">LF</span><span class="p">)</span>
 </code></pre></div>
@@ -1731,7 +1815,7 @@
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/mpi.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: C901</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: C901,D102</span>
 	<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 	<span class="k">while</span> <span class="n">data</span><span class="p">:</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">MPIState</span><span class="o">.</span><span class="n">DATA</span><span class="p">:</span>
@@ -2108,6 +2192,12 @@
         <details class="quote">
           <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Writes data to peer.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		data: The bytes to be written.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
         </details>
@@ -2145,9 +2235,7 @@
         <details class="quote">
           <summary>Source code in <code>mudproto/mpi.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">MPIState</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">	Valid states for the state machine.</span>
-<span class="sd">	&quot;&quot;&quot;</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;Valid states for the state machine.&quot;&quot;&quot;</span>
 
 	<span class="n">DATA</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
 	<span class="n">NEWLINE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>

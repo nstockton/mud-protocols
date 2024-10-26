@@ -267,8 +267,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../base/" class="md-nav__link">
-        base.py
+      <a href="../connection/" class="md-nav__link">
+        connection.py
       </a>
     </li>
   
@@ -353,6 +353,13 @@
           <li class="md-nav__item">
   <a href="#mudproto.manager.Manager.isServer" class="md-nav__link">
     isServer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mudproto.manager.Manager.__init__" class="md-nav__link">
+    __init__()
   </a>
   
 </li>
@@ -553,6 +560,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#mudproto.manager.Manager.__init__" class="md-nav__link">
+    __init__()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#mudproto.manager.Manager.close" class="md-nav__link">
     close()
   </a>
@@ -636,6 +650,7 @@
 
     <div class="doc doc-contents first">
 
+      <p>Protocol manager.</p>
 
 
 
@@ -661,20 +676,32 @@
 
     <div class="doc doc-contents ">
 
+      <p>Handles registering and unregistering protocol classes to a connection.</p>
 
         <details class="quote">
           <summary>Source code in <code>mudproto/manager.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Manager</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;Handles registering and unregistering protocol classes to a connection.&quot;&quot;&quot;</span>
+
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
 		<span class="bp">self</span><span class="p">,</span>
-		<span class="n">writer</span><span class="p">:</span> <span class="n">CONNECTION_WRITER_TYPE</span><span class="p">,</span>
-		<span class="n">receiver</span><span class="p">:</span> <span class="n">CONNECTION_RECEIVER_TYPE</span><span class="p">,</span>
+		<span class="n">writer</span><span class="p">:</span> <span class="n">ConnectionWriterType</span><span class="p">,</span>
+		<span class="n">receiver</span><span class="p">:</span> <span class="n">ConnectionReceiverType</span><span class="p">,</span>
 		<span class="o">*</span><span class="p">,</span>
 		<span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 		<span class="n">promptTerminator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 	<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">CONNECTION_WRITER_TYPE</span> <span class="o">=</span> <span class="n">writer</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">CONNECTION_RECEIVER_TYPE</span> <span class="o">=</span> <span class="n">receiver</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Defines the constructor.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			writer: The object where output is written.</span>
+<span class="sd">			receiver: The object where input is received.</span>
+<span class="sd">			isClient: True if acting as a client, False if acting as a server.</span>
+<span class="sd">			promptTerminator: The byte sequence used to terminate a prompt. If None, IAC + GA is used.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">ConnectionWriterType</span> <span class="o">=</span> <span class="n">writer</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">ConnectionReceiverType</span> <span class="o">=</span> <span class="n">receiver</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">isClient</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">promptTerminator</span><span class="p">:</span> <span class="nb">bytes</span>
 		<span class="k">if</span> <span class="n">promptTerminator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -688,7 +715,7 @@
 			<span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">BaseConnection</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConnectionInterface</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_isConnected</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
 	<span class="nd">@property</span>
@@ -761,8 +788,8 @@
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isConnected</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-			<span class="k">return</span> <span class="kc">None</span>
-		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">:</span>
+			<span class="k">return</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">:</span>
 			<span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span> <span class="o">+</span> <span class="n">data</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 		<span class="k">if</span> <span class="n">data</span><span class="p">:</span>
@@ -783,14 +810,14 @@
 			<span class="n">data</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">promptTerminator</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isConnected</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-			<span class="k">return</span> <span class="kc">None</span>
-		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">:</span>
+			<span class="k">return</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">:</span>
 			<span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span> <span class="o">+</span> <span class="n">data</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 		<span class="k">if</span> <span class="n">data</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-	<span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">BaseConnection</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">ConnectionInterface</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Registers a protocol handler.</span>
 
@@ -803,13 +830,13 @@
 		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
 			<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
 				<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Already registered.&quot;</span><span class="p">)</span>
-		<span class="n">instance</span><span class="p">:</span> <span class="n">BaseConnection</span> <span class="o">=</span> <span class="n">handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">,</span> <span class="n">isClient</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+		<span class="n">instance</span><span class="p">:</span> <span class="n">ConnectionInterface</span> <span class="o">=</span> <span class="n">handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">,</span> <span class="n">isClient</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">_receiver</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">on_dataReceived</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
 		<span class="n">instance</span><span class="o">.</span><span class="n">on_connectionMade</span><span class="p">()</span>
 
-	<span class="k">def</span> <span class="nf">unregister</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">:</span> <span class="n">BaseConnection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">unregister</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">:</span> <span class="n">ConnectionInterface</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Unregisters a protocol handler.</span>
 
@@ -818,7 +845,7 @@
 <span class="sd">		&quot;&quot;&quot;</span>
 		<span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
 			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Instance required, not class.&quot;</span><span class="p">)</span>
-		<span class="k">elif</span> <span class="n">instance</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">instance</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
 			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Instance wasn&#39;t registered.&quot;</span><span class="p">)</span>
 		<span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
@@ -907,6 +934,103 @@
 
 
 
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="mudproto.manager.Manager.__init__" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Method</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">writer</span><span class="p">,</span> <span class="n">receiver</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">isClient</span><span class="p">,</span> <span class="n">promptTerminator</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#mudproto.manager.Manager.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Defines the constructor.</p>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>writer</code></td>
+        <td><code>ConnectionWriterType</code></td>
+        <td><p>The object where output is written.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>receiver</code></td>
+        <td><code>ConnectionReceiverType</code></td>
+        <td><p>The object where input is received.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>isClient</code></td>
+        <td><code>bool</code></td>
+        <td><p>True if acting as a client, False if acting as a server.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>promptTerminator</code></td>
+        <td><code>Optional[bytes]</code></td>
+        <td><p>The byte sequence used to terminate a prompt. If None, IAC + GA is used.</p></td>
+        <td><code>None</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>mudproto/manager.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+	<span class="bp">self</span><span class="p">,</span>
+	<span class="n">writer</span><span class="p">:</span> <span class="n">ConnectionWriterType</span><span class="p">,</span>
+	<span class="n">receiver</span><span class="p">:</span> <span class="n">ConnectionReceiverType</span><span class="p">,</span>
+	<span class="o">*</span><span class="p">,</span>
+	<span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+	<span class="n">promptTerminator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Defines the constructor.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		writer: The object where output is written.</span>
+<span class="sd">		receiver: The object where input is received.</span>
+<span class="sd">		isClient: True if acting as a client, False if acting as a server.</span>
+<span class="sd">		promptTerminator: The byte sequence used to terminate a prompt. If None, IAC + GA is used.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">ConnectionWriterType</span> <span class="o">=</span> <span class="n">writer</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">ConnectionReceiverType</span> <span class="o">=</span> <span class="n">receiver</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">isClient</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">promptTerminator</span><span class="p">:</span> <span class="nb">bytes</span>
+	<span class="k">if</span> <span class="n">promptTerminator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">promptTerminator</span> <span class="o">=</span> <span class="n">IAC</span> <span class="o">+</span> <span class="n">GA</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">promptTerminator</span> <span class="o">=</span> <span class="p">(</span>
+			<span class="n">promptTerminator</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR_LF</span><span class="p">,</span> <span class="n">LF</span><span class="p">)</span>
+			<span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR_NULL</span><span class="p">,</span> <span class="n">CR</span><span class="p">)</span>
+			<span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">CR</span><span class="p">,</span> <span class="n">CR_NULL</span><span class="p">)</span>
+			<span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">LF</span><span class="p">,</span> <span class="n">CR_LF</span><span class="p">)</span>
+		<span class="p">)</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ConnectionInterface</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_isConnected</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
@@ -1056,8 +1180,8 @@
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isConnected</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-		<span class="k">return</span> <span class="kc">None</span>
-	<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">:</span>
+		<span class="k">return</span>
+	<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="p">:</span>
 		<span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span> <span class="o">+</span> <span class="n">data</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_readBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 	<span class="k">if</span> <span class="n">data</span><span class="p">:</span>
@@ -1097,7 +1221,7 @@
   <tbody>
       <tr>
         <td><code>handler</code></td>
-        <td><code>type[BaseConnection]</code></td>
+        <td><code>type[ConnectionInterface]</code></td>
         <td><p>The handler to be registered.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -1111,7 +1235,7 @@
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/manager.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">BaseConnection</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">ConnectionInterface</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Registers a protocol handler.</span>
 
@@ -1124,7 +1248,7 @@
 	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
 		<span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">handler</span><span class="p">):</span>
 			<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Already registered.&quot;</span><span class="p">)</span>
-	<span class="n">instance</span><span class="p">:</span> <span class="n">BaseConnection</span> <span class="o">=</span> <span class="n">handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">,</span> <span class="n">isClient</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+	<span class="n">instance</span><span class="p">:</span> <span class="n">ConnectionInterface</span> <span class="o">=</span> <span class="n">handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">,</span> <span class="n">isClient</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 	<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">_receiver</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">on_dataReceived</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
@@ -1164,7 +1288,7 @@
   <tbody>
       <tr>
         <td><code>instance</code></td>
-        <td><code>BaseConnection</code></td>
+        <td><code>ConnectionInterface</code></td>
         <td><p>The handler instance to be unregistered.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -1172,7 +1296,7 @@
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/manager.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">unregister</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">:</span> <span class="n">BaseConnection</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">unregister</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">:</span> <span class="n">ConnectionInterface</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Unregisters a protocol handler.</span>
 
@@ -1181,7 +1305,7 @@
 <span class="sd">	&quot;&quot;&quot;</span>
 	<span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
 		<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Instance required, not class.&quot;</span><span class="p">)</span>
-	<span class="k">elif</span> <span class="n">instance</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
+	<span class="k">if</span> <span class="n">instance</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
 		<span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Instance wasn&#39;t registered.&quot;</span><span class="p">)</span>
 	<span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
@@ -1258,8 +1382,8 @@
 		<span class="n">data</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">promptTerminator</span>
 	<span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">isConnected</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handlers</span><span class="p">:</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-		<span class="k">return</span> <span class="kc">None</span>
-	<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">:</span>
+		<span class="k">return</span>
+	<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="p">:</span>
 		<span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span> <span class="o">+</span> <span class="n">data</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_writeBuffer</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 	<span class="k">if</span> <span class="n">data</span><span class="p">:</span>

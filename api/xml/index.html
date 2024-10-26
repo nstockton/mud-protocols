@@ -267,8 +267,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../base/" class="md-nav__link">
-        base.py
+      <a href="../connection/" class="md-nav__link">
+        connection.py
       </a>
     </li>
   
@@ -414,15 +414,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.xml.XMLProtocol.tagModes" class="md-nav__link">
-    tagModes
+  <a href="#mudproto.xml.XMLProtocol.tintinReplacements" class="md-nav__link">
+    tintinReplacements
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.xml.XMLProtocol.tintinReplacements" class="md-nav__link">
-    tintinReplacements
+  <a href="#mudproto.xml.XMLProtocol.__init__" class="md-nav__link">
+    __init__()
   </a>
   
 </li>
@@ -470,6 +470,27 @@
         <li class="md-nav__item">
   <a href="#mudproto.xml.XMLState" class="md-nav__link">
     XMLState
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mudproto.xml.directionFromMovement" class="md-nav__link">
+    directionFromMovement()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mudproto.xml.getTintinTagReplacement" class="md-nav__link">
+    getTintinTagReplacement()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mudproto.xml.getXMLMode" class="md-nav__link">
+    getXMLMode()
   </a>
   
 </li>
@@ -560,15 +581,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.xml.XMLProtocol.tagModes" class="md-nav__link">
-    tagModes
+  <a href="#mudproto.xml.XMLProtocol.tintinReplacements" class="md-nav__link">
+    tintinReplacements
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.xml.XMLProtocol.tintinReplacements" class="md-nav__link">
-    tintinReplacements
+  <a href="#mudproto.xml.XMLProtocol.__init__" class="md-nav__link">
+    __init__()
   </a>
   
 </li>
@@ -616,6 +637,27 @@
         <li class="md-nav__item">
   <a href="#mudproto.xml.XMLState" class="md-nav__link">
     XMLState
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mudproto.xml.directionFromMovement" class="md-nav__link">
+    directionFromMovement()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mudproto.xml.getTintinTagReplacement" class="md-nav__link">
+    getTintinTagReplacement()
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mudproto.xml.getXMLMode" class="md-nav__link">
+    getXMLMode()
   </a>
   
 </li>
@@ -684,9 +726,7 @@
         <details class="quote">
           <summary>Source code in <code>mudproto/xml.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">XMLMode</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">	Valid modes corresponding to supported XML tags.</span>
-<span class="sd">	&quot;&quot;&quot;</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;Valid modes corresponding to supported XML tags.&quot;&quot;&quot;</span>
 
 	<span class="n">NONE</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
 	<span class="n">DESCRIPTION</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
@@ -734,7 +774,7 @@
 
 
 <h2 id="mudproto.xml.XMLProtocol" class="doc doc-heading">
-        <code>Class XMLProtocol(<a title="mudproto.base.BaseConnection" href="../base/#mudproto.base.BaseConnection">BaseConnection</a>)</code>
+        <code>Class XMLProtocol(<a title="mudproto.connection.ConnectionInterface" href="../connection/#mudproto.connection.ConnectionInterface">ConnectionInterface</a>)</code>
 
 
 
@@ -746,38 +786,19 @@
 
         <details class="quote">
           <summary>Source code in <code>mudproto/xml.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">XMLProtocol</span><span class="p">(</span><span class="n">BaseConnection</span><span class="p">):</span>
-<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">	Implements the Mume XML protocol.</span>
-<span class="sd">	&quot;&quot;&quot;</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">XMLProtocol</span><span class="p">(</span><span class="n">ConnectionInterface</span><span class="p">):</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;Implements the Mume XML protocol.&quot;&quot;&quot;</span>
 
-	<span class="n">tagModes</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">XMLMode</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
-		<span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">DESCRIPTION</span><span class="p">,</span>
-		<span class="s2">&quot;exits&quot;</span><span class="p">:</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">EXITS</span><span class="p">,</span>
-		<span class="s2">&quot;magic&quot;</span><span class="p">:</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">MAGIC</span><span class="p">,</span>
-		<span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span>
-		<span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">PROMPT</span><span class="p">,</span>
-		<span class="s2">&quot;room&quot;</span><span class="p">:</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">ROOM</span><span class="p">,</span>
-		<span class="s2">&quot;terrain&quot;</span><span class="p">:</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">TERRAIN</span><span class="p">,</span>
+	<span class="n">tintinReplacements</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="sa">b</span><span class="s2">&quot;prompt&quot;</span><span class="p">,</span>
+		<span class="sa">b</span><span class="s2">&quot;name&quot;</span><span class="p">,</span>
+		<span class="sa">b</span><span class="s2">&quot;tell&quot;</span><span class="p">,</span>
+		<span class="sa">b</span><span class="s2">&quot;narrate&quot;</span><span class="p">,</span>
+		<span class="sa">b</span><span class="s2">&quot;pray&quot;</span><span class="p">,</span>
+		<span class="sa">b</span><span class="s2">&quot;say&quot;</span><span class="p">,</span>
+		<span class="sa">b</span><span class="s2">&quot;emote&quot;</span><span class="p">,</span>
 	<span class="p">}</span>
-<span class="w">	</span><span class="sd">&quot;&quot;&quot;A mapping of closing tags to mode objects.&quot;&quot;&quot;</span>
-	<span class="n">tintinReplacements</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
-		<span class="sa">b</span><span class="s2">&quot;prompt&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;PROMPT:&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;/prompt&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;:PROMPT&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;NAME:&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;/name&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;:NAME&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;tell&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;TELL:&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;/tell&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;:TELL&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;narrate&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;NARRATE:&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;/narrate&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;:NARRATE&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;pray&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;PRAY:&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;/pray&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;:PRAY&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;say&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;SAY:&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;/say&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;:SAY&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;emote&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;EMOTE:&quot;</span><span class="p">,</span>
-		<span class="sa">b</span><span class="s2">&quot;/emote&quot;</span><span class="p">:</span> <span class="sa">b</span><span class="s2">&quot;:EMOTE&quot;</span><span class="p">,</span>
-	<span class="p">}</span>
-<span class="w">	</span><span class="sd">&quot;&quot;&quot;A mapping of tag to replacement values for Tintin.&quot;&quot;&quot;</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;Tag to replacement values for Tintin.&quot;&quot;&quot;</span>
 
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
 		<span class="bp">self</span><span class="p">,</span>
@@ -785,6 +806,14 @@
 		<span class="n">outputFormat</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 		<span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
 	<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Defines the constructor.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			*args: Positional arguments to be passed to the parent constructor.</span>
+<span class="sd">			outputFormat: The output format to be used.</span>
+<span class="sd">			**kwargs: Key-word only arguments to be passed to the parent constructor.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">outputFormat</span>
 		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">:</span> <span class="n">XMLState</span> <span class="o">=</span> <span class="n">XMLState</span><span class="o">.</span><span class="n">DATA</span>
@@ -853,10 +882,10 @@
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;raw&quot;</span><span class="p">:</span>
 			<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">LT</span> <span class="o">+</span> <span class="n">tag</span> <span class="o">+</span> <span class="n">GT</span><span class="p">)</span>
 		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;tintin&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gratuitous</span><span class="p">:</span>
-			<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tintinReplacements</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
+			<span class="n">appDataBuffer</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">getTintinTagReplacement</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tintinReplacements</span><span class="p">))</span>
 		<span class="k">if</span> <span class="n">tagName</span> <span class="o">==</span> <span class="s2">&quot;gratuitous&quot;</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">_gratuitous</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">isClosingTag</span>
-		<span class="k">elif</span> <span class="n">isClosingTag</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tagModes</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tagName</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">:</span>
+		<span class="k">elif</span> <span class="n">isClosingTag</span> <span class="ow">and</span> <span class="n">getXMLMode</span><span class="p">(</span><span class="n">tagName</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">:</span>
 			<span class="c1"># The tag is a closing tag, corresponding with the current mode.</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="ow">is</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">ROOM</span><span class="p">:</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">on_xmlEvent</span><span class="p">(</span><span class="s2">&quot;dynamic&quot;</span><span class="p">,</span> <span class="n">unescapeXMLBytes</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dynamicBuffer</span><span class="p">)</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span><span class="p">)))</span>
@@ -899,7 +928,7 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">XMLState</span><span class="o">.</span><span class="n">DATA</span>
 		<span class="k">return</span> <span class="n">data</span>
 
-	<span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 		<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 		<span class="k">while</span> <span class="n">data</span><span class="p">:</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">XMLState</span><span class="o">.</span><span class="n">DATA</span><span class="p">:</span>
@@ -912,13 +941,14 @@
 			<span class="k">else</span><span class="p">:</span>
 				<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_dataReceived</span><span class="p">(</span><span class="n">unescapeXMLBytes</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">appDataBuffer</span><span class="p">)))</span>
 
-	<span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 		<span class="c1"># Turn on XML mode.</span>
 		<span class="c1"># Mode &quot;3&quot; tells MUME to enable XML output without sending an initial &quot;&lt;xml&gt;&quot; tag.</span>
-		<span class="c1"># Option &quot;G&quot; tells MUME to wrap room descriptions in gratuitous tags if they would otherwise be hidden.</span>
+		<span class="c1"># Option &quot;G&quot; tells MUME to wrap room descriptions in gratuitous</span>
+		<span class="c1"># tags if they would otherwise be hidden.</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">MPI_INIT</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;X2&quot;</span> <span class="o">+</span> <span class="n">LF</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;3G&quot;</span> <span class="o">+</span> <span class="n">LF</span><span class="p">)</span>
 
-	<span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 		<span class="k">pass</span>
 
 	<span class="k">def</span> <span class="nf">on_xmlEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -993,34 +1023,15 @@
 
 
 
-<h3 id="mudproto.xml.XMLProtocol.tagModes" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">tagModes</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">mudproto</span><span class="o">.</span><span class="n">xml</span><span class="o">.</span><span class="n">XMLMode</span><span class="p">]]</span></code>
-
-
-<a href="#mudproto.xml.XMLProtocol.tagModes" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>A mapping of closing tags to mode objects.</p>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-attribute">
-
-
-
 <h3 id="mudproto.xml.XMLProtocol.tintinReplacements" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">tintinReplacements</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">]]</span></code>
+<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">tintinReplacements</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">set</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]]</span></code>
 
 
 <a href="#mudproto.xml.XMLProtocol.tintinReplacements" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
-      <p>A mapping of tag to replacement values for Tintin.</p>
+      <p>Tag to replacement values for Tintin.</p>
     </div>
 
   </div>
@@ -1028,6 +1039,88 @@
 
 
 
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="mudproto.xml.XMLProtocol.__init__" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Method</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">outputFormat</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#mudproto.xml.XMLProtocol.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Defines the constructor.</p>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>*args</code></td>
+        <td><code>Any</code></td>
+        <td><p>Positional arguments to be passed to the parent constructor.</p></td>
+        <td><code>()</code></td>
+      </tr>
+      <tr>
+        <td><code>outputFormat</code></td>
+        <td><code>str</code></td>
+        <td><p>The output format to be used.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>**kwargs</code></td>
+        <td><code>Any</code></td>
+        <td><p>Key-word only arguments to be passed to the parent constructor.</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>mudproto/xml.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+	<span class="bp">self</span><span class="p">,</span>
+	<span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+	<span class="n">outputFormat</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+	<span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Defines the constructor.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		*args: Positional arguments to be passed to the parent constructor.</span>
+<span class="sd">		outputFormat: The output format to be used.</span>
+<span class="sd">		**kwargs: Key-word only arguments to be passed to the parent constructor.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">outputFormat</span>
+	<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">:</span> <span class="n">XMLState</span> <span class="o">=</span> <span class="n">XMLState</span><span class="o">.</span><span class="n">DATA</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;The state of the state machine.&quot;&quot;&quot;</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_tagBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>  <span class="c1"># Used for start and end tag names.</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_textBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>  <span class="c1"># Used for the text between start and end tags.</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_dynamicBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>  <span class="c1"># Used for dynamic room descriptions.</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_lineBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>  <span class="c1"># Used for non-XML lines.</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_gratuitous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_mode</span><span class="p">:</span> <span class="n">XMLMode</span> <span class="o">=</span> <span class="n">XMLMode</span><span class="o">.</span><span class="n">NONE</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_parentModes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">XMLMode</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 
@@ -1047,7 +1140,7 @@
 
         <details class="quote">
           <summary>Source code in <code>mudproto/xml.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 	<span class="k">pass</span>
 </code></pre></div>
         </details>
@@ -1073,10 +1166,11 @@
 
         <details class="quote">
           <summary>Source code in <code>mudproto/xml.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 	<span class="c1"># Turn on XML mode.</span>
 	<span class="c1"># Mode &quot;3&quot; tells MUME to enable XML output without sending an initial &quot;&lt;xml&gt;&quot; tag.</span>
-	<span class="c1"># Option &quot;G&quot; tells MUME to wrap room descriptions in gratuitous tags if they would otherwise be hidden.</span>
+	<span class="c1"># Option &quot;G&quot; tells MUME to wrap room descriptions in gratuitous</span>
+	<span class="c1"># tags if they would otherwise be hidden.</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">MPI_INIT</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;X2&quot;</span> <span class="o">+</span> <span class="n">LF</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;3G&quot;</span> <span class="o">+</span> <span class="n">LF</span><span class="p">)</span>
 </code></pre></div>
         </details>
@@ -1121,7 +1215,7 @@
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/xml.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 	<span class="n">appDataBuffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 	<span class="k">while</span> <span class="n">data</span><span class="p">:</span>
 		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="ow">is</span> <span class="n">XMLState</span><span class="o">.</span><span class="n">DATA</span><span class="p">:</span>
@@ -1237,6 +1331,12 @@
         <details class="quote">
           <summary>Source code in <code>mudproto/xml.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Writes data to peer.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		data: The bytes to be written.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
         </details>
@@ -1274,9 +1374,7 @@
         <details class="quote">
           <summary>Source code in <code>mudproto/xml.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">XMLState</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">	Valid states for the state machine.</span>
-<span class="sd">	&quot;&quot;&quot;</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;Valid states for the state machine.&quot;&quot;&quot;</span>
 
 	<span class="n">DATA</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
 	<span class="n">TAG</span> <span class="o">=</span> <span class="n">auto</span><span class="p">()</span>
@@ -1306,6 +1404,228 @@
   </div>
 
 
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="mudproto.xml.directionFromMovement" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Function</span> <span class="n">directionFromMovement</span><span class="p">(</span><span class="n">movement</span><span class="p">)</span></code>
+
+
+<a href="#mudproto.xml.directionFromMovement" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Retrieves the direction of movement from a movement tag.</p>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>movement</code></td>
+        <td><code>bytes</code></td>
+        <td><p>The movement tag to parse.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>bytes</code></td>
+      <td><p>The direction of movement.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>mudproto/xml.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">directionFromMovement</span><span class="p">(</span><span class="n">movement</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Retrieves the direction of movement from a movement tag.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		movement: The movement tag to parse.</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		The direction of movement.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">match</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">re</span><span class="o">.</span><span class="n">Match</span><span class="p">[</span><span class="nb">bytes</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="n">DIRECTIONS_REGEX</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">movement</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s2">&quot;dir&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="mudproto.xml.getTintinTagReplacement" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Function</span> <span class="n">getTintinTagReplacement</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">validTags</span><span class="p">)</span></code>
+
+
+<a href="#mudproto.xml.getTintinTagReplacement" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Retrieves a Tintin tag replacement from a tag name.</p>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>tag</code></td>
+        <td><code>bytes</code></td>
+        <td><p>The tag name.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>validTags</code></td>
+        <td><code>Iterable[bytes]</code></td>
+        <td><p>The supported tag names.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>bytes</code></td>
+      <td><p>Uppercase tag name followed by a colon if opening tag,
+a colon followed by uppercase tag name if closing tag,
+An empty bytes object if not found.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>mudproto/xml.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">getTintinTagReplacement</span><span class="p">(</span><span class="n">tag</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">validTags</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Retrieves a Tintin tag replacement from a tag name.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		tag: The tag name.</span>
+<span class="sd">		validTags: The supported tag names.</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		Uppercase tag name followed by a colon if opening tag,</span>
+<span class="sd">		a colon followed by uppercase tag name if closing tag,</span>
+<span class="sd">		An empty bytes object if not found.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">isClosing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+	<span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+	<span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="n">tag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">validTags</span> <span class="k">else</span> <span class="sa">b</span><span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="n">tag</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">if</span> <span class="n">isClosing</span> <span class="k">else</span> <span class="n">tag</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;:&quot;</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
+
+  <div class="doc doc-object doc-function">
+
+
+
+<h2 id="mudproto.xml.getXMLMode" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Function</span> <span class="n">getXMLMode</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span></code>
+
+
+<a href="#mudproto.xml.getXMLMode" class="headerlink" title="Permanent link">&para;</a></h2>
+
+    <div class="doc doc-contents ">
+
+      <p>Retrieves an XMLMode enum from a tag name.</p>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>tag</code></td>
+        <td><code>str</code></td>
+        <td><p>The tag name.</p></td>
+        <td><em>required</em></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Union[XMLMode, None]</code></td>
+      <td><p>the XMLMode enum corresponding to the tag name, None if not found.</p></td>
+    </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>mudproto/xml.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">getXMLMode</span><span class="p">(</span><span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">XMLMode</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Retrieves an XMLMode enum from a tag name.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		tag: The tag name.</span>
+
+<span class="sd">	Returns:</span>
+<span class="sd">		the XMLMode enum corresponding to the tag name, None if not found.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">KeyError</span><span class="p">):</span>
+		<span class="k">return</span> <span class="n">XMLMode</span><span class="p">[</span><span class="n">tag</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
+	<span class="k">return</span> <span class="kc">None</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
 
 
 

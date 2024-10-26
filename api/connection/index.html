@@ -12,14 +12,14 @@
         <meta name="author" content="Nick Stockton">
       
       
-        <link rel="canonical" href="https://nstockton.github.io/mud-protocols/api/base/">
+        <link rel="canonical" href="https://nstockton.github.io/mud-protocols/api/connection/">
       
       <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.1.3">
     
     
       
-        <title>base.py - MUD Protocols</title>
+        <title>connection.py - MUD Protocols</title>
       
     
     
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mudproto.base" class="md-skip">
+        <a href="#mudproto.connection" class="md-skip">
           Skip to content
         </a>
       
@@ -99,7 +99,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              base.py
+              connection.py
             
           </span>
         </div>
@@ -277,12 +277,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          base.py
+          connection.py
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        base.py
+        connection.py
       </a>
       
         
@@ -301,112 +301,57 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection" class="md-nav__link">
-    BaseConnection
+  <a href="#mudproto.connection.ConnectionInterface" class="md-nav__link">
+    ConnectionInterface
   </a>
   
-    <nav class="md-nav" aria-label="BaseConnection">
+    <nav class="md-nav" aria-label="ConnectionInterface">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection.isClient" class="md-nav__link">
+  <a href="#mudproto.connection.ConnectionInterface.isClient" class="md-nav__link">
     isClient
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection.isServer" class="md-nav__link">
+  <a href="#mudproto.connection.ConnectionInterface.isServer" class="md-nav__link">
     isServer
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection.__init__" class="md-nav__link">
+  <a href="#mudproto.connection.ConnectionInterface.__init__" class="md-nav__link">
     __init__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection.on_connectionLost" class="md-nav__link">
+  <a href="#mudproto.connection.ConnectionInterface.on_connectionLost" class="md-nav__link">
     on_connectionLost()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection.on_connectionMade" class="md-nav__link">
+  <a href="#mudproto.connection.ConnectionInterface.on_connectionMade" class="md-nav__link">
     on_connectionMade()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection.on_dataReceived" class="md-nav__link">
+  <a href="#mudproto.connection.ConnectionInterface.on_dataReceived" class="md-nav__link">
     on_dataReceived()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection.write" class="md-nav__link">
-    write()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnectionInterface" class="md-nav__link">
-    BaseConnectionInterface
-  </a>
-  
-    <nav class="md-nav" aria-label="BaseConnectionInterface">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnectionInterface.isClient" class="md-nav__link">
-    isClient
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnectionInterface.isServer" class="md-nav__link">
-    isServer
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnectionInterface.on_connectionLost" class="md-nav__link">
-    on_connectionLost()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnectionInterface.on_connectionMade" class="md-nav__link">
-    on_connectionMade()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnectionInterface.on_dataReceived" class="md-nav__link">
-    on_dataReceived()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnectionInterface.write" class="md-nav__link">
+  <a href="#mudproto.connection.ConnectionInterface.write" class="md-nav__link">
     write()
   </a>
   
@@ -558,112 +503,57 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection" class="md-nav__link">
-    BaseConnection
+  <a href="#mudproto.connection.ConnectionInterface" class="md-nav__link">
+    ConnectionInterface
   </a>
   
-    <nav class="md-nav" aria-label="BaseConnection">
+    <nav class="md-nav" aria-label="ConnectionInterface">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection.isClient" class="md-nav__link">
+  <a href="#mudproto.connection.ConnectionInterface.isClient" class="md-nav__link">
     isClient
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection.isServer" class="md-nav__link">
+  <a href="#mudproto.connection.ConnectionInterface.isServer" class="md-nav__link">
     isServer
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection.__init__" class="md-nav__link">
+  <a href="#mudproto.connection.ConnectionInterface.__init__" class="md-nav__link">
     __init__()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection.on_connectionLost" class="md-nav__link">
+  <a href="#mudproto.connection.ConnectionInterface.on_connectionLost" class="md-nav__link">
     on_connectionLost()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection.on_connectionMade" class="md-nav__link">
+  <a href="#mudproto.connection.ConnectionInterface.on_connectionMade" class="md-nav__link">
     on_connectionMade()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection.on_dataReceived" class="md-nav__link">
+  <a href="#mudproto.connection.ConnectionInterface.on_dataReceived" class="md-nav__link">
     on_dataReceived()
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnection.write" class="md-nav__link">
-    write()
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnectionInterface" class="md-nav__link">
-    BaseConnectionInterface
-  </a>
-  
-    <nav class="md-nav" aria-label="BaseConnectionInterface">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnectionInterface.isClient" class="md-nav__link">
-    isClient
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnectionInterface.isServer" class="md-nav__link">
-    isServer
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnectionInterface.on_connectionLost" class="md-nav__link">
-    on_connectionLost()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnectionInterface.on_connectionMade" class="md-nav__link">
-    on_connectionMade()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnectionInterface.on_dataReceived" class="md-nav__link">
-    on_dataReceived()
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mudproto.base.BaseConnectionInterface.write" class="md-nav__link">
+  <a href="#mudproto.connection.ConnectionInterface.write" class="md-nav__link">
     write()
   </a>
   
@@ -686,7 +576,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-<a href="https://github.com/nstockton/mud-protocols/blob/master/docs/api/base.md" title="Edit this page" class="md-content__button md-icon">
+<a href="https://github.com/nstockton/mud-protocols/blob/master/docs/api/connection.md" title="Edit this page" class="md-content__button md-icon">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
 </a>
 
@@ -695,15 +585,16 @@
 
 
 
-<h1 id="mudproto.base" class="doc doc-heading">
-        <code>Module mudproto.base</code>
+<h1 id="mudproto.connection" class="doc doc-heading">
+        <code>Module mudproto.connection</code>
 
 
 
-<a href="#mudproto.base" class="headerlink" title="Permanent link">&para;</a></h1>
+<a href="#mudproto.connection" class="headerlink" title="Permanent link">&para;</a></h1>
 
     <div class="doc doc-contents first">
 
+      <p>MUD connection.</p>
 
 
 
@@ -720,331 +611,53 @@
 
 
 
-<h2 id="mudproto.base.BaseConnection" class="doc doc-heading">
-        <code>Class BaseConnection(<a title="mudproto.base.BaseConnectionInterface" href="#mudproto.base.BaseConnectionInterface">BaseConnectionInterface</a>)</code>
+<h2 id="mudproto.connection.ConnectionInterface" class="doc doc-heading">
+        <code>Class ConnectionInterface(<span title="abc.ABC">ABC</span>)</code>
 
 
 
-<a href="#mudproto.base.BaseConnection" class="headerlink" title="Permanent link">&para;</a></h2>
+<a href="#mudproto.connection.ConnectionInterface" class="headerlink" title="Permanent link">&para;</a></h2>
 
     <div class="doc doc-contents ">
 
+      <p>Input and output to a MUD client or server.</p>
 
         <details class="quote">
-          <summary>Source code in <code>mudproto/base.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">BaseConnection</span><span class="p">(</span><span class="n">BaseConnectionInterface</span><span class="p">):</span>
+          <summary>Source code in <code>mudproto/connection.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ConnectionInterface</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;Input and output to a MUD client or server.&quot;&quot;&quot;</span>
+
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
 		<span class="bp">self</span><span class="p">,</span>
-		<span class="n">writer</span><span class="p">:</span> <span class="n">CONNECTION_WRITER_TYPE</span><span class="p">,</span>
-		<span class="n">receiver</span><span class="p">:</span> <span class="n">CONNECTION_RECEIVER_TYPE</span><span class="p">,</span>
+		<span class="n">writer</span><span class="p">:</span> <span class="n">ConnectionWriterType</span><span class="p">,</span>
+		<span class="n">receiver</span><span class="p">:</span> <span class="n">ConnectionReceiverType</span><span class="p">,</span>
 		<span class="o">*</span><span class="p">,</span>
 		<span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
 		<span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
 	<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">CONNECTION_WRITER_TYPE</span> <span class="o">=</span> <span class="n">writer</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">CONNECTION_RECEIVER_TYPE</span> <span class="o">=</span> <span class="n">receiver</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Defines the constructor.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			writer: The object where output is written.</span>
+<span class="sd">			receiver: The object where input is received.</span>
+<span class="sd">			isClient: True if acting as a client, False if acting as a server.</span>
+<span class="sd">			**kwargs: Key-word only arguments (currently unused).</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">ConnectionWriterType</span> <span class="o">=</span> <span class="n">writer</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">ConnectionReceiverType</span> <span class="o">=</span> <span class="n">receiver</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">isClient</span>
 
 	<span class="nd">@property</span>
 	<span class="k">def</span> <span class="nf">isClient</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;True if acting as a client, False otherwise.&quot;&quot;&quot;</span>
 		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span>
 
 	<span class="nd">@property</span>
 	<span class="k">def</span> <span class="nf">isServer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;True if acting as a server, False otherwise.&quot;&quot;&quot;</span>
 		<span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span>
 
-	<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-	<span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-
-
-
-  <div class="doc doc-children">
-
-
-
-
-
-
-  <div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="mudproto.base.BaseConnection.isClient" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-property"><code>property</code></small>
-      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
-  </span>
-
-<a href="#mudproto.base.BaseConnection.isClient" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>True if acting as a client, False otherwise.</p>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="mudproto.base.BaseConnection.isServer" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isServer</span><span class="p">:</span> <span class="nb">bool</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-property"><code>property</code></small>
-      <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
-  </span>
-
-<a href="#mudproto.base.BaseConnection.isServer" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>True if acting as a server, False otherwise.</p>
-    </div>
-
-  </div>
-
-
-
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="mudproto.base.BaseConnection.__init__" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Method</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">writer</span><span class="p">,</span> <span class="n">receiver</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">isClient</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-special"><code>special</code></small>
-  </span>
-
-<a href="#mudproto.base.BaseConnection.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Initialize self.  See help(type(self)) for accurate signature.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>mudproto/base.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-	<span class="bp">self</span><span class="p">,</span>
-	<span class="n">writer</span><span class="p">:</span> <span class="n">CONNECTION_WRITER_TYPE</span><span class="p">,</span>
-	<span class="n">receiver</span><span class="p">:</span> <span class="n">CONNECTION_RECEIVER_TYPE</span><span class="p">,</span>
-	<span class="o">*</span><span class="p">,</span>
-	<span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
-	<span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-	<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">CONNECTION_WRITER_TYPE</span> <span class="o">=</span> <span class="n">writer</span>
-	<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">CONNECTION_RECEIVER_TYPE</span> <span class="o">=</span> <span class="n">receiver</span>
-	<span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">isClient</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="mudproto.base.BaseConnection.on_connectionLost" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
-  </span>
-
-<a href="#mudproto.base.BaseConnection.on_connectionLost" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Called by <code>disconnect</code> when a connection to peer has been lost.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>mudproto/base.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
-<span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">	</span><span class="sd">&quot;&quot;&quot;Called by `disconnect` when a connection to peer has been lost.&quot;&quot;&quot;</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="mudproto.base.BaseConnection.on_connectionMade" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
-  <span class="doc doc-properties">
-      <small class="doc doc-property doc-property-inherited"><code>inherited</code></small>
-  </span>
-
-<a href="#mudproto.base.BaseConnection.on_connectionMade" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Called by <code>connect</code> when a connection to peer has been established.</p>
-
-        <details class="quote">
-          <summary>Source code in <code>mudproto/base.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
-<span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">	</span><span class="sd">&quot;&quot;&quot;Called by `connect` when a connection to peer has been established.&quot;&quot;&quot;</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="mudproto.base.BaseConnection.on_dataReceived" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
-
-
-<a href="#mudproto.base.BaseConnection.on_dataReceived" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Called by <code>parse</code> when data is received.</p>
-
-<p><strong>Parameters:</strong></p>
-<table role="grid" class="data">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>data</code></td>
-        <td><code>bytes</code></td>
-        <td><p>The received data.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>mudproto/base.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-	<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h3 id="mudproto.base.BaseConnection.write" class="doc doc-heading">
-<code class="codehilite language-python"><span class="n">Method</span> <span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
-
-
-<a href="#mudproto.base.BaseConnection.write" class="headerlink" title="Permanent link">&para;</a></h3>
-
-    <div class="doc doc-contents ">
-
-      <p>Writes data to peer.</p>
-
-<p><strong>Parameters:</strong></p>
-<table role="grid" class="data">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-      <tr>
-        <td><code>data</code></td>
-        <td><code>bytes</code></td>
-        <td><p>The bytes to be written.</p></td>
-        <td><em>required</em></td>
-      </tr>
-  </tbody>
-</table>
-        <details class="quote">
-          <summary>Source code in <code>mudproto/base.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-	<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</code></pre></div>
-        </details>
-    </div>
-
-  </div>
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-
-
-  <div class="doc doc-object doc-class">
-
-
-
-<h2 id="mudproto.base.BaseConnectionInterface" class="doc doc-heading">
-        <code>Class BaseConnectionInterface(<span title="typing.Protocol">Protocol</span>)</code>
-
-
-
-<a href="#mudproto.base.BaseConnectionInterface" class="headerlink" title="Permanent link">&para;</a></h2>
-
-    <div class="doc doc-contents ">
-
-
-        <details class="quote">
-          <summary>Source code in <code>mudproto/base.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">BaseConnectionInterface</span><span class="p">(</span><span class="n">TypeProtocol</span><span class="p">):</span>
-	<span class="nd">@property</span>
-	<span class="nd">@abstractmethod</span>
-	<span class="k">def</span> <span class="nf">isClient</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">		</span><span class="sd">&quot;&quot;&quot;True if acting as a client, False otherwise.&quot;&quot;&quot;</span>
-
-	<span class="nd">@property</span>
-	<span class="nd">@abstractmethod</span>
-	<span class="k">def</span> <span class="nf">isServer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">		</span><span class="sd">&quot;&quot;&quot;True if acting as a server, False otherwise.&quot;&quot;&quot;</span>
-
-	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Writes data to peer.</span>
@@ -1052,6 +665,7 @@
 <span class="sd">		Args:</span>
 <span class="sd">			data: The bytes to be written.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
 	<span class="nd">@abstractmethod</span>
 	<span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1069,6 +683,7 @@
 <span class="sd">		Args:</span>
 <span class="sd">			data: The received data.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
         </details>
 
@@ -1085,7 +700,7 @@
 
 
 
-<h3 id="mudproto.base.BaseConnectionInterface.isClient" class="doc doc-heading">
+<h3 id="mudproto.connection.ConnectionInterface.isClient" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span></code>
 
   <span class="doc doc-properties">
@@ -1093,7 +708,7 @@
       <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
   </span>
 
-<a href="#mudproto.base.BaseConnectionInterface.isClient" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.connection.ConnectionInterface.isClient" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1108,7 +723,7 @@
 
 
 
-<h3 id="mudproto.base.BaseConnectionInterface.isServer" class="doc doc-heading">
+<h3 id="mudproto.connection.ConnectionInterface.isServer" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Attribute</span> <span class="n">isServer</span><span class="p">:</span> <span class="nb">bool</span></code>
 
   <span class="doc doc-properties">
@@ -1116,7 +731,7 @@
       <small class="doc doc-property doc-property-readonly"><code>readonly</code></small>
   </span>
 
-<a href="#mudproto.base.BaseConnectionInterface.isServer" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.connection.ConnectionInterface.isServer" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1130,23 +745,106 @@
 
 
 
+  <div class="doc doc-object doc-method">
+
+
+
+<h3 id="mudproto.connection.ConnectionInterface.__init__" class="doc doc-heading">
+<code class="codehilite language-python"><span class="n">Method</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">writer</span><span class="p">,</span> <span class="n">receiver</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">isClient</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+  <span class="doc doc-properties">
+      <small class="doc doc-property doc-property-special"><code>special</code></small>
+  </span>
+
+<a href="#mudproto.connection.ConnectionInterface.__init__" class="headerlink" title="Permanent link">&para;</a></h3>
+
+    <div class="doc doc-contents ">
+
+      <p>Defines the constructor.</p>
+
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>writer</code></td>
+        <td><code>ConnectionWriterType</code></td>
+        <td><p>The object where output is written.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>receiver</code></td>
+        <td><code>ConnectionReceiverType</code></td>
+        <td><p>The object where input is received.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>isClient</code></td>
+        <td><code>bool</code></td>
+        <td><p>True if acting as a client, False if acting as a server.</p></td>
+        <td><em>required</em></td>
+      </tr>
+      <tr>
+        <td><code>**kwargs</code></td>
+        <td><code>Any</code></td>
+        <td><p>Key-word only arguments (currently unused).</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
+        <details class="quote">
+          <summary>Source code in <code>mudproto/connection.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+	<span class="bp">self</span><span class="p">,</span>
+	<span class="n">writer</span><span class="p">:</span> <span class="n">ConnectionWriterType</span><span class="p">,</span>
+	<span class="n">receiver</span><span class="p">:</span> <span class="n">ConnectionReceiverType</span><span class="p">,</span>
+	<span class="o">*</span><span class="p">,</span>
+	<span class="n">isClient</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+	<span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Defines the constructor.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		writer: The object where output is written.</span>
+<span class="sd">		receiver: The object where input is received.</span>
+<span class="sd">		isClient: True if acting as a client, False if acting as a server.</span>
+<span class="sd">		**kwargs: Key-word only arguments (currently unused).</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">:</span> <span class="n">ConnectionWriterType</span> <span class="o">=</span> <span class="n">writer</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">:</span> <span class="n">ConnectionReceiverType</span> <span class="o">=</span> <span class="n">receiver</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_isClient</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">isClient</span>
+</code></pre></div>
+        </details>
+    </div>
+
+  </div>
+
+
 
   <div class="doc doc-object doc-method">
 
 
 
-<h3 id="mudproto.base.BaseConnectionInterface.on_connectionLost" class="doc doc-heading">
+<h3 id="mudproto.connection.ConnectionInterface.on_connectionLost" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
-<a href="#mudproto.base.BaseConnectionInterface.on_connectionLost" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.connection.ConnectionInterface.on_connectionLost" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
       <p>Called by <code>disconnect</code> when a connection to peer has been lost.</p>
 
         <details class="quote">
-          <summary>Source code in <code>mudproto/base.py</code></summary>
+          <summary>Source code in <code>mudproto/connection.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">on_connectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;Called by `disconnect` when a connection to peer has been lost.&quot;&quot;&quot;</span>
@@ -1162,18 +860,18 @@
 
 
 
-<h3 id="mudproto.base.BaseConnectionInterface.on_connectionMade" class="doc doc-heading">
+<h3 id="mudproto.connection.ConnectionInterface.on_connectionMade" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
 
 
-<a href="#mudproto.base.BaseConnectionInterface.on_connectionMade" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.connection.ConnectionInterface.on_connectionMade" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
       <p>Called by <code>connect</code> when a connection to peer has been established.</p>
 
         <details class="quote">
-          <summary>Source code in <code>mudproto/base.py</code></summary>
+          <summary>Source code in <code>mudproto/connection.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">on_connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;Called by `connect` when a connection to peer has been established.&quot;&quot;&quot;</span>
@@ -1189,11 +887,11 @@
 
 
 
-<h3 id="mudproto.base.BaseConnectionInterface.on_dataReceived" class="doc doc-heading">
+<h3 id="mudproto.connection.ConnectionInterface.on_dataReceived" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
 
-<a href="#mudproto.base.BaseConnectionInterface.on_dataReceived" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.connection.ConnectionInterface.on_dataReceived" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1219,7 +917,7 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto/base.py</code></summary>
+          <summary>Source code in <code>mudproto/connection.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
 <span class="k">def</span> <span class="nf">on_dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
@@ -1228,6 +926,7 @@
 <span class="sd">	Args:</span>
 <span class="sd">		data: The received data.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -1240,11 +939,11 @@
 
 
 
-<h3 id="mudproto.base.BaseConnectionInterface.write" class="doc doc-heading">
+<h3 id="mudproto.connection.ConnectionInterface.write" class="doc doc-heading">
 <code class="codehilite language-python"><span class="n">Method</span> <span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></code>
 
 
-<a href="#mudproto.base.BaseConnectionInterface.write" class="headerlink" title="Permanent link">&para;</a></h3>
+<a href="#mudproto.connection.ConnectionInterface.write" class="headerlink" title="Permanent link">&para;</a></h3>
 
     <div class="doc doc-contents ">
 
@@ -1270,15 +969,15 @@
   </tbody>
 </table>
         <details class="quote">
-          <summary>Source code in <code>mudproto/base.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
-<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <summary>Source code in <code>mudproto/connection.py</code></summary>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Writes data to peer.</span>
 
 <span class="sd">	Args:</span>
 <span class="sd">		data: The bytes to be written.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>

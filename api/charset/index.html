@@ -267,8 +267,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../base/" class="md-nav__link">
-        base.py
+      <a href="../connection/" class="md-nav__link">
+        connection.py
       </a>
     </li>
   
@@ -894,6 +894,13 @@
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;A charset mix in class for the Telnet protocol.&quot;&quot;&quot;</span>
 
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Defines the constructor.</span>
+
+<span class="sd">		Args:</span>
+<span class="sd">			*args: Positional arguments to be passed to the parent constructor.</span>
+<span class="sd">			**kwargs: Key-word only arguments to be passed to the parent constructor.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
 		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">subnegotiationMap</span><span class="p">[</span><span class="n">CHARSET</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_charset</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_charsets</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="sa">b</span><span class="s2">&quot;US-ASCII&quot;</span><span class="p">,)</span>
@@ -918,12 +925,12 @@
 			<span class="n">target</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
 		<span class="k">except</span> <span class="ne">LookupError</span><span class="p">:</span>
 			<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; not a valid codec&quot;</span><span class="p">)</span>
-			<span class="k">return</span> <span class="kc">None</span>
+			<span class="k">return</span>
 		<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_charsets</span><span class="p">:</span>
 			<span class="k">if</span> <span class="n">target</span> <span class="o">==</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;us-ascii&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
 				<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tell peer we would like to use the </span><span class="si">{</span><span class="n">item</span><span class="si">!r}</span><span class="s2"> charset.&quot;</span><span class="p">)</span>
 				<span class="bp">self</span><span class="o">.</span><span class="n">requestNegotiation</span><span class="p">(</span><span class="n">CHARSET</span><span class="p">,</span> <span class="n">CHARSET_REQUEST</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="n">item</span><span class="p">)</span>
-				<span class="k">return</span> <span class="kc">None</span>
+				<span class="k">return</span>
 		<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not find any charsets which target &#39;</span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
 
 	<span class="k">def</span> <span class="nf">parseSupportedCharsets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
@@ -968,17 +975,17 @@
 			<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown charset negotiation response from peer: </span><span class="si">{</span><span class="n">data</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">wont</span><span class="p">(</span><span class="n">CHARSET</span><span class="p">)</span>
 
-	<span class="k">def</span> <span class="nf">on_enableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">on_enableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 		<span class="k">if</span> <span class="n">option</span> <span class="o">==</span> <span class="n">CHARSET</span><span class="p">:</span>
 			<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Charset negotiation enabled.&quot;</span><span class="p">)</span>
 			<span class="k">return</span> <span class="kc">True</span>
 		<span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_enableLocal</span><span class="p">(</span><span class="n">option</span><span class="p">))</span>  <span class="c1"># pragma: no cover</span>
 
-	<span class="k">def</span> <span class="nf">on_disableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">on_disableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 		<span class="k">if</span> <span class="n">option</span> <span class="o">==</span> <span class="n">CHARSET</span><span class="p">:</span>
 			<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Charset negotiation disabled.&quot;</span><span class="p">)</span>
-			<span class="k">return</span> <span class="kc">None</span>
-		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_disableLocal</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>  <span class="c1"># pragma: no cover</span>
+			<span class="k">return</span>
+		<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_disableLocal</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>  <span class="c1"># type: ignore[safe-super]  # pragma: no cover</span>
 </code></pre></div>
         </details>
 
@@ -1080,11 +1087,43 @@
 
     <div class="doc doc-contents ">
 
-      <p>Initialize self.  See help(type(self)) for accurate signature.</p>
+      <p>Defines the constructor.</p>
 
+<p><strong>Parameters:</strong></p>
+<table role="grid" class="data">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><code>*args</code></td>
+        <td><code>Any</code></td>
+        <td><p>Positional arguments to be passed to the parent constructor.</p></td>
+        <td><code>()</code></td>
+      </tr>
+      <tr>
+        <td><code>**kwargs</code></td>
+        <td><code>Any</code></td>
+        <td><p>Key-word only arguments to be passed to the parent constructor.</p></td>
+        <td><code>{}</code></td>
+      </tr>
+  </tbody>
+</table>
         <details class="quote">
           <summary>Source code in <code>mudproto/charset.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Defines the constructor.</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">		*args: Positional arguments to be passed to the parent constructor.</span>
+<span class="sd">		**kwargs: Key-word only arguments to be passed to the parent constructor.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
 	<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">subnegotiationMap</span><span class="p">[</span><span class="n">CHARSET</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_charset</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">_charsets</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="sa">b</span><span class="s2">&quot;US-ASCII&quot;</span><span class="p">,)</span>
@@ -1326,12 +1365,12 @@
 		<span class="n">target</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
 	<span class="k">except</span> <span class="ne">LookupError</span><span class="p">:</span>
 		<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; not a valid codec&quot;</span><span class="p">)</span>
-		<span class="k">return</span> <span class="kc">None</span>
+		<span class="k">return</span>
 	<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_charsets</span><span class="p">:</span>
 		<span class="k">if</span> <span class="n">target</span> <span class="o">==</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;us-ascii&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
 			<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tell peer we would like to use the </span><span class="si">{</span><span class="n">item</span><span class="si">!r}</span><span class="s2"> charset.&quot;</span><span class="p">)</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">requestNegotiation</span><span class="p">(</span><span class="n">CHARSET</span><span class="p">,</span> <span class="n">CHARSET_REQUEST</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="n">item</span><span class="p">)</span>
-			<span class="k">return</span> <span class="kc">None</span>
+			<span class="k">return</span>
 	<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not find any charsets which target &#39;</span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
 </code></pre></div>
         </details>
@@ -1571,6 +1610,7 @@
 <span class="sd">	Args:</span>
 <span class="sd">		data: The received data.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_receiver</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
@@ -1592,7 +1632,8 @@
     <div class="doc doc-contents ">
 
       <p>Disables a locally managed option.</p>
-<p>This method is called before we disable a locally enabled option, in order to perform any necessary cleanup.</p>
+<p>This method is called before we disable a
+locally enabled option, in order to perform any necessary cleanup.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <div class="codehilite"><pre><span></span><code>If on_enableLocal is overridden, this method must be overridden as well.
@@ -1621,11 +1662,11 @@
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/charset.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_disableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_disableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 	<span class="k">if</span> <span class="n">option</span> <span class="o">==</span> <span class="n">CHARSET</span><span class="p">:</span>
 		<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Charset negotiation disabled.&quot;</span><span class="p">)</span>
-		<span class="k">return</span> <span class="kc">None</span>
-	<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_disableLocal</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>  <span class="c1"># pragma: no cover</span>
+		<span class="k">return</span>
+	<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_disableLocal</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>  <span class="c1"># type: ignore[safe-super]  # pragma: no cover</span>
 </code></pre></div>
         </details>
     </div>
@@ -1753,7 +1794,7 @@ in order to perform any necessary cleanup on our end.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/charset.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_enableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">on_enableLocal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 	<span class="k">if</span> <span class="n">option</span> <span class="o">==</span> <span class="n">CHARSET</span><span class="p">:</span>
 		<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Charset negotiation enabled.&quot;</span><span class="p">)</span>
 		<span class="k">return</span> <span class="kc">True</span>
@@ -2361,14 +2402,14 @@ in order to perform any necessary cleanup on our end.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/charset.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
-<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Writes data to peer.</span>
 
 <span class="sd">	Args:</span>
 <span class="sd">		data: The bytes to be written.</span>
 <span class="sd">	&quot;&quot;&quot;</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_writer</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div>
         </details>
     </div>
