@@ -759,12 +759,12 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-ena
 
 [[package]]
 name = "knickknacks"
-version = "0.3.0"
+version = "0.4.0"
 description = "Small, reusable, miscellaneous pieces of code."
 optional = false
 python-versions = ">=3.9,<4.0"
 files = [
-    {file = "knickknacks-0.3.0-py3-none-any.whl", hash = "sha256:5cee1616259cac26ca535168e311f59e72f5df91f4922b770a32e72a9058903c"},
+    {file = "knickknacks-0.4.0-py3-none-any.whl", hash = "sha256:99a7e412c16a643ba33cfdb63e1ddc00f78559a52ce164fe8d7b0e1d3bb96ddf"},
 ]
 
 [package.dependencies]
@@ -773,7 +773,7 @@ typing-extensions = {version = ">=4.8,<5.0", markers = "python_version < \"3.12\
 
 [package.source]
 type = "url"
-url = "https://github.com/nstockton/knickknacks/releases/download/v0.3.0/knickknacks-0.3.0-py3-none-any.whl"
+url = "https://github.com/nstockton/knickknacks/releases/download/v0.4.0/knickknacks-0.4.0-py3-none-any.whl"
 
 [[package]]
 name = "markdown"
@@ -1881,4 +1881,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "d6e5276e61d91ff34b4eccfaf49b409846087a6361dbc671f4aee3a826daaa37"
+content-hash = "cdb95d06ee6f0056175073902d16299eb2cc30b6ce052e5f584601274e66b15f"

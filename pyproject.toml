@@ -52,7 +52,7 @@
 
 [tool.poetry.dependencies]
 	python = "^3.9"
-	knickknacks = {url = "https://github.com/nstockton/knickknacks/releases/download/v0.3.0/knickknacks-0.3.0-py3-none-any.whl"}
+	knickknacks = {url = "https://github.com/nstockton/knickknacks/releases/download/v0.4.0/knickknacks-0.4.0-py3-none-any.whl"}
 
 [tool.poetry.dev-dependencies]
 	poetry-dynamic-versioning = {version = "1.4.0", extras = ["plugin"]}
