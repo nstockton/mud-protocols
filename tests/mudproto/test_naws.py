@@ -12,7 +12,7 @@ from unittest.mock import Mock, patch
 
 # MUD Protocol Modules:
 from mudproto.naws import UINT16_MAX, Dimensions, NAWSMixIn
-from mudproto.naws import logger as nawsLogger
+from mudproto.naws import logger as naws_logger
 from mudproto.telnet import TelnetProtocol
 from mudproto.telnet_constants import NAWS
 
@@ -23,111 +23,111 @@ class Telnet(NAWSMixIn, TelnetProtocol):
 
 class TestNAWSMixIn(TestCase):
 	def setUp(self) -> None:
-		self.gameReceives: bytearray = bytearray()
-		self.playerReceives: bytearray = bytearray()
-		self.telnetClient: Telnet = Telnet(
-			self.gameReceives.extend,
-			self.playerReceives.extend,
-			isClient=True,
+		self.game_receives: bytearray = bytearray()
+		self.player_receives: bytearray = bytearray()
+		self.telnet_client: Telnet = Telnet(
+			self.game_receives.extend,
+			self.player_receives.extend,
+			is_client=True,
 		)
-		self.telnetServer: Telnet = Telnet(
-			self.gameReceives.extend,
-			self.playerReceives.extend,
-			isClient=False,
+		self.telnet_server: Telnet = Telnet(
+			self.game_receives.extend,
+			self.player_receives.extend,
+			is_client=False,
 		)
 
 	def tearDown(self) -> None:
-		del self.telnetClient
-		del self.telnetServer
-		self.gameReceives.clear()
-		self.playerReceives.clear()
+		del self.telnet_client
+		del self.telnet_server
+		self.game_receives.clear()
+		self.player_receives.clear()
 
-	@patch("mudproto.telnet.TelnetProtocol.requestNegotiation")
-	def test_nawsDimensions_set_when_invalid_value(self, mockRequestNegotiation: Mock) -> None:
-		self.assertEqual(self.telnetClient.nawsDimensions, Dimensions(0, 0))
+	@patch("mudproto.telnet.TelnetProtocol.request_negotiation")
+	def test_naws_dimensions_set_when_invalid_value(self, mock_request_negotiation: Mock) -> None:
+		self.assertEqual(self.telnet_client.naws_dimensions, Dimensions(0, 0))
 		with self.assertRaises(ValueError):
-			self.telnetClient.nawsDimensions = Dimensions(-1, 0)
+			self.telnet_client.naws_dimensions = Dimensions(-1, 0)
 		with self.assertRaises(ValueError):
-			self.telnetClient.nawsDimensions = Dimensions(UINT16_MAX + 1, 0)
+			self.telnet_client.naws_dimensions = Dimensions(UINT16_MAX + 1, 0)
 		with self.assertRaises(ValueError):
-			self.telnetClient.nawsDimensions = Dimensions(0, -1)
+			self.telnet_client.naws_dimensions = Dimensions(0, -1)
 		with self.assertRaises(ValueError):
-			self.telnetClient.nawsDimensions = Dimensions(0, UINT16_MAX + 1)
-		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		self.assertEqual(self.telnetClient.nawsDimensions, Dimensions(0, 0))
-		mockRequestNegotiation.assert_not_called()
+			self.telnet_client.naws_dimensions = Dimensions(0, UINT16_MAX + 1)
+		self.assertEqual((self.player_receives, self.game_receives), (b"", b""))
+		self.assertEqual(self.telnet_client.naws_dimensions, Dimensions(0, 0))
+		mock_request_negotiation.assert_not_called()
 
-	@patch("mudproto.telnet.TelnetProtocol.requestNegotiation")
-	def test_nawsDimensions_set_when_running_as_client(self, mockRequestNegotiation: Mock) -> None:
-		nawsDimensions: Dimensions = Dimensions(80, 25)
+	@patch("mudproto.telnet.TelnetProtocol.request_negotiation")
+	def test_naws_dimensions_set_when_running_as_client(self, mock_request_negotiation: Mock) -> None:
+		naws_dimensions: Dimensions = Dimensions(80, 25)
 		payload: bytes = b"\x00\x50\x00\x19"
-		self.assertEqual(self.telnetClient.nawsDimensions, Dimensions(0, 0))
-		with self.assertLogs(nawsLogger, "DEBUG"):
-			self.telnetClient.nawsDimensions = nawsDimensions
-		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		self.assertEqual(self.telnetClient.nawsDimensions, nawsDimensions)
-		mockRequestNegotiation.assert_called_once_with(NAWS, payload)
+		self.assertEqual(self.telnet_client.naws_dimensions, Dimensions(0, 0))
+		with self.assertLogs(naws_logger, "DEBUG"):
+			self.telnet_client.naws_dimensions = naws_dimensions
+		self.assertEqual((self.player_receives, self.game_receives), (b"", b""))
+		self.assertEqual(self.telnet_client.naws_dimensions, naws_dimensions)
+		mock_request_negotiation.assert_called_once_with(NAWS, payload)
 
-	@patch("mudproto.telnet.TelnetProtocol.requestNegotiation")
-	def test_nawsDimensions_set_when_running_as_server(self, mockRequestNegotiation: Mock) -> None:
-		nawsDimensions: Dimensions = Dimensions(80, 25)
-		self.assertEqual(self.telnetServer.nawsDimensions, Dimensions(0, 0))
-		self.telnetServer.nawsDimensions = nawsDimensions
-		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		self.assertEqual(self.telnetServer.nawsDimensions, nawsDimensions)
-		mockRequestNegotiation.assert_not_called()
+	@patch("mudproto.telnet.TelnetProtocol.request_negotiation")
+	def test_naws_dimensions_set_when_running_as_server(self, mock_request_negotiation: Mock) -> None:
+		naws_dimensions: Dimensions = Dimensions(80, 25)
+		self.assertEqual(self.telnet_server.naws_dimensions, Dimensions(0, 0))
+		self.telnet_server.naws_dimensions = naws_dimensions
+		self.assertEqual((self.player_receives, self.game_receives), (b"", b""))
+		self.assertEqual(self.telnet_server.naws_dimensions, naws_dimensions)
+		mock_request_negotiation.assert_not_called()
 
 	def test_on_naws_when_running_as_client(self) -> None:
 		payload: bytes = b"\x00\x50\x00\x19"
-		with self.assertLogs(nawsLogger, "WARNING"):
-			self.telnetClient.on_naws(payload)
-		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		self.assertEqual(self.telnetClient.nawsDimensions, Dimensions(0, 0))
+		with self.assertLogs(naws_logger, "WARNING"):
+			self.telnet_client.on_naws(payload)
+		self.assertEqual((self.player_receives, self.game_receives), (b"", b""))
+		self.assertEqual(self.telnet_client.naws_dimensions, Dimensions(0, 0))
 
 	def test_on_naws_when_running_as_server_and_invalid_data(self) -> None:
-		with self.assertLogs(nawsLogger, "WARNING"):
-			self.telnetServer.on_naws(b"**junk**")
-		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		self.assertEqual(self.telnetServer.nawsDimensions, Dimensions(0, 0))
+		with self.assertLogs(naws_logger, "WARNING"):
+			self.telnet_server.on_naws(b"**junk**")
+		self.assertEqual((self.player_receives, self.game_receives), (b"", b""))
+		self.assertEqual(self.telnet_server.naws_dimensions, Dimensions(0, 0))
 
 	def test_on_naws_when_running_as_server_and_valid_data(self) -> None:
-		nawsDimensions: Dimensions = Dimensions(80, 25)
+		naws_dimensions: Dimensions = Dimensions(80, 25)
 		payload: bytes = b"\x00\x50\x00\x19"
-		self.assertEqual(self.telnetServer.nawsDimensions, Dimensions(0, 0))
-		with self.assertLogs(nawsLogger, "DEBUG"):
-			self.telnetServer.on_naws(payload)
-		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		self.assertEqual(self.telnetServer.nawsDimensions, nawsDimensions)
+		self.assertEqual(self.telnet_server.naws_dimensions, Dimensions(0, 0))
+		with self.assertLogs(naws_logger, "DEBUG"):
+			self.telnet_server.on_naws(payload)
+		self.assertEqual((self.player_receives, self.game_receives), (b"", b""))
+		self.assertEqual(self.telnet_server.naws_dimensions, naws_dimensions)
 
 	@patch("mudproto.telnet.TelnetProtocol.do")
-	def test_on_connectionMade_when_acting_as_client(self, mockDo: Mock) -> None:
-		self.telnetClient.on_connectionMade()
-		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		mockDo.assert_not_called()
+	def test_on_connection_made_when_acting_as_client(self, mock_do: Mock) -> None:
+		self.telnet_client.on_connection_made()
+		self.assertEqual((self.player_receives, self.game_receives), (b"", b""))
+		mock_do.assert_not_called()
 
 	@patch("mudproto.telnet.TelnetProtocol.do")
-	def test_on_connectionMade_when_acting_as_server(self, mockDo: Mock) -> None:
-		with self.assertLogs(nawsLogger, "DEBUG"):
-			self.telnetServer.on_connectionMade()
-		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
-		mockDo.assert_called_once_with(NAWS)
+	def test_on_connection_made_when_acting_as_server(self, mock_do: Mock) -> None:
+		with self.assertLogs(naws_logger, "DEBUG"):
+			self.telnet_server.on_connection_made()
+		self.assertEqual((self.player_receives, self.game_receives), (b"", b""))
+		mock_do.assert_called_once_with(NAWS)
 
-	def test_on_enableLocal(self) -> None:
-		with self.assertLogs(nawsLogger, "DEBUG"):
-			self.assertTrue(self.telnetClient.on_enableLocal(NAWS))
-		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
+	def test_on_enable_local(self) -> None:
+		with self.assertLogs(naws_logger, "DEBUG"):
+			self.assertTrue(self.telnet_client.on_enable_local(NAWS))
+		self.assertEqual((self.player_receives, self.game_receives), (b"", b""))
 
-	def test_on_disableLocal(self) -> None:
-		with self.assertLogs(nawsLogger, "DEBUG"):
-			self.telnetClient.on_disableLocal(NAWS)  # Should not throw an exception.
-		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
+	def test_on_disable_local(self) -> None:
+		with self.assertLogs(naws_logger, "DEBUG"):
+			self.telnet_client.on_disable_local(NAWS)  # Should not throw an exception.
+		self.assertEqual((self.player_receives, self.game_receives), (b"", b""))
 
-	def test_on_enableRemote(self) -> None:
-		with self.assertLogs(nawsLogger, "DEBUG"):
-			self.assertTrue(self.telnetServer.on_enableRemote(NAWS))
-		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
+	def test_on_enable_remote(self) -> None:
+		with self.assertLogs(naws_logger, "DEBUG"):
+			self.assertTrue(self.telnet_server.on_enable_remote(NAWS))
+		self.assertEqual((self.player_receives, self.game_receives), (b"", b""))
 
-	def test_on_disableRemote(self) -> None:
-		with self.assertLogs(nawsLogger, "DEBUG"):
-			self.telnetServer.on_disableRemote(NAWS)  # Should not throw an exception.
-		self.assertEqual((self.playerReceives, self.gameReceives), (b"", b""))
+	def test_on_disable_remote(self) -> None:
+		with self.assertLogs(naws_logger, "DEBUG"):
+			self.telnet_server.on_disable_remote(NAWS)  # Should not throw an exception.
+		self.assertEqual((self.player_receives, self.game_receives), (b"", b""))

@@ -28,7 +28,7 @@ class ConnectionInterface(ABC):
 		writer: ConnectionWriterType,
 		receiver: ConnectionReceiverType,
 		*,
-		isClient: bool,
+		is_client: bool,
 		**kwargs: Any,
 	) -> None:
 		"""
@@ -37,22 +37,22 @@ class ConnectionInterface(ABC):
 		Args:
 			writer: The object where output is written.
 			receiver: The object where input is received.
-			isClient: True if acting as a client, False if acting as a server.
+			is_client: True if acting as a client, False if acting as a server.
 			**kwargs: Key-word only arguments (currently unused).
 		"""
 		self._writer: ConnectionWriterType = writer
 		self._receiver: ConnectionReceiverType = receiver
-		self._isClient: bool = isClient
+		self._is_client: bool = is_client
 
 	@property
-	def isClient(self) -> bool:
+	def is_client(self) -> bool:
 		"""True if acting as a client, False otherwise."""
-		return self._isClient
+		return self._is_client
 
 	@property
-	def isServer(self) -> bool:
+	def is_server(self) -> bool:
 		"""True if acting as a server, False otherwise."""
-		return not self._isClient
+		return not self._is_client
 
 	def write(self, data: bytes) -> None:
 		"""
@@ -64,15 +64,15 @@ class ConnectionInterface(ABC):
 		self._writer(data)
 
 	@abstractmethod
-	def on_connectionMade(self) -> None:
+	def on_connection_made(self) -> None:
 		"""Called by `connect` when a connection to peer has been established."""
 
 	@abstractmethod
-	def on_connectionLost(self) -> None:
+	def on_connection_lost(self) -> None:
 		"""Called by `disconnect` when a connection to peer has been lost."""
 
 	@abstractmethod
-	def on_dataReceived(self, data: bytes) -> None:
+	def on_data_received(self, data: bytes) -> None:
 		"""
 		Called by `parse` when data is received.
 

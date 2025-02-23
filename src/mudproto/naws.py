@@ -23,6 +23,7 @@ from .telnet_constants import NAWS
 
 
 UINT16_MAX: int = 0xFFFF
+NAWS_SEQUENCE_LENGTH: int = 4
 
 
 logger: logging.Logger = logging.getLogger(__name__)
@@ -48,7 +49,7 @@ class Dimensions:
 			raise ValueError(f"{self!r}: Values must be in range 0 - {UINT16_MAX}.")
 
 	@classmethod
-	def fromBytes(cls: type[Self], data: bytes) -> Self:
+	def from_bytes(cls: type[Self], data: bytes) -> Self:
 		"""
 		Creates a new Dimensions instance from NAWS bytes.
 
@@ -57,15 +58,18 @@ class Dimensions:
 
 		Returns:
 			A Dimensions instance using the new values.
+
+		Raises:
+			ValueError: Invalid NAWS sequence.
 		"""
-		if len(data) != 4:
+		if len(data) != NAWS_SEQUENCE_LENGTH:
 			raise ValueError(f"Invalid NAWS sequence: {data!r}.")
 		# NAWS is negotiated with 16-bit words.
 		width: int = int.from_bytes(data[:2], byteorder="big", signed=False)
 		height: int = int.from_bytes(data[2:], byteorder="big", signed=False)
 		return cls(width=width, height=height)
 
-	def toBytes(self) -> bytes:
+	def to_bytes(self) -> bytes:
 		"""
 		Converts the width and height to NAWS bytes.
 
@@ -90,21 +94,21 @@ class NAWSMixIn(TelnetInterface):
 			**kwargs: Key-word only arguments to be passed to the parent constructor.
 		"""
 		super().__init__(*args, **kwargs)
-		self.subnegotiationMap[NAWS] = self.on_naws
-		self._nawsDimensions: Dimensions = Dimensions(width=0, height=0)
+		self.subnegotiation_map[NAWS] = self.on_naws
+		self._naws_dimensions: Dimensions = Dimensions(width=0, height=0)
 
 	@property
-	def nawsDimensions(self) -> Dimensions:
+	def naws_dimensions(self) -> Dimensions:
 		"""The window dimensions."""
-		return self._nawsDimensions
+		return self._naws_dimensions
 
-	@nawsDimensions.setter
-	def nawsDimensions(self, value: Union[Dimensions, Sequence[int]]) -> None:
-		self._nawsDimensions = value if isinstance(value, Dimensions) else Dimensions(*value)
-		if self.isClient:
-			payload: bytes = self._nawsDimensions.toBytes()
+	@naws_dimensions.setter
+	def naws_dimensions(self, value: Union[Dimensions, Sequence[int]]) -> None:
+		self._naws_dimensions = value if isinstance(value, Dimensions) else Dimensions(*value)
+		if self.is_client:
+			payload: bytes = self._naws_dimensions.to_bytes()
 			logger.debug(f"Sending NAWS payload: {payload!r}.")
-			self.requestNegotiation(NAWS, payload)
+			self.request_negotiation(NAWS, payload)
 
 	def on_naws(self, data: bytes) -> None:
 		"""
@@ -113,44 +117,44 @@ class NAWSMixIn(TelnetInterface):
 		Args:
 			data: The payload.
 		"""
-		if self.isClient:
+		if self.is_client:
 			logger.warning("Received NAWS subnegotiation while running in client mode.")
 			return
 		try:
-			dimensions: Dimensions = Dimensions.fromBytes(data)
+			dimensions: Dimensions = Dimensions.from_bytes(data)
 			logger.debug(
 				f"Received window size from peer: width = {dimensions.width}, height = {dimensions.height}."
 			)
-			self.nawsDimensions = dimensions
+			self.naws_dimensions = dimensions
 		except ValueError as e:
 			logger.warning(repr(e))
 
-	def on_connectionMade(self) -> None:  # NOQA: D102
-		super().on_connectionMade()  # type: ignore[safe-super]
-		if self.isServer:
+	def on_connection_made(self) -> None:  # NOQA: D102
+		super().on_connection_made()  # type: ignore[safe-super]
+		if self.is_server:
 			logger.debug("We ask peer to enable NAWS.")
 			self.do(NAWS)
 
-	def on_enableLocal(self, option: bytes) -> bool:  # NOQA: D102
-		if self.isClient and option == NAWS:
+	def on_enable_local(self, option: bytes) -> bool:  # NOQA: D102
+		if self.is_client and option == NAWS:
 			logger.debug("We enable NAWS.")
 			return True
-		return bool(super().on_enableLocal(option))  # pragma: no cover
+		return bool(super().on_enable_local(option))  # pragma: no cover
 
-	def on_disableLocal(self, option: bytes) -> None:  # NOQA: D102
-		if self.isClient and option == NAWS:
+	def on_disable_local(self, option: bytes) -> None:  # NOQA: D102
+		if self.is_client and option == NAWS:
 			logger.debug("We disable NAWS.")
 			return
-		super().on_disableLocal(option)  # type: ignore[safe-super]  # pragma: no cover
+		super().on_disable_local(option)  # type: ignore[safe-super]  # pragma: no cover
 
-	def on_enableRemote(self, option: bytes) -> bool:  # NOQA: D102
-		if self.isServer and option == NAWS:
+	def on_enable_remote(self, option: bytes) -> bool:  # NOQA: D102
+		if self.is_server and option == NAWS:
 			logger.debug("Peer enables NAWS.")
 			return True
-		return bool(super().on_enableRemote(option))  # pragma: no cover
+		return bool(super().on_enable_remote(option))  # pragma: no cover
 
-	def on_disableRemote(self, option: bytes) -> None:  # NOQA: D102
-		if self.isServer and option == NAWS:
+	def on_disable_remote(self, option: bytes) -> None:  # NOQA: D102
+		if self.is_server and option == NAWS:
 			logger.debug("Peer disables NAWS.")
 			return
-		super().on_disableRemote(option)  # type: ignore[safe-super]  # pragma: no cover
+		super().on_disable_remote(option)  # type: ignore[safe-super]  # pragma: no cover

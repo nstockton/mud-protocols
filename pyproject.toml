@@ -52,7 +52,7 @@
 
 [tool.poetry.dependencies]
 	python = "^3.9"
-	knickknacks = {url = "https://github.com/nstockton/knickknacks/releases/download/v0.4.0/knickknacks-0.4.0-py3-none-any.whl"}
+	knickknacks = ">=0.5.0,<0.6.0"
 
 [tool.poetry.dev-dependencies]
 	poetry-dynamic-versioning = {version = "1.4.0", extras = ["plugin"]}
@@ -70,7 +70,7 @@
 [tool.poetry.group.lint.dependencies]
 	isort = "^5.13"
 	mypy = "^1.8"
-	ruff = "^0.6"
+	ruff = "^0.9"
 
 [tool.poetry.group.test.dependencies]
 	coverage = {version = "^7.4", extras = ["toml"]}
@@ -91,7 +91,6 @@
 [tool.ruff]
 	extend-include = [
 		"*.pyw",
-		"./pyinstaller_windows.spec",
 	]
 	force-exclude = true
 	line-length = 110
@@ -102,46 +101,64 @@
 	line-ending = "cr-lf"
 
 [tool.ruff.lint]
+	preview = true
+	# select = ["E4", "E7", "E9", "F"]  # The default.
+	select = ["ALL"]  # Enable all rules.
 	extend-select = [
-		"B",  # Flake8-bugbear.
-		"C901",  # McCabe complexity.
-		"D",  # Pydocstyle.
 		"D213",  # Multi-line docstring summary should start at the second line.
-		"E501",  # Line too long.
-		"N801",  # Class name should use CapWords convention.
-		"N804",  # First argument of a class method should be named cls.
-		"N805",  # First argument of a method should be named self.
-		"N818",  # Exception name should be named with an Error suffix.
-		"PERF",  # Perflint.
-		"RET",  # Flake8-return.
-		"RSE",  # Flake8-raise.
-		"SIM",  # Flake8-simplify.
-		"W",  # Pycodestyle warnings.
 	]
 	ignore = [
+		"ANN",  # Flake8-annotations. (We use MyPy for this)
+		"ARG",  # Flake8-unused-arguments.
+		"B019",  # Use of functools.lru_cache or functools.cache on methods can lead to memory leaks.
+		"COM812",  # Trailing comma missing. (Conflicts with formatter)
 		"D105",  # Missing docstring in magic method.
 		"D206",  # Docstring should be indented with spaces, not tabs.
 		"D212",  # Multi-line docstring summary should start at the first line.
-		"I",  # ISort will handle imports instead of Ruff.
+		"EM",  # Flake8-errmsg.
+		"G",  # Flake8-logging-format.
+		"I",  # ISort. (We use ISort package for this)
+		"PT",  # Flake8-pytest-style.
+		"T20",  # Flake8-print.
+		"TCH",  # Flake8-type-checking.
+		"TRY003",  # Avoid specifying long messages outside the exception class.
+		"UP007",  # Use X | Y for union type annotations. (I hate this syntax)
+		"UP045",  # Use X | Y for optional type annotations. (I hate this syntax)
 		"W191",  # Indentation contains tabs.
 	]
 	typing-modules = [
 		"mudproto.typedef",
 		"knickknacks.typedef",
 	]
-	unfixable = [
-		"B",  # Flake8-bugbear.
-	]
+	unfixable = []
+
+[tool.ruff.lint.flake8-builtins]
+	# To stop Ruff complaining when a built-in name is used as a variable name, add the name to the list.
+	builtins-ignorelist = []
+
+[tool.ruff.lint.flake8-copyright]
+	author = "Nick Stockton"
+	min-file-size = 1  # Minimum file size (in bytes) in which to enforce copyright.
+
+[tool.ruff.lint.flake8-implicit-str-concat]
+	allow-multiline = false
 
 [tool.ruff.lint.mccabe]
 	max-complexity = 15
 
 [tool.ruff.lint.per-file-ignores]
 	"**/__init__.py" = ["D1"]
-	"./tests/**" = ["D1"]
+	"**/_version.py" = ["CPY001"]
+	"./tests/**" = ["D1", "ERA001", "PLR09", "SLF001"]
+	"./src/mudproto/mpi.py" = ["PTH"]
 
 [tool.ruff.lint.pydocstyle]
 	convention = "google"
+	ignore-decorators = ["typing.overload"]
+
+[tool.ruff.lint.ruff]
+	# Make it a violation to use a tuple in a subscript without parentheses.
+	parenthesize-tuple-in-subscript = true
 
 [tool.coverage.report]
 	precision = 0

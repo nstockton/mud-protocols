@@ -14,9 +14,12 @@ import logging
 from types import TracebackType
 from typing import Any, Optional
 
+# Third-party Modules:
+from knickknacks.typedef import Self
+
 # Local Modules:
 from .connection import ConnectionInterface
-from .telnet import escapeIAC
+from .telnet import escape_iac
 from .telnet_constants import CR, CR_LF, CR_NULL, GA, IAC, LF
 from .typedef import ConnectionReceiverType, ConnectionWriterType
 
@@ -32,8 +35,8 @@ class Manager:
 		writer: ConnectionWriterType,
 		receiver: ConnectionReceiverType,
 		*,
-		isClient: bool,
-		promptTerminator: Optional[bytes] = None,
+		is_client: bool,
+		prompt_terminator: Optional[bytes] = None,
 	) -> None:
 		"""
 		Defines the constructor.
@@ -41,51 +44,51 @@ class Manager:
 		Args:
 			writer: The object where output is written.
 			receiver: The object where input is received.
-			isClient: True if acting as a client, False if acting as a server.
-			promptTerminator: The byte sequence used to terminate a prompt. If None, IAC + GA is used.
+			is_client: True if acting as a client, False if acting as a server.
+			prompt_terminator: The byte sequence used to terminate a prompt. If None, IAC + GA is used.
 		"""
 		self._writer: ConnectionWriterType = writer
 		self._receiver: ConnectionReceiverType = receiver
-		self._isClient: bool = isClient
-		self.promptTerminator: bytes
-		if promptTerminator is None:
-			self.promptTerminator = IAC + GA
+		self._is_client: bool = is_client
+		self.prompt_terminator: bytes
+		if prompt_terminator is None:
+			self.prompt_terminator = IAC + GA
 		else:
-			self.promptTerminator = (
-				promptTerminator.replace(CR_LF, LF)
+			self.prompt_terminator = (
+				prompt_terminator.replace(CR_LF, LF)
 				.replace(CR_NULL, CR)
 				.replace(CR, CR_NULL)
 				.replace(LF, CR_LF)
 			)
-		self._readBuffer: bytearray = bytearray()
-		self._writeBuffer: bytearray = bytearray()
+		self._read_buffer: bytearray = bytearray()
+		self._write_buffer: bytearray = bytearray()
 		self._handlers: list[ConnectionInterface] = []
-		self._isConnected: bool = False
+		self._is_connected: bool = False
 
 	@property
-	def isClient(self) -> bool:
+	def is_client(self) -> bool:
 		"""True if acting as a client, False otherwise."""
-		return self._isClient
+		return self._is_client
 
 	@property
-	def isServer(self) -> bool:
+	def is_server(self) -> bool:
 		"""True if acting as a server, False otherwise."""
-		return not self._isClient
+		return not self._is_client
 
 	@property
-	def isConnected(self) -> bool:
+	def is_connected(self) -> bool:
 		"""Connection status."""
-		return self._isConnected
+		return self._is_connected
 
-	def __enter__(self) -> Manager:
+	def __enter__(self) -> Self:
 		self.connect()
 		return self
 
 	def __exit__(
 		self,
-		excType: Optional[type[BaseException]],
-		excValue: Optional[BaseException],
-		excTraceback: Optional[TracebackType],
+		exc_type: Optional[type[BaseException]],
+		exc_value: Optional[BaseException],
+		exc_traceback: Optional[TracebackType],
 	) -> None:
 		self.disconnect()
 
@@ -103,23 +106,23 @@ class Manager:
 		If data was buffered while not connected, `parse` will be called with the data.
 		"""
 		data: bytes
-		if not self.isConnected:
-			self._isConnected = True
-			if self._readBuffer:
-				data = bytes(self._readBuffer)
-				self._readBuffer.clear()
+		if not self.is_connected:
+			self._is_connected = True
+			if self._read_buffer:
+				data = bytes(self._read_buffer)
+				self._read_buffer.clear()
 				self.parse(data)
-			if self._writeBuffer:
-				data = bytes(self._writeBuffer)
-				self._writeBuffer.clear()
+			if self._write_buffer:
+				data = bytes(self._write_buffer)
+				self._write_buffer.clear()
 				self.write(data)
 
 	def disconnect(self) -> None:
 		"""Signals that peer has disconnected."""
-		if self.isConnected:
+		if self.is_connected:
 			while self._handlers:
 				self.unregister(self._handlers[0])
-			self._isConnected = False
+			self._is_connected = False
 
 	def parse(self, data: bytes) -> None:
 		"""
@@ -130,14 +133,14 @@ class Manager:
 		Args:
 			data: The data to be parsed.
 		"""
-		if not self.isConnected or not self._handlers:
-			self._readBuffer.extend(data)
+		if not self.is_connected or not self._handlers:
+			self._read_buffer.extend(data)
 			return
-		if self._readBuffer:
-			data = bytes(self._readBuffer + data)
-			self._readBuffer.clear()
+		if self._read_buffer:
+			data = bytes(self._read_buffer + data)
+			self._read_buffer.clear()
 		if data:
-			self._handlers[0].on_dataReceived(data)
+			self._handlers[0].on_data_received(data)
 
 	def write(self, data: bytes, *, escape: bool = False, prompt: bool = False) -> None:
 		"""
@@ -149,15 +152,15 @@ class Manager:
 			prompt: If True, appends the prompt terminator to the data.
 		"""
 		if escape:
-			data = escapeIAC(data).replace(CR, CR_NULL).replace(LF, CR_LF)
+			data = escape_iac(data).replace(CR, CR_NULL).replace(LF, CR_LF)
 		if prompt:
-			data += self.promptTerminator
-		if not self.isConnected or not self._handlers:
-			self._writeBuffer.extend(data)
+			data += self.prompt_terminator
+		if not self.is_connected or not self._handlers:
+			self._write_buffer.extend(data)
 			return
-		if self._writeBuffer:
-			data = bytes(self._writeBuffer + data)
-			self._writeBuffer.clear()
+		if self._write_buffer:
+			data = bytes(self._write_buffer + data)
+			self._write_buffer.clear()
 		if data:
 			self._writer(data)
 
@@ -168,17 +171,22 @@ class Manager:
 		Args:
 			handler: The handler to be registered.
 			**kwargs: Key word arguments to be passed to the handler's constructer.
+
+		Raises:
+			TypeError: Handler is an instance instead of a class.
+			ValueError: Handler was already registered.
 		"""
 		if not inspect.isclass(handler):
-			raise ValueError("Class required, not instance.")
-		for i in self._handlers:
-			if isinstance(i, handler):
-				raise ValueError("Already registered.")
-		instance: ConnectionInterface = handler(self.write, self._receiver, isClient=self._isClient, **kwargs)
+			raise TypeError("Class required, not instance.")
+		if any(i for i in self._handlers if isinstance(i, handler)):
+			raise ValueError("Already registered.")
+		instance: ConnectionInterface = handler(
+			self.write, self._receiver, is_client=self._is_client, **kwargs
+		)
 		if self._handlers:
-			self._handlers[-1]._receiver = instance.on_dataReceived
+			self._handlers[-1]._receiver = instance.on_data_received  # NOQA: SLF001
 		self._handlers.append(instance)
-		instance.on_connectionMade()
+		instance.on_connection_made()
 
 	def unregister(self, instance: ConnectionInterface) -> None:
 		"""
@@ -186,13 +194,17 @@ class Manager:
 
 		Args:
 			instance: The handler instance to be unregistered.
+
+		Raises:
+			TypeError: Handler is a class instead of an instance.
+			ValueError: Handler was never registered.
 		"""
 		if inspect.isclass(instance):
-			raise ValueError("Instance required, not class.")
+			raise TypeError("Instance required, not class.")
 		if instance not in self._handlers:
 			raise ValueError("Instance wasn't registered.")
 		index = self._handlers.index(instance)
 		self._handlers.remove(instance)
 		if self._handlers and index > 0:
-			self._handlers[index - 1]._receiver = instance._receiver
-		instance.on_connectionLost()
+			self._handlers[index - 1]._receiver = instance._receiver  # NOQA: SLF001
+		instance.on_connection_lost()

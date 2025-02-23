@@ -34,7 +34,7 @@ class CharsetMixIn(TelnetInterface):
 			**kwargs: Key-word only arguments to be passed to the parent constructor.
 		"""
 		super().__init__(*args, **kwargs)
-		self.subnegotiationMap[CHARSET] = self.on_charset
+		self.subnegotiation_map[CHARSET] = self.on_charset
 		self._charsets: tuple[bytes, ...] = (b"US-ASCII",)
 		self._charset: bytes = self._charsets[0]
 
@@ -43,7 +43,7 @@ class CharsetMixIn(TelnetInterface):
 		"""The currently used character set."""
 		return str(self._charset, "us-ascii")
 
-	def negotiateCharset(self, name: Union[bytes, str]) -> None:
+	def negotiate_charset(self, name: Union[bytes, str]) -> None:
 		"""
 		Negotiates changing the character set.
 
@@ -61,11 +61,12 @@ class CharsetMixIn(TelnetInterface):
 		for item in self._charsets:
 			if target == codecs.lookup(str(item, "us-ascii")).name:
 				logger.debug(f"Tell peer we would like to use the {item!r} charset.")
-				self.requestNegotiation(CHARSET, CHARSET_REQUEST + separator + item)
+				self.request_negotiation(CHARSET, CHARSET_REQUEST + separator + item)
 				return
 		logger.warning(f"Could not find any charsets which target '{target}'")
 
-	def parseSupportedCharsets(self, response: bytes) -> tuple[bytes, ...]:
+	@staticmethod
+	def parse_supported_charsets(response: bytes) -> tuple[bytes, ...]:
 		"""
 		Parses the supported character sets from peer.
 
@@ -95,9 +96,9 @@ class CharsetMixIn(TelnetInterface):
 		"""
 		status, response = data[:1], data[1:]
 		if status == CHARSET_REQUEST:
-			self._charsets = self.parseSupportedCharsets(response)
+			self._charsets = self.parse_supported_charsets(response)
 			logger.debug(f"Peer responds: Supported charsets: {self._charsets!r}.")
-			self.negotiateCharset(self._charset)
+			self.negotiate_charset(self._charset)
 		elif status == CHARSET_ACCEPTED:
 			logger.debug(f"Peer responds: Charset {response!r} accepted.")
 			self._charset = response
@@ -107,14 +108,14 @@ class CharsetMixIn(TelnetInterface):
 			logger.warning(f"Unknown charset negotiation response from peer: {data!r}")
 			self.wont(CHARSET)
 
-	def on_enableLocal(self, option: bytes) -> bool:  # NOQA: D102
+	def on_enable_local(self, option: bytes) -> bool:  # NOQA: D102
 		if option == CHARSET:
 			logger.debug("Charset negotiation enabled.")
 			return True
-		return bool(super().on_enableLocal(option))  # pragma: no cover
+		return bool(super().on_enable_local(option))  # pragma: no cover
 
-	def on_disableLocal(self, option: bytes) -> None:  # NOQA: D102
+	def on_disable_local(self, option: bytes) -> None:  # NOQA: D102
 		if option == CHARSET:
 			logger.debug("Charset negotiation disabled.")
 			return
-		super().on_disableLocal(option)  # type: ignore[safe-super]  # pragma: no cover
+		super().on_disable_local(option)  # type: ignore[safe-super]  # pragma: no cover
