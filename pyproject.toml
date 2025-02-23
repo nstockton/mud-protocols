@@ -1,21 +1,25 @@
 [build-system]
-	requires = [
-		"poetry-core>=1.0.0",
-		"poetry-dynamic-versioning==1.4.0",
-	]
-	build-backend = "poetry_dynamic_versioning.backend"
+	requires = ["pdm-backend"]
+	build-backend = "pdm.backend"
 
-[tool.poetry]
+[project]
 	name = "mud-protocols"
-	version = "0.0.0"
+	authors = [
+		{name = "Nick Stockton", email = "nstockton@users.noreply.github.com"},
+	]
 	description = "MUD protocols implemented in Python."
-	authors = ["Nick Stockton <nstockton@users.noreply.github.com>"]
-	license = "MPL-2.0"
+	license = {text = "MPL-2.0"}
 	readme = "README.md"
-	homepage = "https://github.com/nstockton/mud-protocols"
-	repository = "https://github.com/nstockton/mud-protocols"
-	documentation = "https://nstockton.github.io/mud-protocols"
-	keywords = ["mud", "protocol", "telnet"]
+	requires-python = ">=3.9,<4.0"
+	dependencies = [
+		"knickknacks>=0.5.0,<0.6.0",
+	]
+	dynamic = ["version"]
+	keywords = [
+		"mud",
+		"protocol",
+		"telnet",
+	]
 	classifiers = [
 		"License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
 		"Programming Language :: Python",
@@ -41,52 +45,56 @@
 		"Operating System :: Unix",
 		"Topic :: Software Development :: Libraries",
 	]
-	packages = [
-		{include = "mudproto", from = "src"},
+
+[project.urls]
+	homepage = "https://github.com/nstockton/mud-protocols"
+	repository = "https://github.com/nstockton/mud-protocols"
+	documentation = "https://nstockton.github.io/mud-protocols"
+
+[dependency-groups]
+	dev = [
+		"pre-commit>=3.5,<4.0",
 	]
-	include = [
-		{path = "tests/*", format = "sdist"},
-		{path = "poetry.lock", format = "sdist"},
+	docs = [
+		"jinja2==3.0.3",
+		"mkdocs==1.2.3",
+		"mkdocs-autorefs==0.3.1",
+		"mkdocs-material==8.1.3",
+		"mkdocs-material-extensions==1.0.3",
+		"mkdocstrings==0.17.0",
+		"pytkdocs @ git+https://github.com/nstockton/pytkdocs.git@9991d493b408c403ac5691074e2af2e509f22926",
 	]
-	exclude = []
-
-[tool.poetry.dependencies]
-	python = "^3.9"
-	knickknacks = ">=0.5.0,<0.6.0"
-
-[tool.poetry.dev-dependencies]
-	poetry-dynamic-versioning = {version = "1.4.0", extras = ["plugin"]}
-	pre-commit = "^3.5"
-
-[tool.poetry.group.docs.dependencies]
-	jinja2 = "3.0.3"  # See https://github.com/mkdocs/mkdocs/issues/2799
-	mkdocs = "1.2.3"
-	mkdocs-autorefs = "0.3.1"
-	mkdocs-material = "8.1.3"
-	mkdocs-material-extensions = "1.0.3"
-	mkdocstrings = "0.17.0"
-	pytkdocs = {git = "https://github.com/nstockton/pytkdocs.git", rev = "9991d493b408c403ac5691074e2af2e509f22926"}
-
-[tool.poetry.group.lint.dependencies]
-	isort = "^5.13"
-	mypy = "^1.8"
-	ruff = "^0.9"
-
-[tool.poetry.group.test.dependencies]
-	coverage = {version = "^7.4", extras = ["toml"]}
-
-[tool.poetry-dynamic-versioning]
-	enable = true
-	vcs = "git"
-	format-jinja = "{% if distance == 0 %}{{ base }}{% else %}{{ base }}+{{ distance }}.g{{ commit|truncate(7,true,'') }}{% endif %}"
-
-[tool.poetry-dynamic-versioning.substitution]
-	files = [
-		"src/*.py", "src/*/__init__.py", "src/*/__version__.py", "src/*/_version.py",
+	lint = [
+		"isort>=5.13,<6.0",
+		"mypy>=1.14,<2.0",
+		"ruff>=0.9,<1.0",
 	]
-	patterns = [
-		"(^__version__(?:\\s*[:]\\s*str)?\\s*=\\s*['\"])[^'\"]*(['\"])",
+	test = [
+		"coverage[toml]>=7.6,<8.0",
 	]
+
+[tool.pdm.build]
+	package-dir = "src"
+	includes = [
+		"src/mudproto",
+	]
+	excludes = []
+	source-includes = [
+		"tests",
+		"uv.lock",
+	]
+
+[tool.pdm.version]
+	fallback_version = "0.0.0"
+	source = "scm"
+	tag_filter = "[vV][0-9]*"
+	tag_regex = '^(?:[vV])(?P<version>\d+\.\d+\.\d+)(?:.*)$'
+	write_to = "mudproto/_version.py"
+	write_template = "__version__: str = \"{}\"\r\n"
+
+[tool.uv]
+	default-groups = ["dev", "docs", "lint", "test"]
+	upgrade-package = ["mud-protocols"]
 
 [tool.ruff]
 	extend-include = [
