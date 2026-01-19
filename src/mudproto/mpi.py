@@ -19,6 +19,7 @@ import tempfile
 import textwrap
 import threading
 from enum import Enum, auto
+from pathlib import Path
 from typing import Any, Union
 
 # Local Modules:
@@ -115,28 +116,28 @@ class MPIProtocol(ConnectionInterface):
 		with tempfile.NamedTemporaryFile(
 			"w", encoding="utf-8", newline=newline, prefix="mume_editing_", suffix=".txt", delete=False
 		) as temp_file_obj:
-			file_name = temp_file_obj.name
+			file_path = Path(temp_file_obj.name)
 			temp_file_obj.write(body)
-		last_modified = os.path.getmtime(file_name)
+		last_modified = file_path.stat().st_mtime
 		if self.output_format == "tintin":
-			print(f"MPICOMMAND:{self.editor} {file_name}:MPICOMMAND")
+			print(f"MPICOMMAND:{self.editor} {file_path}:MPICOMMAND")
 			input("Continue:")
 		else:
-			subprocess.run((*self.editor.split(), file_name))  # NOQA: PLW1510, S603
+			subprocess.run((*self.editor.split(), str(file_path)))  # NOQA: PLW1510, S603
 		response: str
-		if os.path.getmtime(file_name) == last_modified:
+		if file_path.stat().st_mtime == last_modified:
 			# The user closed the text editor without saving. Cancel the editing session.
 			response = f"C{session}\n"
 		else:
 			if self.is_word_wrapping:
-				with open(file_name, encoding="utf-8", newline=newline) as file_obj:
+				with file_path.open(encoding="utf-8", newline=newline) as file_obj:
 					text: str = file_obj.read()
 				text = self.postprocess(text)
-				with open(file_name, "w", encoding="utf-8", newline=newline) as file_obj:
+				with file_path.open("w", encoding="utf-8", newline=newline) as file_obj:
 					file_obj.write(text)
-			with open(file_name, encoding="utf-8", newline=newline) as file_obj:
+			with file_path.open(encoding="utf-8", newline=newline) as file_obj:
 				response = f"E{session}\n{file_obj.read().strip()}\n"
-		os.remove(file_name)
+		file_path.unlink(missing_ok=True)
 		# MUME requires that output body be encoded in Latin-1 with Unix line endings.
 		output: bytes = bytes(response, "latin-1").replace(CR, b"")
 		self.write(MPI_INIT + b"E" + b"%d" % len(output) + LF + output)
@@ -155,13 +156,13 @@ class MPIProtocol(ConnectionInterface):
 		with tempfile.NamedTemporaryFile(
 			"w", encoding="utf-8", newline=newline, prefix="mume_viewing_", suffix=".txt", delete=False
 		) as file_obj:
-			file_name = file_obj.name
+			file_path = Path(file_obj.name)
 			file_obj.write(body)
 		if self.output_format == "tintin":
-			print(f"MPICOMMAND:{self.pager} {file_name}:MPICOMMAND")
+			print(f"MPICOMMAND:{self.pager} {file_path}:MPICOMMAND")
 		else:
-			subprocess.run((*self.pager.split(), file_name))  # NOQA: PLW1510, S603
-			os.remove(file_name)
+			subprocess.run((*self.pager.split(), str(file_path)))  # NOQA: PLW1510, S603
+			file_path.unlink(missing_ok=True)
 
 	def on_data_received(self, data: bytes) -> None:  # NOQA: C901, D102, PLR0912, PLR0915
 		app_data_buffer: bytearray = bytearray()

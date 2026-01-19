@@ -158,7 +158,6 @@
 	"**/__init__.py" = ["D1"]
 	"**/_version.py" = ["CPY001"]
 	"./tests/**" = ["D1", "ERA001", "PLR09", "SLF001"]
-	"./src/mudproto/mpi.py" = ["PTH"]
 
 [tool.ruff.lint.pydocstyle]
 	convention = "google"

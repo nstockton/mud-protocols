@@ -104,6 +104,13 @@ SAMPLE_TEXTS: tuple[str, ...] = (
 )
 
 
+class MockStat:
+	@property
+	def st_mtime(self) -> int:
+		"""Returns a different number representing modified time."""
+		return uuid4().int
+
+
 class TestMPIProtocol(TestCase):
 	def setUp(self) -> None:
 		self.game_receives: bytearray = bytearray()
@@ -187,7 +194,7 @@ class TestMPIProtocol(TestCase):
 			target=self.mpi.command_map[b"V"], args=(data,), daemon=True
 		)
 
-	@patch("mudproto.mpi.os.remove")
+	@patch("mudproto.mpi.Path.unlink")
 	@patch("mudproto.mpi.subprocess.run")
 	@patch("mudproto.mpi.tempfile.NamedTemporaryFile")
 	@patch("mudproto.mpi.print")
@@ -196,7 +203,7 @@ class TestMPIProtocol(TestCase):
 		mock_print: Mock,
 		mock_named_temporary_file: Mock,
 		mock_subprocess: Mock,
-		mock_remove: Mock,
+		mock_unlink: Mock,
 	) -> None:
 		temp_file_name: str = "temp_file_name"
 		mock_named_temporary_file.return_value.__enter__.return_value.name = temp_file_name
@@ -222,24 +229,24 @@ class TestMPIProtocol(TestCase):
 		)
 		mock_named_temporary_file.assert_called_once()
 		mock_subprocess.assert_called_once_with((*self.mpi.pager.split(), temp_file_name))
-		mock_remove.assert_called_once_with(temp_file_name)
+		mock_unlink.assert_called_once_with(missing_ok=True)
 
-	@patch("mudproto.mpi.open", mock_open(read_data=str(BODY, "utf-8")))
+	@patch("mudproto.mpi.Path.open", mock_open(read_data=str(BODY, "utf-8")))
 	@patch("mudproto.mpi.MPIProtocol.postprocess")
-	@patch("mudproto.mpi.os.remove")
+	@patch("mudproto.mpi.Path.unlink")
 	@patch("mudproto.mpi.subprocess.run")
 	@patch("mudproto.mpi.tempfile.NamedTemporaryFile")
-	@patch("mudproto.mpi.os.path")
+	@patch("mudproto.mpi.Path.stat")
 	@patch("mudproto.mpi.input", return_value="")
 	@patch("mudproto.mpi.print")
 	def test_mpi_edit(
 		self,
 		mock_print: Mock,
 		mock_input: Mock,
-		mock_os_path: Mock,
+		mock_stat: Mock,
 		mock_named_temporary_file: Mock,
 		mock_subprocess: Mock,
-		mock_remove: Mock,
+		mock_unlink: Mock,
 		mock_postprocessor: Mock,
 	) -> None:
 		session: bytes = b"12345" + LF
@@ -256,7 +263,7 @@ class TestMPIProtocol(TestCase):
 		# Test a canceled session.
 		expected_sent = MPI_INIT + b"E" + b"%d" % len(b"C" + session) + LF + b"C" + session
 		# Same modified time means the file was *not* modified.
-		mock_os_path.getmtime.return_value = 1.0
+		mock_stat.return_value.st_mtime = 1.0
 		# Test output_format is 'tintin'.
 		self.mpi.output_format = "tintin"
 		self.mpi.edit(b"E" + session + description + BODY + LF)
@@ -267,11 +274,11 @@ class TestMPIProtocol(TestCase):
 		mock_named_temporary_file.assert_called_once()
 		mock_print.assert_called_once_with(f"MPICOMMAND:{self.mpi.editor} {temp_file_name}:MPICOMMAND")
 		mock_input.assert_called_once_with("Continue:")
-		mock_remove.assert_called_once_with(temp_file_name)
+		mock_unlink.assert_called_once_with(missing_ok=True)
 		mock_named_temporary_file.reset_mock()
 		mock_print.reset_mock()
 		mock_input.reset_mock()
-		mock_remove.reset_mock()
+		mock_unlink.reset_mock()
 		# Test output_format is *not* 'tintin'.
 		self.mpi.output_format = "normal"
 		self.mpi.edit(b"E" + session + description + BODY + LF)
@@ -281,17 +288,17 @@ class TestMPIProtocol(TestCase):
 		self.game_receives.clear()
 		mock_named_temporary_file.assert_called_once()
 		mock_subprocess.assert_called_once_with((*self.mpi.editor.split(), temp_file_name))
-		mock_remove.assert_called_once_with(temp_file_name)
+		mock_unlink.assert_called_once_with(missing_ok=True)
 		mock_named_temporary_file.reset_mock()
 		mock_subprocess.reset_mock()
-		mock_remove.reset_mock()
-		mock_os_path.reset_mock(return_value=True)
+		mock_unlink.reset_mock()
+		mock_stat.reset_mock(return_value=True)
 		# Test remote editing.
 		expected_sent = (
 			MPI_INIT + b"E" + b"%d" % len(b"E" + session + BODY + LF) + LF + b"E" + session + BODY + LF
 		)
 		# Different modified time means the file was modified.
-		mock_os_path.getmtime.side_effect = lambda *args: uuid4()
+		mock_stat.return_value = MockStat()
 		# Test output_format is 'tintin'.
 		self.mpi.output_format = "tintin"
 		self.mpi.edit(b"E" + session + description + BODY + LF)
@@ -302,11 +309,11 @@ class TestMPIProtocol(TestCase):
 		mock_named_temporary_file.assert_called_once()
 		mock_print.assert_called_once_with(f"MPICOMMAND:{self.mpi.editor} {temp_file_name}:MPICOMMAND")
 		mock_input.assert_called_once_with("Continue:")
-		mock_remove.assert_called_once_with(temp_file_name)
+		mock_unlink.assert_called_once_with(missing_ok=True)
 		mock_named_temporary_file.reset_mock()
 		mock_print.reset_mock()
 		mock_input.reset_mock()
-		mock_remove.reset_mock()
+		mock_unlink.reset_mock()
 		# Test output_format is *not* 'tintin'.
 		self.mpi.output_format = "normal"
 		self.mpi.edit(b"E" + session + description + BODY + LF)
@@ -316,7 +323,7 @@ class TestMPIProtocol(TestCase):
 		self.game_receives.clear()
 		mock_named_temporary_file.assert_called_once()
 		mock_subprocess.assert_called_once_with((*self.mpi.editor.split(), temp_file_name))
-		mock_remove.assert_called_once_with(temp_file_name)
+		mock_unlink.assert_called_once_with(missing_ok=True)
 		# confirm pre and post processors were not called since wordwrapping was not defined
 		mock_postprocessor.assert_not_called()
 		# test given wordwrapping is enabled, processor methods are called
