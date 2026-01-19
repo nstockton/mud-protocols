@@ -14,7 +14,7 @@ import re
 from collections.abc import Iterable
 from contextlib import suppress
 from enum import Enum, auto
-from typing import Any, ClassVar, Union
+from typing import Any, ClassVar
 
 # Third-party Modules:
 from knickknacks.databytes import decode_bytes
@@ -69,7 +69,7 @@ class XMLMode(Enum):
 	TERRAIN = auto()
 
 
-def get_xml_mode(tag: str) -> Union[XMLMode, None]:
+def get_xml_mode(tag: str) -> XMLMode | None:
 	"""
 	Retrieves an XMLMode enum from a tag name.
 

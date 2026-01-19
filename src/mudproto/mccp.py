@@ -11,7 +11,7 @@ from __future__ import annotations
 # Built-in Modules:
 import logging
 import zlib
-from typing import Any, Union
+from typing import Any
 
 # Local Modules:
 from .telnet import TelnetInterface
@@ -43,7 +43,7 @@ class MCCPMixIn(TelnetInterface):
 		self.subnegotiation_map[MCCP1] = lambda *args: None
 		self.subnegotiation_map[MCCP2] = lambda *args: None
 		self._compression_enabled: bool = False
-		self._mccp_version: Union[int, None] = None
+		self._mccp_version: int | None = None
 		self._compressed_input_buffer: bytearray = bytearray()
 		self._decompressor: Any = None
 

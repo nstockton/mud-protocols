@@ -12,7 +12,7 @@ from __future__ import annotations
 import inspect
 import logging
 from types import TracebackType
-from typing import Any, Optional
+from typing import Any
 
 # Third-party Modules:
 from knickknacks.typedef import Self
@@ -36,7 +36,7 @@ class Manager:
 		receiver: ConnectionReceiverType,
 		*,
 		is_client: bool,
-		prompt_terminator: Optional[bytes] = None,
+		prompt_terminator: bytes | None = None,
 	) -> None:
 		"""
 		Defines the constructor.
@@ -86,9 +86,9 @@ class Manager:
 
 	def __exit__(
 		self,
-		exc_type: Optional[type[BaseException]],
-		exc_value: Optional[BaseException],
-		exc_traceback: Optional[TracebackType],
+		exc_type: type[BaseException] | None,
+		exc_value: BaseException | None,
+		exc_traceback: TracebackType | None,
 	) -> None:
 		self.disconnect()
 

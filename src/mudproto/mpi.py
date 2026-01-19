@@ -20,7 +20,7 @@ import textwrap
 import threading
 from enum import Enum, auto
 from pathlib import Path
-from typing import Any, Union
+from typing import Any
 
 # Local Modules:
 from .connection import ConnectionInterface
@@ -79,10 +79,8 @@ class MPIProtocol(ConnectionInterface):
 		}
 		default_editor: str = editors.get(sys.platform, "nano")
 		default_pager: str = pagers.get(sys.platform, "less")
-		editor: Union[str, None] = shutil.which(
-			os.getenv("VISUAL", "") or os.getenv("EDITOR", default_editor)
-		)
-		pager: Union[str, None] = shutil.which(os.getenv("PAGER", default_pager))
+		editor: str | None = shutil.which(os.getenv("VISUAL", "") or os.getenv("EDITOR", default_editor))
+		pager: str | None = shutil.which(os.getenv("PAGER", default_pager))
 		self._is_word_wrapping: bool = False
 		if editor is None:  # pragma: no cover
 			raise ValueError("MPI editor executable not found.")

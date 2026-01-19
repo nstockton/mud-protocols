@@ -27,7 +27,7 @@ from __future__ import annotations
 import logging
 from abc import abstractmethod
 from enum import Enum, auto
-from typing import Any, Union
+from typing import Any
 
 # Local Modules:
 from .connection import ConnectionInterface
@@ -184,7 +184,7 @@ class TelnetInterface(ConnectionInterface):
 		"""
 
 	@abstractmethod
-	def on_command(self, command: bytes, option: Union[bytes, None]) -> None:
+	def on_command(self, command: bytes, option: bytes | None) -> None:
 		"""
 		Called when a 1 or 2 byte command is received.
 
@@ -204,7 +204,7 @@ class TelnetInterface(ConnectionInterface):
 		"""
 
 	@abstractmethod
-	def on_unhandled_command(self, command: bytes, option: Union[bytes, None]) -> None:
+	def on_unhandled_command(self, command: bytes, option: bytes | None) -> None:
 		"""
 		Called for commands for which no handler is installed.
 
@@ -569,7 +569,7 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 		if app_data_buffer:
 			super().on_data_received(bytes(app_data_buffer))
 
-	def on_command(self, command: bytes, option: Union[bytes, None]) -> None:  # NOQA: D102
+	def on_command(self, command: bytes, option: bytes | None) -> None:  # NOQA: D102
 		if command in self.command_map:
 			self.command_map[command](option)
 		else:
@@ -581,7 +581,7 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 		else:
 			self.on_unhandled_subnegotiation(option, data)
 
-	def on_will(self, option: Union[bytes, None]) -> None:
+	def on_will(self, option: bytes | None) -> None:
 		"""
 		Called when an IAC + WILL + option is received.
 
@@ -618,7 +618,7 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 				+ f"state: {state!r}, option: {option!r}"
 			)
 
-	def on_wont(self, option: Union[bytes, None]) -> None:
+	def on_wont(self, option: bytes | None) -> None:
 		"""
 		Called when an IAC + WONT + option is received.
 
@@ -651,7 +651,7 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 			state.him.negotiating = False
 			self.on_disable_remote(option)
 
-	def on_do(self, option: Union[bytes, None]) -> None:
+	def on_do(self, option: bytes | None) -> None:
 		"""
 		Called when an IAC + DO + option is received.
 
@@ -687,7 +687,7 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 				+ f"state: {state!r}, option: {option!r}"
 			)
 
-	def on_dont(self, option: Union[bytes, None]) -> None:
+	def on_dont(self, option: bytes | None) -> None:
 		"""
 		Called when an IAC + DONT + option is received.
 
@@ -716,7 +716,7 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 			state.us.negotiating = False
 			self.on_disable_local(option)
 
-	def on_unhandled_command(self, command: bytes, option: Union[bytes, None]) -> None:  # NOQA: D102
+	def on_unhandled_command(self, command: bytes, option: bytes | None) -> None:  # NOQA: D102
 		return super().on_unhandled_command(command, option)  # type: ignore[safe-super]
 
 	def on_unhandled_subnegotiation(self, option: bytes, data: bytes) -> None:  # NOQA: D102

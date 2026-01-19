@@ -13,7 +13,7 @@ import json
 import logging
 import re
 from collections.abc import Iterable, Mapping
-from typing import Any, Optional
+from typing import Any
 
 # Third-party Modules:
 from knickknacks.typedef import ReBytesMatchType, ReBytesPatternType
@@ -36,7 +36,7 @@ class GMCPMixIn(TelnetInterface):
 	def __init__(
 		self,
 		*args: Any,
-		gmcp_client_info: Optional[GMCPClientInfoType] = None,
+		gmcp_client_info: GMCPClientInfoType | None = None,
 		**kwargs: Any,
 	) -> None:
 		"""

@@ -10,7 +10,6 @@ from __future__ import annotations
 
 # Built-in Modules:
 from collections.abc import Callable
-from typing import Union
 
 # Third-party Modules:
 from knickknacks.typedef import TypeAlias
@@ -21,7 +20,7 @@ ConnectionWriterType: TypeAlias = Callable[[bytes], None]
 GMCPClientInfoType: TypeAlias = tuple[str, str]
 MPICommandMapValueType: TypeAlias = Callable[[bytes], None]
 MPICommandMapType: TypeAlias = dict[bytes, MPICommandMapValueType]
-TelnetCommandMapValueType: TypeAlias = Callable[[Union[bytes, None]], None]
+TelnetCommandMapValueType: TypeAlias = Callable[[bytes | None], None]
 TelnetCommandMapType: TypeAlias = dict[bytes, TelnetCommandMapValueType]
 TelnetSubnegotiationMapValueType: TypeAlias = Callable[[bytes], None]
 TelnetSubnegotiationMapType: TypeAlias = dict[bytes, TelnetSubnegotiationMapValueType]

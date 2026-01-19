@@ -12,7 +12,7 @@ from __future__ import annotations
 import codecs
 import logging
 from contextlib import suppress
-from typing import Any, Union
+from typing import Any
 
 # Local Modules:
 from .telnet import TelnetInterface
@@ -43,7 +43,7 @@ class CharsetMixIn(TelnetInterface):
 		"""The currently used character set."""
 		return str(self._charset, "us-ascii")
 
-	def negotiate_charset(self, name: Union[bytes, str]) -> None:
+	def negotiate_charset(self, name: bytes | str) -> None:
 		"""
 		Negotiates changing the character set.
 

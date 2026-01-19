@@ -12,7 +12,7 @@ from __future__ import annotations
 import logging
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, Union
+from typing import Any
 
 # Third-party Modules:
 from knickknacks.typedef import Self
@@ -103,7 +103,7 @@ class NAWSMixIn(TelnetInterface):
 		return self._naws_dimensions
 
 	@naws_dimensions.setter
-	def naws_dimensions(self, value: Union[Dimensions, Sequence[int]]) -> None:
+	def naws_dimensions(self, value: Dimensions | Sequence[int]) -> None:
 		self._naws_dimensions = value if isinstance(value, Dimensions) else Dimensions(*value)
 		if self.is_client:
 			payload: bytes = self._naws_dimensions.to_bytes()
