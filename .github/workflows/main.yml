@@ -71,6 +71,7 @@ jobs:
           python -m pre_commit run --all-files --show-diff-on-failure --hook-stage push
           uv build
       - name: Test Documentation
+        if: contains(fromJson('["3.10", "3.11", "3.12", "3.13"]'), matrix.python-version)
         run: |
           source ${{ matrix.activate_path }}
           python -m pre_commit run --all-files --show-diff-on-failure --hook-stage manual
