@@ -865,7 +865,7 @@
 		<span class="bp">self</span><span class="o">.</span><span class="n">subnegotiation_map</span><span class="p">[</span><span class="n">MCCP1</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="kc">None</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">subnegotiation_map</span><span class="p">[</span><span class="n">MCCP2</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="kc">None</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_compression_enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-		<span class="bp">self</span><span class="o">.</span><span class="n">_mccp_version</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">_mccp_version</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_compressed_input_buffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -1065,7 +1065,7 @@
 	<span class="bp">self</span><span class="o">.</span><span class="n">subnegotiation_map</span><span class="p">[</span><span class="n">MCCP1</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="kc">None</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">subnegotiation_map</span><span class="p">[</span><span class="n">MCCP2</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="kc">None</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">_compression_enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-	<span class="bp">self</span><span class="o">.</span><span class="n">_mccp_version</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+	<span class="bp">self</span><span class="o">.</span><span class="n">_mccp_version</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">_compressed_input_buffer</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
 	<span class="bp">self</span><span class="o">.</span><span class="n">_decompressor</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
 </code></pre></div>
@@ -1321,7 +1321,7 @@
       </tr>
       <tr>
         <td><code>option</code></td>
-        <td><code>Union[bytes, None]</code></td>
+        <td><code>bytes | None</code></td>
         <td><p>The second byte in a 2 byte negotiation sequence or None.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -1330,7 +1330,7 @@
         <details class="quote">
           <summary>Source code in <code>mudproto/mccp.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called when a 1 or 2 byte command is received.</span>
 
@@ -1920,7 +1920,7 @@ in order to perform any necessary cleanup on our end.</p>
       </tr>
       <tr>
         <td><code>option</code></td>
-        <td><code>Union[bytes, None]</code></td>
+        <td><code>bytes | None</code></td>
         <td><p>The second byte in a 2 byte negotiation sequence or None.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -1929,7 +1929,7 @@ in order to perform any necessary cleanup on our end.</p>
         <details class="quote">
           <summary>Source code in <code>mudproto/mccp.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">on_unhandled_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">on_unhandled_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called for commands for which no handler is installed.</span>
 

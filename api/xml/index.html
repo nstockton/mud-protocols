@@ -1601,14 +1601,14 @@ An empty bytes object if not found.</p></td>
   </thead>
   <tbody>
     <tr>
-      <td><code>Union[XMLMode, None]</code></td>
+      <td><code>XMLMode | None</code></td>
       <td><p>the XMLMode enum corresponding to the tag name, None if not found.</p></td>
     </tr>
   </tbody>
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/xml.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_xml_mode</span><span class="p">(</span><span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">XMLMode</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_xml_mode</span><span class="p">(</span><span class="n">tag</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">XMLMode</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Retrieves an XMLMode enum from a tag name.</span>
 

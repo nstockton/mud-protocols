@@ -1349,7 +1349,7 @@
 <span class="sd">		&quot;&quot;&quot;</span>
 
 	<span class="nd">@abstractmethod</span>
-	<span class="k">def</span><span class="w"> </span><span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Called when a 1 or 2 byte command is received.</span>
 
@@ -1369,7 +1369,7 @@
 <span class="sd">		&quot;&quot;&quot;</span>
 
 	<span class="nd">@abstractmethod</span>
-	<span class="k">def</span><span class="w"> </span><span class="nf">on_unhandled_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">on_unhandled_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Called for commands for which no handler is installed.</span>
 
@@ -1722,7 +1722,7 @@
       </tr>
       <tr>
         <td><code>option</code></td>
-        <td><code>Union[bytes, None]</code></td>
+        <td><code>bytes | None</code></td>
         <td><p>The second byte in a 2 byte negotiation sequence or None.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -1731,7 +1731,7 @@
         <details class="quote">
           <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called when a 1 or 2 byte command is received.</span>
 
@@ -2276,7 +2276,7 @@ in order to perform any necessary cleanup on our end.</p>
       </tr>
       <tr>
         <td><code>option</code></td>
-        <td><code>Union[bytes, None]</code></td>
+        <td><code>bytes | None</code></td>
         <td><p>The second byte in a 2 byte negotiation sequence or None.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -2285,7 +2285,7 @@ in order to perform any necessary cleanup on our end.</p>
         <details class="quote">
           <summary>Source code in <code>mudproto/telnet.py</code></summary>
           <div class="codehilite"><pre><span></span><code><span class="nd">@abstractmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">on_unhandled_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">on_unhandled_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called for commands for which no handler is installed.</span>
 
@@ -2878,7 +2878,7 @@ in order to perform any necessary cleanup on our end.</p>
 		<span class="k">if</span> <span class="n">app_data_buffer</span><span class="p">:</span>
 			<span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_data_received</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">app_data_buffer</span><span class="p">))</span>
 
-	<span class="k">def</span><span class="w"> </span><span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 		<span class="k">if</span> <span class="n">command</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_map</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">command_map</span><span class="p">[</span><span class="n">command</span><span class="p">](</span><span class="n">option</span><span class="p">)</span>
 		<span class="k">else</span><span class="p">:</span>
@@ -2890,7 +2890,7 @@ in order to perform any necessary cleanup on our end.</p>
 		<span class="k">else</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">on_unhandled_subnegotiation</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 
-	<span class="k">def</span><span class="w"> </span><span class="nf">on_will</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">on_will</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Called when an IAC + WILL + option is received.</span>
 
@@ -2927,7 +2927,7 @@ in order to perform any necessary cleanup on our end.</p>
 				<span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;state: </span><span class="si">{</span><span class="n">state</span><span class="si">!r}</span><span class="s2">, option: </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">&quot;</span>
 			<span class="p">)</span>
 
-	<span class="k">def</span><span class="w"> </span><span class="nf">on_wont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">on_wont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Called when an IAC + WONT + option is received.</span>
 
@@ -2960,7 +2960,7 @@ in order to perform any necessary cleanup on our end.</p>
 			<span class="n">state</span><span class="o">.</span><span class="n">him</span><span class="o">.</span><span class="n">negotiating</span> <span class="o">=</span> <span class="kc">False</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">on_disable_remote</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
 
-	<span class="k">def</span><span class="w"> </span><span class="nf">on_do</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">on_do</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Called when an IAC + DO + option is received.</span>
 
@@ -2996,7 +2996,7 @@ in order to perform any necessary cleanup on our end.</p>
 				<span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;state: </span><span class="si">{</span><span class="n">state</span><span class="si">!r}</span><span class="s2">, option: </span><span class="si">{</span><span class="n">option</span><span class="si">!r}</span><span class="s2">&quot;</span>
 			<span class="p">)</span>
 
-	<span class="k">def</span><span class="w"> </span><span class="nf">on_dont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">on_dont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">		</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		Called when an IAC + DONT + option is received.</span>
 
@@ -3025,7 +3025,7 @@ in order to perform any necessary cleanup on our end.</p>
 			<span class="n">state</span><span class="o">.</span><span class="n">us</span><span class="o">.</span><span class="n">negotiating</span> <span class="o">=</span> <span class="kc">False</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">on_disable_local</span><span class="p">(</span><span class="n">option</span><span class="p">)</span>
 
-	<span class="k">def</span><span class="w"> </span><span class="nf">on_unhandled_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
+	<span class="k">def</span><span class="w"> </span><span class="nf">on_unhandled_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 		<span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_unhandled_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span>  <span class="c1"># type: ignore[safe-super]</span>
 
 	<span class="k">def</span><span class="w"> </span><span class="nf">on_unhandled_subnegotiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
@@ -3420,7 +3420,7 @@ in order to perform any necessary cleanup on our end.</p>
       </tr>
       <tr>
         <td><code>option</code></td>
-        <td><code>Union[bytes, None]</code></td>
+        <td><code>bytes | None</code></td>
         <td><p>The second byte in a 2 byte negotiation sequence or None.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -3428,7 +3428,7 @@ in order to perform any necessary cleanup on our end.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/telnet.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">on_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 	<span class="k">if</span> <span class="n">command</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_map</span><span class="p">:</span>
 		<span class="bp">self</span><span class="o">.</span><span class="n">command_map</span><span class="p">[</span><span class="n">command</span><span class="p">](</span><span class="n">option</span><span class="p">)</span>
 	<span class="k">else</span><span class="p">:</span>
@@ -3762,7 +3762,7 @@ in order to perform any necessary cleanup on our end.</p>
   <tbody>
       <tr>
         <td><code>option</code></td>
-        <td><code>Union[bytes, None]</code></td>
+        <td><code>bytes | None</code></td>
         <td><p>The received option.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -3770,7 +3770,7 @@ in order to perform any necessary cleanup on our end.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/telnet.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">on_do</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">on_do</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called when an IAC + DO + option is received.</span>
 
@@ -3840,7 +3840,7 @@ in order to perform any necessary cleanup on our end.</p>
   <tbody>
       <tr>
         <td><code>option</code></td>
-        <td><code>Union[bytes, None]</code></td>
+        <td><code>bytes | None</code></td>
         <td><p>The received option.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -3848,7 +3848,7 @@ in order to perform any necessary cleanup on our end.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/telnet.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">on_dont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">on_dont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called when an IAC + DONT + option is received.</span>
 
@@ -4136,7 +4136,7 @@ in order to perform any necessary cleanup on our end.</p>
       </tr>
       <tr>
         <td><code>option</code></td>
-        <td><code>Union[bytes, None]</code></td>
+        <td><code>bytes | None</code></td>
         <td><p>The second byte in a 2 byte negotiation sequence or None.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -4144,7 +4144,7 @@ in order to perform any necessary cleanup on our end.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/telnet.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">on_unhandled_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">on_unhandled_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># NOQA: D102</span>
 	<span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_unhandled_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span>  <span class="c1"># type: ignore[safe-super]</span>
 </code></pre></div>
         </details>
@@ -4232,7 +4232,7 @@ in order to perform any necessary cleanup on our end.</p>
   <tbody>
       <tr>
         <td><code>option</code></td>
-        <td><code>Union[bytes, None]</code></td>
+        <td><code>bytes | None</code></td>
         <td><p>The received option.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -4240,7 +4240,7 @@ in order to perform any necessary cleanup on our end.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/telnet.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">on_will</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">on_will</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called when an IAC + WILL + option is received.</span>
 
@@ -4311,7 +4311,7 @@ in order to perform any necessary cleanup on our end.</p>
   <tbody>
       <tr>
         <td><code>option</code></td>
-        <td><code>Union[bytes, None]</code></td>
+        <td><code>bytes | None</code></td>
         <td><p>The received option.</p></td>
         <td><em>required</em></td>
       </tr>
@@ -4319,7 +4319,7 @@ in order to perform any necessary cleanup on our end.</p>
 </table>
         <details class="quote">
           <summary>Source code in <code>mudproto/telnet.py</code></summary>
-          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">on_wont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+          <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">on_wont</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">	</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">	Called when an IAC + WONT + option is received.</span>
 
