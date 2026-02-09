@@ -299,12 +299,13 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 			**kwargs: Key-word only arguments to be passed to the parent constructor.
 		"""
 		super().__init__(*args, **kwargs)
-		self.state: TelnetState = TelnetState.DATA
-		"""The state of the state machine."""
+		self.__app_data_buffer: bytearray = bytearray()
 		self.__received_command_byte: bytes = b""
 		self.__received_subnegotiation_bytes: bytearray = bytearray()
 		self.__option_states: dict[bytes, OptionState] = {}
 		"""A mapping of option bytes to their current state."""
+		self.state: TelnetState = TelnetState.DATA
+		"""The state of the state machine."""
 		# When a Telnet command is received, the command byte,
 		# the first byte after IAC, is looked up in the commandMap dictionary.
 		# If a callable is found, it is invoked with the argument of the command,
@@ -433,8 +434,89 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 	def on_connection_lost(self) -> None:  # NOQA: D102
 		return super().on_connection_lost()  # type: ignore[safe-super]
 
-	def on_data_received(self, data: bytes) -> None:  # NOQA: C901, D102, PLR0912, PLR0915
-		app_data_buffer: bytearray = bytearray()
+	def __process_command_state(self, byte: bytes) -> None:
+		if byte == IAC:
+			# Escaped IAC.
+			self.__app_data_buffer.extend(byte)
+			self.state = TelnetState.DATA
+		elif byte == SE:
+			self.state = TelnetState.DATA
+			logger.warning("IAC SE received outside of subnegotiation.")
+		elif byte == SB:
+			self.state = TelnetState.SUBNEGOTIATION
+			self.__received_subnegotiation_bytes.clear()
+		elif byte in COMMAND_BYTES:
+			self.state = TelnetState.DATA
+			if self.__app_data_buffer:
+				super().on_data_received(bytes(self.__app_data_buffer))
+				self.__app_data_buffer.clear()
+			logger.debug(f"Received from peer: IAC {DESCRIPTIONS[byte]}")
+			self.on_command(byte, None)
+		elif byte in NEGOTIATION_BYTES:
+			self.state = TelnetState.NEGOTIATION
+			self.__received_command_byte = byte
+		else:
+			self.state = TelnetState.DATA
+			logger.warning(f"Unknown Telnet command received {byte!r}.")
+
+	def __process_negotiation_state(self, byte: bytes) -> None:
+		self.state = TelnetState.DATA
+		command = self.__received_command_byte
+		self.__received_command_byte = b""
+		if self.__app_data_buffer:
+			super().on_data_received(bytes(self.__app_data_buffer))
+			self.__app_data_buffer.clear()
+		logger.debug(f"Received from peer: IAC {DESCRIPTIONS[command]} {DESCRIPTIONS.get(byte, repr(byte))}")
+		self.on_command(command, byte)
+
+	def __process_newline_state(self, byte: bytes) -> None:
+		self.state = TelnetState.DATA
+		if byte == LF:
+			self.__app_data_buffer.extend(byte)
+		elif byte == NULL:
+			self.__app_data_buffer.extend(CR)
+		elif byte == IAC:
+			# IAC isn't really allowed after CR, according to the
+			# RFC, but handling it this way is less surprising than
+			# delivering the IAC to the app as application data.
+			# The purpose of the restriction is to allow terminals
+			# to unambiguously interpret the behavior of the CR
+			# after reading only one more byte.  CR + LF is supposed
+			# to mean one thing, cursor to next line, first column,
+			# CR + NUL another, cursor to first column.  Absent the
+			# NUL, it still makes sense to interpret this as CR and
+			# then apply all the usual interpretation to the IAC.
+			self.__app_data_buffer.extend(CR)
+			self.state = TelnetState.COMMAND
+		else:
+			self.__app_data_buffer.extend(CR + byte)
+
+	def __process_subnegotiation_state(self, byte: bytes) -> None:
+		if byte == IAC:
+			self.state = TelnetState.SUBNEGOTIATION_ESCAPED
+		else:
+			self.__received_subnegotiation_bytes.extend(byte)
+
+	def __process_subnegotiation_escaped_state(self, byte: bytes) -> None:
+		if byte == SE:
+			self.state = TelnetState.DATA
+			commands = bytes(self.__received_subnegotiation_bytes)
+			self.__received_subnegotiation_bytes.clear()
+			if self.__app_data_buffer:
+				super().on_data_received(bytes(self.__app_data_buffer))
+				self.__app_data_buffer.clear()
+			option, commands = commands[:1], commands[1:]
+			logger.debug(
+				f"Received from peer: IAC SB {DESCRIPTIONS.get(option, repr(option))} "
+				+ f"{commands!r} IAC SE"
+			)
+			self.on_subnegotiation(option, commands)
+		else:
+			self.state = TelnetState.SUBNEGOTIATION
+			self.__received_subnegotiation_bytes.extend(byte)
+
+	def on_data_received(self, data: bytes) -> None:  # NOQA: D102
+		self.__app_data_buffer.clear()
 		while data:
 			if self.state is TelnetState.DATA:
 				app_data, separator, data = data.partition(IAC)
@@ -443,89 +525,21 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 				elif app_data.endswith(CR):
 					self.state = TelnetState.NEWLINE
 					app_data = app_data[:-1]
-				app_data_buffer.extend(app_data.replace(CR_LF, LF).replace(CR_NULL, CR))
+				self.__app_data_buffer.extend(app_data.replace(CR_LF, LF).replace(CR_NULL, CR))
 				continue
 			byte, data = data[:1], data[1:]
 			if self.state is TelnetState.COMMAND:
-				if byte == IAC:
-					# Escaped IAC.
-					app_data_buffer.extend(byte)
-					self.state = TelnetState.DATA
-				elif byte == SE:
-					self.state = TelnetState.DATA
-					logger.warning("IAC SE received outside of subnegotiation.")
-				elif byte == SB:
-					self.state = TelnetState.SUBNEGOTIATION
-					self.__received_subnegotiation_bytes.clear()
-				elif byte in COMMAND_BYTES:
-					self.state = TelnetState.DATA
-					if app_data_buffer:
-						super().on_data_received(bytes(app_data_buffer))
-						app_data_buffer.clear()
-					logger.debug(f"Received from peer: IAC {DESCRIPTIONS[byte]}")
-					self.on_command(byte, None)
-				elif byte in NEGOTIATION_BYTES:
-					self.state = TelnetState.NEGOTIATION
-					self.__received_command_byte = byte
-				else:
-					self.state = TelnetState.DATA
-					logger.warning(f"Unknown Telnet command received {byte!r}.")
+				self.__process_command_state(byte)
 			elif self.state is TelnetState.NEGOTIATION:
-				self.state = TelnetState.DATA
-				command = self.__received_command_byte
-				self.__received_command_byte = b""
-				if app_data_buffer:
-					super().on_data_received(bytes(app_data_buffer))
-					app_data_buffer.clear()
-				logger.debug(
-					f"Received from peer: IAC {DESCRIPTIONS[command]} {DESCRIPTIONS.get(byte, repr(byte))}"
-				)
-				self.on_command(command, byte)
+				self.__process_negotiation_state(byte)
 			elif self.state is TelnetState.NEWLINE:
-				self.state = TelnetState.DATA
-				if byte == LF:
-					app_data_buffer.extend(byte)
-				elif byte == NULL:
-					app_data_buffer.extend(CR)
-				elif byte == IAC:
-					# IAC isn't really allowed after CR, according to the
-					# RFC, but handling it this way is less surprising than
-					# delivering the IAC to the app as application data.
-					# The purpose of the restriction is to allow terminals
-					# to unambiguously interpret the behavior of the CR
-					# after reading only one more byte.  CR + LF is supposed
-					# to mean one thing, cursor to next line, first column,
-					# CR + NUL another, cursor to first column.  Absent the
-					# NUL, it still makes sense to interpret this as CR and
-					# then apply all the usual interpretation to the IAC.
-					app_data_buffer.extend(CR)
-					self.state = TelnetState.COMMAND
-				else:
-					app_data_buffer.extend(CR + byte)
+				self.__process_newline_state(byte)
 			elif self.state is TelnetState.SUBNEGOTIATION:
-				if byte == IAC:
-					self.state = TelnetState.SUBNEGOTIATION_ESCAPED
-				else:
-					self.__received_subnegotiation_bytes.extend(byte)
+				self.__process_subnegotiation_state(byte)
 			elif self.state is TelnetState.SUBNEGOTIATION_ESCAPED:
-				if byte == SE:
-					self.state = TelnetState.DATA
-					commands = bytes(self.__received_subnegotiation_bytes)
-					self.__received_subnegotiation_bytes.clear()
-					if app_data_buffer:
-						super().on_data_received(bytes(app_data_buffer))
-						app_data_buffer.clear()
-					option, commands = commands[:1], commands[1:]
-					logger.debug(
-						f"Received from peer: IAC SB {DESCRIPTIONS.get(option, repr(option))} "
-						+ f"{commands!r} IAC SE"
-					)
-					self.on_subnegotiation(option, commands)
-				else:
-					self.state = TelnetState.SUBNEGOTIATION
-					self.__received_subnegotiation_bytes.extend(byte)
-		if app_data_buffer:
-			super().on_data_received(bytes(app_data_buffer))
+				self.__process_subnegotiation_escaped_state(byte)
+		if self.__app_data_buffer:
+			super().on_data_received(bytes(self.__app_data_buffer))
 
 	def on_command(self, command: bytes, option: bytes | None) -> None:  # NOQA: D102
 		if command in self.command_map:
