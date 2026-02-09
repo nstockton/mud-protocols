@@ -26,6 +26,7 @@ from __future__ import annotations
 # Built-in Modules:
 import logging
 from abc import abstractmethod
+from dataclasses import dataclass, field
 from enum import Enum, auto
 from typing import Any
 
@@ -74,7 +75,8 @@ class TelnetError(Exception):
 	"""Implements the base class for Telnet exceptions."""
 
 
-class _Perspective:
+@dataclass(slots=True)
+class OptionPerspective:
 	"""
 	Represents the state of an option on one side of the Telnet connection.
 
@@ -89,21 +91,15 @@ class _Perspective:
 	negotiating: bool = False
 	"""Tracks whether negotiation about this option is in progress."""
 
-	def __str__(self) -> str:
-		return f"Enabled: {self.enabled}, Negotiating: {self.negotiating}"
 
-
-class _OptionState:
+@dataclass(slots=True)
+class OptionState:
 	"""Represents the state of an option on both sides of a Telnet connection."""
 
-	def __init__(self) -> None:
-		self.us: _Perspective = _Perspective()
-		"""The state of the option on this side of the connection."""
-		self.him: _Perspective = _Perspective()
-		"""The state of the option on the other side of the connection."""
-
-	def __repr__(self) -> str:
-		return f"<_OptionState us={self.us} him={self.him}>"
+	us: OptionPerspective = field(default_factory=OptionPerspective)
+	"""The state of the option on this side of the connection."""
+	him: OptionPerspective = field(default_factory=OptionPerspective)
+	"""The state of the option on the other side of the connection."""
 
 
 class TelnetState(Enum):
@@ -121,32 +117,32 @@ class TelnetInterface(ConnectionInterface):
 	"""Defines the interface for the Telnet protocol."""
 
 	command_map: TelnetCommandMapType
-	"""A mapping of bytes to callables."""
+	"""A mapping of command bytes to command handlers."""
 	subnegotiation_map: TelnetSubnegotiationMapType
-	"""A mapping of bytes to callables."""
+	"""A mapping of subnegotiation bytes to subnegotiation handlers."""
 
 	@abstractmethod
 	def will(self, option: bytes) -> None:
 		"""
-		Indicates our willingness to enable an option.
+		Negotiates enabling a locally managed option.
 
 		Args:
-			option: The option to accept.
+			option: The option to enable.
 		"""
 
 	@abstractmethod
 	def wont(self, option: bytes) -> None:
 		"""
-		Indicates we are not willing to enable an option.
+		Negotiates disabling a locally managed option.
 
 		Args:
-			option: The option to reject.
+			option: The option to disable.
 		"""
 
 	@abstractmethod
 	def do(self, option: bytes) -> None:
 		"""
-		Requests that the peer enable an option.
+		Negotiates enabling a Remotely managed option.
 
 		Args:
 			option: The option to enable.
@@ -155,22 +151,22 @@ class TelnetInterface(ConnectionInterface):
 	@abstractmethod
 	def dont(self, option: bytes) -> None:
 		"""
-		Requests that the peer disable an option.
+		Negotiates disabling a Remotely managed option.
 
 		Args:
 			option: The option to disable.
 		"""
 
 	@abstractmethod
-	def get_option_state(self, option: bytes) -> _OptionState:
+	def get_option_state(self, option: bytes) -> OptionState:
 		"""
-		Gets the state of a Telnet option.
+		Retrieves the state of a Telnet option.
 
 		Args:
-			option: The option to get state.
+			option: The option to get the state of.
 
 		Returns:
-			An object containing the option state.
+			The option state.
 		"""
 
 	@abstractmethod
@@ -305,7 +301,9 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 		super().__init__(*args, **kwargs)
 		self.state: TelnetState = TelnetState.DATA
 		"""The state of the state machine."""
-		self._options: dict[bytes, _OptionState] = {}
+		self.__received_command_byte: bytes = b""
+		self.__received_subnegotiation_bytes: bytearray = bytearray()
+		self.__option_states: dict[bytes, OptionState] = {}
 		"""A mapping of option bytes to their current state."""
 		# When a Telnet command is received, the command byte,
 		# the first byte after IAC, is looked up in the commandMap dictionary.
@@ -369,13 +367,7 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 		logger.debug(f"Send to peer: IAC WONT {DESCRIPTIONS.get(option, repr(option))}")
 		self.write(IAC + WONT + option)
 
-	def will(self, option: bytes) -> None:
-		"""
-		Tells peer we would like to enable a Telnet option.
-
-		Args:
-			option: The option we wish to enable.
-		"""
+	def will(self, option: bytes) -> None:  # NOQA: D102
 		state = self.get_option_state(option)
 		if state.us.negotiating or state.him.negotiating:
 			logger.warning(
@@ -388,13 +380,7 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 			state.us.negotiating = True
 			self._will(option)
 
-	def wont(self, option: bytes) -> None:
-		"""
-		Tells peer we no longer wish to enable a Telnet option.
-
-		Args:
-			option: The option we wish to disable.
-		"""
+	def wont(self, option: bytes) -> None:  # NOQA: D102
 		state = self.get_option_state(option)
 		if state.us.negotiating or state.him.negotiating:
 			logger.warning(
@@ -407,13 +393,7 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 			state.us.negotiating = True
 			self._wont(option)
 
-	def do(self, option: bytes) -> None:
-		"""
-		Tells peer we would like him to enable a Telnet option.
-
-		Args:
-			option: The option we wish peer to enable.
-		"""
+	def do(self, option: bytes) -> None:  # NOQA: D102
 		state = self.get_option_state(option)
 		if state.us.negotiating or state.him.negotiating:
 			logger.warning(
@@ -426,13 +406,7 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 			state.him.negotiating = True
 			self._do(option)
 
-	def dont(self, option: bytes) -> None:
-		"""
-		Tells peer we would like him to disable a Telnet option.
-
-		Args:
-			option: The option we wish to disable.
-		"""
+	def dont(self, option: bytes) -> None:  # NOQA: D102
 		state = self.get_option_state(option)
 		if state.us.negotiating or state.him.negotiating:
 			logger.warning(
@@ -445,28 +419,12 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 			state.him.negotiating = True
 			self._dont(option)
 
-	def get_option_state(self, option: bytes) -> _OptionState:
-		"""
-		Retrieves the state of an option.
+	def get_option_state(self, option: bytes) -> OptionState:  # NOQA: D102
+		if option not in self.__option_states:
+			self.__option_states[option] = OptionState()
+		return self.__option_states[option]
 
-		Args:
-			option: The option we wish to get the state of.
-
-		Returns:
-			The option state.
-		"""
-		if option not in self._options:
-			self._options[option] = _OptionState()
-		return self._options[option]
-
-	def request_negotiation(self, option: bytes, data: bytes) -> None:
-		"""
-		Performs a Telnet sub-negotiation for the given option.
-
-		Args:
-			option: The option we are negotiating.
-			data: The data we are sending in the body of the negotiation.
-		"""
+	def request_negotiation(self, option: bytes, data: bytes) -> None:  # NOQA: D102
 		self.write(IAC + SB + option + escape_iac(data) + IAC + SE)
 
 	def on_connection_made(self) -> None:  # NOQA: D102
@@ -498,7 +456,7 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 					logger.warning("IAC SE received outside of subnegotiation.")
 				elif byte == SB:
 					self.state = TelnetState.SUBNEGOTIATION
-					self._commands: bytearray = bytearray()
+					self.__received_subnegotiation_bytes.clear()
 				elif byte in COMMAND_BYTES:
 					self.state = TelnetState.DATA
 					if app_data_buffer:
@@ -508,14 +466,14 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 					self.on_command(byte, None)
 				elif byte in NEGOTIATION_BYTES:
 					self.state = TelnetState.NEGOTIATION
-					self._command = byte
+					self.__received_command_byte = byte
 				else:
 					self.state = TelnetState.DATA
 					logger.warning(f"Unknown Telnet command received {byte!r}.")
 			elif self.state is TelnetState.NEGOTIATION:
 				self.state = TelnetState.DATA
-				command = self._command
-				del self._command
+				command = self.__received_command_byte
+				self.__received_command_byte = b""
 				if app_data_buffer:
 					super().on_data_received(bytes(app_data_buffer))
 					app_data_buffer.clear()
@@ -548,12 +506,12 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 				if byte == IAC:
 					self.state = TelnetState.SUBNEGOTIATION_ESCAPED
 				else:
-					self._commands.extend(byte)
+					self.__received_subnegotiation_bytes.extend(byte)
 			elif self.state is TelnetState.SUBNEGOTIATION_ESCAPED:
 				if byte == SE:
 					self.state = TelnetState.DATA
-					commands = bytes(self._commands)
-					del self._commands
+					commands = bytes(self.__received_subnegotiation_bytes)
+					self.__received_subnegotiation_bytes.clear()
 					if app_data_buffer:
 						super().on_data_received(bytes(app_data_buffer))
 						app_data_buffer.clear()
@@ -565,7 +523,7 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 					self.on_subnegotiation(option, commands)
 				else:
 					self.state = TelnetState.SUBNEGOTIATION
-					self._commands.extend(byte)
+					self.__received_subnegotiation_bytes.extend(byte)
 		if app_data_buffer:
 			super().on_data_received(bytes(app_data_buffer))
 

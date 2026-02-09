@@ -29,7 +29,7 @@ NAWS_SEQUENCE_LENGTH: int = 4
 logger: logging.Logger = logging.getLogger(__name__)
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class Dimensions:
 	"""Represents the dimensions of a window."""
 

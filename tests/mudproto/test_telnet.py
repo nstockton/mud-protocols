@@ -11,7 +11,7 @@ from unittest import TestCase
 from unittest.mock import Mock, patch
 
 # MUD Protocol Modules:
-from mudproto.telnet import TelnetProtocol, TelnetState, escape_iac
+from mudproto.telnet import OptionState, TelnetProtocol, TelnetState, escape_iac
 from mudproto.telnet_constants import (
 	COMMAND_BYTES,
 	CR,
@@ -72,10 +72,13 @@ class TestTelnetProtocol(TestCase):
 		self.telnet.state = TelnetState.DATA
 		return player_receives, game_receives, state
 
+	def get_option_states(self) -> dict[bytes, OptionState]:
+		return getattr(self.telnet, "_TelnetProtocol__option_states", {})
+
 	@patch("mudproto.telnet.logger")
 	def test_telnet_will(self, mock_logger: Mock) -> None:
 		state: Mock = self.new_mocked_option_state()
-		self.telnet._options[ECHO] = state
+		self.get_option_states()[ECHO] = state
 		us_negotiating_warning: str = (
 			f"We are offering to enable option {ECHO!r}, "
 			+ "but the option is already being negotiated by us."
@@ -111,7 +114,7 @@ class TestTelnetProtocol(TestCase):
 	@patch("mudproto.telnet.logger")
 	def test_telnet_wont(self, mock_logger: Mock) -> None:
 		state: Mock = self.new_mocked_option_state()
-		self.telnet._options[ECHO] = state
+		self.get_option_states()[ECHO] = state
 		us_negotiating_warning: str = (
 			f"We are refusing to enable option {ECHO!r}, "
 			+ "but the option is already being negotiated by us."
@@ -147,7 +150,7 @@ class TestTelnetProtocol(TestCase):
 	@patch("mudproto.telnet.logger")
 	def test_telnet_do(self, mock_logger: Mock) -> None:
 		state: Mock = self.new_mocked_option_state()
-		self.telnet._options[ECHO] = state
+		self.get_option_states()[ECHO] = state
 		us_negotiating_warning: str = (
 			f"We are requesting that peer enable option {ECHO!r}, "
 			+ "but the option is already being negotiated by us."
@@ -183,7 +186,7 @@ class TestTelnetProtocol(TestCase):
 	@patch("mudproto.telnet.logger")
 	def test_telnet_dont(self, mock_logger: Mock) -> None:
 		state: Mock = self.new_mocked_option_state()
-		self.telnet._options[ECHO] = state
+		self.get_option_states()[ECHO] = state
 		us_negotiating_warning: str = (
 			f"We are requesting that peer disable option {ECHO!r}, "
 			+ "but the option is already being negotiated by us."
@@ -217,10 +220,9 @@ class TestTelnetProtocol(TestCase):
 		self.assertTrue(state.him.negotiating)
 
 	def test_telnet_get_option_state(self) -> None:
-		self.assertNotIn(ECHO, self.telnet._options)
+		self.assertNotIn(ECHO, self.get_option_states())
 		self.telnet.get_option_state(ECHO)
-		self.assertIn(ECHO, self.telnet._options)
-		del self.telnet._options[ECHO]
+		self.assertIn(ECHO, self.get_option_states())
 
 	def test_telnet_request_negotiation(self) -> None:
 		data: bytes = IAC + b"hello"
@@ -282,8 +284,9 @@ class TestTelnetProtocol(TestCase):
 		# 'subnegotiation' state:
 		self.assertEqual(self.parse(data + IAC + SB + IAC), (data, b"", TelnetState.SUBNEGOTIATION_ESCAPED))
 		self.assertEqual(self.parse(data + IAC + SB + b"something"), (data, b"", TelnetState.SUBNEGOTIATION))
-		self.assertEqual(self.telnet._commands, b"something")
-		del self.telnet._commands
+		# Note the name mangling __commands becomes _TelnetProtocol__commands.
+		commands: bytes = getattr(self.telnet, "_TelnetProtocol__received_subnegotiation_bytes", b"invalid")
+		self.assertEqual(commands, b"something")
 		# 'subnegotiation-escaped' state:
 		self.assertEqual(
 			self.parse(data + IAC + SB + ECHO + b"something" + IAC + SE), (data, b"", TelnetState.DATA)
@@ -319,7 +322,7 @@ class TestTelnetProtocol(TestCase):
 		with self.assertRaises(AssertionError):
 			self.telnet.on_will(None)
 		state: Mock = self.new_mocked_option_state()
-		self.telnet._options[ECHO] = state
+		self.get_option_states()[ECHO] = state
 		# --------------------
 		# not state.him.enabled and not state.him.negotiating:
 		# --------------------
@@ -373,7 +376,7 @@ class TestTelnetProtocol(TestCase):
 		with self.assertRaises(AssertionError):
 			self.telnet.on_wont(None)
 		state: Mock = self.new_mocked_option_state()
-		self.telnet._options[ECHO] = state
+		self.get_option_states()[ECHO] = state
 		# --------------------
 		# not state.him.enabled and not state.him.negotiating:
 		# --------------------
@@ -417,7 +420,7 @@ class TestTelnetProtocol(TestCase):
 		with self.assertRaises(AssertionError):
 			self.telnet.on_do(None)
 		state: Mock = self.new_mocked_option_state()
-		self.telnet._options[ECHO] = state
+		self.get_option_states()[ECHO] = state
 		# --------------------
 		# not state.us.enabled and not state.us.negotiating:
 		# --------------------
@@ -464,7 +467,7 @@ class TestTelnetProtocol(TestCase):
 		with self.assertRaises(AssertionError):
 			self.telnet.on_dont(None)
 		state: Mock = self.new_mocked_option_state()
-		self.telnet._options[ECHO] = state
+		self.get_option_states()[ECHO] = state
 		# --------------------
 		# not state.us.enabled and not state.us.negotiating:
 		# --------------------
