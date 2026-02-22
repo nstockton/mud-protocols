@@ -434,6 +434,21 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 	def on_connection_lost(self) -> None:  # NOQA: D102
 		return super().on_connection_lost()  # type: ignore[safe-super]
 
+	def __flush_app_data(self) -> None:
+		if self.__app_data_buffer:
+			super().on_data_received(bytes(self.__app_data_buffer))
+			self.__app_data_buffer.clear()
+
+	def __process_data_state(self, data: bytes) -> bytes:
+		app_data, separator, data = data.partition(IAC)
+		if separator:
+			self.state = TelnetState.COMMAND
+		elif app_data.endswith(CR):
+			self.state = TelnetState.NEWLINE
+			app_data = app_data[:-1]
+		self.__app_data_buffer.extend(app_data.replace(CR_LF, LF).replace(CR_NULL, CR))
+		return data
+
 	def __process_command_state(self, byte: bytes) -> None:
 		if byte == IAC:
 			# Escaped IAC.
@@ -447,9 +462,7 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 			self.__received_subnegotiation_bytes.clear()
 		elif byte in COMMAND_BYTES:
 			self.state = TelnetState.DATA
-			if self.__app_data_buffer:
-				super().on_data_received(bytes(self.__app_data_buffer))
-				self.__app_data_buffer.clear()
+			self.__flush_app_data()
 			logger.debug(f"Received from peer: IAC {DESCRIPTIONS[byte]}")
 			self.on_command(byte, None)
 		elif byte in NEGOTIATION_BYTES:
@@ -463,9 +476,7 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 		self.state = TelnetState.DATA
 		command = self.__received_command_byte
 		self.__received_command_byte = b""
-		if self.__app_data_buffer:
-			super().on_data_received(bytes(self.__app_data_buffer))
-			self.__app_data_buffer.clear()
+		self.__flush_app_data()
 		logger.debug(f"Received from peer: IAC {DESCRIPTIONS[command]} {DESCRIPTIONS.get(byte, repr(byte))}")
 		self.on_command(command, byte)
 
@@ -500,11 +511,12 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 	def __process_subnegotiation_escaped_state(self, byte: bytes) -> None:
 		if byte == SE:
 			self.state = TelnetState.DATA
+			self.__flush_app_data()
 			commands = bytes(self.__received_subnegotiation_bytes)
 			self.__received_subnegotiation_bytes.clear()
-			if self.__app_data_buffer:
-				super().on_data_received(bytes(self.__app_data_buffer))
-				self.__app_data_buffer.clear()
+			if not commands:
+				logger.warning("Empty subnegotiation received.")
+				return
 			option, commands = commands[:1], commands[1:]
 			logger.debug(
 				f"Received from peer: IAC SB {DESCRIPTIONS.get(option, repr(option))} "
@@ -516,17 +528,12 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 			self.__received_subnegotiation_bytes.extend(byte)
 
 	def on_data_received(self, data: bytes) -> None:  # NOQA: D102
-		self.__app_data_buffer.clear()
 		while data:
 			if self.state is TelnetState.DATA:
-				app_data, separator, data = data.partition(IAC)
-				if separator:
-					self.state = TelnetState.COMMAND
-				elif app_data.endswith(CR):
-					self.state = TelnetState.NEWLINE
-					app_data = app_data[:-1]
-				self.__app_data_buffer.extend(app_data.replace(CR_LF, LF).replace(CR_NULL, CR))
+				# Process data as chunks for speed.
+				data = self.__process_data_state(data)
 				continue
+			# All other states require iterating 1 byte at a time.
 			byte, data = data[:1], data[1:]
 			if self.state is TelnetState.COMMAND:
 				self.__process_command_state(byte)
@@ -538,8 +545,7 @@ class TelnetProtocol(TelnetInterface):  # NOQA: PLR0904
 				self.__process_subnegotiation_state(byte)
 			elif self.state is TelnetState.SUBNEGOTIATION_ESCAPED:
 				self.__process_subnegotiation_escaped_state(byte)
-		if self.__app_data_buffer:
-			super().on_data_received(bytes(self.__app_data_buffer))
+		self.__flush_app_data()
 
 	def on_command(self, command: bytes, option: bytes | None) -> None:  # NOQA: D102
 		if command in self.command_map:

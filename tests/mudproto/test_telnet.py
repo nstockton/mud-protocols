@@ -288,6 +288,9 @@ class TestTelnetProtocol(TestCase):
 		commands: bytes = getattr(self.telnet, "_TelnetProtocol__received_subnegotiation_bytes", b"invalid")
 		self.assertEqual(commands, b"something")
 		# 'subnegotiation-escaped' state:
+		self.assertEqual(self.parse(data + IAC + SB + IAC + SE), (data, b"", TelnetState.DATA))
+		mock_on_subnegotiation.assert_not_called()
+		mock_on_subnegotiation.reset_mock()
 		self.assertEqual(
 			self.parse(data + IAC + SB + ECHO + b"something" + IAC + SE), (data, b"", TelnetState.DATA)
 		)
